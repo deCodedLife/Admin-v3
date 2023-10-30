@@ -1,0 +1,320 @@
+@media (max-width: 1450px) {
+    .componentFilters {
+        &_blockFilter {
+            width: 32%;
+            flex-shrink: 0;
+
+            &:not(:last-child) {
+                margin-right: 2%;
+            }
+        }
+    }
+
+    .moduleFunnel {
+        &_column {
+            width: 50%;
+        }
+    }
+
+    .moduleNews {
+        width: 100%;
+    }
+
+    .moduleQueue {
+        &_talonsList {
+            font-size: 5rem;
+        }
+
+        &_talonsHeader {
+            font-size: 2.5rem;
+        }
+
+        &_detail {
+            font-size: 2.5rem;
+        }
+    }
+}
+
+@media (min-width: 991.98px) {
+    .app-sidebar-wrapper {
+        height: calc(100vh - var(--kt-app-header-height) - 1.25rem * 2);
+    }
+
+    .moduleLinksBlock {
+        &_block {
+            &:hover {
+                bottom: 10px;
+
+                & .moduleLinksBlock_blockIcon {
+                    color: var(--kt-primary);
+                }
+            }
+        }
+    }
+
+    .moduleWidgets {
+        &_widgetValue {
+            font-size: 2.5rem;
+        }
+    }
+}
+
+@media (max-width: 991.98px) {
+    .app-sidebar-wrapper {
+        height: calc(100vh - 1.25rem * 2);
+    }
+
+    #kt_app_sidebar_mobile_toggle {
+        margin-right: 0.5rem;
+    }
+
+    .auth-layout {
+        justify-content: center;
+    }
+
+    .auth-image {
+        display: none;
+    }
+
+    .moduleSchedule_table {
+        /*  
+    60px - высота шапки
+    20px * 2 - поля контейнера
+    45px - фильтр + нижний отступ фильтра
+    */
+        height: calc(100vh - 60px - 20px * 2 - 45px);
+    }
+
+    .moduleRoles {
+        &_permission {
+            width: 50%;
+        }
+    }
+
+    .componentFilters {
+
+        &_blockForm,
+        &_stringForm {
+            justify-content: flex-end;
+        }
+
+        &_blockContainer,
+        &_blockButton,
+        &_stringFilterContainer,
+        &_stringButton.componentButton {
+            display: none;
+        }
+
+        &_hiddenDropdown {
+            display: unset;
+            margin-bottom: 1rem;
+        }
+    }
+
+    .componentCheckbox {
+        margin-right: 1.25rem;
+    }
+
+    .moduleNews {
+        padding: 0 20px;
+    }
+
+    .moduleLinksBlock {
+        &_blockContainer {
+            width: 33.3%;
+        }
+    }
+
+    .moduleQueue {
+        padding: 0 0.5rem;
+
+        &_filter {
+            &.componentSelect__control {
+                font-size: 2rem;
+            }
+        }
+
+        &_time {
+            font-size: 2rem;
+        }
+
+        &_date {
+            font-size: 1rem;
+        }
+
+        &_talonsList {
+            font-size: 4rem;
+        }
+
+        &_talonsHeader {
+            font-size: 2rem;
+        }
+
+        &_detail {
+            font-size: 2rem;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+
+    input:focus,
+    textarea:focus {
+        font-size: 16px !important;
+    }
+
+    .col-md-1,
+    .col-md-2,
+    .col-md-3,
+    .col-md-4,
+    .col-md-5,
+    .col-md-6,
+    .col-md-7,
+    .col-md-8,
+    .col-md-9,
+    .col-md-10,
+    .col-md-11,
+    .col-md-12 {
+        width: 100%;
+    }
+
+    .componentButton {
+        &_container {
+            flex-direction: column;
+            justify-content: unset;
+
+            & .componentButton:not(:last-child) {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    }
+
+    .componentSmartList {
+        &_addButton {
+            width: 50%;
+        }
+
+        &_property:not(:last-child) {
+            margin-bottom: 0.5rem;
+        }
+
+        &_propertyLabel {
+            display: inline-block;
+        }
+    }
+
+    .moduleChat {
+
+        overflow-x: hidden;
+
+        &_chats {
+            min-width: 100%;
+            width: 100%;
+            padding: 0;
+        }
+
+        &_messages {
+            min-width: 100%;
+            width: 100%;
+            padding: 0;
+
+            & .moduleChat_messagesGoBackButton {
+                display: unset;
+            }
+        }
+
+        &_messagesButtonsContainer {
+            justify-content: space-between;
+        }
+    }
+
+    .moduleFunnel {
+        &_column {
+            width: 100%;
+        }
+    }
+
+    .moduleNews {
+        &_newsCard {
+            width: 100%;
+        }
+    }
+
+    .moduleLinksBlock {
+        &_blockContainer {
+            width: 50%;
+        }
+    }
+
+    .moduleQueue {
+        &_filter {
+            &.componentSelect__control {
+                font-size: 1.25rem;
+            }
+        }
+
+        &_time {
+            font-size: 1.25rem;
+        }
+
+        &_talonsList {
+            font-size: 2.5rem;
+        }
+
+        &_talonsHeader {
+            font-size: 1.25rem;
+        }
+
+        &_detail {
+            font-size: 1.25rem;
+        }
+    }
+}
+
+@media (min-width: 576px) {
+    .modal-sm {
+        --bs-modal-width: 410px;
+    }
+
+    .moduleSchedule_modal,
+    .componentButton_modal {
+        max-width: 80vw;
+    }
+}
+
+@media (max-width: 576px) {
+    .auth {
+        &_formContainer {
+            width: 90vw;
+        }
+    }
+
+    .moduleQueue {
+
+        &_talonsList {
+            font-size: 2rem;
+        }
+
+        &_detail {
+            font-size: 1rem;
+        }
+    }
+}
+
+@media print {
+
+    html,
+    body {
+        font-family: 'Times New Roman';
+        line-height: 1;
+    }
+
+    div {
+        break-inside: auto;
+    }
+
+    td {
+        border-width: 1px;
+    }
+}

@@ -1,0 +1,3080 @@
+//модуль HeadermoduleHeader
+.moduleHeader {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0.5rem;
+
+    &_title {
+        font-size: 1.35rem;
+        font-weight: 600;
+        color: var(--kt-text-dark);
+    }
+
+    &_description {
+        font-size: 0.95rem;
+        color: var(--kt-text-muted);
+    }
+}
+
+//модуль List 
+.moduleList {
+
+    &_toolbar {
+        display: flex;
+        margin: 1rem 0;
+
+        &>*:not(:last-child) {
+            margin-right: 1rem;
+        }
+    }
+
+    &_buttonsContainer {
+        display: flex;
+        justify-content: flex-end;
+
+        &>*:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    }
+
+    &_actionButton {
+        color: var(--kt-text-muted);
+        background-color: var(--kt-light);
+        transition: color 0.3s;
+
+        & svg g,
+        svg [fill] {
+            fill: var(--kt-text-muted);
+            transition: fill 0.3s;
+        }
+
+        &:hover {
+            color: var(--kt-primary-active);
+            background-color: var(--kt-light);
+
+            & svg g,
+            svg [fill] {
+                fill: var(--kt-primary-active);
+            }
+        }
+    }
+
+    &_headerCell {
+        vertical-align: middle;
+        white-space: nowrap;
+
+        &.deleteCheckbox {
+            & .componentCheckbox {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &_row {
+        background: linear-gradient(to left, transparent 50%, var(--kt-gray-200) 50%) right;
+        background-size: 200%;
+        transition: background-position 0.3s ease-out;
+
+        &.selected {
+            background-position: left;
+        }
+    }
+
+    &_cell {
+        &.link {
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        &.image {
+            width: calc(45px + 0.75rem * 2);
+        }
+
+        &.deleteCheckbox {
+            width: calc(25px + 0.75rem);
+
+            & .componentCheckbox {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &_cellData {
+        &.filterable {
+            cursor: pointer;
+            user-select: none;
+            border-bottom: 1px dashed currentColor;
+        }
+
+        &:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+
+    }
+
+    &_dateCell {
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.625rem;
+
+        &.bg-primary,
+        &.bg-danger {
+            color: var(--kt-primary-inverse);
+        }
+    }
+
+    & .moduleList_emptyTable {
+        text-align: center;
+        font-size: 20px;
+        color: var(--kt-text-muted);
+        height: 200px;
+    }
+
+    &_cellImageContainer {
+        display: inline-block;
+        width: 45px;
+        height: 45px;
+    }
+
+    &_cellImage {
+        width: 100%;
+        height: 100%;
+        border-radius: 0.475rem;
+        object-fit: cover;
+    }
+
+    & .pagination {
+        margin-top: 10px;
+    }
+
+    &_sortButton {
+        background-color: transparent;
+        border: none;
+        opacity: 0.5;
+
+        &.sorted {
+            opacity: 1;
+
+            & .svg-icon {
+                color: var(--kt-primary);
+
+                & svg {
+                    transform: rotate(180deg);
+                }
+            }
+
+            &.reverse {
+                & .svg-icon {
+                    & svg {
+                        transform: rotate(0);
+                    }
+                }
+            }
+        }
+
+        & .svg-icon {
+            transition: color 0.3s;
+
+            svg {
+                fill: currentColor;
+                height: 14px;
+                width: 14px;
+
+            }
+        }
+
+        &:hover {
+            & .svg-icon {
+                color: var(--kt-primary);
+            }
+        }
+    }
+
+    &_csvModuleButton {
+        height: 100%;
+    }
+
+    &_csvModuleCheckbox {
+        &:not(:last-child) {
+            margin-bottom: 10px;
+        }
+    }
+
+    &_selectedItemsContainer {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        top: 0;
+        display: flex;
+        align-items: center;
+        height: 48.33px;
+        padding: 0 2.25rem;
+
+        & .componentCheckbox {
+            margin-right: 1.5rem;
+        }
+
+        & .componentButton {
+            margin-left: 1em;
+        }
+    }
+
+    & .table-responsive {
+        position: relative;
+        margin: 0 -2.25rem;
+
+        & table {
+
+            & td:first-child,
+            th:first-child {
+                padding-left: 2.25rem;
+            }
+
+            & td:last-child,
+            th:last-child {
+                padding-right: 2.25rem;
+            }
+        }
+
+
+        &.selectedItems {
+            & thead th {
+                opacity: 0;
+                pointer-events: none;
+            }
+        }
+    }
+}
+
+.pagination_limit {
+    &__control {
+        height: 100%;
+        background-color: var(--kt-input-solid-bg) !important;
+        border-color: var(--kt-input-solid-bg) !important;
+        border-radius: 0.475rem !important;
+        color: var(--kt-input-solid-color);
+        font-size: 1.1rem;
+        font-weight: 500;
+        box-shadow: none !important;
+
+        &.invalid {
+            border-color: var(--kt-danger) !important;
+        }
+    }
+
+    &__value-container {
+        padding: 0.775rem 1rem !important;
+    }
+
+    &__input-container {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    &__single-value {
+        color: inherit !important;
+    }
+
+    &__multi-value__label {
+        color: inherit !important;
+    }
+
+    &__menu {
+        background-color: var(--kt-card-bg) !important;
+        color: var(--kt-input-solid-color);
+    }
+
+    &__indicator-separator {
+        display: none;
+    }
+}
+
+//модуль Form 
+.moduleForm {
+
+    &_container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+    }
+
+    &_area {
+        padding: 0 0.5rem;
+
+        &:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+
+    }
+
+    &_block {
+        &:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+
+        &.disabled {
+            display: none;
+        }
+    }
+
+    &_block_fields {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+    }
+
+    &_field {
+        --bs-gutter-x: 1.5rem;
+        --bs-gutter-y: 0;
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: calc(-1 * var(--bs-gutter-y));
+        padding: 0 0.5rem;
+
+        &:not(:last-child) {
+            margin-bottom: 0.5rem;
+        }
+
+        &.marginless {
+            margin-bottom: 0;
+        }
+
+        &_labelContainer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        &_label {
+            font-size: 1.05rem;
+            font-weight: 500;
+            line-height: 1.5;
+            color: var(--kt-form-label-color);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        &_container {
+            display: flex;
+            align-items: center;
+        }
+
+        &_component {
+            flex-grow: 1;
+            max-width: 100%;
+        }
+
+        &_button {
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+
+        &_description {
+            width: 100%;
+            min-height: 20px;
+            margin-top: 0.25rem;
+            font-weight: 700;
+            color: var(--kt-text-muted);
+        }
+
+        &.disabled {
+            display: none;
+        }
+    }
+
+}
+
+//модуль Info 
+.moduleInfo {
+    &_block {
+        margin-bottom: 10px;
+    }
+
+    &_area {
+        padding: 0 calc(var(--bs-gutter-x) * 0.5);
+        margin-bottom: 10px;
+    }
+
+    &_fields {
+        display: flex;
+        margin-top: 10px;
+        flex-wrap: wrap;
+    }
+
+    &_field {
+        display: flex;
+        flex-wrap: wrap;
+
+        &:not(:last-child) {
+            margin-bottom: 1.5rem;
+        }
+
+        &_label {
+            width: 100%;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.5;
+            color: var(--kt-text-muted);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+}
+
+//модуль Widgets 
+.moduleWidgets {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 173px;
+
+    & .componentFilters_dropdownContainer {
+        padding: 0 0.5rem;
+    }
+
+    &_toolbar {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    &_updateTime {
+        font-weight: 600;
+    }
+
+    &_widgetContainer {
+        padding: 0 0.5rem;
+        margin-bottom: 1.25rem;
+    }
+
+
+    &_widgetContent.card-header {
+        padding: 1.25rem 2.25rem;
+    }
+
+    &_widgetValueContainer {
+        display: flex;
+        align-items: center;
+        max-width: 100%;
+    }
+
+    &_widgetValuePrefix {
+        color: var(--kt-text-gray-400);
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin-right: 0.25rem;
+        align-self: flex-start;
+    }
+
+    &_widgetValue {
+        color: var(--kt-text-dark);
+        font-size: calc(1.375rem + 1.5vw);
+        font-weight: 600;
+        margin-right: 0.5rem;
+        line-height: 1;
+        letter-spacing: -0.115rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &_widgetDescription {
+        color: var(--kt-text-gray-400);
+        font-size: 1.075rem;
+        font-weight: 500;
+        padding-top: 0.25rem;
+    }
+
+    &_charModule {
+        height: 250px;
+        border-bottom-left-radius: 0.625rem;
+        border-bottom-right-radius: 0.625rem;
+    }
+
+    &_donutModule {
+        overflow-x: hidden;
+
+        & path {
+            stroke: var(--kt-card-bg);
+        }
+
+        & .apexcharts-legend-series {
+            color: var(--kt-text-dark);
+        }
+    }
+    
+    &_hardReportContainer {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &_infoCard {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: 150px;
+        background-color: var(--kt-card-bg);
+        border-radius: 0.625rem;
+        padding: 1rem;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--kt-text-muted);
+    }
+}
+
+//модуль в разработке
+.moduleInCreation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 300px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 0.425rem;
+
+    & .moduleInCreation_image {
+        & svg {
+            width: 100px !important;
+            height: 100px !important;
+        }
+    }
+
+    &_description {
+        margin-top: 10px;
+        font-weight: 600;
+        color: var(--kt-text-dark);
+    }
+}
+
+//модуль Roles
+.moduleRoles {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 300px;
+
+    &_cardContainer {
+        padding: 0 calc(var(--bs-gutter-x) * 0.5);
+        margin-bottom: 10px;
+    }
+
+    &_card {
+        height: 100%;
+    }
+
+    &_field {
+        margin-bottom: 2.5rem;
+    }
+
+    &_field_label {
+        max-width: 100%;
+        margin-bottom: 0.5rem;
+        font-size: 1.25rem;
+        font-weight: 600;
+        line-height: 1.5;
+        color: var(--kt-form-label-color);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &_buttonsContainer {
+        display: flex;
+        margin-top: 3.75rem;
+        justify-content: center;
+
+        & .componentButton:first-child {
+            margin-right: 10px;
+        }
+    }
+
+    &_permission {
+        width: 25%;
+        margin-bottom: 5px;
+        overflow-x: hidden;
+    }
+}
+
+//модуль Schedule 
+/*  
+    70px - высота шапки
+    30px * 2 - поля контейнера
+    51px - фильтр + нижний отступ фильтра
+    10px - общий нижний отступ для модулей
+*/
+$moduleScheduleHeight: calc(100vh - var(--kt-app-header-height) - 30px * 2 - 61px - 10px);
+$moduleScheduleButtonsHeight: 28px;
+$moduleScheduleStepsColumnWidth: 65px;
+$moduleScheduleCellHeight: 3.15rem;
+$moduleScheduleBorderColor: var(--kt-gray-300);
+
+@mixin moduleSchedule_cellColor($color, $percent) {
+    border-color: $color;
+    background-color: lighten($color, $percent);
+    color: $color;
+
+    &::after {
+        background-color: $color;
+    }
+}
+
+.moduleSchedule {
+    position: relative;
+    border-radius: 0.625rem;
+
+    &.loading {
+        opacity: 0.5;
+    }
+
+    &_scrollButtons {
+        position: absolute;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        z-index: 99;
+    }
+
+    &_scrollButtonContainer {
+        padding: 5px 5px 3px;
+        background-color: var(--kt-card-bg);
+    }
+
+    &_scrollButton {
+        height: $moduleScheduleCellHeight - 1rem;
+        padding: 0 1.25rem;
+        font-size: 1rem;
+        border: 0;
+        background-color: var(--kt-primary-light);
+        color: var(--kt-primary);
+        width: $moduleScheduleStepsColumnWidth - 10px;
+        border-radius: 0.625rem;
+        transition: background-color 0.3s;
+
+        & .svg-icon {
+            color: inherit;
+        }
+
+        & svg g,
+        svg g [fill] {
+            fill: currentColor;
+        }
+
+        &:hover {
+            color: var(--kt-primary-inverse);
+            background-color: var(--kt-primary);
+        }
+
+    }
+
+    &_table {
+        overflow: auto;
+        height: $moduleScheduleHeight;
+        padding: 0 3px 3px 0;
+    }
+
+    &_columns {
+        display: inline-flex;
+    }
+
+    &_steps {
+        position: sticky;
+        left: 0;
+        width: $moduleScheduleStepsColumnWidth;
+        flex-shrink: 0;
+        margin-top: calc($moduleScheduleCellHeight - 0.25rem - 1px);
+        display: flex;
+        flex-direction: column;
+        z-index: 98;
+        background-color: var(--kt-card-bg);
+    }
+
+    &_stepsCell {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0.25rem 0;
+        height: $moduleScheduleCellHeight;
+        width: 100%;
+    }
+
+    &_stepsDropdown {
+        width: 100%;
+        position: sticky;
+        top: calc($moduleScheduleCellHeight - 0.3rem - 1px);
+
+        & #moduleSchedule_stepsButton {
+            background-color: transparent;
+            padding: 0;
+            color: var(--kt-primary);
+            height: calc($moduleScheduleCellHeight + 1px);
+            font-size: 1rem;
+            width: 100%;
+            border-radius: 0;
+            border-bottom: 1px solid $moduleScheduleBorderColor;
+            border-top: 1px solid $moduleScheduleBorderColor;
+            background-color: var(--kt-primary-light
+                    /* --kt-gray-200 */
+                ) !important;
+            transition: background-color 0.5s;
+
+            &:hover {
+                color: var(--kt-primary-inverse);
+                background-color: var(--kt-primary
+                        /* --kt-card-bg */
+                    ) !important;
+            }
+
+            &::after {
+                color: inherit;
+                transform: translateY(50%);
+            }
+        }
+    }
+
+    &_filterStep {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &.selected {
+            background-color: var(--kt-gray-200);
+        }
+    }
+
+    &_dateColumnHeader {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem;
+        margin: 0 0.25rem;
+        height: $moduleScheduleCellHeight - 0.25rem;
+        font-size: 1rem;
+        font-weight: 500;
+        border-left: 1px solid $moduleScheduleBorderColor;
+        border-right: 1px solid $moduleScheduleBorderColor;
+        border-bottom: 1px solid $moduleScheduleBorderColor;
+        position: sticky;
+        top: 0;
+        z-index: 97;
+        background-color: var(--kt-card-bg);
+        white-space: nowrap;
+    }
+
+    &_dateColumnContent {
+        position: sticky;
+        left: calc(65px + 0.75rem);
+    }
+
+    &_dateColumnBody {
+        display: flex;
+    }
+
+    &_employeeColumn {
+        width: 195px;
+        margin: 0 0.25rem;
+    }
+
+    &_employeeColumnHeader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5rem;
+        height: $moduleScheduleCellHeight;
+        font-size: 1rem;
+        font-weight: 500;
+        border: 1px solid $moduleScheduleBorderColor;
+        border-top: 0;
+        position: sticky;
+        top: $moduleScheduleCellHeight - 0.25rem;
+        z-index: 97;
+        color: var(--kt-primary
+                /* --bs-body-color */
+            );
+        background-color: var(--kt-primary-light
+                /* --kt-gray-200 */
+            );
+        transition: background-color 0.5s;
+        user-select: none;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--kt-primary-inverse);
+            background-color: var(--kt-primary
+                    /* --kt-card-bg */
+                );
+        }
+    }
+
+    &_employeeColumnTitle {
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &_cellContainer {
+        padding: 0.25rem 0;
+    }
+
+    &_cell {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: $moduleScheduleCellHeight;
+        width: 100%;
+        font-size: 1rem;
+        font-weight: 500;
+        border: 1px solid $moduleScheduleBorderColor;
+        border-radius: 0.425rem;
+        background-color: var(--kt-gray-200);
+        transition: background-color 0.5s;
+        user-select: none;
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--kt-card-bg);
+        }
+
+        &.disabled {
+            cursor: unset;
+            opacity: 0.4;
+
+            &:hover {
+                background-color: var(--kt-gray-200);
+            }
+        }
+
+        &.available {
+            &::before {
+                content: "";
+                display: block;
+                height: 2px;
+                width: 10px;
+                background-color: var(--kt-gray-400);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            &::after {
+                content: "";
+                display: block;
+                height: 10px;
+                width: 2px;
+                background-color: var(--kt-gray-400);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+
+            }
+        }
+
+        &.busy {
+            background-color: lighten(#E4E6EF, 35%);
+            padding-left: 6px;
+
+            color: var(--kt-gray-300);
+
+            &::after {
+                position: absolute;
+                left: 0;
+                top: 0;
+                content: "";
+                width: 6px;
+                height: 100%;
+                background-color: var(--kt-gray-300);
+            }
+
+            &.light_blue {
+                @include moduleSchedule_cellColor(deepskyblue, 35%)
+            }
+
+            &.blue {
+                @include moduleSchedule_cellColor(#009ef7, 25%)
+            }
+
+            &.yellow {
+                @include moduleSchedule_cellColor(yellow, 40%)
+            }
+
+            &.orange {
+                @include moduleSchedule_cellColor(orange, 35%)
+            }
+
+            &.green {
+                @include moduleSchedule_cellColor(#50cd89, 25%)
+            }
+
+            &.pink {
+                @include moduleSchedule_cellColor(pink, 10%)
+            }
+
+            &.red {
+                @include moduleSchedule_cellColor(#f1416c, 25%)
+            }
+
+            &.purple {
+                @include moduleSchedule_cellColor(#7239ea, 25%)
+            }
+        }
+
+    }
+
+    &_cellContentContainer {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow-y: auto;
+
+        &.minimize {
+            & .moduleSchedule_cellValue {
+                white-space: nowrap;
+                overflow-x: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+
+    &_cellWrapper {
+        & .moduleSchedule_cellValue {
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: center;
+        }
+    }
+
+    &_cellOverlay {
+        & .moduleSchedule_cellContentContainer {
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 10px;
+            align-items: stretch;
+            justify-content: unset;
+
+            & .svg-icon {
+                margin-right: 5px;
+                color: inherit;
+
+                & svg g,
+                svg g [fill] {
+                    fill: currentColor;
+                }
+            }
+        }
+    }
+
+    &_cellContent {
+        max-width: 100%;
+
+        &:not(:last-child) {
+            margin-bottom: 1px;
+            display: flex;
+        }
+    }
+
+    &_cellValue {
+        color: #181C32;
+    }
+
+    & .overlay {
+        &:hover {
+            & .overlay-layer {
+                align-items: flex-start;
+                z-index: 1;
+
+                & .moduleSchedule_cell {
+                    transition: height 0.3s ease;
+                    min-height: 100%;
+                    height: 3.15 * 3 + 0.5 * 2rem !important;
+                }
+            }
+
+        }
+    }
+
+    &_cellIcons {
+        position: absolute;
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: nowrap;
+        width: 100%;
+        bottom: 5px;
+        right: 5px;
+        overflow: hidden;
+    }
+
+    &_cellIcon {
+        color: #181C32;
+
+        &:not(:last-child) {
+            margin-right: 3px;
+        }
+
+        & svg {
+            fill: currentColor;
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+}
+
+//модуль Schemes 
+.moduleSchemes {
+
+    &_searchContainer {
+        margin-bottom: 1rem;
+    }
+
+    &_schemeList {
+        flex-grow: 1;
+        list-style-type: none;
+        padding-left: 0;
+        padding-right: 10px;
+        overflow-y: auto;
+
+        &_container {
+            flex: 0 0 auto;
+            width: 25%;
+            padding-right: 10px;
+
+            & form {
+                display: flex;
+                flex-direction: column;
+                height: calc(100vh - var(--kt-app-header-height) - 30px * 2 - (2rem + 2.25rem) - 52px);
+            }
+        }
+
+        &_item {
+            margin-bottom: 5px;
+            transition: background-color 0.3s;
+            padding: 5px;
+            border-radius: 0.425rem;
+            user-select: none;
+            cursor: pointer;
+
+            &.selected {
+                background-color: var(--kt-primary-active);
+                color: var(--kt-primary-inverse);
+            }
+        }
+    }
+
+    &_content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 0 0 auto;
+        width: 75%;
+        padding-left: 10px;
+    }
+
+    &_form {
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - var(--kt-app-header-height) - 30px * 2 - (2rem + 2.25rem) - 52px);
+
+        &_container {
+            width: 100%;
+            height: 100%;
+        }
+
+    }
+
+    &_fieldsSection {
+        width: 100%;
+        margin-bottom: 10px;
+
+        &.propertiesSection {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+    }
+
+    &_fieldsSectionTitle {
+        margin-bottom: 15px;
+    }
+
+    &_fieldsRow {
+        display: flex;
+        width: 100%;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+    }
+
+    &_field {
+        padding: 0 5px;
+
+        &_label {
+            width: 100%;
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+            font-weight: 500;
+            line-height: 1.5;
+            color: var(--kt-form-label-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    &_buttonsContainer {
+        display: flex;
+
+        & .componentButton:not(:last-child) {
+            margin-right: 10px;
+        }
+    }
+
+    &_propertyControls {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &>*:not(:last-child) {
+            margin-bottom: 5px;
+        }
+    }
+
+    &_propertySwapButton {
+        & .svg-icon svg {
+            transform: rotate(90deg);
+        }
+
+        &.down .svg-icon svg {
+            transform: rotate(-90deg);
+        }
+    }
+
+    &_propertyCheckbox {
+        margin-right: 0;
+    }
+
+    &_pageTab {
+        position: relative;
+        border: 2px dashed var(--kt-card-border-color);
+        border-radius: 0.625rem;
+        padding: 10px;
+        margin-bottom: 30px;
+    }
+
+    &_pageTabButton {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+
+        & .svg-icon svg {
+            transform: rotate(90deg);
+        }
+
+        &.down {
+            top: unset;
+            bottom: 10px;
+
+            & .svg-icon svg {
+                transform: rotate(-90deg);
+            }
+        }
+    }
+
+    &_actionsCell {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &_actionsCellHead {
+        width: 100px;
+    }
+
+}
+
+//модуль Chat
+.moduleChat {
+    display: flex;
+    height: calc(100vh - 70px - 30px * 2);
+
+    &_chats {
+        width: 30%;
+        min-width: 320px;
+        padding: 0 0.75rem;
+        height: inherit;
+
+        & .card-body {
+            display: flex;
+            flex-direction: column;
+
+            &.card-empty {
+                justify-content: center;
+            }
+        }
+    }
+
+    &_messages {
+        width: 70%;
+        padding: 0 0.75rem;
+        height: inherit;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        & .card-body {
+            display: flex;
+            flex-direction: column;
+
+            &.card-empty {
+                justify-content: center;
+            }
+        }
+
+        & .moduleChat_messagesGoBackButton {
+            display: none;
+        }
+
+        & .moduleChat_messagesGoBackButton,
+        & .moduleChat_messagesSubmitButton {
+            border-radius: 0.475rem;
+        }
+    }
+
+    &_messagesTitle.card-header {
+        height: 105px;
+        font-size: 1.15rem;
+        font-weight: 700;
+        overflow-y: auto;
+
+        & .card-title {
+            font-size: inherit;
+            font-weight: inherit;
+            margin: 0;
+        }
+    }
+
+    &_messagesContainer {
+        overflow-y: auto;
+    }
+
+    &_messagesForm {
+
+        & form {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+    }
+
+    &_messagesTextarea {
+        flex-grow: 1;
+        padding-top: 15px;
+        background-color: var(--kt-card-bg);
+        border-radius: calc(0.625rem - 1px);
+        margin-bottom: 0.75rem;
+
+    }
+
+    &_messagesButtonsContainer {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    &_messageContainer {
+        display: flex;
+        flex-direction: column;
+
+        &:not(:last-child) {
+            margin-bottom: 2.5rem;
+        }
+
+        &.author {
+            align-items: flex-end;
+
+            & .moduleChat_messageProperties {
+                flex-direction: row-reverse;
+            }
+
+            & .moduleChat_messageDescription {
+                margin-left: 0;
+                margin-right: 0.75rem;
+                flex-direction: row-reverse;
+            }
+
+            & .moduleChat_messageAuthor {
+                margin-left: 0.25rem;
+                margin-right: 0;
+            }
+
+            & .moduleChat_messageContent {
+                background-color: var(--kt-primary-light);
+            }
+        }
+    }
+
+    &_messageProperties {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+
+    &_messagePhoto {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+    }
+
+    &_messageDescription {
+        display: flex;
+        align-items: baseline;
+        margin-left: 0.75rem;
+    }
+
+    &_messageAuthor {
+        color: var(--kt-text-gray-900);
+        font-weight: 600;
+        font-size: 1.15rem;
+        margin-right: 0.25rem;
+    }
+
+    &_messageDate {
+        color: var(--kt-text-muted);
+        font-size: 0.95rem;
+    }
+
+    &_messageContent {
+        padding: 1.25rem;
+        border-radius: 0.475rem;
+        max-width: 400px;
+        background-color: var(--kt-info-light);
+    }
+
+
+
+    & .card {
+        height: inherit;
+
+        &-body {
+            flex-grow: 1;
+            padding: 0.5rem 1.25rem 2rem;
+        }
+
+        &-header {
+            padding: 0 1.25rem;
+        }
+
+        &-footer {
+            padding: 0.5rem 1.25rem 2rem;
+        }
+    }
+
+    &_chatGroups {
+        display: flex;
+        align-items: flex-end;
+        max-width: 100%;
+        overflow-x: auto;
+
+        &::-webkit-scrollbar {
+
+            display: none;
+        }
+
+        & ul {
+            display: flex;
+            padding: 0;
+            list-style-type: none;
+            margin: 0;
+        }
+    }
+
+    &_chatGroup {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem;
+        border-radius: calc(0.625rem - 1px) calc(0.625rem - 1px) 0 0;
+        transition: color 0.3s, background-color 0.3s;
+        border-bottom: 2px solid transparent;
+        cursor: pointer;
+
+        &.selected {
+            font-weight: 600;
+            color: var(--kt-primary);
+            border-bottom-color: var(--kt-primary);
+        }
+
+        &:hover {
+            background-color: var(--kt-app-bg-color);
+        }
+    }
+
+    &_chatGroupContent {
+        flex-grow: 1;
+        margin-right: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &_chatGroupButton {
+        border: none;
+        background-color: transparent;
+        width: 40px;
+
+        & svg g,
+        svg g [fill] {
+            fill: currentColor;
+        }
+    }
+
+    &_chatsList {
+        padding: 0;
+        list-style-type: none;
+        overflow-y: auto;
+        flex-grow: 1;
+
+        & li {
+            &:not(:last-child) {
+                margin-bottom: 10px;
+            }
+        }
+    }
+
+    &_chat {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        color: inherit;
+        transition: color 0.3s;
+        cursor: pointer;
+        border-radius: calc(0.625rem - 1px);
+        padding: 1rem 0.75rem;
+
+        &.selected {
+            background-color: var(--kt-primary);
+            color: var(--kt-primary-inverse);
+
+            & .badge.badge-primary {
+                background-color: var(--kt-primary-inverse);
+                color: var(--kt-primary);
+            }
+
+            &:hover {
+                color: var(--kt-primary-inverse);
+                ;
+            }
+        }
+
+        &:hover {
+            color: var(--kt-primary);
+        }
+    }
+
+    &_chatContent {
+        font-size: 1.05rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-right: 5px;
+    }
+
+    &_emptyList {
+        text-align: center;
+        font-weight: 700;
+        font-size: 24px;
+        color: var(--kt-gray-400);
+        margin-bottom: 10px;
+    }
+
+    &_modal {
+        & form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        & .moduleChat_modalButton {
+            align-self: flex-end;
+            border-radius: 0.475rem;
+        }
+    }
+
+    &_modalField {
+        &:not(:last-child) {
+            margin-bottom: 0.75rem;
+        }
+    }
+
+    &_modalFieldLabel {
+        max-width: 100%;
+        margin-bottom: 0.5rem;
+        font-size: 1.25rem;
+        font-weight: 600;
+        line-height: 1.5;
+        color: var(--kt-form-label-color);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+}
+
+//модуль MiniChat
+.moduleMiniChat {
+    &_messagesContainer {
+        height: 400px;
+        overflow: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &_emptyContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        font-weight: 700;
+        font-size: 24px;
+        color: var(--kt-gray-400);
+    }
+
+    &_messageContainer {
+        display: flex;
+        flex-direction: column;
+
+        &:not(:last-child) {
+            margin-bottom: 2.5rem;
+        }
+
+        &.author {
+            align-items: flex-end;
+
+            & .moduleMiniChat_messageProperties {
+                flex-direction: row-reverse;
+            }
+
+            & .moduleMiniChat_messageDescription {
+                margin-left: 0;
+                margin-right: 0.75rem;
+                flex-direction: row-reverse;
+            }
+
+            & .moduleMiniChat_messageAuthor {
+                margin-left: 0.25rem;
+                margin-right: 0;
+            }
+
+            & .moduleMiniChat_messageContent {
+                background-color: var(--kt-primary-light);
+            }
+        }
+    }
+
+    &_messageProperties {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+
+    &_messagePhoto {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+    }
+
+    &_messageDescription {
+        display: flex;
+        align-items: baseline;
+        margin-left: 0.75rem;
+    }
+
+    &_messageAuthor {
+        color: var(--kt-text-gray-900);
+        font-weight: 600;
+        font-size: 1.15rem;
+        margin-right: 0.25rem;
+    }
+
+    &_messageDate {
+        color: var(--kt-text-muted);
+        font-size: 0.95rem;
+    }
+
+    &_messageContent {
+        padding: 1.25rem;
+        border-radius: 0.475rem;
+        max-width: 400px;
+        background-color: var(--kt-info-light);
+    }
+
+    &_messagesTextarea {
+        flex-grow: 1;
+        padding-top: 15px;
+        background-color: var(--kt-card-bg);
+        border-radius: calc(0.625rem - 1px);
+        margin-bottom: 0.75rem;
+
+    }
+
+    &_messagesButtonsContainer {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+}
+
+//модуль Calendar
+.moduleCalendar {
+    &_container {
+        padding: 2rem 2.25rem;
+        border-radius: 0.625rem;
+        background-color: var(--kt-card-bg);
+    }
+
+    & .rbc-toolbar {
+        justify-content: unset;
+    }
+
+    & .rbc-btn-group button {
+        color: var(--kt-primary);
+        background-color: var(--kt-primary-light);
+        font-size: 13px;
+        border: 0;
+        padding: 0.75rem 1.25rem;
+        transition: all 0.3s;
+
+        &:hover,
+        &.rbc-active {
+            color: var(--kt-primary-inverse);
+            background-color: var(--kt-primary);
+            box-shadow: none;
+        }
+    }
+
+    & .rbc-toolbar-label {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--bs-gray-800);
+    }
+
+    & .rbc-event {
+        border-color: var(--kt-primary);
+        background-color: var(--kt-primary);
+        outline: none;
+
+        &.success {
+            border-color: var(--kt-success);
+            background-color: var(--kt-success);
+        }
+
+        &.danger {
+            border-color: var(--kt-danger);
+            background-color: var(--kt-danger);
+        }
+    }
+
+    & .rbc-month-view,
+    & .rbc-time-view,
+    & .rbc-agenda-view {
+        border-radius: 0.475rem;
+        border-color: #f4f4f4;
+        font-size: 1rem;
+    }
+
+    & .rbc-agenda-view table.rbc-agenda-table {
+        border-radius: 0.475rem;
+        border-color: #f4f4f4;
+    }
+
+    & .rbc-time-header-content .rbc-row {
+        min-height: 40px;
+    }
+
+    & .rbc-header {
+        font-size: 1rem;
+        border-color: #f4f4f4;
+        padding: 0.75rem 0.5rem;
+    }
+
+    & .rbc-off-range-bg {
+        background-color: transparent;
+        opacity: 0.3;
+    }
+
+    & .rbc-date-cell.rbc-off-range {
+        opacity: 0.3;
+    }
+
+    & .rbc-today {
+        background-color: rgb(232, 255, 243);
+    }
+
+    & .rbc-month-row+.rbc-month-row,
+    & .rbc-time-header-content,
+    & .rbc-timeslot-group,
+    & .rbc-time-header.rbc-overflowing,
+    & .rbc-time-content,
+    & .rbc-events-container,
+    & .rbc-timeslot-group,
+    & .rbc-time-content>*+*>*,
+    & .rbc-agenda-view table.rbc-agenda-table tbody>tr>td+td,
+    & .rbc-agenda-view table.rbc-agenda-table tbody>tr+tr,
+    & .rbc-day-bg {
+        border-color: #f4f4f4;
+    }
+
+    & .rbc-time-slot {
+        font-size: 0.95rem;
+    }
+
+    &_actionsModalContainer {
+        display: flex;
+        flex-direction: column;
+
+        &>*:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+    }
+}
+
+html[data-theme="dark"] {
+    & .rbc-today {
+        background-color: rgb(28, 50, 56);
+    }
+}
+
+//модуль Documents
+.moduleDocuments {
+    &_form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &_block {
+        margin-bottom: 0.75rem;
+    }
+
+    &_field {
+        margin-bottom: 1.5rem;
+        padding: 0 0.75rem;
+    }
+
+    //убрать по факту разработки собственного компонента
+    &_dropdown {
+        font-size: 0.925rem;
+        font-weight: 600;
+
+        &.btn:not(.btn-outline):not(.btn-dashed):not(.border-hover):not(.border-active):not(.btn-flush):not(.btn-icon) {
+            padding: calc(0.55rem + 1px) calc(1.25rem + 1px);
+        }
+    }
+
+}
+
+//модуль Funnel
+.moduleFunnel {
+    display: flex;
+    flex-wrap: wrap;
+
+    &_column {
+        width: 33%;
+        padding: 0 0.75rem;
+        margin-bottom: 50px;
+
+        &.dragEnter {
+            & .moduleFunnel_columnReport {
+                top: -50px;
+            }
+        }
+    }
+
+    &_columnReport {
+        background-color: var(--kt-primary);
+        position: relative;
+        top: 0;
+        transition: top 0.3s;
+        width: 100%;
+        height: 230px;
+        border-radius: 0.625rem;
+        padding: 1.75rem 2.25rem 0;
+        user-select: none;
+    }
+
+    &_columnReportContent {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--kt-text-white);
+        padding-top: 2rem;
+    }
+
+    &_columnReportTitle {
+        margin: 0;
+        font-size: 1.35rem;
+        font-weight: 600;
+        color: inherit;
+    }
+
+    &_columnReportCounter {
+        padding-top: 0.25rem;
+        font-size: 2rem;
+        font-weight: 600;
+    }
+
+
+    &_columnList {
+        position: relative;
+        height: 400px;
+        overflow: auto;
+        background-color: var(--kt-body-bg);
+        margin: -100px 2.25rem 2.25rem;
+        padding: 2.25rem 1.5rem;
+        box-shadow: var(--kt-box-shadow-xs);
+        border-radius: 0.625rem;
+        z-index: 1;
+    }
+
+    &_item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 1.5rem;
+    }
+
+    &_itemMainProps {
+        width: calc(100% - 0.5rem - 35px);
+    }
+
+    &_itemTitle {
+        white-space: nowrap;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: 600;
+        font-size: 1.15rem;
+        color: var(--kt-text-gray-800);
+        transition: color 0.2s;
+        margin: 0;
+    }
+
+    &_itemTags {
+        &>* {
+            margin: 0 0.5rem 0.5rem 0;
+        }
+    }
+
+    &_modalField {
+        padding: 0 0.75rem;
+        margin-bottom: 10px;
+    }
+}
+
+//модуль Dialog 
+.moduleDialog {
+
+    &_sectionTitle {
+        margin: 0 0.25rem 0.5rem 0;
+        font-size: 1.25rem;
+        font-weight: 700;
+        line-height: 1;
+        color: var(--kt-text-gray-900);
+        transition: color 0.2s ease;
+        user-select: none;
+
+        &:hover {
+            color: var(--kt-primary);
+        }
+    }
+
+    &_body {
+        flex-grow: 1;
+        overflow-x: hidden;
+        overflow-y: auto;
+        position: relative;
+
+        &.card-body {
+            padding: 0;
+        }
+    }
+
+    &_groupsWrapper {
+        min-height: 100%;
+        max-height: 100%;
+        overflow-y: auto;
+        padding: 2rem 2.25rem;
+    }
+
+    &_groupsList,
+    &_chatsList {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+
+        &>*:not(:last-child) {
+            margin-bottom: 3px;
+        }
+    }
+
+    &_groupItem,
+    &_chatItem {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid transparent;
+        border-radius: 0.625rem;
+        padding: 1rem;
+        transition: all 0.3s;
+
+        &:hover {
+            color: var(--kt-primary);
+            border-color: var(--kt-primary);
+            user-select: none;
+            cursor: pointer;
+        }
+
+        &.selected {
+            background-color: var(--kt-primary);
+            color: var(--kt-primary-inverse);
+            border-color: transparent;
+        }
+    }
+
+    &_counter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 20px;
+        width: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        background-color: var(--kt-primary);
+        color: var(--kt-primary-inverse);
+        border-radius: 0.625rem;
+    }
+
+    &_chatsWrapper {
+        position: absolute;
+        background-color: var(--kt-card-bg);
+        min-height: 100%;
+        max-height: 100%;
+        overflow-y: auto;
+        width: 100%;
+        padding: 2rem 2.25rem;
+        top: 0;
+        left: 100%;
+        transition: left 0.3s;
+
+        &.active {
+            left: 0;
+        }
+    }
+
+    &_messagesWrapper {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--kt-card-bg);
+        min-height: 100%;
+        max-height: 100%;
+        width: 100%;
+        padding: 2rem 2.25rem;
+        top: 0;
+        left: 100%;
+        transition: left 0.3s;
+
+        &.active {
+            left: 0;
+        }
+    }
+
+    &_messagesContainer {
+        flex-grow: 1;
+        overflow-y: auto;
+        margin-bottom: 2rem;
+    }
+
+    &_messagesTextarea {
+        background-color: var(--kt-card-bg);
+        border-radius: calc(0.625rem - 1px);
+        margin-bottom: 0.75rem;
+    }
+
+    &_messagesButtonsContainer {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    &_emptyContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        flex-grow: 1;
+        font-weight: 700;
+        font-size: 24px;
+        color: var(--kt-gray-400);
+        user-select: none;
+    }
+
+    &_returnButton {
+        min-width: 35px;
+        min-height: 35px;
+        margin-right: 10px;
+
+        &.disabled {
+            opacity: 0;
+            pointer-events: none;
+        }
+    }
+}
+
+.messageToast {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid var(--kt-card-border-color);
+    background-color: var(--kt-card-bg);
+    border-radius: 0.625rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+
+    &.show {
+        opacity: 1;
+    }
+
+    &_avatar {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 4rem;
+        flex-shrink: 0;
+    }
+
+    &_content {
+        width: 280px;
+        margin-left: 0.5rem;
+    }
+
+    &_author {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &_message {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 0;
+    }
+
+    &_closeButton {
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        color: var(--kt-text-muted);
+        background-color: transparent;
+        border: none;
+    }
+}
+
+//модуль News
+.moduleNews {
+    max-width: 1320px;
+    padding: 0 30px;
+    margin: 0 auto;
+
+    &_newsCardsContainer {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &_newsCard {
+        display: flex;
+        flex-direction: column;
+        width: 33.3%;
+        padding: 0 1.25rem;
+        margin-bottom: 1.25rem;
+        max-height: 360px;
+    }
+
+    &_newsCardOverlay {
+        margin-bottom: 1.25rem;
+
+        & .overlay-layer {
+            border-radius: 0.625rem;
+        }
+    }
+
+    &_newsCardImage {
+        width: 100%;
+        height: 175px;
+        object-fit: cover;
+        border-radius: 0.625rem;
+    }
+
+    &_newsCardTitle {
+        color: var(--kt-text-dark);
+        font-weight: 600;
+        line-height: 1.5;
+        user-select: none;
+        transition: color 0.3s;
+        cursor: pointer;
+        user-select: none;
+
+        &:hover {
+            color: var(--kt-primary);
+        }
+    }
+
+    &_newsCardBody {
+        color: var(--kt-text-gray-600);
+        font-weight: 500;
+        font-size: 1.15rem;
+        margin: 1rem 0;
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+
+    &_newsModalImage {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 0.625rem;
+        margin-bottom: 1.25rem;
+    }
+
+    &_newsModalBody {
+        color: var(--kt-text-gray-600);
+        font-weight: 500;
+        font-size: 1.15rem;
+        margin: 1rem 0;
+    }
+
+    &_emptyNewsContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 400px;
+        width: 100%;
+    }
+
+    &_emptyNewsImage {
+        margin-bottom: 1rem;
+
+        & svg {
+            height: 75px;
+            width: 75px;
+        }
+    }
+
+    &_emptyNewsDescription {
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--kt-text-muted);
+    }
+}
+
+//модуль Logs
+.moduleLogs {
+    &_logsList {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    &_log {
+        position: relative;
+        display: flex;
+    }
+
+    &_logTimeline {
+        width: 40px;
+        position: absolute;
+        z-index: 0;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        transform: translate(50%);
+        border-left: 1px dashed var(--kt-gray-300);
+        z-index: 1;
+    }
+
+    &_logIcon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+        width: 40px;
+        border-radius: 4rem;
+        background-color: var(--kt-light);
+        margin-right: 1rem;
+        z-index: 2;
+        flex-shrink: 0;
+
+        & svg {
+            fill: currentColor;
+        }
+    }
+
+    &_logContent {
+        width: 100%;
+        margin-bottom: 2.5rem;
+    }
+
+    &_logBadge {
+        font-size: 0.95rem;
+    }
+
+    &_logDescription {
+        font-size: 1.15rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    &_logProperties {
+        display: flex;
+        align-items: center;
+
+        &>*:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    }
+
+    &_logDate {
+        font-size: 0.85rem;
+        margin-right: 0.5rem;
+        color: var(--kt-text-muted);
+    }
+
+    &_logAuthors {
+        font-size: 0.95rem;
+    }
+
+    &_logAuthor {
+        font-weight: 600;
+        text-decoration: none;
+        color: inherit;
+        transition: color 0.3s;
+
+        &:hover {
+            color: var(--kt-primary);
+        }
+    }
+
+    &_logAuthorIp {
+        font-size: 0.95rem;
+        color: var(--kt-text-muted);
+    }
+
+    &_emptyList {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        font-size: 20px;
+        color: var(--kt-text-muted);
+
+    }
+}
+
+//модуль LinksBlock
+.moduleLinksBlock {
+    margin-bottom: 15px;
+
+    &_title {
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin-bottom: 16px;
+    }
+
+    &_blocksContainer {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &_blockContainer {
+        width: 25%;
+        padding-right: 10px;
+        margin-bottom: 5px;
+    }
+
+    &_block {
+        position: relative;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid var(--kt-card-border-color);
+        border-radius: 0.625rem;
+        background-color: var(--kt-card-bg);
+        padding: 32px 16px;
+        color: var(--kt-gray-500);
+        box-shadow: 0 1px 15px #0000000a, 0 1px 6px #0000000a;
+        cursor: pointer;
+        transition: bottom 0.5s;
+    }
+
+    &_blockIcon {
+        color: var(--kt-gray-700);
+        transition: color 0.3s;
+
+        & svg {
+            fill: currentColor;
+            width: 75px;
+            height: 75px;
+            margin-bottom: 5px;
+        }
+    }
+
+    &_blockTitle {
+        color: inherit;
+        transition: color 0.3s;
+        font-size: 1rem;
+        font-weight: 600;
+        user-select: none;
+    }
+}
+
+//модуль AppEditor 
+.moduleAppEditor {
+
+
+    &_toolbar {
+        background-color: var(--kt-card-bg);
+        border-radius: 0.625rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        min-height: 70px;
+        padding: 0 2.25rem;
+        color: var(--kt-card-cap-color);
+        border-bottom: 1px solid var(--kt-card-border-color);
+        margin-bottom: 1rem;
+    }
+
+    &_schemeSelector {
+        width: 30%;
+        margin-right: 10px;
+    }
+
+    &_buttonsContainer {
+        display: flex;
+
+        & *:not(:last-child) {
+            margin-right: 10px;
+        }
+    }
+
+    &_schemeContainer {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &_schemeArea {
+        display: flex;
+        flex-direction: column;
+        padding: 0.75rem;
+        border: 3px dashed transparent;
+        border-radius: 0.625rem;
+        min-height: 250px;
+        transition: border-color 0.3s;
+
+        &.blockOverArea {
+            border-color: var(--kt-danger);
+        }
+    }
+
+    &_schemeAreaBlocks {
+        flex-grow: 1;
+    }
+
+    &_schemeAreaToolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    &_schemeAreaButtons {
+        display: flex;
+        flex-wrap: wrap;
+
+        & *:not(:last-child) {
+            margin-right: 10px;
+        }
+    }
+
+    &_schemeAreaSizeContainer {
+        background-color: var(--kt-card-bg);
+        border-radius: 0.625rem;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+
+        & label {
+            white-space: nowrap;
+            margin-right: 5px;
+        }
+    }
+
+    &_schemeBlock {
+        padding-top: 0;
+        margin-bottom: 10px;
+        transition: padding-top 0.3s ease;
+
+        &.fieldOverBlock {
+            & .moduleAppEditor_schemeBlockButtons {
+                margin-top: 62px;
+            }
+        }
+
+        &.blockOverBlock {
+            padding-top: 160px;
+        }
+    }
+
+    &_schemeBlockCard {
+        padding: 2rem 2.25rem;
+        border-radius: 0.625rem;
+        background-color: var(--kt-card-bg);
+    }
+
+    &_schemeBlockButtons {
+        margin-top: 0;
+        display: flex;
+        transition: margin-top 0.3s ease;
+
+        & *:not(:last-child) {
+            margin-right: 10px;
+        }
+    }
+
+    &_schemeField {
+        display: flex;
+        flex-wrap: wrap;
+        padding-top: 0;
+        margin-bottom: 1rem;
+        transition: padding-top 0.3s ease;
+
+        &.overField {
+            padding-top: 62px;
+        }
+    }
+
+    &_schemeFieldLabel {
+        color: var(--kt-form-label-color);
+        font-size: 1.05rem;
+        font-weight: 500;
+        line-height: 1.5;
+        margin-bottom: 0.5rem;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &_schemeFieldValue {
+        background-color: var(--kt-input-solid-bg);
+        border: 1px solid var(--kt-input-border-color);
+        border-radius: 0.475rem;
+        flex-grow: 1;
+        margin-right: 10px;
+    }
+
+    &_appendAreaButtonContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        min-height: 250px;
+    }
+}
+
+//модуль Accordion 
+.moduleAccordion {
+    &_item.card {
+        &:not(:first-child) {
+            & .moduleAccordion_itemTitle.card-header:not(.active) {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+        }
+
+        &:last-child {
+            & .moduleAccordion_itemTitle.card-header:not(.active) {
+                border-bottom-left-radius: calc(0.625rem - 1px);
+                border-bottom-right-radius: calc(0.625rem - 1px);
+            }
+        }
+    }
+
+    &_itemHeader.card-header {
+        align-items: center;
+        flex-wrap: nowrap;
+        border: 1px solid var(--kt-card-border-color);
+        transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+        cursor: pointer;
+        min-height: unset;
+        padding: 1rem 2.25rem;
+
+        &:hover {
+            border-color: var(--kt-primary);
+            color: var(--kt-primary);
+        }
+
+        & .moduleAccordion_itemTitle.card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: inherit;
+            margin: 0;
+        }
+
+        &.active {
+            background-color: var(--kt-primary);
+            border-color: var(--kt-primary);
+            color: #fff;
+
+            &~.accordion-collapse {
+                & .moduleAccordion_itemBody.card-body {
+                    border-color: var(--kt-primary);
+                }
+            }
+        }
+    }
+
+    &_itemTitle.card-title {
+        font-size: 1rem;
+        font-weight: 600;
+        flex-grow: 1;
+    }
+
+    &_itemButtons {
+        display: flex;
+        justify-content: space-between;
+
+        &>*:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    }
+
+    &_itemBody.card-body {
+        overflow: auto;
+        border: 1px solid var(--kt-card-border-color);
+    }
+}
+
+//модуль DayPlanning 
+.moduleDayPlanning {
+    &_rowsContainer {
+        min-height: 70px;
+        opacity: 1;
+        transition: opacity 0.5s;
+
+        &.loading {
+            opacity: 0.5;
+            pointer-events: none;
+            user-select: none;
+        }
+    }
+
+    &_row {
+        display: flex;
+        align-items: center;
+
+        &:not(:last-child) {
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    &_rowBullet {
+        display: flex;
+        min-height: 70px;
+        max-height: 100%;
+        margin-right: 1rem;
+    }
+
+    &_rowBody {
+        flex-grow: 1;
+    }
+
+    &_rowTime {
+        font-size: 1.275rem;
+        font-weight: 500;
+        color: var(--kt-text-gray-800);
+    }
+
+    &_rowContent {
+        font-size: 1.075rem;
+        font-weight: 500;
+        color: var(--kt-text-gray-700);
+    }
+
+    &_rowLinks {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--kt-text-gray-400);
+    }
+
+    &_rowLink {
+        &:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    }
+
+    &_rowButtons {
+        display: flex;
+        align-items: center;
+
+        &>*:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    }
+
+    &_datesContainer {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+    }
+
+    &_date {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 50rem;
+        padding: 1rem 0.75rem;
+        transition: color 0.3s, background-color 0.3s;
+        user-select: none;
+        cursor: pointer;
+
+        &:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+
+        &.active,
+        &:hover {
+            background-color: var(--application-theme-color);
+            color: var(--kt-danger-inverse);
+
+            &>* {
+                color: inherit;
+            }
+        }
+    }
+
+    &_dateWeekDay {
+        font-size: 0.95rem;
+        color: var(--kt-text-muted);
+    }
+
+    &_dateMonthDay {
+        font-size: 1.075rem;
+        font-weight: 600;
+    }
+
+    &_emptyList {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        min-height: inherit;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--kt-text-muted);
+        user-select: none;
+    }
+}
+
+//модуль Tabs
+.moduleTabs {
+    &_tabCounter {
+        margin-left: 0.5rem;
+    }
+}
+
+
+//модуль YandexMap
+.moduleYandexMap {
+    & .ymaps-2-1-79-map-copyrights-promo {
+        display: none;
+    }
+
+    ;
+
+    & .ymaps-2-1-79-copyright {
+        display: none;
+    }
+}
+
+//модуль Queue
+/*  
+    70px - высота шапки
+    30px * 2 - поля контейнера
+    51px - кнопка полного экрана
+    10px - общий нижний отступ для модулей
+*/
+$moduleQueueHeight: calc(100vh - var(--kt-app-header-height) - 30px * 2 - 51px - 10px);
+
+.moduleQueue {
+
+    @keyframes textBlink {
+        0% {
+            color: transparent;
+        }
+
+        100% {
+            color: inherit;
+        }
+    }
+
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.625rem;
+    background-color: var(--kt-app-bg-color);
+    padding: 0 1rem;
+    min-height: $moduleQueueHeight;
+
+    &_fullscreenButton {
+        margin-bottom: 1rem;
+    }
+
+    &::backdrop {
+        background-color: inherit;
+    }
+
+    &_header {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        color: var(--application-theme-color);
+    }
+
+    &_filters {
+        flex-grow: 1;
+        display: flex;
+
+        &>*:not(:last-child) {
+            margin-right: 1rem;
+        }
+    }
+
+    &_filter {
+        &.componentSelect__control {
+            color: inherit;
+            background-color: transparent !important;
+            border: none !important;
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+    }
+
+    &_dateContainer {
+        display: flex;
+        align-items: center;
+    }
+
+    &_time {
+        font-size: 2.5rem;
+        margin-right: 1rem;
+        font-weight: 500;
+    }
+
+    &_date {
+        flex-shrink: 0;
+        font-size: 1.25rem;
+    }
+
+    &_talonsList {
+        position: relative;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: inherit;
+        font-size: 6rem;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    &_talonsHeader {
+        height: 70px;
+        background-color: var(--application-theme-color);
+        color: #fff;
+        font-size: 3rem;
+        border-radius: 0.625rem;
+    }
+
+    &_talonsHeader,
+    &_talonRow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &>* {
+            flex-shrink: 0;
+        }
+    }
+
+    &_talonRow {
+        :not(:last-child) {
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    &_talon,
+    &_cabinet {
+        width: 20%;
+        white-space: nowrap;
+    }
+
+    &_direction {
+        width: 10%;
+    }
+
+    &_detail {
+        width: 50%;
+    }
+
+    &_detail {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        font-weight: 500;
+        line-height: 1.25;
+
+        &.hide {
+            color: transparent;
+        }
+    }
+
+    &_announce {
+        display: none;
+        position: absolute;
+        top: 70px;
+        right: 0;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: inherit;
+        width: 50%;
+        height: calc(100% - 70px);
+        color: var(--application-theme-color);
+
+        &.active {
+            display: flex;
+
+            & .moduleQueue_announceText {
+                animation: textBlink 1s infinite alternate;
+            }
+        }
+    }
+
+    &_notice {
+        color: var(--kt-text-muted);
+        font-size: 4rem;
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+}
+
+//модуль DomRu
+.moduleDomRu {
+    @keyframes shake {
+        0% {
+            fill: var(--kt-primary);
+            scale: 1.25;
+            rotate: 30deg
+        }
+
+        10% {
+            fill: var(--kt-primary);
+            scale: 1.25;
+            rotate: 0deg
+        }
+
+        20% {
+            fill: var(--kt-primary);
+            scale: 1.25;
+            rotate: 30deg
+        }
+
+        30% {
+            fill: var(--kt-primary);
+            scale: 1.25;
+            rotate: 0deg
+        }
+
+        40% {
+            fill: var(--kt-primary);
+            scale: 1.25;
+            rotate: 30deg
+        }
+
+        50% {
+            fill: var(--kt-primary);
+            scale: 1;
+            rotate: 0deg
+        }
+    }
+
+    &_button {
+        width: 40px;
+        height: 40px;
+        background-color: transparent;
+        border: none;
+
+        & svg {
+            animation: shake 1.5s infinite;
+        }
+    }
+}
+
+//модуль Developer
+.moduleDeveloper {
+    &_requestsWrapper {
+        display: none;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1040;
+
+        &.show {
+            display: block;
+        }
+    }
+
+    &_requests {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        max-height: 75%;
+        background-color: var(--kt-card-bg);
+        padding: 1rem;
+        transform: translateY(-100%);
+        transition: transform 0.5s;
+        z-index: 1041;
+
+        &.show {
+            transform: translateY(0);
+            box-shadow: var(--bs-card-box-shadow);
+        }
+    }
+
+    &_requestsForm {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &_requestsResponse {
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+
+    &_requestsButtons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-left: 1rem;
+
+        &>*:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+
+//модуль SalaryWidgets
+.moduleSalaryWidgets {
+    height: 55px;
+    width: 155px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    padding: 0.5rem;
+
+    &_progressbarWidget {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        align-items: center;
+
+        & .progress {
+            width: 100%;
+        }
+
+        & .moduleSalaryWidgets_title {
+            margin-bottom: 0.25rem;
+        }
+    }
+
+    &_rangeWidget {
+        max-width: 100%;
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &_title {
+        font-size: 1.15rem;
+        font-weight: 600;
+    }
+
+    &_range {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--kt-primary);
+    }
+
+    &_switchSalaryButton {
+        position: absolute;
+        top: -0.25rem;
+        right: -0.25rem;
+        background-color: transparent;
+        border: none;
+
+        &:hover {
+            & .svg-icon {
+                color: var(--kt-primary);
+            }
+        }
+    }
+}

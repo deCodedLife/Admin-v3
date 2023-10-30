@@ -1,0 +1,143 @@
+
+
+[data-app-theme=theme_1] #kt_app_body {
+    --kt-app-bg-color: #fff;
+    --kt-app-header-height: 80px;
+    --kt-app-sidebar-width: 240px;
+    --kt-app-sidebar-width-actual: 240px;
+    --kt-card-bg: rgba(252, 252, 252);
+    --kt-input-solid-bg:  #f9f9f9;
+    --kt-input-solid-color: #5E6278;
+  
+    & .app-header {
+        box-shadow: none;
+    }
+    & #kt_app_sidebar_toggle {
+        display: none;
+    }
+
+    & #kt_sign_in_submit {
+        --kt-primary: #7E8299;
+        --kt-primary-active: #B5B5C3; 
+        background-color: var(--kt-primary);
+        &:hover {
+            background-color: var(--kt-primary-active);
+            color: var(--kt-primary);
+        }
+    }
+
+    & .app-sidebar {
+        & .app-sidebar-logo {
+            border-bottom: none;
+        }
+
+        & .menu .menu-item {
+            & .menu-link.active {
+                background-color: var(--bs-gray-200);
+                color: var(--bs-gray-900);
+
+                & .menu-icon {
+                    color: inherit;
+                    & .svg-icon {
+                        color: inherit;
+                    }
+                }
+
+                & .menu-title {
+                    color: inherit;
+                }
+
+                & .menu-bullet .bullet {
+                    background-color: currentColor;
+                }
+            }
+        }
+
+    }
+
+    & .card {
+        border: 1px dashed var(--bs-card-border-color);
+        box-shadow: none;
+    }
+
+    & .btn {
+        background-color: var(--bs-gray-200);
+        &:hover {
+            background-color: var(--bs-gray-200) !important;
+        }
+    }
+
+    & .componentButton {
+        --kt-primary: #7E8299;
+        --kt-primary-active: #B5B5C3; 
+        --kt-primary-light: #E4E6EF;
+    }
+
+    & .pagination {
+        --bs-pagination-hover-color: #B5B5C3; 
+        --bs-pagination-active-bg: #7E8299;
+    }
+
+
+    & body::-webkit-scrollbar-thumb,
+    main::-webkit-scrollbar-thumb,
+    span::-webkit-scrollbar-thumb,
+    ol::-webkit-scrollbar-thumb,
+    ul::-webkit-scrollbar-thumb,
+    pre::-webkit-scrollbar-thumb,
+    div::-webkit-scrollbar-thumb,
+    body:hover::-webkit-scrollbar-thumb,
+    main:hover::-webkit-scrollbar-thumb,
+    span:hover::-webkit-scrollbar-thumb,
+    ol:hover::-webkit-scrollbar-thumb,
+    ul:hover::-webkit-scrollbar-thumb,
+    pre:hover::-webkit-scrollbar-thumb,
+    div:hover::-webkit-scrollbar-thumb {
+        --kt-primary: #7E8299;
+    }
+
+    & .moduleSchedule_stepsDropdown {
+        & #moduleSchedule_stepsButton {
+            &:hover {
+                background-color: var(--kt-card-bg) !important;
+            }
+        }
+    }
+
+    .moduleSchedule {
+        &_cellContainer {
+            & .card {
+                border: none;
+            }
+        }
+    }
+
+    & .moduleList {
+        &_actionButton {
+            background-color: var(--kt-gray-300);
+            border: 1px solid transparent;
+            transition: border-color 0.3s, background-color 0.3s;
+    
+            & svg g,
+            svg [fill] {
+                fill: #fff;
+            }
+    
+            &:hover {
+                background-color: var(--kt-light);
+                border-color: var(--kt-primary-active);
+                & svg g,
+                svg [fill] {
+                    fill: var(--kt-primary-active);
+                }
+            }
+
+           
+        }
+    }
+
+    .react-loading-skeleton.skeleton {
+        --base-color: var(--kt-form-check-input-bg-solid); 
+        --highlight-color: var(--kt-input-solid-bg);
+    }
+}
