@@ -3,7 +3,7 @@ import { Formik, Form as FormikForm, useFormikContext } from "formik"
 import moment from "moment"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { Modal } from "react-bootstrap"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import useListData from "../../../api/hooks/useListData"
 import useMutate from "../../../api/hooks/useMutate"
 import useRequest from "../../../api/hooks/useRequest"
@@ -40,15 +40,15 @@ import useUpdate from "../../../api/hooks/useUpdate"
 import setModalIndex from "../../helpers/setModalIndex"
 import usePrevious from "../../helpers/usePrevious"
 import { isEqual } from "lodash"
-import { usePageContext, useRefetchSubscribers, useSubscribeOnRefetch } from "../helpers/PageContext"
+import { useRefetchSubscribers, useSubscribeOnRefetch } from "../helpers/PageContext"
 
 export const getButtonKey = (button: ComponentButtonType) => `${button.type}-${button.settings.title}-${button.settings.icon}`
 
-const DownloadCSVModule: React.FC<ModuleListCSVDownloaderType> = ({ object, columns }) => {
+const DownloadCSVModule: React.FC<ModuleListCSVDownloaderType> = ({ object, columns , filters}) => {
     const intl = useIntl()
     const [showModal, setShowModal] = useState(false)
     const handleSubmit = async (selectedColumns: Array<string>) => {
-        const loadedCSV = await api(object, "get", { context: { block: "csv" }, select: selectedColumns })
+        const loadedCSV = await api(object, "get", { context: { block: "csv" }, select: selectedColumns, ...filters })
         if (loadedCSV) {
             const link = document.createElement('a')
             //@ts-ignore
@@ -673,7 +673,7 @@ const ModuleList = React.memo<ModuleListType>((props) => {
                     haveSearch || haveButtons || showCSVDownloader ? <div className="moduleList_toolbar">
                         {haveSearch ? <ComponentSearch value={search} setValue={setSearch} /> : null}
                         {haveButtons ? components.buttons.map(button => <ComponentButton key={button.settings.title} className="dark-light" {...button} />) : null}
-                        {showCSVDownloader ? <DownloadCSVModule object={settings.object} columns={headers} /> : null}
+                        {showCSVDownloader ? <DownloadCSVModule object={settings.object} columns={headers} filters={filter} /> : null}
                     </div> : null
                 }
                 <Formik enableReinitialize initialValues={{

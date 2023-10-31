@@ -127,7 +127,8 @@ export type ModuleInfoType = DefaultModuleType<"info", {
 //модуль List
 export type ModuleListCSVDownloaderType = {
     object: string,
-    columns: Array<{ title: string, article: string }>
+    columns: Array<{ title: string, article: string }>,
+    filters: {[key: string]: any}
 }
 export type ModuleListUpdateFieldType = {
     title: string,

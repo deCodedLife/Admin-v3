@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { Col, Form } from "react-bootstrap"
 import useWidget from "../../../api/hooks/useWidget"
 import { ModuleWidgetsType, ModuleWidgetsWidgetGraphModuleType, ModuleWidgetsWidgetType } from "../../../types/modules"
@@ -16,7 +16,7 @@ import SplashScreen from "../../helpers/SplashScreen"
 import ComponentButton from "../../components/ComponentButton"
 import moment from "moment"
 import api from "../../../api"
-import { usePageContext, useRefetchSubscribers, useSubscribeOnRefetch } from "../helpers/PageContext"
+import { useRefetchSubscribers, useSubscribeOnRefetch } from "../helpers/PageContext"
 
 
 const WidgetGraphModule: React.FC<ModuleWidgetsWidgetGraphModuleType> = ({ detail }) => {
