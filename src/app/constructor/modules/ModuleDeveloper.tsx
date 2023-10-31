@@ -8,8 +8,9 @@ import ComponentButton from "../components/ComponentButton"
 import { createPortal } from "react-dom"
 import { Col, Form } from "react-bootstrap"
 import { JSONTree } from "react-json-tree"
-import { stringifyRequest } from "../../api"
+import api, { stringifyRequest } from "../../api"
 import { useThemeMode } from "../../../_metronic/partials"
+import { getErrorToast, getSuccessToast } from "../helpers/toasts"
 
 type Props = {
     toggleBtnClass?: string
@@ -37,11 +38,11 @@ const theme = {
     base0D: '#66d9ef',
     base0E: '#ae81ff',
     base0F: '#cc6633',
-  };
+};
 
 const ModuleRequest: React.FC<{ visible: boolean, handleClose: () => void }> = ({ visible, handleClose }) => {
     const [response, setResponse] = useState(null)
-    const {mode} = useThemeMode()
+    const { mode } = useThemeMode()
 
     const handleEscapeKeyClick = useCallback((event: KeyboardEvent) => {
         if (event.key === "Escape") {
@@ -83,7 +84,7 @@ const ModuleRequest: React.FC<{ visible: boolean, handleClose: () => void }> = (
                 }
             </Formik>
             <div className="moduleDeveloper_requestsResponse">
-                {response ? <JSONTree  data={response} theme={theme} invertTheme={mode === "light"} /> : null}
+                {response ? <JSONTree data={response} theme={theme} invertTheme={mode === "light"} /> : null}
             </div>
         </div>
     </>, document.body)
@@ -105,6 +106,16 @@ const ModuleDeveloper: React.FC<Props> = (props) => {
         sessionStorage.clear()
         navigate(0)
     }, [])
+
+    const handleUpdateAdminApplication = useCallback(async () => {
+        try {
+            await api("admin", "update-crm")
+            getSuccessToast("Успешно")
+        } catch (error: any) {
+            getErrorToast(error.message)
+        }
+    }, [])
+
     return <>
 
         <a
@@ -164,6 +175,19 @@ const ModuleDeveloper: React.FC<Props> = (props) => {
                         <KTSVG path='/media/crm/icons/ranking.svg' className='svg-icon-3' />
                     </span>
                     <span className='menu-title'>Отправить запрос</span>
+                </a>
+            </div>
+
+            <div className='menu-item px-3 my-0'>
+                <a
+                    href='#'
+                    className={clsx('menu-link px-3 py-2')}
+                    onClick={handleUpdateAdminApplication}
+                >
+                    <span className='menu-icon' data-kt-element='icon'>
+                        <KTSVG path='/media/crm/icons/repeat.svg' className='svg-icon-3' />
+                    </span>
+                    <span className='menu-title'>Обновить админку</span>
                 </a>
             </div>
 
