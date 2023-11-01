@@ -55,7 +55,7 @@ const api = async <dataType = any>(object: string | undefined, command: string, 
         jwt: localStorage.getItem("authToken") ?? undefined
     })
     //выгрузка простых документов (CSV, text)
-    if (headers["content-type"].includes("text")) {
+    if (headers["content-type"].includes("text") || headers["content-type"].includes("excel")) {
         return responseData
     } else {
         if (responseData.status !== 200) {
@@ -64,6 +64,30 @@ const api = async <dataType = any>(object: string | undefined, command: string, 
             return responseData
         }
     }
+}
+
+const fileInstance = axios.create({
+    baseURL: getApiUrl(),
+    headers: {
+        "Content-Type": "blob"
+    },
+    responseType: "arraybuffer"
+})
+
+export const fileApi = async <dataType = any>(object: string | undefined, command: string, data: any = undefined) => {
+    if (!object) {
+        throw new Error("Отсутствует объект запроса")
+    }
+    const { data: responseData, headers } = await fileInstance.post<ApiResponseType<dataType>>(`?q=${object}__${command}`, {
+        object,
+        command,
+        data,
+        jwt: localStorage.getItem("authToken") ?? undefined
+    })
+    //выгрузка простых документов (CSV, text)
+    if (headers["content-type"].includes("text") || headers["content-type"].includes("excel")) {
+        return responseData
+    } 
 }
 
 export const uploadFiles = async (object: string, command: string, data: any) => {

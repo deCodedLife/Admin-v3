@@ -10,7 +10,7 @@ import useRequest from "../../../api/hooks/useRequest"
 import useSearchRequest from "../../../api/hooks/useSearchRequest"
 import { ComponentButtonType } from "../../../types/components"
 import {
-    ModuleListActionButtonsType, ModuleListCSVDownloaderType, ModuleListCellType, ModuleListHeaderCellType,
+    ModuleListActionButtonsType, ModuleListCellType, ModuleListDownloaderType, ModuleListHeaderCellType,
     ModuleListPaginationType, ModuleListRowType, ModuleListType, ModuleListUpdateFieldType, ModuleListUpdateModalType
 } from "../../../types/modules"
 import ComponentButton from "../../components/ComponentButton"
@@ -28,7 +28,7 @@ import { checkDatesInString, getDateFormat, getMaskedString, useFilter, useSearc
 import Select from "react-select"
 import { KTSVG } from "../../../../_metronic/helpers"
 import { useIntl } from "react-intl"
-import api from "../../../api"
+import api, { fileApi } from "../../../api"
 import SkeletonRows from "./SkeletonRows"
 import useLoading from "../../components/helpers/hooks/useLoading"
 import { getErrorToast } from "../../helpers/toasts"
@@ -44,30 +44,18 @@ import { useRefetchSubscribers, useSubscribeOnRefetch } from "../helpers/PageCon
 
 export const getButtonKey = (button: ComponentButtonType) => `${button.type}-${button.settings.title}-${button.settings.icon}`
 
-const DownloadCSVModule: React.FC<ModuleListCSVDownloaderType> = ({ object, columns , filters}) => {
+const DownloaderModule: React.FC<ModuleListDownloaderType> = ({ title, handleDownload, columns }) => {
     const intl = useIntl()
     const [showModal, setShowModal] = useState(false)
     const handleSubmit = async (selectedColumns: Array<string>) => {
-        const loadedCSV = await api(object, "get", { context: { block: "csv" }, select: selectedColumns, ...filters })
-        if (loadedCSV) {
-            const link = document.createElement('a')
-            //@ts-ignore
-            link.href = `data:text/csv;charset=utf-8,${encodeURIComponent(loadedCSV)}`
-            const filename = `${object} (${moment().format("DD.MM.YY")}).csv`
-            link.setAttribute('download', `${filename}`)
-            document.body.appendChild(link)
-            link.click()
-            link.remove()
-            return setShowModal(false)
-        } else {
-            getErrorToast(intl.formatMessage({ id: "LIST.CSV_FILE_ERROR" }))
-        }
+        await handleDownload(selectedColumns)
+        setShowModal(false)
     }
-    return <div className="moduleList_csvModule">
+    return <div>
         <ComponentButton
-            className="moduleList_csvModuleButton"
+            className="moduleList_downloaderModuleButton"
             type="custom"
-            settings={{ title: intl.formatMessage({ id: "LIST.CSV_BUTTON_TITLE" }), icon: "download", background: "light" }}
+            settings={{ title, icon: "download", background: "light" }}
             customHandler={() => setShowModal(true)}
         />
         <Modal show={showModal} onHide={() => setShowModal(false)} onEntering={setModalIndex}>
@@ -77,14 +65,12 @@ const DownloadCSVModule: React.FC<ModuleListCSVDownloaderType> = ({ object, colu
                 onSubmit={values => handleSubmit(values.select)}>
                 {({ values, setFieldValue, handleSubmit }) => <FormikForm>
                     <Modal.Header>
-                        <Modal.Title>
-                            {intl.formatMessage({ id: "LIST.CSV_MODAL_TITLE" })}
-                        </Modal.Title>
+                        <Modal.Title>{intl.formatMessage({ id: "LIST.DOWNLOADER_MODAL_TITLE" })}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         {columns.map(column => <ComponentCheckbox
                             key={column.article}
-                            className="moduleList_csvModuleCheckbox"
+                            className="moduleList_downloaderModuleCheckbox"
                             customChecked={values.select.includes(column.article)}
                             customHandler={() => {
                                 const selectedColumnsClone = [...values.select]
@@ -539,9 +525,10 @@ const HeaderCell: React.FC<ModuleListHeaderCellType> = ({ article, title, type, 
 const ModuleList = React.memo<ModuleListType>((props) => {
     const intl = useIntl()
     const { settings, components, hook } = props
-    const { headers, filters: initialFilters, is_csv, is_edit = true, context: initialContext, linked_filter, link } = settings
+    const { headers, filters: initialFilters, is_csv, is_exel, is_edit = true, context: initialContext, linked_filter, link } = settings
     const haveButtons = Boolean(components?.buttons)
     const showCSVDownloader = Boolean(is_csv)
+    const showExelDownloader = Boolean(is_exel)
     const isListEditable = is_edit
     const currentLink = typeof link === "string" ? link : link === false ? null : settings.object
 
@@ -582,14 +569,14 @@ const ModuleList = React.memo<ModuleListType>((props) => {
     useSubscribeOnRefetch(refetch, linked_filter)
 
     useRefetchSubscribers(`${props.type}_${settings.object}`, isRefetching, Boolean(linked_filter))
-    
+
     //проверка обновления при наличии хука 
     useUpdate([{ active: Boolean(hook), update: refetch }], hook, 1000)
 
 
     //блок поиска
     const haveSearch = Boolean(components.search)
-    const {search, setSearch} = useSearch(`${props.type}_${settings.object}`)
+    const { search, setSearch } = useSearch(`${props.type}_${settings.object}`)
     const isSetSearchData = haveSearch && search.length
     const {
         isLoading: searchLoading,
@@ -598,7 +585,7 @@ const ModuleList = React.memo<ModuleListType>((props) => {
         refetch: searchRefetch
     } = useSearchRequest({ object: settings.object, context: "list", value: search, enabled: haveSearch })
 
-    
+
     //запрос полей под массовое редактирование
     const { isLoading: isGroupUpdateFieldsLoading, data: groupUpdateFields } = useRequest("admin", "group-update-fields", { scheme_name: settings.object }, is_edit)
     const [showUpdateFieldsModal, setShowUpdateFieldsModal] = useState(false)
@@ -658,6 +645,40 @@ const ModuleList = React.memo<ModuleListType>((props) => {
         refresh: refetch
     }), [])
 
+
+    const handleDownloadCSV = async (selectedColumns: Array<string>) => {
+        const loadedCSV = await api(settings.object, "get", { context: { block: "csv" }, select: selectedColumns, ...filter })
+        if (loadedCSV) {
+            const link = document.createElement('a')
+            //@ts-ignore
+            link.href = `data:text/csv;charset=utf-8,${encodeURIComponent(loadedCSV)}`
+            const filename = `${settings.object} (${moment().format("DD.MM.YY")}).csv`
+            link.setAttribute('download', `${filename}`)
+            document.body.appendChild(link)
+            link.click()
+            link.remove()
+        } else {
+            getErrorToast(intl.formatMessage({ id: "LIST.DOWNLOADER_FILE_ERROR" }))
+        }
+    }
+
+
+    const handleDownloadExcel = async (selectedColumns: Array<string>) => {
+        const loadedExcel = await fileApi(settings.object, "get", { context: { block: "exel" }, select: selectedColumns, ...filter })
+        if (loadedExcel) {
+            const link = document.createElement('a')
+            //@ts-ignore
+            link.href = URL.createObjectURL(new Blob([loadedExcel]))
+            const filename = `${settings.object} (${moment().format("DD.MM.YY")}).xlsx`
+            link.setAttribute('download', `${filename}`)
+            document.body.appendChild(link)
+            link.click()
+            link.remove()
+        } else {
+            getErrorToast(intl.formatMessage({ id: "LIST.DOWNLOADER_FILE_ERROR" }))
+        }
+    }
+
     return <ModuleContext.Provider value={contextValue}>
         {haveFilter ? <ComponentFilters
             type="string"
@@ -670,10 +691,19 @@ const ModuleList = React.memo<ModuleListType>((props) => {
         <div className="card moduleList">
             <div className="card-body py-3">
                 {
-                    haveSearch || haveButtons || showCSVDownloader ? <div className="moduleList_toolbar">
+                    haveSearch || haveButtons || showCSVDownloader || showExelDownloader ? <div className="moduleList_toolbar">
                         {haveSearch ? <ComponentSearch value={search} setValue={setSearch} /> : null}
                         {haveButtons ? components.buttons.map(button => <ComponentButton key={button.settings.title} className="dark-light" {...button} />) : null}
-                        {showCSVDownloader ? <DownloadCSVModule object={settings.object} columns={headers} filters={filter} /> : null}
+                        {showCSVDownloader ? <DownloaderModule
+                            title={intl.formatMessage({ id: "LIST.CSV_BUTTON_TITLE" })}
+                            handleDownload={handleDownloadCSV}
+                            columns={headers}
+                        /> : null}
+                        {showExelDownloader ? <DownloaderModule
+                            title={intl.formatMessage({ id: "LIST.EXCEL_BUTTON_TITLE" })}
+                            handleDownload={handleDownloadExcel}
+                            columns={headers}
+                        /> : null}
                     </div> : null
                 }
                 <Formik enableReinitialize initialValues={{

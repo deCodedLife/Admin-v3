@@ -125,11 +125,12 @@ export type ModuleInfoType = DefaultModuleType<"info", {
 }>
 
 //модуль List
-export type ModuleListCSVDownloaderType = {
-    object: string,
+export type ModuleListDownloaderType = {
+    title: string, 
+    handleDownload: (columns: Array<string>) => Promise<void>,
     columns: Array<{ title: string, article: string }>,
-    filters: {[key: string]: any}
 }
+
 export type ModuleListUpdateFieldType = {
     title: string,
     article: string,
@@ -190,6 +191,7 @@ export type ModuleListType = DefaultModuleType<"list", { filters: Array<Componen
     filters: { [key: string]: any },
     link?: string | false,
     is_csv?: boolean,
+    is_exel?: boolean,
     is_edit?: boolean,
     context?: Object,
     linked_filter?: string

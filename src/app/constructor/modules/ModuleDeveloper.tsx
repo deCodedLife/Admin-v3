@@ -59,9 +59,7 @@ const ModuleRequest: React.FC<{ visible: boolean, handleClose: () => void }> = (
     }, [visible])
 
     const handleWrapperClick = useCallback((event: React.MouseEvent<HTMLDivElement>) => handleClose(), [])
-    useEffect(() => {
-        console.log("hello, update!")
-    }, [])
+
     return createPortal(<>
         <div className={`moduleDeveloper_requestsWrapper${visible ? " show" : ""}`} onClick={handleWrapperClick} />
         <div className={`moduleDeveloper_requests${visible ? " show" : ""}`}>

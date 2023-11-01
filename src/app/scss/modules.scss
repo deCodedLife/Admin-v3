@@ -193,11 +193,11 @@
         }
     }
 
-    &_csvModuleButton {
+    &_downloaderModuleButton {
         height: 100%;
     }
 
-    &_csvModuleCheckbox {
+    &_downloaderModuleCheckbox {
         &:not(:last-child) {
             margin-bottom: 10px;
         }
