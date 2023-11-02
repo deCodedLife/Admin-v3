@@ -332,7 +332,9 @@
     }
 
     &_stringFilter {
-        &.form-control.componentDate_input, &.form-control.form-control-solid {
+
+        &.form-control.componentDate_input,
+        &.form-control.form-control-solid {
             border: 1px solid var(--kt-gray-300);
             color: var(--kt-text-muted);
             padding: 0.5rem;
@@ -351,7 +353,7 @@
             }
         }
 
-        
+
 
         &.componentSelect {
             &__control {
@@ -1071,7 +1073,8 @@
             border-bottom-right-radius: 0.425rem;
         }
 
-        &.selected, &:hover:not(.disabled) {
+        &.selected,
+        &:hover:not(.disabled) {
             color: var(--kt-primary-inverse);
             background-color: var(--kt-primary);
         }
@@ -1267,6 +1270,7 @@
     & .tooltip-arrow::before {
         border-top-color: var(--kt-card-bg);
     }
+
     &.centered .tooltip-inner {
         text-align: center;
     }

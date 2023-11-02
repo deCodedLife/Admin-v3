@@ -71,6 +71,7 @@ const ComponentInputString: React.FC<ComponentInputStringType> = ({
             disabled={is_disabled}
             placeholder={placeholder}
             autoComplete="new-password"
+            onWheel={event => event.currentTarget.blur()}
 
         />
         {

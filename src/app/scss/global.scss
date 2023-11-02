@@ -594,6 +594,26 @@ input:-webkit-autofill:active  {
 }
 
 
+input[type="number"] {
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        background-color: #fff;
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAKUlEQVQYlWNgwAT/sYhhKPiPT+F/LJgEsHv37v+EMGkmkuImoh2NoQAANlcun/q4OoYAAAAASUVORK5CYII=);
+        background-position: center center;
+        background-repeat: no-repeat;
+        width: 1em;
+        border-left: 1px solid var(--bs-card-border-color);
+        opacity: 0.5; 
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+
 @import 'react-big-calendar/lib/sass/styles';
 
 @import "./components.scss";
