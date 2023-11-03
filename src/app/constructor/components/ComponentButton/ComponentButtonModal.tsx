@@ -74,6 +74,7 @@ const ComponentButtonModal: React.FC<ComponentButtonModalType> = ({ settings, de
             show={Boolean(showModal) && Boolean(data)}
             onHide={() => setShowModal(false)}
             onEntering={setModalIndex}
+            enforceFocus={false}
         >
             <Modal.Header closeButton className="modal-emptyHeader" />
             <Modal.Body className="scroll-y">

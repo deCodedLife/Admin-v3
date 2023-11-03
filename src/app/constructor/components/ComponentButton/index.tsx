@@ -4,6 +4,7 @@ import { ComponentButtonType } from "../../../types/components"
 import ComponentButtonModal from "./ComponentButtonModal"
 import ComponentButtonPrint from "./ComponentButtonPrint"
 import ComponentButtonClassic from "./ComponentButtonClassic"
+import ComponentButtonDrawer from "./ComponentButtonDrawer"
 
 export const getLabel = (defaultLabel: string, settings: any) => {
     switch (defaultLabel) {
@@ -21,6 +22,8 @@ const ComponentButton: React.FC<ComponentButtonType> = (props) => {
     switch (props.type) {
         case "modal":
             return <ComponentButtonModal {...props} />
+        case "drawer":
+            return <ComponentButtonDrawer {...props} />
         case "print":
             return <ComponentButtonPrint {...props} />
         default:

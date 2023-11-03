@@ -53,7 +53,21 @@ export type ComponentButtonPrintType = DefaultComponentButtonType<"print", {
     context?: { [key: string]: any }
 }>
 
-export type ComponentButtonType = ComponentButtonClassicType | ComponentButtonModalType | ComponentButtonPrintType
+
+export type ComponentButtonDrawerType = DefaultComponentButtonType<"drawer",
+    {
+        insert_to_field?: string,
+        refresh_after_submit?: boolean,
+        close_after_submit?: boolean,
+        close_previous_modal?: boolean,
+        direction?: "top" | "right" | "bottom" | "left"
+        context?: Object,
+        page: string
+    }
+>
+
+
+export type ComponentButtonType = ComponentButtonClassicType | ComponentButtonModalType | ComponentButtonPrintType | ComponentButtonDrawerType
 
 
 //компонент Error
