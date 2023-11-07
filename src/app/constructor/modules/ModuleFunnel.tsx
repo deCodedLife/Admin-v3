@@ -22,7 +22,13 @@ const ModuleFunnelItem = React.memo<ModuleFunnelItemType>(({ id, title, descript
     const descriptionAsDate = moment(description).format("DD MMMM YY HH:mm")
     const navigate = useNavigate()
     const location = useLocation()
-    const handleTitleClick = () => navigate(`${location.pathname}/update/${id}`)
+    const resolvedHref = `${location.pathname}/update/${id}`
+
+    const handleTitleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault()
+        navigate(resolvedHref)
+    }
+
     const haveTags = Array.isArray(tags) && tags.length
     return <div
         className="moduleFunnel_item"
@@ -31,9 +37,12 @@ const ModuleFunnelItem = React.memo<ModuleFunnelItemType>(({ id, title, descript
     >
         <div className="moduleFunnel_itemMainProps">
             <ComponentTooltip title={title}>
-                <h4 className="moduleFunnel_itemTitle text-hover-primary" onClick={handleTitleClick}>
+                <a href={resolvedHref} onClick={handleTitleClick}>
+                  <h4 className="moduleFunnel_itemTitle text-hover-primary">
                     {title}
-                </h4>
+                </h4>  
+                </a>
+                
             </ComponentTooltip>
             <div className='text-gray-400 fw-semibold fs-7'>{descriptionAsDate !== "Invalid date" ? descriptionAsDate : description}</div>
             {

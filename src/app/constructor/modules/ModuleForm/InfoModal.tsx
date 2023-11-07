@@ -4,6 +4,7 @@ import { Modal } from "react-bootstrap"
 import usePrevious from "../../helpers/usePrevious"
 import parse from "html-react-parser"
 import setModalIndex from "../../helpers/setModalIndex"
+import { unescape } from "lodash"
 
 
 const InfoModal: React.FC = () => {
@@ -11,7 +12,6 @@ const InfoModal: React.FC = () => {
     const [field] = useField("modal_info")
     const {value} = field
     const previousFieldValue = usePrevious(value)
-    
     useEffect(() => {
         if (Array.isArray(value) && value.length) {
             if ((Array.isArray(previousFieldValue) && previousFieldValue.length < value.length) || !previousFieldValue) {
@@ -26,7 +26,7 @@ const InfoModal: React.FC = () => {
             </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            {parse(content ?? "")}
+        {parse(unescape(content ?? ""))}
         </Modal.Body>
     </Modal>
 }
