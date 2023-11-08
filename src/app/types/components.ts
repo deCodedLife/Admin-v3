@@ -45,7 +45,8 @@ export type ComponentButtonPrintType = DefaultComponentButtonType<"print", {
         scheme_name: string,
         row_id: string | number,
         is_edit: boolean,
-        save_to?: {
+        script?: {
+            command: string,
             object: string,
             properties: any
         }

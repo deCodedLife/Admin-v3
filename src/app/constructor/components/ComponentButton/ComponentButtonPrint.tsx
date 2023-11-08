@@ -26,7 +26,7 @@ const ComponentButtonPrint: React.FC<ComponentButtonPrintType> = ({ settings, de
     const { currentUser } = useAuth()
     const intl = useIntl()
     const { data, context } = settings
-    const { is_edit, row_id, scheme_name, document_article, save_to } = data
+    const { is_edit, row_id, scheme_name, document_article, script } = data
     const resolvedContext = Object.assign({ block: "print" }, context ?? {})
     const { data: documents } = useRequest<Array<Tdocument>>("documents", "get", { context: resolvedContext })
     const [showEditModal, setShowEditModal] = useState(false)
@@ -36,12 +36,12 @@ const ComponentButtonPrint: React.FC<ComponentButtonPrintType> = ({ settings, de
     const isIconBased = defaultLabel === "icon"
 
     const handleScriptAction = useCallback((title: string, body: string) => {
-        if (save_to) {
+        if (script) {
             const resolvedTitle = `${title} (${moment().format("DD.MM.YY г.")})`
-            const requestData = Object.assign({}, { title: resolvedTitle, body }, save_to.properties ?? {})
-            api(save_to.object, "add", requestData)
+            const requestData = Object.assign({}, { title: resolvedTitle, body }, script.properties ?? {})
+            api(script.object, script.command, requestData)
         }
-    }, [save_to])
+    }, [script])
 
     const handleClick = async () => {
         if (isMinimize) {
