@@ -88,7 +88,7 @@ const ModuleSalaryWidgets: React.FC = () => {
     })
 
     
-    if (!data) {
+    if (!data || !data?.length) {
         return null
     }
     
