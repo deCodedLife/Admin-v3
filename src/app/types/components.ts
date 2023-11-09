@@ -174,6 +174,7 @@ export type ComponentSelectType = {
     list?: Array<{ title: string, value: string | number | boolean, joined_field_value?: string, menu_title?: string }>,
     isMulti?: boolean,
     isDisabled?: boolean,
+    isVisible?: boolean,
     isClearable?: boolean,
     isDuplicate?: boolean,
     isLoading?: boolean,

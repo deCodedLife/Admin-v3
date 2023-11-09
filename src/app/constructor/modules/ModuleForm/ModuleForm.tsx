@@ -31,7 +31,7 @@ import InfoModal from "./InfoModal"
 import ComponentGooglePlaces from "../../components/ComponentGooglePlaces"
 //Тип поля
 export const Component: React.FC<ModuleFormFieldType> = (props) => {
-    const { article, data_type, field_type, is_disabled, hook, is_clearable, object_id, request_object } = props
+    const { article, data_type, field_type, is_disabled, is_visible, hook, is_clearable, object_id, request_object } = props
     switch (field_type) {
         case "string":
         case "year":
@@ -58,6 +58,7 @@ export const Component: React.FC<ModuleFormFieldType> = (props) => {
                 data_type={data_type}
                 list={props.list ?? []}
                 isDisabled={Boolean(is_disabled)}
+                isVisible={Boolean(is_visible)}
                 isMulti={data_type === "array" ?? false}
                 hook={hook}
                 joined_field={joined_field}
@@ -160,7 +161,15 @@ const ModuleFormField: React.FC<ModuleFormFieldType> = (props) => {
             </Form.Group> : null
         }
         <Form.Group className="moduleForm_field_container" as={Col} md={12}>
-            <div className="moduleForm_field_component"><Component {...props} is_disabled={isFieldDisabled} request_object={request_object} object_id={object_id} /></div>
+            <div className="moduleForm_field_component">
+                <Component
+                    {...props}
+                    is_disabled={isFieldDisabled}
+                    is_visible={isFieldVisible}
+                    request_object={request_object}
+                    object_id={object_id}
+                />
+            </div>
             {currentButtons.map(button => <ComponentButton
                 className="moduleForm_field_button"
                 key={button.type + button.settings.title}

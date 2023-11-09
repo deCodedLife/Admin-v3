@@ -1,6 +1,6 @@
 import { useField, useFormikContext } from "formik"
-import React, { useCallback, useEffect, useState } from "react"
-import Select from "react-select"
+import React, { useEffect, useState } from "react"
+import Select, { GroupBase, OptionsOrGroups } from "react-select"
 import AsyncSelect from 'react-select/async';
 import api from "../../api"
 import { ComponentSelectType } from "../../types/components"
@@ -13,9 +13,10 @@ const DefaultSelect: React.FC<ComponentSelectType> = (props) => {
     const {
         article, data_type, placeholder,
         list, isMulti, onChangeSubmit = false,
-        isDisabled, isClearable, isDuplicate,
-        hook, prefix, isSearchable = true,
-        menuPortal = true, isLoading = false, customHandler
+        isDisabled, isVisible = true, isClearable,
+        isDuplicate, hook, prefix,
+        isSearchable = true, menuPortal = true, isLoading = false,
+        customHandler
     } = props
     const [options, setOptions] = useState<Array<any>>([])
     const [previousJoinedFieldValue, setPreviousJoinedFieldValue] = useState<any>(null)
@@ -51,6 +52,7 @@ const DefaultSelect: React.FC<ComponentSelectType> = (props) => {
                 list.map(item => ({ label: item.title, value: item.value, menu_label: item.menu_title ?? item.title }))
             setOptions(currentOptions)
         } else {
+
             if (!isLoadingOption) {
                 try {
                     setIsLoadingOption(true)
@@ -79,12 +81,14 @@ const DefaultSelect: React.FC<ComponentSelectType> = (props) => {
                     setIsLoadingOption(false)
                 }
             }
-        } 
+        }
     }
 
     useEffect(() => {
-        getOptions()
-    }, [values])
+        if (isVisible) {
+            getOptions()
+        }
+    }, [values, isVisible])
 
 
     const handleChange = (value: Array<{ label: string, value: string | number, innerValue?: string | number }> | { label: string, value: string | number } | null) => {
@@ -150,9 +154,9 @@ type SelectValueType = SelectOptionType | Array<SelectOptionType> | null
 const SearchSelect: React.FC<ComponentSelectType> = (props) => {
     const {
         article, placeholder, isMulti,
-        onChangeSubmit = false, isDisabled, isClearable,
-        hook, search, prefix,
-        menuPortal = true, customHandler
+        onChangeSubmit = false, isDisabled, isVisible = true,
+        isClearable, hook, search,
+        prefix, menuPortal = true, customHandler
     } = props
     const [value, setValue] = useState<SelectValueType>(null)
     const [field, meta] = useField(article)
@@ -162,12 +166,24 @@ const SearchSelect: React.FC<ComponentSelectType> = (props) => {
     const resolvedClassNamePrefix = `${isError ? "invalid " : ""}${prefix ? `${prefix} ` : ""} ${field.value ? "selected" : ""} componentSelect`
     const resolvedMenuTargetPortal = menuPortal ? document.body : null
 
-    const loadOptions = async (inputValue: string) => {
+    /*
+    --- поиск отложенный. Id прошлого timeout хранится в состоянии 
+    */
+    const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null)
+
+    const loadOptions = (inputValue: string, callback: (options: OptionsOrGroups<SelectOptionType, GroupBase<SelectOptionType>>) => void) => {
+        if (timeoutId) {
+            clearInterval(timeoutId)
+        }
         const { joined_field, joined_field_filter } = props
         const additionalRequestData = Object
             .assign({ context: { block: "select" }, search: inputValue }, joined_field ? { [joined_field_filter ?? joined_field]: values[joined_field] } : {})
-        const response = await api<Array<any>>(search, "search", additionalRequestData)
-        return response.data.map((item: any) => ({ label: item.title, value: item.value, menu_label: item.menu_title ?? item.title }))
+        const id = setTimeout(async () => {
+            const response = await api<Array<any>>(search, "search", additionalRequestData)
+            callback(response.data.map((item: any) => ({ label: item.title, value: item.value, menu_label: item.menu_title ?? item.title })))
+            setTimeoutId(null)
+        }, 500)
+        setTimeoutId(id)
     }
 
     /*
@@ -187,8 +203,10 @@ const SearchSelect: React.FC<ComponentSelectType> = (props) => {
     }
 
     useEffect(() => {
-        handleInitialValues()
-    }, [field.value])
+        if (isVisible) {
+            handleInitialValues()
+        }
+    }, [field.value, isVisible])
 
 
     const handleChange = (value: SelectValueType) => {
