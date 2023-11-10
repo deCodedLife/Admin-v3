@@ -2588,6 +2588,9 @@ html[data-theme="dark"] {
 }
 
 //модуль DayPlanning 
+@mixin moduleDayPlanning_bulletColor($color) {
+    background-color: $color;
+}
 .moduleDayPlanning {
     &_rowsContainer {
         min-height: 70px;
@@ -2615,6 +2618,38 @@ html[data-theme="dark"] {
         min-height: 70px;
         max-height: 100%;
         margin-right: 1rem;
+
+        &.bg-light_blue {
+            @include moduleDayPlanning_bulletColor(deepskyblue)
+        }
+
+        &.bg-blue {
+            @include moduleDayPlanning_bulletColor(#009ef7)
+        }
+
+        &.bg-yellow {
+            @include moduleDayPlanning_bulletColor(yellow)
+        }
+
+        &.bg-orange {
+            @include moduleDayPlanning_bulletColor(orange)
+        }
+
+        &.bg-green {
+            @include moduleDayPlanning_bulletColor(#50cd89)
+        }
+
+        &.bg-pink {
+            @include moduleDayPlanning_bulletColor(pink)
+        }
+
+        &.bg-red {
+            @include moduleDayPlanning_bulletColor(#f1416c)
+        }
+
+        &.bg-purple {
+            @include moduleDayPlanning_bulletColor(#7239ea)
+        }
     }
 
     &_rowBody {
