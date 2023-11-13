@@ -31,7 +31,7 @@ import InfoModal from "./InfoModal"
 import ComponentGooglePlaces from "../../components/ComponentGooglePlaces"
 //Тип поля
 export const Component: React.FC<ModuleFormFieldType> = (props) => {
-    const { article, data_type, field_type, is_disabled, is_visible, hook, is_clearable, object_id, request_object } = props
+    const { article, data_type, field_type, is_disabled, is_visible = true, hook, is_clearable, object_id, request_object } = props
     switch (field_type) {
         case "string":
         case "year":
