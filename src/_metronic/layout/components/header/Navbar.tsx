@@ -95,7 +95,7 @@ const Navbar = () => {
     if (currentUser?.avatar) {
       return currentUser.avatar.includes("https") ? currentUser.avatar : `${getApiUrl()}${currentUser.avatar}`
     } else {
-      return toAbsoluteUrl('/media/avatars/300-1.jpg')
+      return toAbsoluteUrl('/media/crm/assets/blank.png')
     }
   }, [currentUser])
 

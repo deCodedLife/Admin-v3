@@ -5,7 +5,7 @@ import { ModuleNewsCardType, ModuleNewsType } from "../../types/modules"
 import ComponentButton from "../components/ComponentButton"
 import parse from "html-react-parser"
 import { useIntl } from "react-intl"
-import { KTSVG } from "../../../_metronic/helpers"
+import { KTSVG, toAbsoluteUrl } from "../../../_metronic/helpers"
 import setModalIndex from "../helpers/setModalIndex"
 
 const NewsCard: React.FC<ModuleNewsCardType> = ({ image, title, body, preview, handleNewsClick }) => {
@@ -13,7 +13,9 @@ const NewsCard: React.FC<ModuleNewsCardType> = ({ image, title, body, preview, h
     return <div className="moduleNews_newsCard">
         <div className="overlay moduleNews_newsCardOverlay">
             <div className="overlay-wrapper">
-                <img className="moduleNews_newsCardImage" src={image} alt="news image" />
+                <img className="moduleNews_newsCardImage" src={image} alt="news image" onError={event => {
+                    event.currentTarget.src = toAbsoluteUrl("media/crm/backgrounds/crm.jpg")
+                }} />
             </div>
             <div className="overlay-layer bg-dark bg-opacity-50">
                 <ComponentButton
@@ -59,7 +61,7 @@ const ModuleNews: React.FC<ModuleNewsType> = ({ settings }) => {
                     })}
                     {
                         showEmptyNewsContainer ? <div className="moduleNews_emptyNewsContainer">
-                            <KTSVG svgClassName="" className="moduleNews_emptyNewsImage" path="media/crm/icons/publication.svg" />
+                            <KTSVG svgClassName="" className="moduleNews_emptyNewsImage" path="/media/crm/icons/publication.svg" />
                             <p className="moduleNews_emptyNewsDescription">
                                 {intl.formatMessage({ id: "NEWS.EMPTY_NEWS" })}
                             </p>
@@ -80,7 +82,9 @@ const ModuleNews: React.FC<ModuleNewsType> = ({ settings }) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className="scroll-y">
-                <img className="moduleNews_newsModalImage" src={selectedNews?.image} alt="news image" />
+                <img className="moduleNews_newsModalImage" src={selectedNews?.image} alt="news image" onError={event => {
+                    event.currentTarget.src = toAbsoluteUrl("media/crm/backgrounds/crm.jpg")
+                }} />
                 <p className="moduleNews_newsModalBody">{parse(selectedNews?.body ?? "")}</p>
             </Modal.Body>
             <Modal.Footer>
