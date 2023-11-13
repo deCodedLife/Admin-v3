@@ -1,5 +1,5 @@
 import 'moment/min/locales'
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { Outlet } from 'react-router-dom'
 import { I18nProvider } from '../_metronic/i18n/i18nProvider'
@@ -10,7 +10,9 @@ import { AuthInit } from './modules/auth'
 
 
 const App = () => {
-
+  useEffect(() => {
+    console.log("updated - 13.11")
+  }, [])
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
       <I18nProvider>
