@@ -2128,7 +2128,9 @@ html[data-theme="dark"] {
     }
 
     &_newsCardImage {
+        min-width: 100%;
         width: 100%;
+        min-height: 175px;
         height: 175px;
         object-fit: cover;
         border-radius: 0.625rem;

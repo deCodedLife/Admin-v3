@@ -4,7 +4,7 @@ import { useIntl } from "react-intl"
 import { useModuleContext } from "../../modules/helpers/useModuleContent"
 import { ModalContext } from "../../modules/ModuleSchedule/ModuleSchedule"
 import { useNavigate } from "react-router-dom"
-import { getErrorToast } from "../../helpers/toasts"
+import { getErrorToast, getSuccessToast } from "../../helpers/toasts"
 import ComponentTooltip from "../ComponentTooltip"
 import ComponentButton, { getLabel } from "."
 import { Modal } from "react-bootstrap"
@@ -35,9 +35,15 @@ const ComponentButtonClassic: React.FC<ComponentButtonClassicType> = ({ type, se
             case "custom":
                 return customHandler ? customHandler() : getErrorToast(intl.formatMessage({ id: "BUTTON.HANDLER_ERROR" }))
             case "script":
-                await api(settings.object, settings.command, settings.data)
-                moduleContext.refresh()
-                return modalContext.setShow ? modalContext.setShow(false) : () => { }
+                try {
+                    await api(settings.object, settings.command, settings.data)
+                    moduleContext.refresh()
+                    getSuccessToast("Успешно")
+                    return modalContext.setShow ? modalContext.setShow(false) : () => { }
+                } catch (error) {
+                    //@ts-ignore
+                    return getErrorToast(error.message)
+                }
             default:
                 return
         }
