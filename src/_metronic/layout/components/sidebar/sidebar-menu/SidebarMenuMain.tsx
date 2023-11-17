@@ -7,29 +7,29 @@ import { MenuItemType } from '../../../../../app/types/global'
 
 const MenuItem: React.FC<MenuItemType> = (props) => {
   const { children, href, icon, title } = props
-  if (children.length) {
+  const hasBullet = !Boolean(icon)
+  const resolvedIconPath = icon ? `/media/crm/icons/${icon}.svg` : undefined
+
+  
+  if (children?.length) {
     return <SidebarMenuItemWithSub
       to=''
       title={title}
       fontIcon='bi-layers'
-      icon={`/media/crm/icons/${icon ?? "gear"}.svg`}
+      icon={resolvedIconPath}
+      hasBullet={hasBullet}
     >
-      {children.map(({ title, href }) => {
-        return <SidebarMenuItem
-          key={href}
-          to={`/${href}`}
-          title={title}
-          fontIcon='bi-layers'
-          hasBullet
-        />
+      {children.map((props) => {
+        return <MenuItem key={props.href} {...props} />
       })}
     </SidebarMenuItemWithSub>
   } else {
     return <SidebarMenuItem
       to={`/${href}`}
-      icon={`/media/crm/icons/${icon ?? "gear"}.svg`}
       title={title}
       fontIcon='bi-layers'
+      icon={resolvedIconPath}
+      hasBullet={hasBullet}
     />
   }
 }

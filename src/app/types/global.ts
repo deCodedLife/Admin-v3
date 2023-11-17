@@ -5,7 +5,7 @@ export type PageBuilderType = { data?: ApiPageType, isFetching: boolean, showPro
 
 //меню
 export type MenuItemType = {
-    children: Array<MenuItemType>,
+    children?: Array<MenuItemType>,
     href: string,
     icon: string | null,
     title: string
