@@ -58,12 +58,8 @@ const ComponentSmartList: React.FC<ComponentSmartListType> = ({ article, propert
     return <div className="componentSmartList">
         <div className="componentSmartList_propertiesContainer">
             {value?.map?.((value: any, index: number) => {
-                /*
-                -- временное решение по ключам для того, чтобы в smart_list при удалении каждой строки не происходил перезапрос на инит. пункт асинхронного меню. 
-                */
-                const resolvedKey = Object.values(value).filter(innerValues => innerValues).length ? JSON.stringify(value) : index
                 return <ComponentSmartListPropertiesRow
-                key={`${article}[${resolvedKey}]`}
+                key={`${article}[${index}]`}
                 parentArticle={`${article}[${index}]`}
                 properties={properties}
                 hook={hook}

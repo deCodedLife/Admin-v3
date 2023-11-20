@@ -9,7 +9,7 @@ import setModalIndex from "../helpers/setModalIndex"
 
 type TComponentModal = { 
     page?: string,
-     page_context?: Object,  show: boolean | { [key: string]: any } | null,
+      show: boolean | { [key: string]: any } | null,
       setShow: (value: null | false) => void, refresh: () => void,
       size?: "sm" | "lg" | "xl"
     }
@@ -18,7 +18,7 @@ type TContext = {
     initialData: { [key: string]: any },
     insideModal: boolean
 }
-const ComponentModal: React.FC<TComponentModal> = ({ page, page_context, show, size = "xl", setShow, refresh }) => {
+const ComponentModal: React.FC<TComponentModal> = ({ page, show, size = "xl", setShow, refresh }) => {
 
     const handleClose = useCallback((value: any) => {
         if (refresh) {
@@ -34,7 +34,7 @@ const ComponentModal: React.FC<TComponentModal> = ({ page, page_context, show, s
         }
     }, [show])
 
-    const { data, isFetching } = useItem("pages", Object.assign({ page }, page_context ? {context: page_context} : {}), Boolean(page))
+    const { data, isFetching } = useItem("pages", { page }, Boolean(page))
 
     return <Modal
         size={size}

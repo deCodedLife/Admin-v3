@@ -488,7 +488,7 @@ export type ModuleMiniChatType = DefaultModuleType<"mini_chat", any, {
 export type ModuleCalendarType = DefaultModuleType<"calendar", { filters: Array<ComponentFilterType>, buttons: Array<ComponentButtonType> }, {
     object: string,
     events: { add: string, update: string }
-    context: Object,
+    context_keys: Array<string>,
     filters: any
 }>
 

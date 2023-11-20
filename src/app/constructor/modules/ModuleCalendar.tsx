@@ -19,7 +19,7 @@ const ModuleCalendar: React.FC<ModuleCalendarType> = (props) => {
   const localizer = momentLocalizer(moment)
   const intl = useIntl()
   const { settings, components } = props
-  const { object, filters: initialFilters, events: { add, update }, context: page_context } = settings
+  const { object, filters: initialFilters, events: { add, update }, context_keys } = settings
 
   const haveFilter = Boolean(components?.filters)
   const haveButtons = Boolean(props.components?.buttons)
@@ -109,6 +109,16 @@ const ModuleCalendar: React.FC<ModuleCalendarType> = (props) => {
     refresh: refetch
   }), [])
 
+  const formValues = useMemo(() => {
+    const values: {[key: string]: any} = {}
+    if (Array.isArray(context_keys)) {
+      context_keys.forEach(key => {
+        values[key] = filter[key]
+      })
+    }
+    return values
+  }, [filter])
+
   return <>
     <ModuleContext.Provider value={contextValue}>
       <ComponentDashboard inverse>
@@ -160,8 +170,7 @@ const ModuleCalendar: React.FC<ModuleCalendarType> = (props) => {
       </div>
       <ComponentModal
         page={add}
-        page_context={page_context}
-        show={selectedSlots}
+        show={selectedSlots ? {...selectedSlots, ...formValues} : null}
         size="lg"
         setShow={handleCloseDayEventModal}
         refresh={refetch}
@@ -170,7 +179,6 @@ const ModuleCalendar: React.FC<ModuleCalendarType> = (props) => {
       <ComponentModal
         page={selectedEventId ? update + `/${selectedEventId}` : undefined}
         size="lg"
-        page_context={page_context}
         show={showEditModal && selectedEventId ? { id: selectedEventId } : false}
         setShow={() => setShowEditModal(false)}
         refresh={() => {
