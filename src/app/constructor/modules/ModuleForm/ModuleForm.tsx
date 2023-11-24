@@ -30,7 +30,7 @@ import ComponentAnnotation from "../../components/ComponentAnnotation"
 import InfoModal from "./InfoModal"
 import ComponentGooglePlaces from "../../components/ComponentGooglePlaces"
 //Тип поля
-export const Component: React.FC<ModuleFormFieldType> = (props) => {
+export const Component = React.memo<ModuleFormFieldType>((props) => {
     const { article, data_type, field_type, is_disabled, is_visible = true, hook, is_clearable, object_id, request_object } = props
     switch (field_type) {
         case "string":
@@ -141,16 +141,18 @@ export const Component: React.FC<ModuleFormFieldType> = (props) => {
         default:
             return <ComponentInCreation type={field_type} />
     }
-}
+})
+
 //Компонент, состоящий из поля определенного типа и лейбла
-const ModuleFormField: React.FC<ModuleFormFieldType> = (props) => {
-    const { annotation, title, is_required, article, buttons, size, object_id, request_object } = props
+const ModuleFormField = React.memo<ModuleFormFieldType>((props) => {
+    const { annotation, title, is_required, article, buttons, size, object_id, request_object, isFieldDisabled, isFieldVisible, fieldDescription } = props
     const currentButtons = buttons.filter(button => button.settings.field_place === article)
-    const [{ value: isFieldVisible }] = useField(`fieldsVisibility.${article}`)
-    const [{ value: fieldDescription }] = useField(`fieldsDescriptions.${article}`)
-    const [{ value: isFieldDisabled }] = useField(`fieldsDisabled.${article}`)
     const resolvedSize = size ? size * 3 : 12
     const resolvedContainerClassName = `moduleForm_field${!isFieldVisible ? " disabled" : ""}${resolvedSize !== 12 ? " marginless" : ""}`
+
+    if (!isFieldVisible) {
+        return null
+    }
     return <Form.Group className={resolvedContainerClassName} as={Col} md={resolvedSize}>
         {
             title ? <Form.Group className="moduleForm_field_labelContainer" as={Col} md={12}>
@@ -180,13 +182,15 @@ const ModuleFormField: React.FC<ModuleFormFieldType> = (props) => {
         </Form.Group>
         <span className="moduleForm_field_description">{fieldDescription ?? ""}</span>
     </Form.Group>
-}
+})
 //Блок полей 
 const ModuleFormBlock: React.FC<ModuleFormBlockType> = ({ title, fields, buttons, object_id, request_object }) => {
     const fieldsArticles = useMemo(() => {
         return fields.map(field => field.article)
     }, [fields])
     const [{ value: visibilityState }] = useField(`fieldsVisibility`)
+    const [{ value: descriptionsState }] = useField(`fieldsDescriptions`)
+    const [{ value: disabledState }] = useField(`fieldsDisabled`)
     const isBlockVisible = fieldsArticles.some(article => visibilityState[article])
     return <div className={`moduleForm_block card ${!isBlockVisible ? "disabled" : ""}`}>
         {
@@ -199,7 +203,16 @@ const ModuleFormBlock: React.FC<ModuleFormBlockType> = ({ title, fields, buttons
             </div> : null
         }
         <div className="moduleForm_block_fields card-body">
-            {fields.map(field => <ModuleFormField key={field.article} {...field} buttons={buttons} request_object={request_object} object_id={object_id} />)}
+            {fields.map(field => <ModuleFormField
+             key={field.article}
+              {...field}
+               buttons={buttons} 
+               request_object={request_object}
+                object_id={object_id}
+                isFieldDisabled={disabledState[field.article]}
+                isFieldVisible={visibilityState[field.article]}
+                fieldDescription={descriptionsState[field.article]}
+                 />)}
         </div>
 
     </div>

@@ -3,6 +3,7 @@ import api from "../../../api"
 import { set, unset } from "lodash"
 import { getMaskedString } from "../../modules/helpers"
 import { ApiSetupType } from "../../../types/api"
+import { useEffect, useState } from "react"
 
 //функция вызова хука у поля после изменения значений
 export const hookAfterChange = async (
@@ -55,6 +56,17 @@ export const hookAfterChange = async (
             setFieldValue("modal_info", null)
         }
     }
+}
+export const useHook = (article: string, values: any, setFieldValue: (article: string, value: any) => void, hook?: string) => {
+    const [valueForHook, setValueForHook] = useState<any>(null)
+
+    useEffect(() => {
+        if (valueForHook && hook) {
+            hookAfterChange(article, valueForHook, values, setFieldValue, hook)
+        }
+    }, [valueForHook])
+    
+    return setValueForHook
 }
 //функции для автоподстановки переменных в документ
 const getFormattedValue = (type: string, value: any, context: ApiSetupType) => {

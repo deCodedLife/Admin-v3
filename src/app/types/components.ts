@@ -121,42 +121,7 @@ export type ComponentInputType = {
     onBlurSubmit?: boolean,
     placeholder?: string,
     className?: string,
-    customHandler?: (e: React.ChangeEvent<any>) => void,
-}
-export type ComponentInputStringType = {
-    name: string,
-    value: string,
-    error?: string,
-    touched: boolean,
-    field_type: ComponentInputType["field_type"],
-    is_disabled?: boolean,
-    hook?: string,
-    onBlurSubmit?: boolean,
-    placeholder?: string,
-    values: any,
-    className?: string,
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void,
-    onBlur: (event: React.FocusEvent<HTMLInputElement>) => void,
-    setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
-    handleSubmit: () => void
-}
-
-export type ComponentInputNumberType = {
-    name: string,
-    value: string,
-    error?: string,
-    touched: boolean,
-    field_type: ComponentInputType["field_type"],
-    is_disabled?: boolean,
-    hook?: string,
-    onBlurSubmit?: boolean,
-    placeholder?: string,
-    values: any,
-    className?: string,
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
-    onBlur: (event: React.FocusEvent<HTMLInputElement>) => void,
-    setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void,
-    handleSubmit: () => void
+    customHandler?: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }
 
 //компонент Info

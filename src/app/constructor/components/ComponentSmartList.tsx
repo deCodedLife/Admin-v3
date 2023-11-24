@@ -8,7 +8,7 @@ import { ComponentSmartListPropertiesRowType, ComponentSmartListPropertyType, Co
 import { useIntl } from "react-intl"
 import ComponentTooltip from "./ComponentTooltip"
 
-const ComponentSmartListProperty: React.FC<ComponentSmartListPropertyType> = (props) => {
+const ComponentSmartListProperty: React.FC<ComponentSmartListPropertyType> = React.memo<ComponentSmartListPropertyType>((props) => {
     const { title, is_required, size } = props
     const resolvedSize = size ? size * 3 : 3
     return <Form.Group className="componentSmartList_property" as={Col} md={resolvedSize}>
@@ -25,7 +25,7 @@ const ComponentSmartListProperty: React.FC<ComponentSmartListPropertyType> = (pr
             <Component {...props} />
         </Form.Group>
     </Form.Group>
-}
+})
 
 const ComponentSmartListPropertiesRow: React.FC<ComponentSmartListPropertiesRowType> = ({ parentArticle, properties, hook, handleDeleteRow }) => {
     return <div className="componentSmartList_propertiesRow">

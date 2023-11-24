@@ -72,7 +72,7 @@ export type ModuleFormFieldType = (ModuleFormFieldInputType | ModuleFormFieldTex
     ModuleFormFieldPhoneType | ModuleFormFieldDateType | ModuleFormFieldCheckboxType | ModuleFormFieldSelectType |
     ModuleFormFieldAddressType | ModuleFormFieldGoogleAddressType | ModuleFormFieldImageType | ModuleFormFieldEditorType |
     ModuleFormFieldFileType | ModuleFormFieldRadioType | ModuleFormFieldStringsType | ModuleFormFieldSmartListType |
-    ModuleFormFieldLayoutType) & { buttons: Array<ModuleFormButtonType> }
+    ModuleFormFieldLayoutType) & { buttons: Array<ModuleFormButtonType>, isFieldVisible: boolean, isFieldDisabled: boolean, fieldDescription?: string }
 export type ModuleFormBlockType = {
     title: string,
     fields: Array<ModuleFormFieldType>,

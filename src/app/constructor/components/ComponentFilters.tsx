@@ -14,7 +14,7 @@ import ComponentInput from "./ComponentInput"
 import { useIntl } from "react-intl"
 import ComponentCheckbox from "./ComponentCheckbox"
 
-const ComponentFilter: React.FC<ComponentFilterType & { className?: string }> = (props) => {
+const ComponentFilter = React.memo<ComponentFilterType & { className?: string }>((props) => {
     const { type, settings, placeholder, title, className = "" } = props
     switch (type) {
         case "date":
@@ -48,7 +48,7 @@ const ComponentFilter: React.FC<ComponentFilterType & { className?: string }> = 
         default:
             return <ComponentInCreation type={type} />
     }
-}
+})
 
 const getFilterKey = (filter: ComponentFilterType) => `${filter.type}-${filter.settings.recipient_property}`
 
