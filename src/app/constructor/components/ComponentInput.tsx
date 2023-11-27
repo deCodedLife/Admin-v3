@@ -164,13 +164,13 @@ const ComponentInput: React.FC<ComponentInputType> = ({ article, field_type, is_
                     default:
                         resolvedValue = inputValue
                 }
-                return setFieldValue(name, value)
+                return setFieldValue(name, resolvedValue)
             }
         }
     }, [])
 
     const handleBlur = useCallback((event: React.FocusEvent<HTMLInputElement>) => {
-        const resolvedValue = isMaskedInput ? Number(event.target.value.replace(/\s+/g, "")) : event.target.valueAsNumber
+        const resolvedValue = isMaskedInput ? Number(event.target.value.replace(/\s+/g, "")) : event.target.value
         setFieldValue(name, resolvedValue)
 
         if (hook) {
