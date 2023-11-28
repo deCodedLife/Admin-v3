@@ -44,7 +44,7 @@ const HeaderUserMenu: FC = () => {
       <div className='separator my-2'></div>
 
       <div className='menu-item px-5'>
-        <Link to={`/users/info/${currentUser?.id ?? ""}`} className='menu-link px-5'>
+        <Link to="/profile" className='menu-link px-5'>
           {intl.formatMessage({id: "CURRENT_USER.PROFILE"})}
         </Link>
       </div>

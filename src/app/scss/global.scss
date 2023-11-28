@@ -390,6 +390,14 @@ button {
     }
 }
 
+.notificationTitleContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--kt-primary);
+    border-top-left-radius:  var(--bs-border-radius);
+    border-top-right-radius:  var(--bs-border-radius);
+}
+
 .notificationItem {
     display: flex;
     flex-direction: column;

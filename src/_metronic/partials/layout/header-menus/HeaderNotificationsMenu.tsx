@@ -71,10 +71,7 @@ const HeaderNotificationsMenu: React.FC<NotificationsType> = ({ notifications, h
     className='menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px'
     data-kt-menu='true'
   >
-    <div
-      className='d-flex flex-column bgi-no-repeat rounded-top'
-      style={{ backgroundImage: `url('${toAbsoluteUrl('/media/misc/menu-header-bg.jpg')}')` }}
-    >
+    <div className="notificationTitleContainer">
       <h3 className='text-white fw-bold px-9 mt-10 mb-6'>
         {intl.formatMessage({ id: "NOTIFICATIONS.TITLE" })}
       </h3>

@@ -1,9 +1,11 @@
-import React, { useMemo, useState } from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 import useSalary from "../../api/hooks/useSalary"
 import { ProgressBar } from "react-bootstrap"
 import { SalaryProgressbarType, SalaryRangeType, SalaryType } from "../../types/global"
-import { KTSVG } from "../../../_metronic/helpers"
+import { KTSVG, toAbsoluteUrl } from "../../../_metronic/helpers"
 import ComponentTooltip from "../components/ComponentTooltip"
+import usePrevious from "../helpers/usePrevious"
+import { isEqual } from "lodash"
 
 
 const ModuleSalaryProgressbar: React.FC<SalaryProgressbarType> = ({ values }) => {
@@ -73,6 +75,8 @@ const ModuleSalaryWidget: React.FC<{ salary: SalaryType }> = ({ salary }) => {
 }
 const ModuleSalaryWidgets: React.FC = () => {
     const { data } = useSalary()
+    const previousValue = usePrevious(data)
+    const audioRef = useRef<HTMLAudioElement | null>(null)
 
 
     /*
@@ -87,12 +91,18 @@ const ModuleSalaryWidgets: React.FC = () => {
         }
     })
 
+    useEffect(() => {
+        if (Array.isArray(previousValue) && !isEqual(data, previousValue)) {
+            audioRef.current?.play()
+        }
+    }, [data])
     
     if (!data || !data?.length) {
         return null
     }
     
     return <div className="moduleSalaryWidgets">
+        <audio ref={audioRef} src={toAbsoluteUrl("/media/crm/sounds/kpi.mp3")} />
         {
             data.length > 1 ? <button className="moduleSalaryWidgets_switchSalaryButton" type="button" onClick={handleSwitchSalary}>
                 <KTSVG path='/media/crm/icons/arrow_2.svg' />
