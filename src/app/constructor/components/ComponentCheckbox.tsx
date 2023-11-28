@@ -39,7 +39,7 @@ const ComponentCheckbox: React.FC<ComponentCheckboxType> = props => {
         if (onChangeSubmit) {
             handleSubmit()
         }
-    }, [])
+    }, [customHandler])
    
     const resolvedClassNamePrefix = `componentCheckbox form-check form-check-sm form-check-custom form-check-solid ${className}`
     return <Checkbox
