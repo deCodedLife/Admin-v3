@@ -1259,6 +1259,7 @@
 .componentTooltip {
     position: fixed;
     white-space: pre-wrap;
+    z-index: 10000;
 
     & .tooltip-inner {
         max-width: 300px;

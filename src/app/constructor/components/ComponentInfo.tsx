@@ -22,7 +22,7 @@ const ComponentInfo: React.FC<ComponentInfoType> = ({ value, field_type }) => {
             case "datetime":
                 return <div className="componentInfo">{moment(value).format("DD.MM.YYYY HH:mm")}</div>
             default:
-                return <div className="componentInfo">{value}</div>
+                return <div className="componentInfo">{Array.isArray(value) ? value.map((item, index) => `${item}${index < value.length - 1 ? ", " : ""}`) : value}</div>
         }
     } else {
         return <div className="componentInfo">-</div>

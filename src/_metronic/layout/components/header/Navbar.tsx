@@ -50,7 +50,7 @@ const ComponentNotifications: React.FC = () => {
     if (Array.isArray(notifications) && Array.isArray(previousNotificationsIds)) {
       const notificationsAsIds = notifications.map(notification => notification.id)
       if (notificationsAsIds.some(id => !previousNotificationsIds.includes(id))) {
-        const audio = new Audio("https://assets.mixkit.co/active_storage/sfx/2575/2575-preview.mp3")
+        const audio = new Audio(toAbsoluteUrl("/media/crm/sounds/alert.mp3"))
         audio.play()
       }
     }
