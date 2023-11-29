@@ -30,6 +30,7 @@ const ComponentButtonModal: React.FC<ComponentButtonModalType> = ({ settings, de
     const moduleContext = useModuleContext()
     const modalContext = useReactContext<any>(ModalContext)
 
+    const isButtonDisabled = !data && !isFetching
 
     const handleResponse = useCallback((data: any) => {
         if (refresh_after_submit) {
@@ -62,7 +63,12 @@ const ComponentButtonModal: React.FC<ComponentButtonModalType> = ({ settings, de
     }, [])
     return <>
         <ComponentTooltip title={settings.title ?? ""}>
-            <button className={`componentButton ${className} ${settings.background}`} type="button" onClick={() => setShowModal(true)}>
+            <button
+             className={`componentButton ${className} ${settings.background}`}
+              type="button" 
+              disabled={isButtonDisabled}
+              onClick={() => setShowModal(true)}
+              >
                 {getLabel(defaultLabel, settings)}
             </button>
         </ComponentTooltip>
