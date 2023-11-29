@@ -226,7 +226,7 @@ const UpdateFieldsModal: React.FC<ModuleListUpdateModalType> = ({ showModal, fie
     </Modal>
 }
 
-const Pagination: React.FC<ModuleListPaginationType> = ({ detail, filter: { page: filterPage, limit }, setFilter }) => {
+export const Pagination: React.FC<ModuleListPaginationType> = ({ detail, filter: { page: filterPage, limit }, setFilter }) => {
     const intl = useIntl()
     const activePage = filterPage ?? 1
     const handlePageChange = (value: string | number) => {
@@ -315,7 +315,7 @@ const Pagination: React.FC<ModuleListPaginationType> = ({ detail, filter: { page
         return null
     }
 
-    return <div className='row'>
+    return <div className='paginationRow row'>
         <div className='col-sm-12 col-md-4 d-flex align-items-center justify-content-center justify-content-md-start'>
             <Select
                 classNamePrefix="pagination_limit"

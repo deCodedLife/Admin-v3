@@ -2587,6 +2587,13 @@ html[data-theme="dark"] {
         overflow: auto;
         border: 1px solid var(--kt-card-border-color);
     }
+
+    & .paginationRow {
+        margin: 1rem 0 0;
+        background-color: var(--kt-card-bg);
+        padding: 0.25rem 1rem;
+        border-radius: 0.625rem;
+    }
 }
 
 //модуль DayPlanning 

@@ -1,6 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from "react"
 import { ModuleAccordionItemType, ModuleAccordionType } from "../../types/modules"
-import useItem from "../../api/hooks/useItem"
 import { Accordion, AccordionContext, Card, Modal, useAccordionButton } from "react-bootstrap"
 import parse from "html-react-parser"
 import ComponentButton from "../components/ComponentButton"
@@ -12,6 +11,8 @@ import { Formik, Form as FormikForm } from "formik"
 import ComponentTextEditor from "../components/ComponentTextEditor"
 import setModalIndex from "../helpers/setModalIndex"
 import { unescape } from "lodash"
+import { Pagination } from "./ModuleList/ModuleList"
+import useListData from "../../api/hooks/useListData"
 
 
 const AccordionItem: React.FC<ModuleAccordionItemType> = ({ id, title, body, user_id, mutate, handleEdit }) => {
@@ -62,8 +63,9 @@ const AccordionItem: React.FC<ModuleAccordionItemType> = ({ id, title, body, use
 const ModuleAccordion: React.FC<ModuleAccordionType> = ({ settings }) => {
     const intl = useIntl()
     const { object, property_title, property_body, filters } = settings
-    const resolvedFilter = Object.assign({ select: ["title", "body", "user_id"] }, filters ?? {})
-    const { data, refetch } = useItem(object, resolvedFilter)
+    const initialFilters = Object.assign({ select: ["title", "body", "user_id"] }, filters ?? {})
+    const [filter, setFilter] = useState<{page: number, limit: number}>({page: 1, limit: 20})
+    const { data, refetch } = useListData(object, Object.assign(filter, initialFilters))
     const { mutate, isSuccess } = useMutate(object, "remove")
     const {mutate: updateItem, isSuccess: isUpdateSuccess} = useMutate(object, "update")
     const [editableItem, setEditableItem] = useState<{id: number, body: string} | null>(null)
@@ -80,7 +82,7 @@ const ModuleAccordion: React.FC<ModuleAccordionType> = ({ settings }) => {
 
     return <div className="moduleAccordion">
         <Accordion>
-            {data?.map(document => <AccordionItem
+            {data?.data.map(document => <AccordionItem
                 key={document.id}
                 id={document.id}
                 title={document[property_title]}
@@ -88,8 +90,9 @@ const ModuleAccordion: React.FC<ModuleAccordionType> = ({ settings }) => {
                 user_id={document.user_id}
                 mutate={mutate}
                 handleEdit={handleEdit}
-            />)}
+            />)}     
         </Accordion>
+        <Pagination detail={data?.detail}  filter={filter} setFilter={setFilter}/>
         <Modal show={Boolean(editableItem)} onHide={() => setEditableItem(null)} size="xl" onEntering={setModalIndex}>
             <Modal.Header>
                 <Modal.Title>
