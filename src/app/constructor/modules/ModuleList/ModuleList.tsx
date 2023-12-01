@@ -421,7 +421,8 @@ const ListCell: React.FC<ModuleListCellType> = ({ article, type, row, page, filt
             case "phone":
                 return <span>{getMaskedString(data, type, context)}</span>
             case "price":
-                return <div className={`moduleList_priceCell ${data < 0 ? "negative" : "positive"}`}>{getMaskedString(data, type, context)}</div>
+                const resolvedClassName = `moduleList_priceCell ${data < 0 ? "negative" : ""} ${data ? "" : " paddingless"}`
+                return <div className={resolvedClassName}>{getMaskedString(data, type, context)}</div>
             case "image":
                 const isImage = data?.includes("https")
                 return <div className="moduleList_cellImageContainer">

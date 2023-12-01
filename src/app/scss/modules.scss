@@ -134,6 +134,9 @@
         &.negative {
             background-color: lighten(#f1416c, 15%);
         }
+        &.paddingless {
+            padding: 0;
+        }
     }
 
     & .moduleList_emptyTable {
