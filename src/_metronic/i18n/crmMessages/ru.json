@@ -134,6 +134,7 @@
   "GLOBAL_SEARCH.EMPTY_RESPONSE": "По данному запросу нет результатов",
   "IMAGE.DESCRIPTION": "Перетащите или выберите нужные фотографии",
   "IMAGE.INCORRECT_FORMAT": "Некорректный формат файла",
+  "IMAGE.INCORRECT_SIZE": "Размер файла не должен превышать 2 МБ",
   "IMAGE.UPLOAD_MORE": "Загрузить еще",
   "IMAGE.ALLOWED_FORMATS": "Допустимые форматы:",
   "IMAGE.REFRESH_IMAGE": "Обновить фотографию",

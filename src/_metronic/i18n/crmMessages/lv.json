@@ -134,6 +134,7 @@
   "GLOBAL_SEARCH.EMPTY_RESPONSE": "Šai meklēšanai nav rezultātu",
   "IMAGE.DESCRIPTION": "Velciet vai atlasiet vajadzīgos fotoattēlus",
   "IMAGE.INCORRECT_FORMAT": "Nederīgs faila formāts",
+  "IMAGE.INCORRECT_SIZE": "Faila lielums nedrīkst pārsniegt 2 MB",
   "IMAGE.UPLOAD_MORE": "Ielādēt vairāk",
   "IMAGE.ALLOWED_FORMATS": "Pieņemamie formāti:",
   "IMAGE.REFRESH_IMAGE": "Atjaunināt fotoattēlu",

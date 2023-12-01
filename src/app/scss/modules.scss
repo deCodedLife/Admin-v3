@@ -126,6 +126,16 @@
         }
     }
 
+    &_priceCell {
+        display: inline-block;
+        padding: 0.25rem 1rem;
+        background-color: lighten(#50cd89, 15%);
+        border-radius: 0.625rem;
+        &.negative {
+            background-color: lighten(#f1416c, 15%);
+        }
+    }
+
     & .moduleList_emptyTable {
         text-align: center;
         font-size: 20px;

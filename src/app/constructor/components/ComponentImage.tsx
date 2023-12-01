@@ -107,8 +107,9 @@ const ComponentImage: React.FC<ComponentImageType> = ({ article, allowedFormats 
         if (files?.length) {
             const ArrayFromFiles = isMulti ? Array.from(files) : [files[0]]
             const isFilesAsImages = ArrayFromFiles.every(file => file.type.includes("image"))
+            const isImageSizeAllowed = ArrayFromFiles.every(file => file.size <= 2_000_000)
             const isImageFormatAllowed = allowedFormats.length ? ArrayFromFiles.every(file => allowedFormats.some(format => file.type.includes(format))) : true
-            if (isFilesAsImages && isImageFormatAllowed) {
+            if (isFilesAsImages && isImageFormatAllowed && isImageSizeAllowed) {
                 const resolvedImagesPreviews = await Promise.all(ArrayFromFiles.map(file => readImageAsData(file)))
                 const sourceValueClone = (field.value && isMulti) ? Array.isArray(field.value) ? [...field.value] : [field.value] : []
                 const resolvedValues = sourceValueClone.concat(ArrayFromFiles)
@@ -120,7 +121,7 @@ const ComponentImage: React.FC<ComponentImageType> = ({ article, allowedFormats 
                 })
 
             } else {
-                getErrorToast(intl.formatMessage({ id: "IMAGE.INCORRECT_FORMAT" }))
+                getErrorToast(intl.formatMessage({ id: isImageSizeAllowed ? "IMAGE.INCORRECT_FORMAT" : "IMAGE.INCORRECT_SIZE" }))
             }
         }
     }
