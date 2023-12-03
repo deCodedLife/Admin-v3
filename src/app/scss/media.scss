@@ -162,6 +162,10 @@
     .componentButton_modal {
         max-width: 80vw;
     }
+
+    .componentTooltip {
+        display: none;
+    }
 }
 
 @media (max-width: 767px) {
@@ -193,7 +197,7 @@
 
             & .componentButton:not(:last-child) {
                 margin-right: 0;
-                margin-bottom: 10px;
+                margin-bottom: 0.5rem;
             }
         }
     }
@@ -307,6 +311,22 @@
     .moduleSchedule_modal,
     .componentButton_modal {
         max-width: unset;
+    }
+
+    .moduleSalaryWidgets {
+        display: none;
+    }
+
+    .componentDashboard {
+        flex-direction: column;
+        height: unset;
+        & > * {
+            width: 100%;
+            margin: 0;
+            &:not(:last-child) {
+                margin-bottom: 0.5rem;
+            }
+        }
     }
 }
 

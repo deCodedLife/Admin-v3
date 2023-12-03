@@ -19,7 +19,7 @@ const InfoModal: React.FC = () => {
             }
         }
     }, [value])
-    return <Modal show={Boolean(content)} onHide={() => setContent(null)} size="xl" onEntering={setModalIndex}>
+    return <Modal show={Boolean(content)} onHide={() => setContent(null)} size="xl" centered onEntering={setModalIndex}>
         <Modal.Header closeButton>
             <Modal.Title>
             Информационное окно

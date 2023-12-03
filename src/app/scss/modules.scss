@@ -975,6 +975,12 @@ $moduleScheduleBorderColor: var(--kt-gray-300);
             font-weight: 600;
             text-align: center;
         }
+
+        & .moduleSchedule_cellContent {
+            &:not(:last-child) {
+                margin-bottom: 0.06rem;
+            }
+        }
     }
 
     &_cellOverlay {
@@ -995,13 +1001,18 @@ $moduleScheduleBorderColor: var(--kt-gray-300);
                 }
             }
         }
+
+        & .moduleSchedule_cellContent {
+            &:not(:last-child) {
+                margin-bottom: 0.17rem;
+            }
+        }
     }
 
     &_cellContent {
         max-width: 100%;
 
         &:not(:last-child) {
-            margin-bottom: 1px;
             display: flex;
         }
     }

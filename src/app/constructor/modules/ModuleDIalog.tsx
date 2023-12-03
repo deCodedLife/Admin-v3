@@ -157,7 +157,7 @@ const ModuleDialogMessagesWrapper: React.FC<TModuleDialogMessagesWrapper> = ({ m
                 {({ handleSubmit }) => {
                     return <FormikForm>
                         <div className="moduleDialog_messagesTextarea">
-                            <ComponentTextarea article="message" />
+                            <ComponentTextarea article="message" rows={4}/>
                         </div>
                         <div className="moduleDialog_messagesButtonsContainer">
                             <ComponentButton
