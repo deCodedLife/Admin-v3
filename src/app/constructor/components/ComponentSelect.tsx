@@ -144,6 +144,7 @@ handleChange: (value: any) => void,
             menuPlacement="auto"
             formatOptionLabel={(option: { label: string, value: any, menu_label: string }, { context }) => <div>{context === "value" ? option.label : option.menu_label}</div>}
             isLoading={isLoading}
+            noOptionsMessage={() => intl.formatMessage({ id: "SEARCH.EMPTY_LIST" })}
         />
         {isError ? <div className="invalid_feedback">
             {error}

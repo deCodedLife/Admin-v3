@@ -214,6 +214,11 @@ const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
                                 settings={{ title: intl.formatMessage({ id: "BUTTON.PRINT" }), icon: "", background: "dark" }}
                                 customHandler={() => handlePrintContent(values.document_body)}
                             />
+                             <ComponentButton
+                                type="submit"
+                                settings={{ title: intl.formatMessage({ id: "BUTTON.SAVE" }), background: "dark", icon: "" }}
+                                customHandler={handleSubmit}
+                            />
                             {/* временно отключить возможность установки колонтитулов */}
                             {/* <Dropdown>
                                 <Dropdown.Toggle className="moduleDocuments_dropdown">
@@ -273,13 +278,6 @@ const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
                                 {!isVariablesLoading ? <ComponentTextEditor article="document_body" variables={variables.variables} tableVariables={variables.tableVariables} /> : null}
                             </div>
                         </div>
-                        <ComponentDashboard inverse>
-                            <ComponentButton
-                                type="submit"
-                                settings={{ title: intl.formatMessage({ id: "BUTTON.SAVE" }), background: "dark", icon: "" }}
-                                customHandler={handleSubmit}
-                            />
-                        </ComponentDashboard>
                         <Modal show={Boolean(editBlock)} onHide={() => setEditBlock(null)} size="xl" onEntering={setModalIndex}>
                             <Modal.Header closeButton>
                                 <Modal.Title>
