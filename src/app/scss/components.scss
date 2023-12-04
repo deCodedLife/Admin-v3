@@ -73,6 +73,22 @@
             background-color: var(--kt-danger-active);
         }
     }
+    
+    &.warning {
+        background-color: var(--kt-warning);
+
+        &:hover {
+            background-color: var(--kt-warning-active);
+        }
+    }
+
+    &.success {
+        background-color: var(--kt-success);
+
+        &:hover {
+            background-color: var(--kt-success-active);
+        }
+    }
 
     & svg,
     svg g,
