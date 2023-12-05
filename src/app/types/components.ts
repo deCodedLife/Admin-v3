@@ -21,7 +21,8 @@ type ComponentButtonHrefType = DefaultComponentButtonType<"href", { page: string
 type ComponentButtonScriptType = DefaultComponentButtonType<"script", {
     object: string,
     command: string,
-    data: any
+    data: any,
+    href?: string,
 }>
 type ComponentButtonSubmitType = DefaultComponentButtonType<"submit", { href?: string }>
 type ComponentButtonCustomType = DefaultComponentButtonType<"custom", {}>

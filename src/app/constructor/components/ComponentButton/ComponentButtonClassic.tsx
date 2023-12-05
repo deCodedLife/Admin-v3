@@ -15,7 +15,9 @@ import setModalIndex from "../../helpers/setModalIndex"
 const ComponentButtonClassic: React.FC<ComponentButtonClassicType> = ({ type, settings, defaultLabel = "title", className = "", disabled = false, customHandler }) => {
     const intl = useIntl()
     //Переделать !
-
+    if (type === "script") {
+        console.log(settings.href)
+    }
     //////
     const moduleContext = useModuleContext()
     const modalContext = useReactContext<any>(ModalContext)
@@ -39,7 +41,7 @@ const ComponentButtonClassic: React.FC<ComponentButtonClassicType> = ({ type, se
                     await api(settings.object, settings.command, settings.data)
                     moduleContext.refresh()
                     getSuccessToast("Успешно")
-                    return modalContext.setShow ? modalContext.setShow(false) : () => { }
+                    return modalContext.setShow ? modalContext.setShow(false) : settings.href ? navigate(settings.href) : () => { }
                 } catch (error) {
                     //@ts-ignore
                     return getErrorToast(error.message)
