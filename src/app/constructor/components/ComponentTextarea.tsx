@@ -34,7 +34,7 @@ const Field = React.memo<TField>(props => {
     </>
 })
 
-const ComponentTextarea: React.FC<ComponentTextareaType> = ({ article, is_disabled, rows = 18, customHandler }) => {
+const ComponentTextarea: React.FC<ComponentTextareaType> = ({ article, is_disabled, rows = 4, customHandler }) => {
     const [field, { error, touched }] = useField(article)
     const { onChange, onBlur, value } = field
     const isError = Boolean(error && touched)

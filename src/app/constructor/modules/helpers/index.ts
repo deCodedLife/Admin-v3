@@ -112,7 +112,6 @@ export const getMaskedString = (value: any, type: "phone" | "price", context: Ap
         const getCurrentMask = (type: "phone" | "price") => {
             switch (type) {
                 case "price":
-                    console.log(value)
                     const defaultMaskOptions = {
                         prefix: "", /* Number(value) < 0 ? "-" : '' - для отображения минуса */
                         suffix: context.currency ?? '₽',

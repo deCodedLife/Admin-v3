@@ -61,7 +61,8 @@ export const useHook = (article: string, values: any, setFieldValue: (article: s
     const [valueForHook, setValueForHook] = useState<any>(null)
 
     useEffect(() => {
-        if (valueForHook && hook) {
+        const isValidValue = valueForHook !== null && valueForHook !== undefined
+        if (isValidValue && hook) {
             hookAfterChange(article, valueForHook, values, setFieldValue, hook)
         }
     }, [valueForHook])
