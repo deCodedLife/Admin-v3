@@ -1,5 +1,5 @@
 import { Formik, Form as FormikForm, useFormikContext } from "formik"
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { Col, Form, Modal } from "react-bootstrap"
 import useItem from "../../api/hooks/useItem"
 import useMutate from "../../api/hooks/useMutate"
@@ -210,7 +210,7 @@ const RoleDetailsModal: React.FC<ModuleRolesDetailsModalType> = ({ chosenRole, s
 }
 
 
-const RoleCard: React.FC<ModuleRolesCardType> = ({ title, permissions, notificationTypes, article, setRole, id }) => {
+const RoleCard: React.FC<ModuleRolesCardType> = ({ title, permissions, notificationTypes, article, setRole, handleRemoveRoleClick, id }) => {
     const intl = useIntl()
     /* Устанавливается значение доступов в превью под отображение, остаточное количество доступов используется для вывода текста с многоточием */
     const previewedPermissionsCount = 6
@@ -244,6 +244,11 @@ const RoleCard: React.FC<ModuleRolesCardType> = ({ title, permissions, notificat
                         permissions,
                         notificationTypes
                     })} />
+                    <ComponentButton
+                    type="custom"
+                    settings={{ title: intl.formatMessage({ id: "ROLES.DELETE_BUTTON" }), background: "danger", icon: "", attention_modal: true }}
+                    customHandler={() => handleRemoveRoleClick(id)}
+                    />
             </div>
         </div>
     </Form.Group>
@@ -252,10 +257,19 @@ const RoleCard: React.FC<ModuleRolesCardType> = ({ title, permissions, notificat
 const ModuleRoles: React.FC<ModuleRolesType> = () => {
     const { data, isLoading, refetch } = useItem<Array<ApiRoleType>>("roles", {})
     const [chosenRole, setRole] = useState<ApiRoleType | null>(null)
+    const { mutate: removeRole, isSuccess: isRemoveRoleSuccess } = useMutate<{id: number}>("roles", "remove")
+
+    useEffect(() => {
+        if (isRemoveRoleSuccess) {
+            refetch()
+        }
+    }, [isRemoveRoleSuccess])
+
+    const handleRemoveRoleClick = useCallback((id: number) => removeRole({id}), [])
 
 
     return <div className="moduleRoles">
-        {data?.map((role) => <RoleCard key={role.id}  {...role} setRole={setRole} />)}
+        {data?.map((role) => <RoleCard key={role.id}  {...role} setRole={setRole} handleRemoveRoleClick={handleRemoveRoleClick} />)}
         <RoleDetailsModal chosenRole={chosenRole} setRole={setRole} refetchRoles={refetch} />
         <SplashScreen active={isLoading} />
     </div>

@@ -33,6 +33,17 @@
             font-size: 2.5rem;
         }
     }
+
+    .moduleRoles {
+        & .card-footer {
+            flex-direction: column;
+
+            &>*:not(:last-child) {
+                margin-right: 0;
+                margin-bottom: 0.5rem;
+            }
+        }
+    }
 }
 
 @media (min-width: 991.98px) {
@@ -57,6 +68,7 @@
             font-size: 2.5rem;
         }
     }
+
     .moduleSchedule_modal,
     .componentButton_modal {
         max-width: 1050px;
@@ -158,6 +170,7 @@
             font-size: 2rem;
         }
     }
+
     .moduleSchedule_modal,
     .componentButton_modal {
         max-width: 80vw;
@@ -308,6 +321,7 @@
             font-size: 1rem;
         }
     }
+
     .moduleSchedule_modal,
     .componentButton_modal {
         max-width: unset;
@@ -320,9 +334,11 @@
     .componentDashboard {
         flex-direction: column;
         height: unset;
-        & > * {
+
+        &>* {
             width: 100%;
             margin: 0;
+
             &:not(:last-child) {
                 margin-bottom: 0.5rem;
             }

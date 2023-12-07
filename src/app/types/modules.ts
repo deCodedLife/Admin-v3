@@ -280,7 +280,8 @@ export type ModuleRolesDetailsModalType = {
     refetchRoles: () => void
 }
 export type ModuleRolesCardType = ApiRoleType & {
-    setRole: (role: ApiRoleType) => void
+    setRole: (role: ApiRoleType) => void,
+    handleRemoveRoleClick: (id: number) => void
 }
 export type ModuleRolesType = DefaultModuleType<"roles", Array<any>, Array<any>>
 

@@ -177,6 +177,7 @@
   "QUEUE.NOTICE": "Для работы с электронной очередью пожалуйста, выберите нужный филиал",
   "ROLES.AND_MORE": "И еще",
   "ROLES.EDIT_BUTTON": "Редактировать роль",
+  "ROLES.DELETE_BUTTON": "Удалить роль",
   "ROLES.ROLE_TITLE_LABEL": "Название роли",
   "ROLES.NOTIFICATIONS": "Уведомления",
   "ROLES.PERMISSIONS": "Доступы",

@@ -177,6 +177,7 @@
   "QUEUE.NOTICE": "To work with the electronic queue, please select the store",
   "ROLES.AND_MORE": "And more",
   "ROLES.EDIT_BUTTON": "Edit role",
+  "ROLES.DELETE_BUTTON": "Delete role",
   "ROLES.ROLE_TITLE_LABEL": "Role title",
   "ROLES.NOTIFICATIONS": "Notifications",
   "ROLES.PERMISSIONS": "Permissions",
