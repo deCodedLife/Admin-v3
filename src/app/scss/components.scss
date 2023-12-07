@@ -35,7 +35,15 @@
         }
 
         & .componentButton:not(:last-child) {
-            margin-right: 10px;
+            margin-right: 1rem;
+        }
+
+        &.marginless {
+            margin-bottom: 0;
+        }
+
+        &.paddingless {
+            padding: 0;
         }
     }
 
@@ -88,6 +96,11 @@
         &:hover {
             background-color: var(--kt-success-active);
         }
+    }
+
+    &.gray {
+        background-color: var(--kt-text-gray-300);
+        color: var(--kt-text-gray-700);
     }
 
     & svg,

@@ -291,3 +291,18 @@ export const useSearch = (key: string) => {
         search, setSearch
     }
 }
+
+
+//хук для определения подстраницы
+
+export const useIsSubpage = () => {
+    const { pathname } = useLocation()
+
+    const isSubpage = useMemo(() => {
+        const slicedPathname = pathname.slice(1)
+        const pathnameAsArray = slicedPathname.split("/")
+        return pathnameAsArray.length > 1
+    }, [pathname])
+
+    return isSubpage
+}

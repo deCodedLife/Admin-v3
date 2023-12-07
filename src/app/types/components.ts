@@ -8,7 +8,7 @@ type DefaultComponentButtonType<type = string, settings = any> = {
     type: type,
     settings: settings & {
         title: string,
-        background: "dark" | "light" | "danger" | "warning" | "success",
+        background: "dark" | "light" | "danger" | "warning" | "success" | "gray",
         icon: string,
         attention_modal?: boolean
     },

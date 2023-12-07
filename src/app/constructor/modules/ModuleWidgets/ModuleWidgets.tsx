@@ -78,25 +78,25 @@ const ModuleWidgetsSimpleReport: React.FC<{ data: Array<any> }> = ({ data }) => 
         {data.map(widget => <Widget key={widget.description + widget.value} data={widget} />)}
     </>
 }
-const ModuleWidgetsHardReport: React.FC<{data: {report: Array<any>, status: "no_cache" | "updating" | "updated", updated_at: null | string}}> = ({data}) => {
-    const {report, status} = data
+const ModuleWidgetsHardReport: React.FC<{ data: { report: Array<any>, status: "no_cache" | "updating" | "updated", updated_at: null | string } }> = ({ data }) => {
+    const { report, status } = data
     return <div className="moduleWidgets_hardReportContainer">
         {status === "no_cache" ? <div className="moduleWidgets_infoCard">
             <span>По данному отчёту еще не запрашивалась информация. Пожалуйста, нажмите на кнопку "Обновить отчёт".</span>
+        </div> :
+            status === "updating" ? <div className="moduleWidgets_infoCard">
+                <span>Отчёт в процессе формирования. Пожалуйста, ожидайте.</span>
             </div> :
-         status === "updating" ? <div className="moduleWidgets_infoCard">
-            <span>Отчёт в процессе формирования. Пожалуйста, ожидайте.</span>
-            </div> :
-         report.map(widget => <Widget key={widget.description + widget.value} data={widget} />)}
+                report.map(widget => <Widget key={widget.description + widget.value} data={widget} />)}
     </div>
 }
-const ModuleWidgetsToolbar: React.FC<{updated_at: string | null, status: "no_cache" | "updating" | "updated", handleUpdateHardReport: () => Promise<void>}> = (props) => {
-    const {updated_at, status, handleUpdateHardReport} = props
+const ModuleWidgetsToolbar: React.FC<{ updated_at: string | null, status: "no_cache" | "updating" | "updated", handleUpdateHardReport: () => Promise<void> }> = (props) => {
+    const { updated_at, status, handleUpdateHardReport } = props
     const resolvedUpdateTime = updated_at ? moment(updated_at).format("DD.MM.YY г. HH:mm") : "-"
     const isButtonDisabled = status === "updating"
     return <div className="moduleWidgets_toolbar">
         <div className="moduleWidgets_updateTime">{`Последнее обновление: ${resolvedUpdateTime}`}</div>
-        <ComponentButton type="custom" settings={{title: "Обновить отчёт", background: "dark", icon: ""}} customHandler={handleUpdateHardReport} disabled={isButtonDisabled} />
+        <ComponentButton type="custom" settings={{ title: "Обновить отчёт", background: "dark", icon: "" }} customHandler={handleUpdateHardReport} disabled={isButtonDisabled} />
     </div>
 }
 
@@ -116,24 +116,28 @@ const ModuleWidgets = React.memo<ModuleWidgetsType>((props) => {
     useUpdate([{ active: Boolean(hook), update: refetch }], hook, 1000)
     const showToolbar = data && !Array.isArray(data)
     const handleUpdateHardReport = async () => {
-        await api("hardReports", "add", {reportArticle: widgetCommand, filters: filter})
+        await api("hardReports", "add", { reportArticle: widgetCommand, filters: filter })
         setTimeout(refetch, 1000)
     }
     return <div className="moduleWidgets">
-        <ComponentDashboard>
-        {haveButtons ? components.buttons.map(button => <ComponentButton key={button.settings.title} className="dark-light" {...button} />) : null}
-            {haveFilter ? <ComponentFilters
-                type="dropdown"
-                data={components.filters}
-                filterValues={filter}
-                isInitials={isInitials}
-                handleChange={setFilter}
-                handleReset={resetFilter}
-            /> : null}
-        </ComponentDashboard>
-        {showToolbar ? <ModuleWidgetsToolbar updated_at={data.updated_at} status={data.status} handleUpdateHardReport={handleUpdateHardReport}/> : null}
+        {
+            haveButtons || haveFilter ?
+                <ComponentDashboard>
+                    {haveButtons ? components.buttons.map(button => <ComponentButton key={button.settings.title} className="dark-light" {...button} />) : null}
+                    {haveFilter ? <ComponentFilters
+                        type="dropdown"
+                        data={components.filters}
+                        filterValues={filter}
+                        isInitials={isInitials}
+                        handleChange={setFilter}
+                        handleReset={resetFilter}
+                    /> : null}
+                </ComponentDashboard> : null
+        }
+
+        {showToolbar ? <ModuleWidgetsToolbar updated_at={data.updated_at} status={data.status} handleUpdateHardReport={handleUpdateHardReport} /> : null}
         <SplashScreen active={isLoading} />
-        {data ? Array.isArray(data) ? <ModuleWidgetsSimpleReport data={data} /> : <ModuleWidgetsHardReport data={data} /> : null }
+        {data ? Array.isArray(data) ? <ModuleWidgetsSimpleReport data={data} /> : <ModuleWidgetsHardReport data={data} /> : null}
     </div>
 })
 

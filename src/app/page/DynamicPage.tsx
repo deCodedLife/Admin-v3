@@ -1,23 +1,30 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import usePage from '../api/hooks/usePage'
 import PageError from './PageError'
 import PageBuilder from './PageBuilder'
 import { useLocation, useNavigate } from 'react-router-dom'
 import ComponentButton from '../constructor/components/ComponentButton'
 import { useIntl } from 'react-intl'
+import { useIsSubpage } from '../constructor/modules/helpers'
 
-const DynamicPageComponent: React.FC = () => {
+
+const HandleSubmitContext = React.createContext<(callback: ((e?: React.FormEvent<HTMLFormElement> | undefined) => void) | null) => void>(() => { })
+export const useHandleSubmitContext = () => useContext(HandleSubmitContext)
+
+const DynamicPageComponent = React.memo(() => {
+
     const { isFetching, error, data } = usePage()
     if (error) {
         return <PageError error={error as Error} />
     }
     return <PageBuilder isFetching={isFetching} data={data} />
-}
+})
 
 const DynamicPage: React.FC = () => {
     const intl = useIntl()
     const { pathname } = useLocation()
     const navigate = useNavigate()
+    const [handleSubmit, setHandleSubmit] = useState<((e?: React.FormEvent<HTMLFormElement> | undefined) => void) | null>(null)
 
     useEffect(() => {
         const pathsArray = sessionStorage.getItem("paths") ?? JSON.stringify([])
@@ -48,18 +55,22 @@ const DynamicPage: React.FC = () => {
         }
     }
 
-    const isSubpage = useMemo(() => {
-        const slicedPathname = pathname.slice(1)
-        const pathnameAsArray = slicedPathname.split("/")
-        return pathnameAsArray.length > 1
-    }, [pathname])
-    return <>
-        {isSubpage ? <ComponentButton
-            type='custom'
-            settings={{ title: intl.formatMessage({ id: "BUTTON.PREVIOUS" }), icon: "", background: "dark" }}
-            customHandler={handleReturnClick} /> : null}
+    const isSubpage = useIsSubpage()
+
+    return <HandleSubmitContext.Provider value={setHandleSubmit}>
+        {isSubpage ? <div className="componentButton_container inverse marginless paddingless">
+            <ComponentButton
+                type='custom'
+                settings={{ title: intl.formatMessage({ id: "BUTTON.PREVIOUS" }), icon: "", background: "gray" }}
+                customHandler={handleReturnClick} />
+            {handleSubmit ? <ComponentButton
+                type='custom'
+                settings={{ title: intl.formatMessage({ id: "BUTTON.SAVE" }), icon: "", background: "dark" }}
+                customHandler={handleSubmit} />
+                : null}
+        </div> : null}
         <DynamicPageComponent />
-    </>
+    </HandleSubmitContext.Provider>
 }
 
 export default DynamicPage

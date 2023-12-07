@@ -12,26 +12,63 @@ import * as Yup from 'yup';
 //@ts-ignore
 import { default as printer } from 'print-html-element';
 import useMutate from "../../api/hooks/useMutate"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import useRequest from "../../api/hooks/useRequest"
 import { Component } from "./ModuleForm/ModuleForm"
-import { useIntl } from "react-intl"
+import { IntlShape, useIntl } from "react-intl"
 import ComponentTooltip from "../components/ComponentTooltip"
 import setModalIndex from "../helpers/setModalIndex"
 import api from "../../api"
 import { getErrorToast } from "../helpers/toasts"
+import { useIsSubpage } from "./helpers"
+import { useHandleSubmitContext } from "../../page/DynamicPage"
+import { isEqual } from "lodash"
 
+
+type TModuleDocumentsButtons = {
+    intl: IntlShape,
+    isSubpage: boolean,
+    document_body: string,
+    handleSubmit: (e?: React.FormEvent<HTMLFormElement> | undefined) => void,
+    handlePrintContent: (content: string) => void
+}
+
+const ModuleDocumentsButtons = React.memo<TModuleDocumentsButtons>(props => {
+    const { intl, isSubpage, document_body, handleSubmit, handlePrintContent } = props
+    const setHandleSubmit = useHandleSubmitContext()
+    useEffect(() => {
+        if (isSubpage) {
+            setHandleSubmit(() => handleSubmit)
+            return () => setHandleSubmit(prev => isEqual(prev, handleSubmit) ? null : prev)
+        }
+    }, [])
+    return <div className="componentButton_container inverse">
+        <ComponentButton
+            type="custom"
+            settings={{ title: intl.formatMessage({ id: "BUTTON.PRINT" }), icon: "", background: "dark" }}
+            customHandler={() => handlePrintContent(document_body)}
+        />
+        {
+            !isSubpage ? <ComponentButton
+                type="submit"
+                settings={{ title: intl.formatMessage({ id: "BUTTON.SAVE" }), background: "dark", icon: "" }}
+                customHandler={handleSubmit}
+            /> : null
+        }
+    </div>
+})
 
 const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
     const intl = useIntl()
     const { settings } = props
     const { object, command, fields_list } = settings
-    const { pathname } = useLocation()
     const navigate = useNavigate()
     const { data } = useDocument()
     const { data: serverVariables, isLoading: isVariablesLoading } = useRequest('admin', "get-variables", {})
     const { mutate, isSuccess } = useMutate(object, command)
     const [editBlock, setEditBlock] = useState<{ type: "header" | "footer", content: string } | null>(null)
+
+    const isSubpage = useIsSubpage()
 
     /* const handlePrintContent = (documentContent: { header?: string, body: string, footer?: string }) => {
         const { header, footer, body } = documentContent
@@ -55,7 +92,7 @@ const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
     } */
 
     const handlePrintContent = async (content: string) => {
-        const response = await api("documents", "print", {body: content})
+        const response = await api("documents", "print", { body: content })
         if (response.data) {
             printer.printHtml(response.data)
         } else {
@@ -85,11 +122,6 @@ const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
         document_body: Yup.string().required(" ")
     })
 
-    const isSubpage = useMemo(() => {
-        const slicedPathname = pathname.slice(1)
-        const pathnameAsArray = slicedPathname.split("/")
-        return pathnameAsArray.length > 1
-    }, [pathname])
 
     useEffect(() => {
         if (isSuccess && isSubpage) {
@@ -208,17 +240,15 @@ const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
                         }
                     }
                     return <FormikForm className="moduleDocuments_form">
+                        <ModuleDocumentsButtons
+                            intl={intl}
+                            isSubpage={isSubpage}
+                            document_body={values.document_body}
+                            handlePrintContent={handlePrintContent}
+                            handleSubmit={handleSubmit}
+                        />
                         <ComponentDashboard inverse>
-                            <ComponentButton
-                                type="custom"
-                                settings={{ title: intl.formatMessage({ id: "BUTTON.PRINT" }), icon: "", background: "dark" }}
-                                customHandler={() => handlePrintContent(values.document_body)}
-                            />
-                             <ComponentButton
-                                type="submit"
-                                settings={{ title: intl.formatMessage({ id: "BUTTON.SAVE" }), background: "dark", icon: "" }}
-                                customHandler={handleSubmit}
-                            />
+
                             {/* временно отключить возможность установки колонтитулов */}
                             {/* <Dropdown>
                                 <Dropdown.Toggle className="moduleDocuments_dropdown">
@@ -253,7 +283,7 @@ const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
                                 {/*
                                 --- Привязка к объекту. Отключена 
                                  */}
-                               {/*  <Form.Group className="moduleDocuments_field" as={Col} md={12}>
+                                {/*  <Form.Group className="moduleDocuments_field" as={Col} md={12}>
                                     <ComponentTooltip title={intl.formatMessage({ id: "DOCUMENTS.BIND_TO_LABEL" })}>
                                         <label className="moduleDocuments_fieldLabel required">
                                             {intl.formatMessage({ id: "DOCUMENTS.BIND_TO_LABEL" })}

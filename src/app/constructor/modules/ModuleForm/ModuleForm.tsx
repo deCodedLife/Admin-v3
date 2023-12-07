@@ -5,7 +5,7 @@ import { Col, Form } from "react-bootstrap"
 import ComponentInput from "../../components/ComponentInput"
 import ComponentSelect from "../../components/ComponentSelect"
 import useMutate from "../../../api/hooks/useMutate"
-import { getFields, getInitialValues, getValidationSchema } from "../helpers"
+import { getFields, getInitialValues, getValidationSchema, useIsSubpage } from "../helpers"
 import { useLocation, useNavigate } from "react-router-dom"
 import { ModuleFormAreaType, ModuleFormBlockType, ModuleFormFieldType, ModuleFormType } from "../../../types/modules"
 import { ComponentButtonType } from "../../../types/components"
@@ -29,6 +29,8 @@ import ComponentTooltip from "../../components/ComponentTooltip"
 import ComponentAnnotation from "../../components/ComponentAnnotation"
 import InfoModal from "./InfoModal"
 import ComponentGooglePlaces from "../../components/ComponentGooglePlaces"
+import { useHandleSubmitContext } from "../../../page/DynamicPage"
+import { isEqual } from "lodash"
 //Тип поля
 export const Component = React.memo<ModuleFormFieldType>((props) => {
     const { article, data_type, field_type, is_disabled, is_visible = true, hook, is_clearable, object_id, request_object } = props
@@ -204,15 +206,15 @@ const ModuleFormBlock: React.FC<ModuleFormBlockType> = ({ title, fields, buttons
         }
         <div className="moduleForm_block_fields card-body">
             {fields.map(field => <ModuleFormField
-             key={field.article}
-              {...field}
-               buttons={buttons} 
-               request_object={request_object}
+                key={field.article}
+                {...field}
+                buttons={buttons}
+                request_object={request_object}
                 object_id={object_id}
                 isFieldDisabled={disabledState[field.article]}
                 isFieldVisible={visibilityState[field.article]}
                 fieldDescription={descriptionsState[field.article]}
-                 />)}
+            />)}
         </div>
 
     </div>
@@ -234,6 +236,39 @@ const getAreaKey = (area: ModuleFormAreaType) => {
     }, "")
     return `${area.size}${concatedAreaTitles}`
 }
+
+type TModuleFormButtons = {
+    className: string,
+    buttons: Array<ComponentButtonType>,
+    isSubpage: boolean,
+    handleSubmit: (e?: React.FormEvent<HTMLFormElement> | undefined) => void
+}
+
+const ModuleFormButtons = React.memo<TModuleFormButtons>(props => {
+    const { className, buttons, isSubpage, handleSubmit } = props
+    const setHandleSubmit = useHandleSubmitContext()
+    const resolvedClassName = `componentButton_container ${className}`
+    
+    const resolvedButtons = useMemo(() => {
+        if (isSubpage) {
+            return buttons.filter(button => button.type !== "submit")
+        } else {
+            return buttons
+        }
+    }, [])
+
+    useEffect(() => {
+        if (isSubpage) {
+            setHandleSubmit(() => handleSubmit)
+            return () => setHandleSubmit(prev => isEqual(prev, handleSubmit) ? null : prev)
+        }
+    }, [])
+
+    return <Form.Group className={resolvedClassName} as={Col} md={12}>
+        {resolvedButtons.map(button => <ComponentButton key={button.type + button.settings.title} {...button} />)}
+    </Form.Group>
+})
+
 
 const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
     //контекст нужен для передачи дополнительных инит значений (прим.: модалка в расписании)
@@ -332,6 +367,9 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
 
     const isFormInsideModal = Boolean(modalContext.insideModal)
     const buttonsContainerAdditionalClass = isFormInsideModal ? buttons.length === 2 ? "between" : "" : "inverse"
+
+    const isSubpage = useIsSubpage()
+
     return <Formik
         enableReinitialize
         initialValues={formConfiguration.initialValues}
@@ -344,9 +382,7 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
                     <div className="moduleForm_container">
                         {areas.map(area => <ModuleFormArea key={getAreaKey(area)} {...area} buttons={fieldButtons} request_object={object} object_id={id} />)}
                     </div>
-                    <Form.Group className={`componentButton_container ${buttonsContainerAdditionalClass}`} as={Col} md={12}>
-                        {mainButtons.map(button => <ComponentButton key={button.type + button.settings.title} {...button} customHandler={handleSubmit} />)}
-                    </Form.Group>
+                    <ModuleFormButtons className={buttonsContainerAdditionalClass} buttons={mainButtons} handleSubmit={handleSubmit} isSubpage={isSubpage} />
                 </FormikForm>
                 <InfoModal />
             </div>
