@@ -241,16 +241,17 @@ type TModuleFormButtons = {
     className: string,
     buttons: Array<ComponentButtonType>,
     isSubpage: boolean,
+    isFormInsideModal: boolean,
     handleSubmit: (e?: React.FormEvent<HTMLFormElement> | undefined) => void
 }
 
 const ModuleFormButtons = React.memo<TModuleFormButtons>(props => {
-    const { className, buttons, isSubpage, handleSubmit } = props
+    const { className, buttons, isSubpage, isFormInsideModal, handleSubmit } = props
     const setHandleSubmit = useHandleSubmitContext()
     const resolvedClassName = `componentButton_container ${className}`
     
     const resolvedButtons = useMemo(() => {
-        if (isSubpage) {
+        if (isSubpage && !isFormInsideModal) {
             return buttons.filter(button => button.type !== "submit")
         } else {
             return buttons
@@ -258,7 +259,7 @@ const ModuleFormButtons = React.memo<TModuleFormButtons>(props => {
     }, [])
 
     useEffect(() => {
-        if (isSubpage) {
+        if (isSubpage && !isFormInsideModal) {
             setHandleSubmit(() => handleSubmit)
             return () => setHandleSubmit(prev => isEqual(prev, handleSubmit) ? null : prev)
         }
@@ -382,7 +383,7 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
                     <div className="moduleForm_container">
                         {areas.map(area => <ModuleFormArea key={getAreaKey(area)} {...area} buttons={fieldButtons} request_object={object} object_id={id} />)}
                     </div>
-                    <ModuleFormButtons className={buttonsContainerAdditionalClass} buttons={mainButtons} handleSubmit={handleSubmit} isSubpage={isSubpage} />
+                    <ModuleFormButtons className={buttonsContainerAdditionalClass} buttons={mainButtons} handleSubmit={handleSubmit} isSubpage={isSubpage} isFormInsideModal={isFormInsideModal} />
                 </FormikForm>
                 <InfoModal />
             </div>

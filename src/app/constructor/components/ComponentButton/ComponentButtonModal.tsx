@@ -58,7 +58,8 @@ const ComponentButtonModal: React.FC<ComponentButtonModalType> = ({ settings, de
             // коллбэк, выполняемый после отправки формы
             handleResponse,
             //если передать в setShow функцию, то, после отправки формы, закроется модалка
-            setShow: handleClose
+            setShow: handleClose,
+            insideModal: true
         }
     }, [])
     return <>
