@@ -247,10 +247,9 @@ const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
                             handlePrintContent={handlePrintContent}
                             handleSubmit={handleSubmit}
                         />
-                        <ComponentDashboard inverse>
-
-                            {/* временно отключить возможность установки колонтитулов */}
-                            {/* <Dropdown>
+                         {/* временно отключить возможность установки колонтитулов */}
+                        {/* <ComponentDashboard inverse>
+                            <Dropdown>
                                 <Dropdown.Toggle className="moduleDocuments_dropdown">
                                     {intl.formatMessage({ id: "DROPDOWN.TITLE" })}
                                 </Dropdown.Toggle>
@@ -268,8 +267,8 @@ const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
                                         handlePrintContent({ header: values.document_header, body: values.document_body, footer: values.document_footer })
                                     }}> {intl.formatMessage({ id: "BUTTON.PRINT" })}</Dropdown.Item>
                                 </Dropdown.Menu>
-                            </Dropdown> */}
-                        </ComponentDashboard>
+                            </Dropdown>
+                        </ComponentDashboard> */}
                         <div className="moduleDocuments_block card">
                             <div className="card-body">
                                 <Form.Group className="moduleDocuments_field" as={Col} md={12}>

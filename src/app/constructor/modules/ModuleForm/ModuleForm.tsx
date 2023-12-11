@@ -265,7 +265,7 @@ const ModuleFormButtons = React.memo<TModuleFormButtons>(props => {
     }, [])
 
     return <Form.Group className={resolvedClassName} as={Col} md={12}>
-        {resolvedButtons.map(button => <ComponentButton key={button.type + button.settings.title} {...button} />)}
+        {resolvedButtons.map(button => <ComponentButton key={button.type + button.settings.title} {...button} customHandler={handleSubmit} />)}
     </Form.Group>
 })
 
