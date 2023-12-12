@@ -299,14 +299,20 @@ export type ModuleScheduleEventType = {
 export type ModuleScheduleServerCellType = {
     steps: Array<number>,
     status: string,
-    event?: ModuleScheduleEventType
+    event?: ModuleScheduleEventType,
+    initials?: {
+        [key: string]: any
+    }
 }
 
 export type ModuleScheduleCellType = {
     type: string,
     time: string,
     cell_height: number,
-    event?: ModuleScheduleEventType
+    event?: ModuleScheduleEventType,
+    initials?: {
+        [key: string]: any
+    }
 }
 
 export type ModuleScheduleColumnType = {
@@ -320,7 +326,7 @@ export type ModuleScheduleColumnType = {
 
 export type ModuleScheduleComponentCellType = ModuleScheduleCellType & {
     date: string,
-    initials: {
+    innerInitials?: {
         [key: string]: any
     }
     setSelectedCell: (cell: any) => void

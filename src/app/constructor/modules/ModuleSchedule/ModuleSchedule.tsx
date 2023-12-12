@@ -39,7 +39,8 @@ const getEmployeeSchedule = (schedule: Array<ModuleScheduleServerCellType>, step
                 return acc.concat(currentSteps.map(step => ({
                     type: "available",
                     time: step,
-                    cell_height: 1
+                    cell_height: 1,
+                    initials: graph.initials
                 })))
             default:
                 return acc.concat(currentSteps.map(step => ({
@@ -67,7 +68,7 @@ const getScheduleAsArray = (data?: ApiScheduleType) => {
 }
 
 const ModuleScheduleCell: React.FC<ModuleScheduleComponentCellType> = (props) => {
-    const { type, date, time, cell_height, event, initials, setSelectedCell } = props
+    const { type, date, time, cell_height, event, initials, innerInitials, setSelectedCell,  } = props
     const currentCellHeight = `${3.15 * cell_height + 0.5 * (cell_height - 1)}rem`
     const handleClick = () => {
         if (type === "disabled") {
@@ -78,7 +79,7 @@ const ModuleScheduleCell: React.FC<ModuleScheduleComponentCellType> = (props) =>
                 date,
                 time,
                 event,
-                initials
+                initials: Object.assign({}, initials, innerInitials ?? {})
             })
         }
     }
@@ -135,7 +136,7 @@ const ModuleScheduleCell: React.FC<ModuleScheduleComponentCellType> = (props) =>
 }
 const ModuleScheduleColumn: React.FC<ModuleScheduleComponentColumnType> = (props) => {
     const { performer_title, performer_href, schedule, date, initials, setSelectedCell } = props
-    
+
     return <div className="moduleSchedule_employeeColumn">
         <a href={performer_href ?? ""} target="_blank">
             <div className="moduleSchedule_employeeColumnHeader">
@@ -151,6 +152,7 @@ const ModuleScheduleColumn: React.FC<ModuleScheduleComponentColumnType> = (props
             cell_height={cell.cell_height}
             event={cell.event}
             initials={initials}
+            innerInitials={cell.initials}
             setSelectedCell={setSelectedCell}
         />)}
     </div>
