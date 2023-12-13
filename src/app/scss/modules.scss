@@ -115,20 +115,21 @@
 
     }
 
-    &_dateCell {
+    &_dateCell, &_cellWrapper {
         display: inline-block;
         padding: 0.25rem 0.5rem;
         border-radius: 0.625rem;
-
+        white-space: nowrap;
         &.bg-primary,
-        &.bg-danger {
+        &.bg-danger,
+        &.bg-success {
             color: var(--kt-primary-inverse);
         }
     }
 
     &_priceCell {
         display: inline-block;
-        padding: 0.25rem 1rem;
+        padding: 0.25rem 0.5rem;
         background-color: lighten(#50cd89, 15%);
         border-radius: 0.625rem;
         &.negative {

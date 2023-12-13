@@ -112,10 +112,10 @@ const NumberField = React.memo<TNumberField>(props => {
 
 
 
-const ComponentInput: React.FC<ComponentInputType> = ({ article, field_type, is_disabled, hook, onBlurSubmit, placeholder, className, customHandler }) => {
-
+const ComponentInput: React.FC<ComponentInputType> = props => {
+    const { article, field_type, is_disabled, hook, onBlurSubmit, placeholder, className, suffix,  customHandler } = props
     const { values, setFieldValue, handleSubmit } = useFormikContext<any>()
-    const [{ name, value, onChange, onBlur }, { error, touched }] = useField(article)
+    const [{ name, value, onBlur }, { error, touched }] = useField(article)
     const isMaskedInput = field_type === "integer" || field_type === "float"
     const isError = Boolean(error && touched)
     const resolvedClassName = `form-control form-control-solid${isError ? " invalid" : ""} ${className}`
@@ -130,7 +130,7 @@ const ComponentInput: React.FC<ComponentInputType> = ({ article, field_type, is_
 
             const defaultMaskOptions = {
                 prefix: '',
-                suffix: '',
+                suffix: suffix ?? '',
                 includeThousandsSeparator: true,
                 thousandsSeparatorSymbol: ' ',
                 allowDecimal,
@@ -151,7 +151,8 @@ const ComponentInput: React.FC<ComponentInputType> = ({ article, field_type, is_
             return customHandler(event)
         } else {
             if (isMaskedInput) {
-                return onChange(event)
+                const resolvedValue = Number(event?.target.value.replace(/[^\d]/g, ""))
+                return setFieldValue(name, resolvedValue)
             } else {
                 let resolvedValue
                 const inputValue = event.target.value
@@ -170,8 +171,7 @@ const ComponentInput: React.FC<ComponentInputType> = ({ article, field_type, is_
     }, [])
 
     const handleBlur = useCallback((event: React.FocusEvent<HTMLInputElement>) => {
-        const resolvedValue = isMaskedInput ? Number(event.target.value.replace(/\s+/g, "")) : event.target.value
-        setFieldValue(name, resolvedValue)
+        const resolvedValue = isMaskedInput ? Number(event?.target.value.replace(/[^\d]/g, "")) : event.target.value
 
         if (hook) {
             setValueForHook(resolvedValue)

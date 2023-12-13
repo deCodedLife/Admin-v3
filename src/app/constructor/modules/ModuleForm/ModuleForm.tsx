@@ -46,6 +46,7 @@ export const Component = React.memo<ModuleFormFieldType>((props) => {
                 field_type={field_type}
                 is_disabled={Boolean(is_disabled)}
                 hook={hook}
+                suffix={props.suffix}
             />
         case "textarea":
             return <ComponentTextarea

@@ -105,14 +105,14 @@ export const getMaskedPhone = (format: ApiSetupType["phone_format"]) => {
 
 
 //функция для форматирования наложения маски на телефон (строка)
-export const getMaskedString = (value: any, type: "phone" | "price", context: ApiSetupType) => {
+export const getMaskedString = (value: any, type: "phone" | "price" | "float" | "integer", context: ApiSetupType, suffix = "") => {
     if (!value || value === "null" || value === "undefined") {
         return ""
     } else {
-        const getCurrentMask = (type: "phone" | "price") => {
+        const getCurrentMask = (type: "phone" | "price" | "float" | "integer") => {
             switch (type) {
                 case "price":
-                    const defaultMaskOptions = {
+                    return createNumberMask({
                         prefix: "", /* Number(value) < 0 ? "-" : '' - для отображения минуса */
                         suffix: context.currency ?? '₽',
                         includeThousandsSeparator: true,
@@ -122,8 +122,20 @@ export const getMaskedString = (value: any, type: "phone" | "price", context: Ap
                         decimalLimit: 2,
                         allowNegative: false,
                         allowLeadingZeroes: false,
-                    }
-                    return createNumberMask({ ...defaultMaskOptions, })
+                    })
+                case "integer":
+                case "float":
+                    return createNumberMask({
+                        prefix: "",
+                        suffix: suffix ?? "",
+                        includeThousandsSeparator: true,
+                        thousandsSeparatorSymbol: ' ',
+                        allowDecimal: type === "float",
+                        decimalSymbol: '.',
+                        decimalLimit: 2,
+                        allowNegative: false,
+                        allowLeadingZeroes: false,
+                    })
                 case "phone":
                 default:
                     return getMaskedPhone(context.phone_format).mask

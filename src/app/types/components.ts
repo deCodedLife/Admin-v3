@@ -122,6 +122,7 @@ export type ComponentInputType = {
     onBlurSubmit?: boolean,
     placeholder?: string,
     className?: string,
+    suffix?: string,
     customHandler?: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }
 

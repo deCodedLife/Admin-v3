@@ -35,7 +35,7 @@ type DefaultModuleFormFieldType<field_type = string, settings = null, additional
     object_id?: string | number,
     request_object?: string
 } & additionals
-type ModuleFormFieldInputType = DefaultModuleFormFieldType<ComponentInputType["field_type"], null, { min_value?: number, max_value?: number }>
+type ModuleFormFieldInputType = DefaultModuleFormFieldType<ComponentInputType["field_type"], null, { min_value?: number, max_value?: number, suffix?: string }>
 type ModuleFormFieldTextareaType = DefaultModuleFormFieldType<"textarea", { rows?: number } | null, { min_value?: number, max_value?: number }>
 type ModuleFormFieldPriceType = DefaultModuleFormFieldType<"price", null, { min_value?: number, max_value?: number }>
 type ModuleFormFieldPhoneType = DefaultModuleFormFieldType<"phone", null, { min_value?: number, max_value?: number }>
@@ -163,12 +163,14 @@ export type ModuleListCellType = {
     row: { [key: string]: any },
     page: string | null,
     filterable: boolean,
-    setFilter: (values: any) => void
+    setFilter: (values: any) => void,
+    suffix?: string
 }
 export type ModuleListHeadersType = Array<{
     title: string,
     article: string,
-    type: string
+    type: string,
+    suffix?: string
 }>
 export type ModuleListRowType = {
     data: { [key: string]: any },

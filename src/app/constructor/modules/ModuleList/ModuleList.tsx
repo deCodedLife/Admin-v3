@@ -371,7 +371,7 @@ export const Pagination: React.FC<ModuleListPaginationType> = ({ detail, filter:
 
 const nonClickableCellsTypes = ["email", "phone", "buttons", "audio_player"]
 
-const ListCell: React.FC<ModuleListCellType> = ({ article, type, row, page, filterable, setFilter }) => {
+const ListCell: React.FC<ModuleListCellType> = ({ article, type, row, page, filterable, suffix, setFilter }) => {
     const context = useSetupContext()
     const data = row[article]
     const navigate = useNavigate()
@@ -409,13 +409,20 @@ const ListCell: React.FC<ModuleListCellType> = ({ article, type, row, page, filt
             case "list":
                 return Array.isArray(data) ? data.map((option, index, array) => {
                     const isLastElement = index === array.length - 1
-                    return <span
-                        key={option.value + index}
-                        className={`moduleList_cellData${filterable ? " filterable" : ""}`}
-                        onClick={() => handleCellDataClick(option.value)}>{`${option.title?.trim()}${isLastElement ? "" : ", "}`}</span>
-
+                    return <span className={`moduleList_cellWrapper${option?.color ? ` bg-${option.color}` : ""}`}>
+                        <span
+                            key={option.value + index}
+                            className={`moduleList_cellData${filterable ? " filterable" : ""}`}
+                            onClick={() => handleCellDataClick(option.value)}>{`${option.title?.trim()}${isLastElement ? "" : ", "}`}</span>
+                    </span>
                 }) :
-                    <span className={`moduleList_cellData${filterable ? " filterable" : ""}`} onClick={() => handleCellDataClick(data?.value)}>{data?.title}</span>
+                    <span className={`moduleList_cellWrapper${data?.color ? ` bg-${data.color}` : ""}`}>
+                        <span
+                            className={`moduleList_cellData${filterable ? " filterable" : ""}`}
+                            onClick={() => handleCellDataClick(data?.value)}>
+                            {data?.title}
+                        </span>
+                    </span>
             case "buttons":
                 return <ModuleListActionButtons data={data} />
             case "phone":
@@ -423,6 +430,11 @@ const ListCell: React.FC<ModuleListCellType> = ({ article, type, row, page, filt
             case "price":
                 const resolvedClassName = `moduleList_priceCell ${data < 0 ? "negative" : ""} ${data ? "" : " paddingless"}`
                 return <div className={resolvedClassName}>{getMaskedString(data, type, context)}</div>
+            case "float":
+            case "integer":
+                return <span 
+                className={`moduleList_cellData${filterable ? " filterable" : ""}`} 
+                onClick={() => handleCellDataClick(data)}>{getMaskedString(data, type, context, suffix)}</span>
             case "image":
                 const isImage = data?.includes("https")
                 return <div className="moduleList_cellImageContainer">
@@ -475,6 +487,7 @@ const ListRow: React.FC<ModuleListRowType> = ({ data, headers, page, filterKeys,
             page={page}
             filterable={filterKeys.includes(cell.article)}
             setFilter={setFilter}
+            suffix={cell.suffix}
         />
         )}
     </tr>
