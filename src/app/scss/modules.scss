@@ -39,7 +39,7 @@
         }
     }
 
-    &_actionButton {
+    &_actionButton.componentButton {
         color: var(--kt-text-muted);
         background-color: var(--kt-light);
         transition: color 0.3s;
@@ -122,7 +122,8 @@
         white-space: nowrap;
         &.bg-primary,
         &.bg-danger,
-        &.bg-success {
+        &.bg-success,
+        &.bg-warning {
             color: var(--kt-primary-inverse);
         }
     }
