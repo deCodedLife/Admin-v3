@@ -382,6 +382,7 @@ const ListCell: React.FC<ModuleListCellType> = ({ article, type, row, page, filt
         const navigateToInfoPage = row?.row_href_type === "info"
         return isDataAsHref ? navigate(`${page}/${navigateToInfoPage ? "info" : "update"}/${row.id}`) : null
     }, [isDataAsHref, page])
+
     const handleCellDataClick = useCallback((value: string | number | boolean) => {
         if (filterable) {
             return setFilter((prevFilter: any) => Object.assign({}, prevFilter, { [article]: value }))
@@ -446,6 +447,8 @@ const ListCell: React.FC<ModuleListCellType> = ({ article, type, row, page, filt
             case "audio_player": {
                 return <ComponentAudio src={data} />
             }
+            case "link":
+                return <span className={`moduleList_linkCell${!data?.value ? " disabled" : "" }`} onClick={() => data?.value ? navigate(data.value) : null }>{data?.title}</span>
             default:
                 return <span className={`moduleList_cellData${filterable ? " filterable" : ""}`} onClick={() => handleCellDataClick(data)}>{checkDatesInString(data)}</span>
         }

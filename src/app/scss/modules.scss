@@ -141,6 +141,16 @@
         }
     }
 
+    &_linkCell {
+        transition: color 0.3s;
+        &:hover:not(.disabled) {
+            color: var(--kt-link-color);
+        }
+        &.disabled {
+            color: var(--kt-text-muted);
+        }
+    }
+
     & .moduleList_emptyTable {
         text-align: center;
         font-size: 20px;
