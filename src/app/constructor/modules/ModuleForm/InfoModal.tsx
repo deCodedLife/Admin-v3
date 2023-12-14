@@ -19,7 +19,14 @@ const InfoModal: React.FC = () => {
             }
         }
     }, [value])
-    return <Modal show={Boolean(content)} onHide={() => setContent(null)} size="xl" centered onEntering={setModalIndex}>
+    return <Modal show={Boolean(content)} onHide={() => setContent(null)} size="xl" centered onEntering={/* setModalIndex */() => {
+        const backdropsList = document.body.getElementsByClassName("modal-backdrop show")
+        const modalsList = document.body.getElementsByClassName("modal show")
+        const currentBackdrop = backdropsList[backdropsList.length - 1]
+        const currentModal = modalsList[modalsList.length - 1]
+        currentBackdrop.setAttribute("style", `z-index: 2010`)
+        currentModal.setAttribute("style", `display: block; z-index: 2013`)
+    }}>
         <Modal.Header closeButton>
             <Modal.Title>
             Информационное окно
