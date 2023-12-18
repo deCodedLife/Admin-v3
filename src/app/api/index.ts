@@ -30,7 +30,13 @@ export const getApiUrl = () => {
     }
 
     if (currentDomain === "mewbas" && currentSubdomain === "crm-admin") {
+
         apiUrl = "https://crm-api.mewbas.com"
+
+    } else if (currentDomain === "docacrm" && currentSubdomain === "astragreenv3admin") {
+
+        apiUrl = "https://astragreenv3.docacrm.com/"
+        
     }
 
     return apiUrl
@@ -87,7 +93,7 @@ export const fileApi = async <dataType = any>(object: string | undefined, comman
     //выгрузка простых документов (CSV, text)
     if (headers["content-type"].includes("text") || headers["content-type"].includes("excel")) {
         return responseData
-    } 
+    }
 }
 
 export const uploadFiles = async (object: string, command: string, data: any) => {

@@ -48,6 +48,12 @@ const ComponentAddress: React.FC<ComponentAddressType> = ({ article, field_type,
         }
     }
 
+    const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.value === "") {
+            setFieldValue(article, event.target.value)
+        }
+    }
+
     return <AddressSuggestions
         token="e4f7fbcbf49276babe7b49b636c34a51e07afb81"
         //@ts-ignore
@@ -62,6 +68,7 @@ const ComponentAddress: React.FC<ComponentAddressType> = ({ article, field_type,
         inputProps={{
             name: article,
             className: `form-control form-control-solid${isError ? " invalid" : ""}`,
+            onInput: handleInput,
             onBlur: onBlur,
             disabled: is_disabled
         }}

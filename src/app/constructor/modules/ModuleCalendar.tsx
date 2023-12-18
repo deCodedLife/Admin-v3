@@ -40,7 +40,7 @@ const ModuleCalendar: React.FC<ModuleCalendarType> = (props) => {
   const { mutate, isSuccess } = useMutate<{ id: number }>(object, "remove", { success: false, error: true })
   const [date, setDate] = useState<Date>(new Date(moment(filter.event_from).format()))
   const [view, setView] = useState<View>("month")
-
+  console.log(data)
 
   useEffect(() => {
     if (isSuccess) {
