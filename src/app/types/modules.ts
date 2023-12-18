@@ -96,7 +96,8 @@ export type ModuleFormType = DefaultModuleType<"form", { buttons: Array<ModuleFo
     joined_property: string,
     object: string,
     type: "application/json" | "multipart/form-data",
-    data?: { [key: string]: any }
+    data?: { [key: string]: any },
+    close_after_submit?: boolean
 }>
 
 //модуль Info

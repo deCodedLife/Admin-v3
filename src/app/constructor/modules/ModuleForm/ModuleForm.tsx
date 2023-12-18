@@ -276,7 +276,7 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
     //контекст нужен для передачи дополнительных инит значений (прим.: модалка в расписании)
     const modalContext = useContext<any>(ModalContext)
     const initialData = Object.assign({}, modalContext.initialData ?? {}, settings.data ?? {})
-    const { object, command, command_type, areas, type } = settings
+    const { object, command, command_type, areas, type, close_after_submit = true } = settings
     const buttons = useMemo(() => Array.isArray(components) ? [] : components.buttons, [components])
     const mainButtons = useMemo(() => buttons.filter(button => !button.settings.field_place), [buttons])
     const fieldButtons = useMemo(() => buttons.filter(button => button.settings.field_place), [buttons])
@@ -316,7 +316,7 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
             } else {
                 navigate(`/${redirectUrl}`)
             }
-        } else if (modalContext.setShow) {
+        } else if (modalContext.setShow && close_after_submit) {
             modalContext.setShow(false)
         }
     }, [])
