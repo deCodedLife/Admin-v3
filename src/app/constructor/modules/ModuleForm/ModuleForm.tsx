@@ -330,11 +330,11 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
             }
         }
     }, [isSuccess])
-
+    console.log(initialData)
     const formConfiguration = useMemo(() => {
         const fields = getFields(areas)
         return {
-            initialValues: getInitialValues(fields, isCreating, id ? { ...initialData, id } : initialData),
+            initialValues: getInitialValues(fields, isCreating, id && !initialData?.id ? { ...initialData, id } : initialData),
             validationSchema: getValidationSchema(fields)
         }
     }, [areas, initialData])
