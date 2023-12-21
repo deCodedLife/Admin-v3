@@ -55,6 +55,7 @@ export const Component = React.memo<ModuleFormFieldType>((props) => {
                 rows={props.settings?.rows}
             />
         case "list":
+        case "link_list" as "list":
             const { joined_field, joined_field_filter, search, settings, on_change_submit } = props
             return <ComponentSelect
                 article={article}
