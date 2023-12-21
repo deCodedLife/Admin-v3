@@ -369,7 +369,7 @@ export const Pagination: React.FC<ModuleListPaginationType> = ({ detail, filter:
     </div>
 }
 
-const nonClickableCellsTypes = ["email", "phone", "buttons", "audio_player"]
+const nonClickableCellsTypes = ["email", "phone", "buttons", "audio_player", "link", "link_list"]
 
 const ListCell: React.FC<ModuleListCellType> = ({ article, type, row, page, filterable, suffix, setFilter }) => {
     const context = useSetupContext()
@@ -433,9 +433,9 @@ const ListCell: React.FC<ModuleListCellType> = ({ article, type, row, page, filt
                 return <div className={resolvedClassName}>{getMaskedString(data, type, context)}</div>
             case "float":
             case "integer":
-                return <span 
-                className={`moduleList_cellData${filterable ? " filterable" : ""}`} 
-                onClick={() => handleCellDataClick(data)}>{getMaskedString(data, type, context, suffix)}</span>
+                return <span
+                    className={`moduleList_cellData${filterable ? " filterable" : ""}`}
+                    onClick={() => handleCellDataClick(data)}>{getMaskedString(data, type, context, suffix)}</span>
             case "image":
                 const isImage = data?.includes("https")
                 return <div className="moduleList_cellImageContainer">
@@ -447,8 +447,21 @@ const ListCell: React.FC<ModuleListCellType> = ({ article, type, row, page, filt
             case "audio_player": {
                 return <ComponentAudio src={data} />
             }
+            case "link_list":
+                return Array.isArray(data) ? data.map((option, index, array) => {
+                    const isLastElement = index === array.length - 1
+                    return <span
+                        key={option.value + index}
+                        className={`moduleList_linkCell${!option?.href ? " disabled" : ""}`}
+                        onClick={() => option?.href ? navigate(option.href) : null}>{`${option.title?.trim()}${isLastElement ? "" : ", "}`}</span>
+                }) :
+                    <span
+                        className={`moduleList_linkCell${!data?.href ? " disabled" : ""}`}
+                        onClick={() => data?.href ? navigate(data.href) : null}>
+                        {data?.title}
+                    </span>
             case "link":
-                return <span className={`moduleList_linkCell${!data?.value ? " disabled" : "" }`} onClick={() => data?.value ? navigate(data.value) : null }>{data?.title}</span>
+                return <span className={`moduleList_linkCell${!data?.href ? " disabled" : ""}`} onClick={() => data?.href ? navigate(data.href) : null}>{data?.title}</span>
             default:
                 return <span className={`moduleList_cellData${filterable ? " filterable" : ""}`} onClick={() => handleCellDataClick(data)}>{checkDatesInString(data)}</span>
         }

@@ -142,7 +142,9 @@
     }
 
     &_linkCell {
+        font-weight: 700;
         transition: color 0.3s;
+        cursor: pointer;
         &:hover:not(.disabled) {
             color: var(--kt-link-color);
         }
