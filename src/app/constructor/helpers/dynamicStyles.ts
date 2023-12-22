@@ -1,6 +1,28 @@
 import { toAbsoluteUrl } from '../../../_metronic/helpers'
 
 
+
+export const getProjectName = () => {
+  const url = window.location.hostname.split(".")
+  const currentDomain = url.length === 3 ? url[1] : url[0]
+  /* субдомен не нужен в дальнейшем, только для текущей реализации задачника */
+  const currentSubdomain = url.length === 3 ? url[0] : null
+  switch (currentDomain) {
+    case "ritzipcrm":
+      return document.title = "RitzipCRM"
+    case "adwanto":
+      return document.title = "Adwanto"
+    case "mewbas":
+      if (currentSubdomain === "crm-admin") {
+        return document.title = "OxCRM"
+      } else {
+        return document.title = "DocaCRM"
+      }
+    default:
+      return document.title = "DocaCRM"
+  }
+}
+
 export const setDocumentTitle = () => {
   const url = window.location.hostname.split(".")
   const currentDomain = url.length === 3 ? url[1] : url[0]

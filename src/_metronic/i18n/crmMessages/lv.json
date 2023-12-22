@@ -128,6 +128,8 @@
   "FILE.UPLOAD_MORE": "Ielādēt vairāk",
   "FILE.REFRESH_FILE": "Atjaunināt failu",
   "FILTER.CLEAR_BUTTON": "Atiestatīt filtrus",
+  "FOOTER.RULES": "Lietošanas noteikumi",
+  "FOOTER.PRIVACY": "Privātuma politika",
   "FUNNEL.SELECT_PLACEHOLDER": "Izvēlieties vajadzīgo kolonnu",
   "GOOGLE_PLACES.WITHOUT_KEY": "Jums ir jānorāda api atslēga",
   "GLOBAL_SEARCH.ENTER_DATA": "Ievadiet datus, lai meklētu",

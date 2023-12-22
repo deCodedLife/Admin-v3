@@ -145,7 +145,8 @@ export type ApiSetupType = {
     sign_up?: boolean,
     dom_ru?: boolean,
     google_places?: string,
-    salary_widget?: boolean
+    salary_widget?: boolean,
+    footer?: boolean
 }
 
 //тип ответа виджетов

@@ -128,6 +128,8 @@
   "FILE.REFRESH_FILE": "Update file",
   "FILTER.DROPDOWN_TITLE": "Filters",
   "FILTER.CLEAR_BUTTON": "Reset filters",
+  "FOOTER.RULES": "Terms of use",
+  "FOOTER.PRIVACY": "Privacy Policy",
   "FUNNEL.SELECT_PLACEHOLDER": "Select the desired column",
   "GOOGLE_PLACES.WITHOUT_KEY": "You must specify the api key",
   "GLOBAL_SEARCH.ENTER_DATA": "Enter data to search",

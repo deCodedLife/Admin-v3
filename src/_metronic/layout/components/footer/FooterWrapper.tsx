@@ -1,24 +1,20 @@
-import clsx from 'clsx'
-import {useLayout} from '../../core'
-import {Footer} from './Footer'
+import { useSetupContext } from '../../../../app/constructor/helpers/SetupContext'
+import { useLayout } from '../../core'
+import { Footer } from './Footer'
 
 const FooterWrapper = () => {
-  const {config} = useLayout()
-  if (!config.app?.footer?.display) {
+  const { config } = useLayout()
+  const {footer} = useSetupContext()
+  
+  if (!footer/* !config.app?.footer?.display */) {
     return null
   }
-  return null
+
   return (
     <div className='app-footer' id='kt_app_footer'>
-      {config.app?.footer?.containerClass ? (
-        <div className={clsx('app-container', config.app?.footer?.containerClass)}>
-          <Footer />
-        </div>
-      ) : (
-        <Footer />
-      )}
+      <Footer />
     </div>
   )
 }
 
-export {FooterWrapper}
+export { FooterWrapper }

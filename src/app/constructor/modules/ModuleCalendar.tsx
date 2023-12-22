@@ -76,8 +76,8 @@ const ModuleCalendar: React.FC<ModuleCalendarType> = (props) => {
     return view === "month" ? {
       start_from: moment(slot.start).format("YYYY-MM-DD"),
       start_to: moment(slot.end).subtract(1, "day").format("YYYY-MM-DD"),
-      event_from: "00:00",
-      event_to: "23:59",
+      event_from: "00:00:00",
+      event_to: "23:59:00",
     } :
       {
         start_from: moment(slot.start).format("YYYY-MM-DD"),
