@@ -27,13 +27,13 @@ const Footer = () => {
 
       <ul className='menu menu-gray-600 menu-hover-primary fw-semibold order-1'>
         <li className='menu-item'>
-          <a href={`${getApiUrl()}/uploads/yazdorov/rules.pdf`} target='_blank' className='menu-link px-2'>
+          <a href={`${getApiUrl()}/uploads/rules.pdf`} target='_blank' className='menu-link px-2'>
           {intl.formatMessage({id: "FOOTER.RULES"})}
           </a>
         </li>
 
         <li className='menu-item'>
-          <a href={`${getApiUrl()}/uploads/yazdorov/policy.pdf`} target='_blank' className='menu-link px-2'>
+          <a href={`${getApiUrl()}/uploads/policy.pdf`} target='_blank' className='menu-link px-2'>
           {intl.formatMessage({id: "FOOTER.PRIVACY"})}
           </a>
         </li>
