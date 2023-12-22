@@ -1,7 +1,7 @@
 
 @media (min-width: 991.98px) {
     [data-app-theme=theme_1] #kt_app_body {
-        .moduleLinksBlock {
+        & .moduleLinksBlock {
             &_block {
                 &:hover {
                     bottom: 10px;
@@ -11,6 +11,9 @@
                 }
             }
         }
+        & .app-footer {
+            background-color: var(--custom-primary-app-color);
+        }
     }
 }
 
@@ -18,11 +21,15 @@
     [data-app-theme=theme_1] #kt_app_body {
         --kt-app-header-height: 70px;
 
-        .btn:not(.componentFilters_dropdown, .auth_button, #moduleSchedule_stepsButton)  {
+        & .btn:not(.componentFilters_dropdown, .auth_button, #moduleSchedule_stepsButton)  {
             background-color: unset;
             &:hover {
                 background-color: unset !important;
             }
+        }
+
+        & .app-footer {
+            background-color: var(--custom-primary-app-color);
         }
     }
 }
