@@ -59,7 +59,9 @@ const getScheduleAsArray = (data?: ApiScheduleType) => {
             body: body ? Object.values(body).map(employee => ({
                 ...employee,
                 schedule: getEmployeeSchedule(employee.schedule, steps_list)
-            })) : []
+            })).sort((currentEmployee, previousEmployee) => {
+                return currentEmployee.performer_title > previousEmployee.performer_title ? 1 : -1
+            }) : []
         }))
     }
     else {
@@ -281,7 +283,7 @@ const ModuleSchedule: React.FC<ModuleScheduleType> = (props) => {
 
     const { data, isLoading: loading, isFetching, refetch } = useSchedule(object, filter)
     const schedule = useMemo(() => getScheduleAsArray(data), [data])
-    
+    console.log(schedule)
     useUpdate([{ active: true, update: refetch }], "schedule", 1000)
 
     const tableRef = useRef<HTMLDivElement | null>(null)
