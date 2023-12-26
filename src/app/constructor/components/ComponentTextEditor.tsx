@@ -252,6 +252,7 @@ const ComponentTextEditor: React.FC<{ article: string, variables?: Array<any>, t
             init={{
                 setup,
                 min_height: 500,
+                max_height: 500,
                 menubar: false,
                 fontsize_formats : "10px 12px 14px 16px 18px 20px 22px 24px 26px 28px 30px",
                 content_style: "body { font-size: 20px;}",
