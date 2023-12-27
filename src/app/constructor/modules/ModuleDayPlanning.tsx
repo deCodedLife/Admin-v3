@@ -16,12 +16,12 @@ const ModuleDayPlanningRow = React.memo<ModuleDayPlanningRowType>(({ body, color
         </ComponentTooltip>
         <div className="moduleDayPlanning_rowBody">
             <div className="moduleDayPlanning_rowTime">{time}</div>
-            <div className="moduleDayPlanning_rowContent">{body}</div>
             <div className="moduleDayPlanning_rowLinks">{links.map(link => <a
                 key={link.title + link.link}
                 className="moduleDayPlanning_rowLink"
                 href={link.link}
                 target="_blank">{link.title}</a>)}</div>
+            <div className="moduleDayPlanning_rowContent">{body}</div>
         </div>
         <div className="moduleDayPlanning_rowButtons">
             {buttons?.map(button => <ComponentButton key={getButtonKey(button)} {...button} defaultLabel="icon" />)}
