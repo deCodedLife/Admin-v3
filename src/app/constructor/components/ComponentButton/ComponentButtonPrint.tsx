@@ -83,7 +83,7 @@ const ComponentButtonPrint: React.FC<ComponentButtonPrintType> = ({ settings, de
     }
 
     const initialValues = useMemo(() => ({ selectedDocument: null, selectedDocumentTitle: "", documentContent: currentDocument ?? "" }), [currentDocument])
-    const documentsList = useMemo(() => documents ? documents.map(document => ({ title: document.title, value: document.article })) : [], [documents])
+    const documentsList = useMemo(() => documents && Array.isArray(documents) ? documents.map(document => ({ title: document.title, value: document.article })) : [], [documents])
     return <>
         <ComponentTooltip title={settings.title ?? ""}>
             <button
