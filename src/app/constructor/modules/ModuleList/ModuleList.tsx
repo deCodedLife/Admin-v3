@@ -51,6 +51,10 @@ const DownloaderModule: React.FC<ModuleListDownloaderType> = ({ title, handleDow
         await handleDownload(selectedColumns)
         setShowModal(false)
     }
+    const initialSelectedColumns = useMemo(() => {
+        return columns.map(column => column.article)
+    }, [columns])
+    
     return <div>
         <ComponentButton
             className="moduleList_downloaderModuleButton"
@@ -60,7 +64,7 @@ const DownloaderModule: React.FC<ModuleListDownloaderType> = ({ title, handleDow
         />
         <Modal show={showModal} onHide={() => setShowModal(false)} onEntering={setModalIndex}>
             <Formik initialValues={{
-                select: [] as Array<string>
+                select: initialSelectedColumns
             }}
                 onSubmit={values => handleSubmit(values.select)}>
                 {({ values, setFieldValue, handleSubmit }) => <FormikForm>
