@@ -123,7 +123,8 @@
         &.bg-primary,
         &.bg-danger,
         &.bg-success,
-        &.bg-warning {
+        &.bg-warning,
+        &.bg-dark {
             color: var(--kt-primary-inverse);
         }
     }
@@ -1804,6 +1805,13 @@ $moduleScheduleBorderColor: var(--kt-gray-300);
 html[data-theme="dark"] {
     & .rbc-today {
         background-color: rgb(28, 50, 56);
+    }
+    & .moduleList {
+        &_dateCell, &_cellWrapper {
+            &.bg-dark {
+                color: #181C32 !important;
+            }
+        }
     }
 }
 

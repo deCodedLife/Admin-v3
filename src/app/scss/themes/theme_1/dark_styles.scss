@@ -147,6 +147,9 @@
         --kt-primary-light: var(--custom-text-color);
         --kt-light: var(--custom-light-button-color);
         --kt-light-active: var(--custom-light-button-color-active);
+        &.gray {
+            color: inherit;
+        }
     }
 
     & .componentDate.react-datepicker {
