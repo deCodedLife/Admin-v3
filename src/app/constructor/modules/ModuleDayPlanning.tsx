@@ -15,7 +15,7 @@ const ModuleDayPlanningRow = React.memo<ModuleDayPlanningRowType>(({ body, color
             <span className={`moduleDayPlanning_rowBullet bullet bullet-vertical bg-${color}`} />
         </ComponentTooltip>
         <div className="moduleDayPlanning_rowBody">
-            <div className="moduleDayPlanning_rowTime">{time}</div>
+            <div className={`moduleDayPlanning_rowTime ${color}`}>{time}</div>
             <div className="moduleDayPlanning_rowLinks">{links.map(link => <a
                 key={link.title + link.link}
                 className="moduleDayPlanning_rowLink"

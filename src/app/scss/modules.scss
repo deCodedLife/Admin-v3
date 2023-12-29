@@ -2653,6 +2653,11 @@ html[data-theme="dark"] {
 @mixin moduleDayPlanning_bulletColor($color) {
     background-color: $color;
 }
+
+@mixin moduleDayPlanning_timeColor($color, $percent) {
+    background-color: lighten($color, $percent);
+}
+
 .moduleDayPlanning {
     &_rowsContainer {
         min-height: 70px;
@@ -2719,9 +2724,44 @@ html[data-theme="dark"] {
     }
 
     &_rowTime {
+        display: inline-flex;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.625rem;
         font-size: 1.275rem;
-        font-weight: 500;
-        color: var(--kt-text-gray-800);
+        font-weight: 600;
+        color: #181c32;
+
+        &.light_blue {
+            @include moduleDayPlanning_timeColor(deepskyblue, 35%)
+        }
+
+        &.blue {
+            @include moduleDayPlanning_timeColor(#009ef7, 25%)
+        }
+
+        &.yellow {
+            @include moduleDayPlanning_timeColor(yellow, 40%)
+        }
+
+        &.orange {
+            @include moduleDayPlanning_timeColor(orange, 35%)
+        }
+
+        &.green {
+            @include moduleDayPlanning_timeColor(#50cd89, 25%)
+        }
+
+        &.pink {
+            @include moduleDayPlanning_timeColor(pink, 10%)
+        }
+
+        &.red {
+            @include moduleDayPlanning_timeColor(#f1416c, 25%)
+        }
+
+        &.purple {
+            @include moduleDayPlanning_timeColor(#7239ea, 25%)
+        }
     }
 
     &_rowContent {
