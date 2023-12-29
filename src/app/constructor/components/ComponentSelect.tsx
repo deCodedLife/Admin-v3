@@ -104,12 +104,12 @@ handleChange: (value: any) => void,
             }
         }
     }
-
+    /* list нужно оставить, т.к. бывает асинхронное формирование списка */
     useEffect(() => {
         if (isVisible) {
             getOptions()
         }
-    }, [joinedFieldValue, isVisible])
+    }, [joinedFieldValue, isVisible, list])
 
     const getValue = () => {
         const value = formValue
