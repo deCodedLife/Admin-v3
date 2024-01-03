@@ -24,7 +24,7 @@ type ComponentButtonScriptType = DefaultComponentButtonType<"script", {
     data: any,
     href?: string,
 }>
-type ComponentButtonSubmitType = DefaultComponentButtonType<"submit", { href?: string }>
+export type ComponentButtonSubmitType = DefaultComponentButtonType<"submit", { href?: string }>
 type ComponentButtonCustomType = DefaultComponentButtonType<"custom", {}>
 
 export type ComponentButtonClassicType = ComponentButtonHrefType | ComponentButtonScriptType | ComponentButtonSubmitType | ComponentButtonCustomType

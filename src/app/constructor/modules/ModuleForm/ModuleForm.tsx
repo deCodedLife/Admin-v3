@@ -260,14 +260,14 @@ const ModuleFormButtons = React.memo<TModuleFormButtons>(props => {
         }
     }, [])
 
-    const haveSubmitButton = useMemo(() => {
-        return Boolean(buttons.find(button => button.type === "submit"))
+    const submitButton = useMemo(() => {
+        return buttons.find(button => button.type === "submit")
     }, [])
 
     useEffect(() => {
-        if (isSubpage && !isFormInsideModal && haveSubmitButton) {
-            setHandleSubmit(() => handleSubmit)
-            return () => setHandleSubmit(prev => isEqual(prev, handleSubmit) ? null : prev)
+        if (isSubpage && !isFormInsideModal && submitButton) {
+            setHandleSubmit({...submitButton, type: "submit", customHandler: handleSubmit})
+            return () => setHandleSubmit(prev => isEqual(prev?.customHandler, handleSubmit) ? null : prev)
         }
     }, [])
 

@@ -6,9 +6,10 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import ComponentButton from '../constructor/components/ComponentButton'
 import { useIntl } from 'react-intl'
 import { useIsSubpage } from '../constructor/modules/helpers'
+import { ComponentButtonSubmitType } from '../types/components'
 
 
-const HandleSubmitContext = React.createContext<(callback: ((e?: React.FormEvent<HTMLFormElement> | undefined) => void) | null) => void>(() => { })
+const HandleSubmitContext = React.createContext<React.Dispatch<React.SetStateAction<ComponentButtonSubmitType | null>>>(() => { })
 export const useHandleSubmitContext = () => useContext(HandleSubmitContext)
 
 const DynamicPageComponent = React.memo(() => {
@@ -24,7 +25,7 @@ const DynamicPage: React.FC = () => {
     const intl = useIntl()
     const { pathname } = useLocation()
     const navigate = useNavigate()
-    const [handleSubmit, setHandleSubmit] = useState<((e?: React.FormEvent<HTMLFormElement> | undefined) => void) | null>(null)
+    const [submitButton, setSubmitButton] = useState<ComponentButtonSubmitType | null>(null)
 
     useEffect(() => {
         const pathsArray = sessionStorage.getItem("paths") ?? JSON.stringify([])
@@ -57,17 +58,13 @@ const DynamicPage: React.FC = () => {
 
     const isSubpage = useIsSubpage()
 
-    return <HandleSubmitContext.Provider value={setHandleSubmit}>
+    return <HandleSubmitContext.Provider value={setSubmitButton}>
         {isSubpage ? <div className="componentButton_container inverse marginless paddingless">
             <ComponentButton
                 type='custom'
                 settings={{ title: intl.formatMessage({ id: "BUTTON.PREVIOUS" }), icon: "", background: "gray" }}
                 customHandler={handleReturnClick} />
-            {handleSubmit ? <ComponentButton
-                type='custom'
-                settings={{ title: intl.formatMessage({ id: "BUTTON.SAVE" }), icon: "", background: "dark" }}
-                customHandler={handleSubmit} />
-                : null}
+            {submitButton ? <ComponentButton {...submitButton} />: null}
         </div> : null}
         <DynamicPageComponent />
     </HandleSubmitContext.Provider>

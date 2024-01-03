@@ -38,8 +38,8 @@ const ModuleDocumentsButtons = React.memo<TModuleDocumentsButtons>(props => {
     const setHandleSubmit = useHandleSubmitContext()
     useEffect(() => {
         if (isSubpage) {
-            setHandleSubmit(() => handleSubmit)
-            return () => setHandleSubmit(prev => isEqual(prev, handleSubmit) ? null : prev)
+            setHandleSubmit({type: "submit", settings: { title: intl.formatMessage({ id: "BUTTON.SAVE" }), background: "dark", icon: "" }, customHandler: handleSubmit})
+            return () => setHandleSubmit(prev => isEqual(prev?.customHandler, handleSubmit) ? null : prev)
         }
     }, [])
     return <div className="componentButton_container inverse">
