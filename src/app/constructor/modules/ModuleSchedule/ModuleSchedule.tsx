@@ -283,7 +283,6 @@ const ModuleSchedule: React.FC<ModuleScheduleType> = (props) => {
 
     const { data, isLoading: loading, isFetching, refetch } = useSchedule(object, filter)
     const schedule = useMemo(() => getScheduleAsArray(data), [data])
-    console.log(schedule)
     useUpdate([{ active: true, update: refetch }], "schedule", 1000)
 
     const tableRef = useRef<HTMLDivElement | null>(null)

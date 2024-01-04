@@ -247,6 +247,8 @@
 
     &__multi-value__label {
         color: inherit !important;
+        white-space: unset !important;
+        text-overflow: unset !important;
     }
 
     &__menu {
@@ -358,6 +360,7 @@
 
     &_stringFilterContainer {
         width: calc(16% - 1rem);
+        min-width: 200px;
     }
 
     &_stringFilter {

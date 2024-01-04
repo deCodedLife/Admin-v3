@@ -179,6 +179,20 @@
     .componentTooltip {
         display: none;
     }
+
+    .componentButton {
+        &_container {
+            justify-content: space-between;
+            flex-wrap: wrap;
+
+            & .componentButton {
+                width: calc(50% - 1rem);
+                &:not(:last-child) {
+                    margin-bottom: 0.5rem;
+                }
+            }
+        }
+    }
 }
 
 @media (max-width: 767px) {
@@ -208,9 +222,11 @@
             flex-direction: column;
             justify-content: unset;
 
-            & .componentButton:not(:last-child) {
-                margin-right: 0;
-                margin-bottom: 0.5rem;
+            & .componentButton {
+                width: unset;
+                &:not(:last-child) {
+                    margin-right: 0;
+                }
             }
         }
     }
