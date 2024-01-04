@@ -69,10 +69,6 @@
         }
     }
 
-    .moduleSchedule_modal,
-    .componentButton_modal {
-        max-width: 1200px;
-    }
 }
 
 @media (max-width: 991.98px) {
@@ -171,11 +167,6 @@
         }
     }
 
-    .moduleSchedule_modal,
-    .componentButton_modal {
-        max-width: 80vw;
-    }
-
     .componentTooltip {
         display: none;
     }
@@ -187,8 +178,9 @@
 
             & .componentButton {
                 width: calc(50% - 1rem);
+                margin-bottom: 0.5rem;
                 &:not(:last-child) {
-                    margin-bottom: 0.5rem;
+                    margin-right: 0;
                 }
             }
         }
@@ -224,9 +216,6 @@
 
             & .componentButton {
                 width: unset;
-                &:not(:last-child) {
-                    margin-right: 0;
-                }
             }
         }
     }
@@ -314,6 +303,11 @@
 }
 
 @media (min-width: 576px) {
+    .moduleSchedule_modal,
+    .componentButton_modal {
+        max-width: 1200px;
+    }
+
     .modal-sm {
         --bs-modal-width: 410px;
     }
@@ -336,11 +330,6 @@
         &_detail {
             font-size: 1rem;
         }
-    }
-
-    .moduleSchedule_modal,
-    .componentButton_modal {
-        max-width: unset;
     }
 
     .moduleSalaryWidgets {
