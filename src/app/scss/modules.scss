@@ -2735,7 +2735,7 @@ html[data-theme="dark"] {
             @include moduleDayPlanning_timeColor(deepskyblue, 35%)
         }
 
-        &.blue {
+        &.blue, &.primary {
             @include moduleDayPlanning_timeColor(#009ef7, 25%)
         }
 
