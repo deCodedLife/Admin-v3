@@ -135,7 +135,7 @@ const ComponentTextEditor: React.FC<{ article: string, variables?: Array<any>, t
                                 },
                                 {
                                     type: "checkbox",
-                                    label: "Указывать количество",
+                                    label: "Указывать № п/п",
                                     name: `serial`,
                                 },
                                 ]

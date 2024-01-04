@@ -1,15 +1,21 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {FC, useMemo} from 'react'
-import {Link} from 'react-router-dom'
-import {useAuth} from '../../../../app/modules/auth'
-import {Languages} from './Languages'
-import {toAbsoluteUrl} from '../../../helpers'
+import { FC, useCallback, useMemo } from 'react'
+import { Link } from 'react-router-dom'
+import { useAuth } from '../../../../app/modules/auth'
+import { Languages } from './Languages'
+import { toAbsoluteUrl } from '../../../helpers'
 import { useIntl } from 'react-intl'
 import { getApiUrl } from '../../../../app/api'
 
 const HeaderUserMenu: FC = () => {
-   const intl = useIntl()
-  const {currentUser, logout} = useAuth()
+  const intl = useIntl()
+  const { currentUser, logout } = useAuth()
+
+  const handleLogout = useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
+    sessionStorage.clear()
+    logout()
+  }, [])
 
   const userAvatar = useMemo(() => {
     if (currentUser?.avatar) {
@@ -27,13 +33,13 @@ const HeaderUserMenu: FC = () => {
       <div className='menu-item px-3'>
         <div className='menu-content d-flex align-items-center px-3'>
           <div className='symbol symbol-50px me-5'>
-            <img src={userAvatar} style={{objectFit: "cover"}} alt="menu_user_avatar"   />
+            <img src={userAvatar} style={{ objectFit: "cover" }} alt="menu_user_avatar" />
           </div>
 
           <div className='d-flex flex-column'>
             <div className='fw-bolder d-flex align-items-center fs-5'>
               {currentUser?.last_name} {currentUser?.first_name}
-             {/*  <span className='badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2'>Pro</span> */}
+              {/*  <span className='badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2'>Pro</span> */}
             </div>
             <a href='#' className='fw-bold text-muted text-hover-primary fs-7'>
               {currentUser?.email}
@@ -45,7 +51,7 @@ const HeaderUserMenu: FC = () => {
 
       <div className='menu-item px-5'>
         <Link to="/profile" className='menu-link px-5'>
-          {intl.formatMessage({id: "CURRENT_USER.PROFILE"})}
+          {intl.formatMessage({ id: "CURRENT_USER.PROFILE" })}
         </Link>
       </div>
 
@@ -128,12 +134,12 @@ const HeaderUserMenu: FC = () => {
       </div> */}
 
       <div className='menu-item px-5'>
-        <a onClick={logout} className='menu-link px-5'>
-        {intl.formatMessage({id: "CURRENT_USER.LOGOUT"})}
+        <a onClick={handleLogout} className='menu-link px-5'>
+          {intl.formatMessage({ id: "CURRENT_USER.LOGOUT" })}
         </a>
       </div>
     </div>
   )
 }
 
-export {HeaderUserMenu}
+export { HeaderUserMenu }
