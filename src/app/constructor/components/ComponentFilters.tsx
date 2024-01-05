@@ -1,6 +1,6 @@
 import clsx from "clsx"
 import { Form as FormikForm, Formik } from "formik"
-import React, { useMemo } from "react"
+import React, { useCallback, useMemo, useState } from "react"
 import { Col, Dropdown, Form } from "react-bootstrap"
 import { KTSVG } from "../../../_metronic/helpers"
 import { useLayout } from "../../../_metronic/layout/core"
@@ -13,6 +13,19 @@ import ComponentPrice from "./ComponentPrice"
 import ComponentInput from "./ComponentInput"
 import { useIntl } from "react-intl"
 import ComponentCheckbox from "./ComponentCheckbox"
+
+const useToggle = () => {
+    const [show, setShow] = useState(false)
+    const handleToggle = useCallback((nextShow: boolean, meta: any) => {
+        const isSomeOfPortalContainers = Boolean(meta.originalEvent.target.closest(".componentDate") || meta.originalEvent.target.closest(".componentSelect__menu"))
+        if (meta.source === "rootClose" && isSomeOfPortalContainers) {
+            return
+        } else {
+            setShow(nextShow)
+        }
+    }, [])
+    return { show, handleToggle }
+}
 
 const ComponentFilter = React.memo<ComponentFilterType & { className?: string }>((props) => {
     const { type, settings, placeholder, title, className = "" } = props
@@ -80,8 +93,9 @@ const ComponentFiltersCustomToggle: React.FC<{ children: any, onClick: (value: a
 const ComponentFiltersDropdown: React.FC<ComponentFiltersType> = (props) => {
     const intl = useIntl()
     const initialValues = useMemo(() => props.filterValues ?? {}, [props.filterValues])
+    const { show, handleToggle } = useToggle()
     return <div className="componentFilters_dropdownContainer">
-        <Dropdown autoClose={false}>
+        <Dropdown show={show} onToggle={handleToggle} >
             <Dropdown.Toggle as={ComponentFiltersCustomToggle} id="dropdown-custom-components">
                 {intl.formatMessage({ id: "FILTER.DROPDOWN_TITLE" })}
             </Dropdown.Toggle>
@@ -133,7 +147,7 @@ const ComponentFiltersDropdown: React.FC<ComponentFiltersType> = (props) => {
 const ComponentFiltersBlock: React.FC<ComponentFiltersType> = (props) => {
     const intl = useIntl()
     const initialValues = useMemo(() => props.filterValues ?? {}, [props.filterValues])
-
+    const { show, handleToggle } = useToggle()
     return <div className="componentFilters_block">
         <Formik enableReinitialize initialValues={initialValues} onSubmit={(values) => props.handleChange(values)}>
             {({ handleSubmit, handleReset }) => {
@@ -164,7 +178,7 @@ const ComponentFiltersBlock: React.FC<ComponentFiltersType> = (props) => {
                         />
                         : null}
                     <div className="componentFilters_hiddenDropdown">
-                        <Dropdown autoClose={false}>
+                        <Dropdown show={show} onToggle={handleToggle}>
                             <Dropdown.Toggle as={ComponentFiltersCustomToggle} id="dropdown-custom-components">
                                 {intl.formatMessage({ id: "FILTER.DROPDOWN_TITLE" })}
                             </Dropdown.Toggle>
@@ -199,7 +213,7 @@ const ComponentFiltersBlock: React.FC<ComponentFiltersType> = (props) => {
 const ComponentFiltersString: React.FC<ComponentFiltersType> = (props) => {
     const intl = useIntl()
     const initialValues = useMemo(() => props.filterValues ?? {}, [props.filterValues])
-
+    const { show, handleToggle } = useToggle()
     return <div className="componentFilters_string">
         <Formik enableReinitialize initialValues={initialValues} onSubmit={(values) => props.handleChange(values)}>
             {({ handleSubmit, handleReset }) => {
@@ -229,7 +243,7 @@ const ComponentFiltersString: React.FC<ComponentFiltersType> = (props) => {
                         />
                         : null}
                     <div className="componentFilters_hiddenDropdown">
-                        <Dropdown autoClose={false}>
+                        <Dropdown show={show} onToggle={handleToggle}>
                             <Dropdown.Toggle as={ComponentFiltersCustomToggle} id="dropdown-custom-components">
                                 {intl.formatMessage({ id: "FILTER.DROPDOWN_TITLE" })}
                             </Dropdown.Toggle>
