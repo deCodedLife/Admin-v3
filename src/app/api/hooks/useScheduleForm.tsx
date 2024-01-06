@@ -12,7 +12,6 @@ const useScheduleForm = (requestObject: string, cell: {type: "available" | "busy
    
     const hookConfiguration = {
         retry: false,
-        keepPreviousData: true,
         refetchOnWindowFocus: false,
         enabled,
         select: (data: ApiResponseType<ApiPageType>) => data.data,
