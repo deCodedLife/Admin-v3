@@ -184,8 +184,11 @@ export const autocompleteDocument = async (
             /*
             --- костылище 
             */
-            const value = variablePath.split("/").reduce((acc, path) => acc?.[path], variables) ??
-                Object.entries<any>(variables).filter(([key, values]) => key !== "globalVariables")[0][1]
+            const value = variablePath.split("/").reduce((acc, path, index) => {
+                const value = acc?.[path]
+                /* если объект не найдет в переменных (только для 0 индекса - который является ключом основного объекта), использовать первый попавшийся объект */
+                return (!value && index === 0) ? Object.entries<{[key:string]: any}>(acc).filter(([key, values]) => key !== "globalVariables")[0][1] : value
+            }, variables) /* ??
             /* при наличии внутреннего пути нужно проверить, массив ли это, т.к. объекты тоже передаются с типом list */
             const resolvedValue = innerVariablePath && value ? Array.isArray(value) ?
                 value.map((item: any) => getFormattedValue(innerVariableType, item[innerVariablePath], applicationContext))
