@@ -7,12 +7,12 @@ import { ModalContext } from "../modules/ModuleSchedule/ModuleSchedule"
 import setModalIndex from "../helpers/setModalIndex"
 
 
-type TComponentModal = { 
-    page?: string,
-      show: boolean | { [key: string]: any } | null,
-      setShow: (value: null | false) => void, refresh: () => void,
-      size?: "sm" | "lg" | "xl"
-    }
+type TComponentModal = {
+    page?: string | null,
+    show: boolean | { [key: string]: any } | null,
+    setShow: (value: null | false) => void, refresh: () => void,
+    size?: "sm" | "lg" | "xl"
+}
 type TContext = {
     setShow: TComponentModal["setShow"],
     initialData: { [key: string]: any },

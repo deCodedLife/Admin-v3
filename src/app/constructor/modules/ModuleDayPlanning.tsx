@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo } from "react"
-import { ModuleDayPlanningDateType, ModuleDayPlanningRowType, ModuleDayPlanningType } from "../../types/modules"
+import React, { useCallback, useMemo, useState } from "react"
+import { ModuleDayPlanningDateType, ModuleDayPlanningLinkType, ModuleDayPlanningRowType, ModuleDayPlanningType } from "../../types/modules"
 import moment from "moment"
 import ComponentButton from "../components/ComponentButton"
 import { useFilter } from "./helpers"
@@ -8,19 +8,25 @@ import { getButtonKey } from "./ModuleList/ModuleList"
 import useUpdate from "../../api/hooks/useUpdate"
 import { useIntl } from "react-intl"
 import ComponentTooltip from "../components/ComponentTooltip"
+import ComponentModal from "../components/ComponentModal"
 
-const ModuleDayPlanningRow = React.memo<ModuleDayPlanningRowType>(({ body, color, links, description, time, buttons }) => {
+const ModuleDayPlanningLink = React.memo<ModuleDayPlanningLinkType>(props => {
+    const handleClick = () => setSelectedPage(link)
+    const {link, title, setSelectedPage} = props
+    return <span
+    key={title + link}
+    className="moduleDayPlanning_rowLink"
+    onClick={handleClick}>{title}</span>
+})
+
+const ModuleDayPlanningRow = React.memo<ModuleDayPlanningRowType>(({ body, color, links, description, time, buttons, setSelectedPage }) => {
     return <div className="moduleDayPlanning_row">
         <ComponentTooltip title={description}>
             <span className={`moduleDayPlanning_rowBullet bullet bullet-vertical bg-${color}`} />
         </ComponentTooltip>
         <div className="moduleDayPlanning_rowBody">
             <div className={`moduleDayPlanning_rowTime ${color}`}>{time}</div>
-            <div className="moduleDayPlanning_rowLinks">{links.map(link => <a
-                key={link.title + link.link}
-                className="moduleDayPlanning_rowLink"
-                href={link.link}
-                target="_blank">{link.title}</a>)}</div>
+            <div className="moduleDayPlanning_rowLinks">{links.map(link => <ModuleDayPlanningLink link={link.link} title={link.title} setSelectedPage={setSelectedPage} />)}</div>
             <div className="moduleDayPlanning_rowContent">{body}</div>
         </div>
         <div className="moduleDayPlanning_rowButtons">
@@ -41,6 +47,10 @@ const ModuleDayPlanning: React.FC<ModuleDayPlanningType> = (props) => {
     const intl = useIntl()
     const { settings } = props
     const { object, links_property, time_from_property, time_to_property } = settings
+    const [selectedPage, setSelectedPage] = useState<string | null>(null)
+    const handleClose = useCallback((value: boolean | null) => {
+        setSelectedPage(null)
+    }, [])
 
     //спектр выводимых дат под фильтр
     const dates = useMemo(() => {
@@ -86,10 +96,11 @@ const ModuleDayPlanning: React.FC<ModuleDayPlanningType> = (props) => {
                 {dates.map(date => <ModuleDayPlanningDate key={date.format("YYYY-MM-DD")} date={date} filter={filter} handleDateClick={handleDateClick} />)}
             </div>
             <div className={`moduleDayPlanning_rowsContainer${isFetching ? " loading" : ""}`}>
-                {data?.map(row => <ModuleDayPlanningRow key={row.id}  {...row} />)}
+                {data?.map(row => <ModuleDayPlanningRow key={row.id} {...row} setSelectedPage={setSelectedPage}/>)}
                 {isEmptyDate ? <div className="moduleDayPlanning_emptyList">{intl.formatMessage({ id: "DAY_PANNING.EMPTY_LIST" })}</div> : null}
             </div>
         </div>
+        <ComponentModal page={selectedPage} show={Boolean(selectedPage)} setShow={handleClose} refresh={refetch}   />
     </div>
 }
 

@@ -2773,10 +2773,15 @@ html[data-theme="dark"] {
     &_rowLinks {
         font-size: 1.075rem;
         font-weight: 500;
-        color: var(--kt-text-gray-400);
+        color: var(--kt-primary);
     }
 
     &_rowLink {
+        transition: color 0.3s;
+        cursor: pointer;
+        &:hover {
+            color: var(--kt-primary-active);
+        }
         &:not(:last-child) {
             margin-right: 0.5rem;
         }

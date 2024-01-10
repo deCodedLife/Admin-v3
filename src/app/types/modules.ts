@@ -127,7 +127,7 @@ export type ModuleInfoType = DefaultModuleType<"info", {
 
 //модуль List
 export type ModuleListDownloaderType = {
-    title: string, 
+    title: string,
     handleDownload: (columns: Array<string>) => Promise<void>,
     columns: Array<{ title: string, article: string }>,
 }
@@ -247,11 +247,11 @@ export type ModuleWidgetsWidgetType = {
     }
 }
 
-export type ModuleWidgetsViewType = { data?: ApiWidgetType, is_hard: boolean}
+export type ModuleWidgetsViewType = { data?: ApiWidgetType, is_hard: boolean }
 
 export type ModuleWidgetsType = DefaultModuleType<"analytic_widgets",
- { filters: Array<ComponentFilterType>,  buttons: Array<ComponentButtonType> },
-  { filters: {[key: string]: any}, widgets_group: string, is_hard: boolean, linked_filter?: string }>
+    { filters: Array<ComponentFilterType>, buttons: Array<ComponentButtonType> },
+    { filters: { [key: string]: any }, widgets_group: string, is_hard: boolean, linked_filter?: string }>
 
 //модуль Roles
 
@@ -663,12 +663,18 @@ export type ModuleAccordionItemType = {
 export type ModuleAccordionType = DefaultModuleType<"accordion", Array<any>, { object: string, property_title: string, property_body: string, filters: any }>
 
 //модуль DayPlanning
+export type ModuleDayPlanningLinkType = {
+    link: string,
+    title: string,
+    setSelectedPage: (value: string | null) => void
+}
 export type ModuleDayPlanningRowType = {
     body: string,
     color: string,
     description: string,
     id: string | number,
-    links: Array<{ title: string, link: string }>, time: string, buttons?: Array<ComponentButtonType>
+    links: Array<{ title: string, link: string }>, time: string, buttons?: Array<ComponentButtonType>,
+    setSelectedPage: (value: string | null) => void
 }
 export type ModuleDayPlanningDateType = { date: moment.Moment, filter: any, handleDateClick: (date: moment.Moment) => void }
 export type ModuleDayPlanningType = DefaultModuleType<"day_planning", Array<any>, { object: string, links_property: string, time_from_property: string, time_to_property: string }>
