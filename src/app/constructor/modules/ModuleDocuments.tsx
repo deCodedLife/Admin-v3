@@ -38,7 +38,7 @@ const ModuleDocumentsButtons = React.memo<TModuleDocumentsButtons>(props => {
     const setHandleSubmit = useHandleSubmitContext()
     useEffect(() => {
         if (isSubpage) {
-            setHandleSubmit({type: "submit", settings: { title: intl.formatMessage({ id: "BUTTON.SAVE" }), background: "dark", icon: "" }, customHandler: handleSubmit})
+            setHandleSubmit({ type: "submit", settings: { title: intl.formatMessage({ id: "BUTTON.SAVE" }), background: "dark", icon: "" }, customHandler: handleSubmit })
             return () => setHandleSubmit(prev => isEqual(prev?.customHandler, handleSubmit) ? null : prev)
         }
     }, [])
@@ -208,23 +208,37 @@ const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
                     return acc + currentDocument.settings.document_body + ((array.length - 1 === index) ? "" : "<br>")
                 }, "")
             if (Array.isArray(fields_list)) {
-                fields_list.filter(field => field.field_type === "list").forEach(field => {
-                    //@ts-ignore
-                    const initialListValue = documentClone[field.article]
-                    //@ts-ignore
-                    documentClone[field.article] = initialListValue ? Array.isArray(initialListValue) ?
-                        initialListValue.map((value: { title: string, value: any }) => value.value) : initialListValue.value : null
+                fields_list.forEach(field => {
+                    if (field.field_type === "list") {
+                        //@ts-ignore
+                        const initialListValue = documentClone[field.article]
+                        //@ts-ignore
+                        documentClone[field.article] = initialListValue ? Array.isArray(initialListValue) ?
+                            initialListValue.map((value: { title: string, value: any }) => value.value) : initialListValue.value : null
+                    } else {
+                        if (!documentClone.hasOwnProperty(field.article)) {
+                            documentClone[field.article] = field.value
+                        }
+                    }
                 })
             }
             return documentClone
         } else {
-            return {
+            const initials: {[key: string]: any} = {
                 title: "",
                 type_id: 2, //убрать, пока обязательный параметр для сервера
                 document_header: "",
                 document_footer: "",
                 document_body: ""
             }
+            if (Array.isArray(fields_list)) {
+                fields_list.forEach(field => {
+                    if (!initials.hasOwnProperty(field.article)) {
+                        initials[field.article] = field.value
+                    }
+                })
+            }
+            return initials
         }
     }, [data])
     return <div className="moduleDocuments">
@@ -247,7 +261,7 @@ const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
                             handlePrintContent={handlePrintContent}
                             handleSubmit={handleSubmit}
                         />
-                         {/* временно отключить возможность установки колонтитулов */}
+                        {/* временно отключить возможность установки колонтитулов */}
                         {/* <ComponentDashboard inverse>
                             <Dropdown>
                                 <Dropdown.Toggle className="moduleDocuments_dropdown">
