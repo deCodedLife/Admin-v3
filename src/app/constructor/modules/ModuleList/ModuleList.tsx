@@ -54,7 +54,7 @@ const DownloaderModule: React.FC<ModuleListDownloaderType> = ({ title, handleDow
     const initialSelectedColumns = useMemo(() => {
         return columns.map(column => column.article)
     }, [columns])
-    
+
     return <div>
         <ComponentButton
             className="moduleList_downloaderModuleButton"
@@ -434,7 +434,10 @@ const ListCell: React.FC<ModuleListCellType> = ({ article, type, row, page, filt
                 return <span>{getMaskedString(data, type, context)}</span>
             case "price":
                 if (data && typeof data === "object") {
-                    return <div><span>{getMaskedString(data?.new_price, type, context)}</span><sup style={{textDecoration: "line-through"}}>{getMaskedString(data?.old_price, type, context)}</sup></div>
+                    return <div>
+                        <span>{getMaskedString(data?.new_price, type, context)}</span>
+                        <sup style={{ textDecoration: "line-through" }}>{getMaskedString(data?.old_price, type, context)}</sup>
+                    </div>
                 } else {
                     const resolvedClassName = `moduleList_priceCell ${data < 0 ? "negative" : ""} ${data ? "" : " paddingless"}`
                     return <div className={resolvedClassName}>{getMaskedString(data, type, context)}</div>

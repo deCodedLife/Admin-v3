@@ -106,7 +106,7 @@ export const getMaskedPhone = (format: ApiSetupType["phone_format"]) => {
 
 //функция для форматирования наложения маски на телефон (строка)
 export const getMaskedString = (value: any, type: "phone" | "price" | "float" | "integer", context: ApiSetupType, suffix = "") => {
-    if (!value || value === "null" || value === "undefined") {
+    if ((!value && typeof value !== "number") || value === "null" || value === "undefined") {
         return ""
     } else {
         const getCurrentMask = (type: "phone" | "price" | "float" | "integer") => {
