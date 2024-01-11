@@ -25,6 +25,8 @@ const ModuleDomRu: React.FC = () => {
     useEffect(() => {
         if (isActiveCall && !notificated) {
             setShow(true)
+        } else {
+            setShow(false)
         }
     }, [isActiveCall, notificated])
 
@@ -58,9 +60,6 @@ const ModuleDomRu: React.FC = () => {
             return {}
         }
     }, [data])
-    const handleMakeCall = () => {
-        api("dom_ru", "make_call", { user: currentUser?.domru_login, phone: "79520376037" })
-    }
     return <div className="app-navbar-item ms-1 ms-lg-3">
         {
             isActiveCall ? <button className="moduleDomRu_button" onClick={() => setShow(true)}>
@@ -68,7 +67,6 @@ const ModuleDomRu: React.FC = () => {
             </button> : null
         }
 
-        {/*  <ComponentButton type={"custom"} settings={{title: "Call", icon: "", background: "dark"}} customHandler={handleMakeCall} /> */}
         <ModalContext.Provider value={modalContext}>
             <Modal dialogClassName="customModal" show={show} size={modalSize} onHide={handleHideModal} onEntering={setModalIndex}>
                 <Modal.Header closeButton>
