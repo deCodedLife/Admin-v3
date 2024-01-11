@@ -439,7 +439,7 @@ const ListCell: React.FC<ModuleListCellType> = ({ article, type, row, page, filt
                         <sup style={{ textDecoration: "line-through" }}>{getMaskedString(data?.old_price, type, context)}</sup>
                     </div>
                 } else {
-                    const resolvedClassName = `moduleList_priceCell ${data < 0 ? "negative" : ""} ${(data && typeof data !== "number") ? "" : " paddingless"}`
+                    const resolvedClassName = `moduleList_priceCell ${data < 0 ? "negative" : ""} ${typeof data === "number" ? "" : " paddingless"}`
                     return <div className={resolvedClassName}>{getMaskedString(data, type, context)}</div>
                 }
             case "float":
