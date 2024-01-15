@@ -158,7 +158,7 @@
             right: 0;
             background-color: var(--kt-danger);
             border: 1px solid var(--kt-danger);
-            border-top-right-radius: calc(0.625rem - 1px);
+            border-top-right-radius: 0.4rem;
             transition: 0.3s;
 
             &:hover {
