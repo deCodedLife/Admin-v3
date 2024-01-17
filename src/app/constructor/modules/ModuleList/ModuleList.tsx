@@ -1,7 +1,7 @@
 import clsx from "clsx"
 import { Formik, Form as FormikForm, useFormikContext } from "formik"
 import moment from "moment"
-import React, { useCallback, useEffect, useMemo, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Modal } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import useListData from "../../../api/hooks/useListData"
@@ -11,6 +11,7 @@ import useSearchRequest from "../../../api/hooks/useSearchRequest"
 import { ComponentButtonType } from "../../../types/components"
 import {
     ModuleListActionButtonsType, ModuleListCellType, ModuleListDownloaderType, ModuleListHeaderCellType,
+    ModuleListInfiniteScrollType,
     ModuleListPaginationType, ModuleListRowType, ModuleListType, ModuleListUpdateFieldType, ModuleListUpdateModalType
 } from "../../../types/modules"
 import ComponentButton from "../../components/ComponentButton"
@@ -41,6 +42,7 @@ import setModalIndex from "../../helpers/setModalIndex"
 import usePrevious from "../../helpers/usePrevious"
 import { isEqual } from "lodash"
 import { useRefetchSubscribers, useSubscribeOnRefetch } from "../helpers/PageContext"
+import useInfiniteListData from "../../../api/hooks/useInfiniteListData"
 
 export const getButtonKey = (button: ComponentButtonType) => `${button.type}-${button.settings.title}-${button.settings.icon}`
 
@@ -373,6 +375,27 @@ export const Pagination: React.FC<ModuleListPaginationType> = ({ detail, filter:
     </div>
 }
 
+const InfiniteScroll: React.FC<ModuleListInfiniteScrollType> = (props) => {
+    const { currentRowsCount = 0, rowsCount = 0, hasNextPage, isFetching, fetch } = props
+    const [isVisible, setIsVisible] = useState(false)
+    const ref = useRef<HTMLDivElement | null>(null)
+    useEffect(() => {
+        const observer = new IntersectionObserver(([entry]) => {
+            setIsVisible(entry.isIntersecting)
+        })
+        observer.observe(ref?.current as Element)
+        return () => observer.disconnect()
+    }, [])
+
+    useEffect(() => {
+        if (isVisible && hasNextPage && !isFetching) {
+            fetch()
+        }
+    }, [isVisible])
+
+    return <div ref={ref} className="infiniteScroll">Показано {currentRowsCount} строк из {rowsCount}</div>
+}
+
 const nonClickableCellsTypes = ["email", "phone", "buttons", "audio_player", "link", "link_list"]
 
 const ListCell: React.FC<ModuleListCellType> = ({ article, type, row, page, filterable, suffix, setFilter }) => {
@@ -563,15 +586,17 @@ const HeaderCell: React.FC<ModuleListHeaderCellType> = ({ article, title, type, 
         ><KTSVG path='/media/crm/icons/sort.svg' /></button> : null}</th>
 }
 
-const ModuleList = React.memo<ModuleListType>((props) => {
+const ModuleList = React.memo<ModuleListType>((props) => { 
     const intl = useIntl()
     const { settings, components, hook } = props
-    const { headers, filters: initialFilters, is_csv, is_exel, is_edit = true, context: initialContext, linked_filter, link } = settings
+    const { headers, filters: initialFilters, is_csv, is_exel, is_edit = true, context: initialContext, linked_filter, link, is_infinite } = settings
     const haveButtons = Boolean(components?.buttons)
     const showCSVDownloader = Boolean(is_csv)
     const showExelDownloader = Boolean(is_exel)
     const isListEditable = is_edit
     const currentLink = typeof link === "string" ? link : link === false ? null : settings.object
+    const withInfiniteScroll = is_infinite
+    console.log(is_infinite)
 
 
 
@@ -605,7 +630,14 @@ const ModuleList = React.memo<ModuleListType>((props) => {
 
     const context = Object.assign({}, { block: "list" }, initialContext ?? {})
     const resolvedFilter = { context, ...filter }
-    const { isLoading: loading, isFetching, isRefetching, data: response, refetch } = useListData(settings.object, resolvedFilter)
+    const { data: response, isLoading: loading, isFetching, isRefetching, refetch } = useListData(settings.object, resolvedFilter, !withInfiniteScroll)
+    const {
+        data: infiniteResponse,
+        isLoading: isInifiniteDataLoading,
+        isFetching: isInfiniteDataFetching,
+        hasNextPage,
+        fetchNextPage
+    } = useInfiniteListData(settings.object, resolvedFilter, withInfiniteScroll)
 
     useSubscribeOnRefetch(refetch, linked_filter)
 
@@ -646,10 +678,13 @@ const ModuleList = React.memo<ModuleListType>((props) => {
         [...headers, { title: "", article: "buttons", type: "buttons" }] : headers : [], [headers, isListEditable])
 
     //подключение нужных данных
-    const data = isSetSearchData ? searchResponse?.data : response?.data
-    const detail = isSetSearchData ? searchResponse?.detail : response?.detail
-    const isDataFetching = isSetSearchData ? isSearchFetching : isFetching
-    const isEmptyData = isSetSearchData ? (!searchLoading && data?.length === 0) : (!loading && data?.length === 0)
+    const data = isSetSearchData ? searchResponse?.data :
+        withInfiniteScroll ? infiniteResponse?.pages.reduce<Array<{ [key: string]: any }>>((acc, currentValue) => acc.concat(currentValue.data), []) : response?.data
+    const detail = isSetSearchData ? searchResponse?.detail :
+        withInfiniteScroll ? infiniteResponse?.pages[0]?.detail : response?.detail
+    const isDataFetching = isSetSearchData ? isSearchFetching : withInfiniteScroll ? false : isFetching
+    const isEmptyData = isSetSearchData ? (!searchLoading && data?.length === 0) : 
+    withInfiniteScroll ? (!isInifiniteDataLoading && data?.length === 0) : (!loading && data?.length === 0)
 
 
     useEffect(() => {
@@ -853,7 +888,18 @@ const ModuleList = React.memo<ModuleListType>((props) => {
                                     </tbody>
                                 </table>
                             </div>
-                            <Pagination detail={detail} filter={filter} setFilter={setFilter} />
+                            {
+                                isSetSearchData ? null :
+                                    withInfiniteScroll ? <InfiniteScroll
+                                        fetch={fetchNextPage}
+                                        currentRowsCount={data?.length}
+                                        rowsCount={detail?.rows_count}
+                                        hasNextPage={hasNextPage}
+                                        isFetching={isInfiniteDataFetching}
+                                    /> :
+                                        <Pagination detail={detail} filter={filter} setFilter={setFilter} />
+                            }
+
                             <UpdateFieldsModal
                                 showModal={showUpdateFieldsModal}
                                 hideModal={setShowUpdateFieldsModal}

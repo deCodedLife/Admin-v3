@@ -158,6 +158,13 @@ export type ModuleListPaginationType = {
     filter: { page?: number, limit: number }
     setFilter: (values: any) => void
 }
+export type ModuleListInfiniteScrollType = {
+    currentRowsCount?: number,
+    rowsCount?: number,
+    hasNextPage?: boolean,
+    isFetching: boolean,
+    fetch: () => void
+}
 export type ModuleListCellType = {
     article: string,
     type: string,
@@ -198,6 +205,7 @@ export type ModuleListType = DefaultModuleType<"list", { filters: Array<Componen
     is_edit?: boolean,
     context?: Object,
     linked_filter?: string
+    is_infinite: boolean
 }>
 
 //модуль Widgets

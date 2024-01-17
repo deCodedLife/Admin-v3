@@ -178,6 +178,14 @@
         margin-top: 10px;
     }
 
+    & .infiniteScroll {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+        font-weight: 500;
+    }
+
     &_sortButton {
         background-color: transparent;
         border: none;
