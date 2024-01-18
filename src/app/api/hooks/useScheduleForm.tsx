@@ -4,11 +4,13 @@ import { ApiPageType, ApiResponseType } from "../../types/api"
 import { getErrorToast } from "../../constructor/helpers/toasts"
 
 
-const useScheduleForm = (requestObject: string, cell: {type: "available" | "busy", date: string, time: string, event: any} | null) => {
+const useScheduleForm = (requestObject: string, cell: {type: "available" | "busy", date: string, time: string, event: any, initials: {[key: string]: any}} | null) => {
+    console.log(cell)
     const enabled = Boolean(cell)
     const fetchKey = ["scheduleForm", cell]
     const requestPath = cell ? cell.type === "busy" ? `${requestObject}/update/${cell.event?.id}` : `${requestObject}/add` : ""
-    const fetchFunction = () => api<ApiPageType>("pages", "get", { page: requestPath })
+    const resolvedRequestData = cell?.initials?.user_id ? {page: requestPath, context: {user_id: cell.initials.user_id}} : { page: requestPath }
+    const fetchFunction = () => api<ApiPageType>("pages", "get", resolvedRequestData)
    
     const hookConfiguration = {
         retry: false,
