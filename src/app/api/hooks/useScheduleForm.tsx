@@ -5,7 +5,6 @@ import { getErrorToast } from "../../constructor/helpers/toasts"
 
 
 const useScheduleForm = (requestObject: string, cell: {type: "available" | "busy", date: string, time: string, event: any, initials: {[key: string]: any}} | null) => {
-    console.log(cell)
     const enabled = Boolean(cell)
     const fetchKey = ["scheduleForm", cell]
     const requestPath = cell ? cell.type === "busy" ? `${requestObject}/update/${cell.event?.id}` : `${requestObject}/add` : ""

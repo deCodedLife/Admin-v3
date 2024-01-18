@@ -596,7 +596,6 @@ const ModuleList = React.memo<ModuleListType>((props) => {
     const isListEditable = is_edit
     const currentLink = typeof link === "string" ? link : link === false ? null : settings.object
     const withInfiniteScroll = is_infinite
-    console.log(is_infinite)
 
 
 
