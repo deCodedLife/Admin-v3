@@ -9,15 +9,18 @@ import ComponentButton from "./ComponentButton"
 import api from "../../api"
 import { Modal } from "react-bootstrap"
 import setModalIndex from "../helpers/setModalIndex"
+import { useHook } from "./helpers"
 
-const ComponentPhone: React.FC<ComponentPhoneType> = ({ article, is_disabled, customHandler }) => {
+const ComponentPhone: React.FC<ComponentPhoneType> = ({ article, is_disabled, hook, customHandler }) => {
     const applicationContext = useSetupContext()
     const { currentUser } = useAuth()
     const [field, meta] = useField<string>(article)
     const { name, value, onBlur } = field
-    const { setFieldValue } = useFormikContext()
+    const { values, setFieldValue } = useFormikContext()
     const isError = Boolean(meta.error && meta.touched)
     const { mask, placeholder, pure_length } = getMaskedPhone(applicationContext.phone_format)
+
+    const setValueForHook = useHook(name, values, setFieldValue, hook)
 
 
     /*
@@ -49,6 +52,9 @@ const ComponentPhone: React.FC<ComponentPhoneType> = ({ article, is_disabled, cu
         setFieldValue(article, resolvedValue)
         if (customHandler) {
             customHandler(resolvedValue)
+        }
+        if (hook) {
+            setValueForHook(resolvedValue)
         }
         onBlur(event)
     }

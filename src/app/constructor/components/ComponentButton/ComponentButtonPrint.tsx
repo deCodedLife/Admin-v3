@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { ComponentButtonPrintType } from "../../../types/components"
 import { useSetupContext } from "../../helpers/SetupContext"
 import { useAuth } from "../../../modules/auth"
@@ -17,15 +17,17 @@ import setModalIndex from "../../helpers/setModalIndex"
 import { Formik, Form as FormikForm } from "formik"
 import ComponentSelect from "../ComponentSelect"
 import ComponentTextEditor from "../ComponentTextEditor"
+import { useFormContext } from "../../modules/ModuleForm/ModuleForm"
 
 
 type Tdocument = { title: string, article: string, object?: string, structure: Array<{ block_type: string, settings: { document_body: string } }> }
 
 const ComponentButtonPrint: React.FC<ComponentButtonPrintType> = ({ settings, defaultLabel = "title", className = "" }) => {
+    const ref = useRef<HTMLButtonElement | null>(null)
     const applicationContext = useSetupContext()
     const { currentUser } = useAuth()
     const intl = useIntl()
-    const { data, context } = settings
+    const { data, context, visible = true, afterSubmit = true } = settings
     const { is_edit, row_id, scheme_name, document_article, script } = data
     const resolvedContext = Object.assign({ block: "print" }, context ?? {})
     const { data: documents } = useRequest<Array<Tdocument>>("documents", "get", { context: resolvedContext })
@@ -34,6 +36,7 @@ const ComponentButtonPrint: React.FC<ComponentButtonPrintType> = ({ settings, de
     const [isLoading, setIsLoading] = useState(false)
     const [currentDocument, setCurrentDocument] = useState<string | null>(null)
     const isIconBased = defaultLabel === "icon"
+    const { isSuccess } = useFormContext()
 
     const handleScriptAction = useCallback((title: string, body: string) => {
         if (script) {
@@ -42,6 +45,12 @@ const ComponentButtonPrint: React.FC<ComponentButtonPrintType> = ({ settings, de
             api(script.object, script.command, requestData)
         }
     }, [script])
+
+    useEffect(() => {
+        if (isSuccess && afterSubmit) {
+            ref.current?.click()
+        }
+    }, [isSuccess])
 
     const handleClick = async () => {
         if (isMinimize) {
@@ -84,10 +93,12 @@ const ComponentButtonPrint: React.FC<ComponentButtonPrintType> = ({ settings, de
 
     const initialValues = useMemo(() => ({ selectedDocument: null, selectedDocumentTitle: "", documentContent: currentDocument ?? "" }), [currentDocument])
     const documentsList = useMemo(() => documents && Array.isArray(documents) ? documents.map(document => ({ title: document.title, value: document.article })) : [], [documents])
+    const resolvedClassName = `componentButton${isIconBased ? " icon_based" : ""} ${className} ${settings.background} ${isMinimize ? " minimized" : ""} ${visible ? "" : " hidden"}`
     return <>
         <ComponentTooltip title={settings.title ?? ""}>
             <button
-                className={`componentButton${isIconBased ? " icon_based" : ""} ${className} ${settings.background} ${isMinimize ? " minimized" : ""}`}
+                ref={ref}
+                className={resolvedClassName}
                 type="button"
                 onClick={handleClick}>
                 {getLabel(defaultLabel, settings)}

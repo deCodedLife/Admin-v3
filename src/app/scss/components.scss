@@ -16,6 +16,10 @@
         opacity: 0.5;
     }
 
+    &.hidden {
+        display: none;
+    }
+
     &:hover {
         background-color: var(--kt-primary-active);
     }

@@ -52,7 +52,9 @@ export type ComponentButtonPrintType = DefaultComponentButtonType<"print", {
             properties: any
         }
     },
-    context?: { [key: string]: any }
+    context?: { [key: string]: any },
+    afterSubmit?: boolean,
+    visible?: boolean
 }>
 
 
@@ -217,6 +219,7 @@ export type ComponentPriceType = {
 //компонент Phone 
 export type ComponentPhoneType = {
     article: string,
+    hook?: string,
     is_disabled?: boolean,
     customHandler?: (value: any) => void,
 }

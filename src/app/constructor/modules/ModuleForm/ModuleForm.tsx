@@ -31,6 +31,11 @@ import InfoModal from "./InfoModal"
 import ComponentGooglePlaces from "../../components/ComponentGooglePlaces"
 import { useHandleSubmitContext } from "../../../page/DynamicPage"
 import { isEqual } from "lodash"
+
+//контекст
+const FormContext = React.createContext<{isSuccess?: boolean}>({})
+export const useFormContext = () => useContext(FormContext)
+
 //Тип поля
 export const Component = React.memo<ModuleFormFieldType>((props) => {
     const { article, data_type, field_type, is_disabled, is_visible = true, hook, is_clearable, object_id, request_object } = props
@@ -85,6 +90,7 @@ export const Component = React.memo<ModuleFormFieldType>((props) => {
         case "phone":
             return <ComponentPhone
                 article={article}
+                hook={hook}
                 is_disabled={Boolean(is_disabled)}
             />
         case "date":
@@ -377,7 +383,14 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
 
     const isSubpage = useIsSubpage()
 
-    return <Formik
+    const contextValue = useMemo(() => {
+        return {
+            isSuccess
+        }
+    }, [isSuccess])
+
+    return <FormContext.Provider value={contextValue}>
+        <Formik
         enableReinitialize
         initialValues={formConfiguration.initialValues}
         onSubmit={handleSubmit}
@@ -395,6 +408,7 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
             </div>
         }}
     </Formik>
+    </FormContext.Provider>
 }
 
 export default ModuleForm
