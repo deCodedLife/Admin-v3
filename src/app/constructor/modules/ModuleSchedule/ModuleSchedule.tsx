@@ -72,12 +72,9 @@ const getScheduleAsArray = (data?: ApiScheduleType) => {
 const ModuleScheduleCell: React.FC<ModuleScheduleComponentCellType> = (props) => {
     const { type, date, time, cell_height, event, initials, innerInitials, setSelectedCell,  } = props
     const currentCellHeight = `${3.15 * cell_height + 0.5 * (cell_height - 1)}rem`
-    const resolvedIcons = useMemo(() => {
-        return {
-            left: event?.icons?.slice(0, 2) ?? [],
-            right: event?.icons?.slice(2, 4) ?? []
-        }
-    }, [])
+    const leftResolvedIcons = event && Array.isArray(event.icons) ? event.icons.length > 2 ? event.icons.slice(0,2) : [] : []
+    const rightResolvedIcons = event && Array.isArray(event.icons) ? event.icons.length > 2 ? event.icons.slice(2,4) : event.icons.slice(0,2) : []
+
     const handleClick = () => {
         if (type === "disabled") {
             return
@@ -100,7 +97,7 @@ const ModuleScheduleCell: React.FC<ModuleScheduleComponentCellType> = (props) =>
                             <div className={`moduleSchedule_cell ${type} ${event?.color}`} style={{ height: currentCellHeight }}>
                                 <div className={`moduleSchedule_cellContentContainer ${cell_height === 1 ? " minimize" : ""}`}>
                                 <div className="moduleSchedule_cellIcons left">
-                                        {resolvedIcons.left.map((icon: string) => <KTSVG key={icon} path={`/media/crm/icons/${icon}.svg`} className='moduleSchedule_cellIcon' />)}
+                                        {leftResolvedIcons.map((icon: string) => <KTSVG key={icon} path={`/media/crm/icons/${icon}.svg`} className='moduleSchedule_cellIcon' />)}
                                     </div>
                                     {Array.isArray(event.description) ? event.description.map((descriptionRow: string) => {
                                         return <div key={descriptionRow} className="moduleSchedule_cellContent">
@@ -108,7 +105,7 @@ const ModuleScheduleCell: React.FC<ModuleScheduleComponentCellType> = (props) =>
                                         </div>
                                     }) : null}
                                     <div className="moduleSchedule_cellIcons right">
-                                    {resolvedIcons.right.map((icon: string) => <KTSVG key={icon} path={`/media/crm/icons/${icon}.svg`} className='moduleSchedule_cellIcon' />)}
+                                    {rightResolvedIcons.map((icon: string) => <KTSVG key={icon} path={`/media/crm/icons/${icon}.svg`} className='moduleSchedule_cellIcon' />)}
                                     </div>
                                 </div>
                             </div>
