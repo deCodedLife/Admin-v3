@@ -27,7 +27,7 @@ const ComponentButtonPrint: React.FC<ComponentButtonPrintType> = ({ settings, de
     const applicationContext = useSetupContext()
     const { currentUser } = useAuth()
     const intl = useIntl()
-    const { data, context, visible = true, afterSubmit = true } = settings
+    const { data, context, visible = true, afterSubmit = false } = settings
     const { is_edit, row_id, scheme_name, document_article, script } = data
     const resolvedContext = Object.assign({ block: "print" }, context ?? {})
     const { data: documents } = useRequest<Array<Tdocument>>("documents", "get", { context: resolvedContext })
