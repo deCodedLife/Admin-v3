@@ -15,7 +15,7 @@ export type DefaultModuleType<type = string, components = any, settings = any> =
 export type ModuleHeaderType = DefaultModuleType<"header", { buttons: Array<ComponentButtonType> }, { title: string, description: string }>
 
 //модуль Form
-type ModuleFormButtonType = ComponentButtonType & { settings: { field_place?: string } }
+type ModuleFormButtonType = ComponentButtonType & { settings: { field_place?: string, visible?: boolean } }
 type DefaultModuleFormFieldType<field_type = string, settings = null, additionals = {}> = {
     annotation?: string,
     title?: string,

@@ -290,7 +290,7 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
     const initialData = Object.assign({}, modalContext.initialData ?? {}, settings.data ?? {})
     const { object, command, command_type, areas, type, close_after_submit = true } = settings
     const buttons = useMemo(() => Array.isArray(components) ? [] : components.buttons, [components])
-    const mainButtons = useMemo(() => buttons.filter(button => !button.settings.field_place), [buttons])
+    const mainButtons = useMemo(() => buttons.filter(button => !button.settings.field_place && button.settings.visible !== false), [buttons])
     const fieldButtons = useMemo(() => buttons.filter(button => button.settings.field_place), [buttons])
     const { mutate: classicMutate, isSuccess: isSuccessClassicMutate, isLoading: isClassicMutateLoading, data: responseOnClassicMutate } = useMutate(object, command)
     const { mutate: mutateWithFiles,
