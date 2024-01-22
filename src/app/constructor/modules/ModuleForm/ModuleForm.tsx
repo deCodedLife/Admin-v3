@@ -290,7 +290,7 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
     const initialData = Object.assign({}, modalContext.initialData ?? {}, settings.data ?? {})
     const { object, command, command_type, areas, type, close_after_submit = true } = settings
     const buttons = useMemo(() => Array.isArray(components) ? [] : components.buttons, [components])
-    const mainButtons = useMemo(() => buttons.filter(button => !button.settings.field_place && button.settings.visible !== false), [buttons])
+    const mainButtons = useMemo(() => buttons.filter(button => !button.settings.field_place), [buttons])
     const fieldButtons = useMemo(() => buttons.filter(button => button.settings.field_place), [buttons])
     const { mutate: classicMutate, isSuccess: isSuccessClassicMutate, isLoading: isClassicMutateLoading, data: responseOnClassicMutate } = useMutate(object, command)
     const { mutate: mutateWithFiles,
@@ -308,7 +308,7 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
     const isSuccess = useFormDataRequest ? isSuccessMutateWithFiles : isSuccessClassicMutate
     const isLoading = useFormDataRequest ? isMutateWithFilesLoading : isClassicMutateLoading
     const responseData = useFormDataRequest ? responseOnMutateWithFilesData : responseOnClassicMutate
-
+    console.log(mainButtons)
     /* функция проверяет, есть ли у формы кнопка submit с переданным url для перехода после отправки формы, и, если есть, осуществляет переход.
     Сам переход выполняется в двух случаях: после успешного запроса или при отсутствии изменении в форме редактирования (отправка запроса игнорируется)  */
     const afterSubmitAction = useCallback((buttons: Array<ComponentButtonType>) => {
@@ -380,7 +380,7 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
     }
 
     const isFormInsideModal = Boolean(modalContext.insideModal)
-    const buttonsContainerAdditionalClass = isFormInsideModal ? buttons.length === 2 ? "between" : "" : "inverse"
+    const buttonsContainerAdditionalClass = isFormInsideModal ? buttons.filter(button => button.settings.visible !== false).length === 2 ? "between" : "" : "inverse"
 
     const isSubpage = useIsSubpage()
 
