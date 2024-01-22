@@ -1,5 +1,5 @@
-import { useField, useFormikContext } from "formik"
-import React, { useEffect, useMemo, useState } from "react"
+import { Formik, Form as FormikForm, useField, useFormikContext } from "formik"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 import MaskedInput from "react-text-mask"
 import { ComponentPhoneType } from "../../types/components"
 import { useSetupContext } from "../helpers/SetupContext"
@@ -7,11 +7,13 @@ import { getMaskedPhone } from "../modules/helpers"
 import { useAuth } from "../../modules/auth"
 import ComponentButton from "./ComponentButton"
 import api from "../../api"
-import { Modal } from "react-bootstrap"
+import { Col, Form, Modal } from "react-bootstrap"
 import setModalIndex from "../helpers/setModalIndex"
 import { useHook } from "./helpers"
+import ComponentSelect from "./ComponentSelect"
+import { getErrorToast } from "../helpers/toasts"
 
-const ComponentPhone: React.FC<ComponentPhoneType> = ({ article, is_disabled, hook, customHandler }) => {
+const ComponentPhone: React.FC<ComponentPhoneType> = ({ article, is_disabled, hook, script, customHandler }) => {
     const applicationContext = useSetupContext()
     const { currentUser } = useAuth()
     const [field, meta] = useField<string>(article)
@@ -36,7 +38,7 @@ const ComponentPhone: React.FC<ComponentPhoneType> = ({ article, is_disabled, ho
     */
     const [initializeCall, setInitializeCall] = useState(false)
     useEffect(() => {
-        if (initializeCall) {
+        if (initializeCall && !script) {
             const id = setTimeout(() => setInitializeCall(false), 3000)
             return () => clearTimeout(id)
         }
@@ -87,15 +89,40 @@ const ComponentPhone: React.FC<ComponentPhoneType> = ({ article, is_disabled, ho
         return String(applicationContext?.phone_format)
     }, [applicationContext])
 
+    const list = useMemo(() => [
+        { title: "Да", value: true },
+        { title: "Нет", value: false }
+    ], [])
+
+    const handleSubmit = useCallback(async (props: { call_status?: boolean }) => {
+        try {
+            if (!script) {
+                throw new Error("Не передан скрипт запроса")
+            } else if (props.call_status) {
+                await api(script.object, script.command, script.properties)
+            }
+            setInitializeCall(false)
+        } catch (error: any) {
+            return getErrorToast(error.message)
+        }
+    }, [script])
+
     return <>
         <Modal show={initializeCall} onHide={() => setInitializeCall(false)} size="sm" centered onEntering={setModalIndex}>
             <Modal.Header closeButton>
                 <Modal.Title>
-                    Внимание
+                    {script ? "Удалось дозвониться?" : "Внимание"}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <p>Инициализация звонка</p>
+                {!script && <p>Инициализация звонка</p>}
+                {script && <Formik initialValues={{ call_status: undefined }} onSubmit={handleSubmit}>
+                    {() => <FormikForm>
+                        <Form.Group as={Col} md={12}>
+                            <ComponentSelect article="call_status" data_type="boolean" list={list} onChangeSubmit />
+                        </Form.Group>
+                    </FormikForm>}
+                </Formik>}
             </Modal.Body>
         </Modal>
         <div className="componentPhone_container">

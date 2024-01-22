@@ -1,6 +1,6 @@
 import moment from "moment"
 import { ApiDatabaseSchemeType, ApiModuleType, ApiNotificationTypesType, ApiObjectSchemeType, ApiPageSchemeType, ApiPermissionType, ApiRoleType, ApiScheduleType, ApiWidgetType } from "./api"
-import { ComponentButtonType, ComponentFilterType, ComponentInfoType, ComponentInputType, ComponentSelectType } from "./components"
+import { ComponentButtonType, ComponentFilterType, ComponentInfoType, ComponentInputType, ComponentPhoneType, ComponentSelectType } from "./components"
 
 //тип модуля по умолчанию. Используется для создания типов конкретных модулей
 export type DefaultModuleType<type = string, components = any, settings = any> = {
@@ -38,7 +38,7 @@ type DefaultModuleFormFieldType<field_type = string, settings = null, additional
 type ModuleFormFieldInputType = DefaultModuleFormFieldType<ComponentInputType["field_type"], null, { min_value?: number, max_value?: number, suffix?: string }>
 type ModuleFormFieldTextareaType = DefaultModuleFormFieldType<"textarea", { rows?: number } | null, { min_value?: number, max_value?: number }>
 type ModuleFormFieldPriceType = DefaultModuleFormFieldType<"price", null, { min_value?: number, max_value?: number }>
-type ModuleFormFieldPhoneType = DefaultModuleFormFieldType<"phone", null, { min_value?: number, max_value?: number }>
+type ModuleFormFieldPhoneType = DefaultModuleFormFieldType<"phone", null, { min_value?: number, max_value?: number, script?: ComponentPhoneType["script"] }>
 type ModuleFormFieldDateType = DefaultModuleFormFieldType<"date" | "time" | "datetime" | "month", null, { min_value?: number, max_value?: number }>
 type ModuleFormFieldCheckboxType = DefaultModuleFormFieldType<"checkbox", null, { min_value?: number, max_value?: number }>
 type ModuleFormFieldSelectType = DefaultModuleFormFieldType<"list", { is_duplicate: boolean, object: string, select: string } | null, {

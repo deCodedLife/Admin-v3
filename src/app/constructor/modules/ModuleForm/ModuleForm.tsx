@@ -92,6 +92,7 @@ export const Component = React.memo<ModuleFormFieldType>((props) => {
                 article={article}
                 hook={hook}
                 is_disabled={Boolean(is_disabled)}
+                script={props.script}
             />
         case "date":
         case "time":

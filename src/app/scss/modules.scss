@@ -1070,12 +1070,15 @@ $moduleScheduleBorderColor: var(--kt-gray-300);
     &_cellIcons {
         position: absolute;
         display: flex;
-        justify-content: flex-end;
         flex-wrap: nowrap;
-        width: 100%;
-        bottom: 5px;
-        right: 5px;
+        bottom: 2px;
         overflow: hidden;
+        &.left {
+            left: 5px;
+        }
+        &.right {
+            right: 5px;
+        }
     }
 
     &_cellIcon {

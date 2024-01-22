@@ -72,6 +72,12 @@ const getScheduleAsArray = (data?: ApiScheduleType) => {
 const ModuleScheduleCell: React.FC<ModuleScheduleComponentCellType> = (props) => {
     const { type, date, time, cell_height, event, initials, innerInitials, setSelectedCell,  } = props
     const currentCellHeight = `${3.15 * cell_height + 0.5 * (cell_height - 1)}rem`
+    const resolvedIcons = useMemo(() => {
+        return {
+            left: event?.icons?.slice(0, 2) ?? [],
+            right: event?.icons?.slice(2, 4) ?? []
+        }
+    }, [])
     const handleClick = () => {
         if (type === "disabled") {
             return
@@ -93,15 +99,16 @@ const ModuleScheduleCell: React.FC<ModuleScheduleComponentCellType> = (props) =>
                         <div className="overlay-wrapper moduleSchedule_cellWrapper">
                             <div className={`moduleSchedule_cell ${type} ${event?.color}`} style={{ height: currentCellHeight }}>
                                 <div className={`moduleSchedule_cellContentContainer ${cell_height === 1 ? " minimize" : ""}`}>
+                                <div className="moduleSchedule_cellIcons left">
+                                        {resolvedIcons.left.map((icon: string) => <KTSVG key={icon} path={`/media/crm/icons/${icon}.svg`} className='moduleSchedule_cellIcon' />)}
+                                    </div>
                                     {Array.isArray(event.description) ? event.description.map((descriptionRow: string) => {
                                         return <div key={descriptionRow} className="moduleSchedule_cellContent">
                                             <span className="moduleSchedule_cellValue">{descriptionRow}</span>
                                         </div>
                                     }) : null}
-                                    <div className="moduleSchedule_cellIcons">
-                                        {Array.isArray(event.icons) ?
-                                            event.icons.map((icon: string) => <KTSVG key={icon} path={`/media/crm/icons/${icon}.svg`} className='moduleSchedule_cellIcon' />) :
-                                            null}
+                                    <div className="moduleSchedule_cellIcons right">
+                                    {resolvedIcons.right.map((icon: string) => <KTSVG key={icon} path={`/media/crm/icons/${icon}.svg`} className='moduleSchedule_cellIcon' />)}
                                     </div>
                                 </div>
                             </div>
