@@ -62,7 +62,7 @@ type ModuleFormFieldRadioType = DefaultModuleFormFieldType<"radio", null, {
 type ModuleFormFieldAddressType = DefaultModuleFormFieldType<"dadata_address" | "dadata_country" | "dadata_region" |
     "dadata_local_area" | "dadata_city" | "dadata_street", null, { min_value?: number, max_value?: number }>
 type ModuleFormFieldGoogleAddressType = DefaultModuleFormFieldType<"google_address", null, { min_value?: number, max_value?: number }>
-type ModuleFormFieldImageType = DefaultModuleFormFieldType<"image", null | { is_multiply?: boolean, allowed_formats?: Array<string> }, { min_value?: number, max_value?: number }>
+type ModuleFormFieldImageType = DefaultModuleFormFieldType<"image", null | { is_multiply?: boolean, allowed_formats?: Array<string>, is_editor?: boolean }, { min_value?: number, max_value?: number }>
 type ModuleFormFieldEditorType = DefaultModuleFormFieldType<"editor", null, { min_value?: number, max_value?: number }>
 type ModuleFormFieldFileType = DefaultModuleFormFieldType<"file", null | { is_multiply?: boolean }, { min_value?: number, max_value?: number }>
 type ModuleFormFieldStringsType = DefaultModuleFormFieldType<"info_strings", null, { min_value?: number, max_value?: number }>

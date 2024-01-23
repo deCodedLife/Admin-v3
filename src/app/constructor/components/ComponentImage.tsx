@@ -1,15 +1,15 @@
 import { useField, useFormikContext } from "formik"
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import { KTSVG } from "../../../_metronic/helpers"
-import { useIntl } from "react-intl"
+import { IntlShape, useIntl } from "react-intl"
 import { getErrorToast } from "../helpers/toasts"
-import { Carousel } from "react-bootstrap"
+import { Carousel, Modal } from "react-bootstrap"
 import ComponentButton from "./ComponentButton"
 import ComponentDropdown from "./ComponentDropdown"
 import { ComponentImageType } from "../../types/components"
 import AvatarEditor from "react-avatar-editor"
 
-const readImageAsData = (file: File) => {
+const readImageAsData = (file: File | Blob) => {
     return new Promise<string>(resolve => {
         const reader = new FileReader()
         reader.onload = () => resolve(reader.result as string)
@@ -18,45 +18,58 @@ const readImageAsData = (file: File) => {
 }
 
 
-const ComponentImageEditor: React.FC<{image: string}> = ({image}) => {
+const ComponentImageEditor: React.FC<{ image: File | null, handleUploadEditedPhoto: (image: Blob | null) => void, intl: IntlShape }> = ({ image, intl, handleUploadEditedPhoto }) => {
     const [border, setBorder] = useState(0)
     const [scale, setScale] = useState(1)
     const [rotate, setRotate] = useState(0)
     const ref = useRef<AvatarEditor | null>(null)
     return <>
-    <AvatarEditor
-    ref={ref}
-    image={image}
-    width={250}
-    height={250}
-    borderRadius={border}
-    color={[0, 0, 0, 0.6]} // RGBA
-    scale={scale}
-    rotate={rotate}
-    crossOrigin="use-credentials"
-  />
-  <div>
+        <AvatarEditor
+            className="componentImage_editor"
+            ref={ref}
+            image={image ?? ""}
+            width={300}
+            height={300}
+            border={75}
+            borderRadius={border}
+            color={[0, 0, 0, 0.6]} // RGBA
+            scale={scale}
+            rotate={rotate}
+            crossOrigin="use-credentials"
+        />
+        <div className="componentImage_editorToolbar">
+
+            <input className="componentImage_editorScale" type="range" value={scale} min={1} max={10} step={0.1} onChange={event => setScale(Number(event.currentTarget.value))} />
+
+
+            <ComponentButton type="custom" settings={{ title: intl.formatMessage({ id: "BUTTON.SAVE" }), icon: "", background: "dark" }} customHandler={() => ref ? ref.current?.getImage().toBlob(handleUploadEditedPhoto) : null} />
+        </div>
+        {/*  <div>
     <input type="range" value={border} min={0} max={180} step={1} onChange={event => setBorder(Number(event.currentTarget.value))}/>
     <label>border</label>
-  </div>
-  <div>
-    <input type="range" value={scale} min={0} max={10} step={0.1} onChange={event => setScale(Number(event.currentTarget.value))}/>
-    <label>scale</label>
-  </div>
-  <div>
+  </div> */}
+        <div>
+
+
+        </div>
+        {/*  <div>
     <input type="range" value={rotate} min={0} max={360} step={1} onChange={event => setRotate(Number(event.currentTarget.value))}/>
     <label>rotate</label>
-  </div>
-  <div>
-    <ComponentButton type="custom" settings={{title: "get image", icon: "", background: "dark"}}  customHandler={() => ref ? console.log(ref.current?.getImage().toDataURL()) : null}/>
-  </div>
+  </div> */}
+        <div>
+
+        </div>
 
     </>
 }
-const ComponentImage: React.FC<ComponentImageType> = ({ article, allowedFormats = [], is_multiply }) => {
+const ComponentImage: React.FC<ComponentImageType> = ({ article, allowedFormats = [], is_multiply, is_editor }) => {
     const intl = useIntl()
     const { setFieldValue } = useFormikContext<any>()
     const [field] = useField(article)
+
+    //проверка на возможность редактирования фото (аватар) и состояние для редактора фото
+    const isEditable = Boolean(is_editor)
+    const [sourceImage, setSourceImage] = useState<File | null>(null)
 
     //проверка на массовую загрузку
     const isMulti = Boolean(is_multiply)
@@ -102,6 +115,16 @@ const ComponentImage: React.FC<ComponentImageType> = ({ article, allowedFormats 
         return () => document.removeEventListener("keydown", closeFullscreenCarousel)
     }, []);
 
+    //загрузка обработанного фото
+    const handleUploadEditedPhoto = async (image: Blob | null) => {
+        if (image) {
+            const reolvedPreview = await readImageAsData(image)
+            setFieldValue(article, [image])
+            setImagePreview([reolvedPreview])
+            setSourceImage(null)
+        }
+    }
+
     //валидатор формата и загрузка изображений
     const validationUploadedFile = async (files: FileList | null) => {
         if (files?.length) {
@@ -110,16 +133,19 @@ const ComponentImage: React.FC<ComponentImageType> = ({ article, allowedFormats 
             const isImageSizeAllowed = ArrayFromFiles.every(file => file.size <= 2_000_000)
             const isImageFormatAllowed = allowedFormats.length ? ArrayFromFiles.every(file => allowedFormats.some(format => file.type.includes(format))) : true
             if (isFilesAsImages && isImageFormatAllowed && isImageSizeAllowed) {
-                const resolvedImagesPreviews = await Promise.all(ArrayFromFiles.map(file => readImageAsData(file)))
-                const sourceValueClone = (field.value && isMulti) ? Array.isArray(field.value) ? [...field.value] : [field.value] : []
-                const resolvedValues = sourceValueClone.concat(ArrayFromFiles)
-                setFieldValue(article, resolvedValues)
-                setImagePreview(prev => {
-                    const previewsClone = [...prev]
-                    const resolvedPreviews = isMulti ? previewsClone.concat(resolvedImagesPreviews) : resolvedImagesPreviews
-                    return resolvedPreviews
-                })
-
+                if (isEditable && !isMulti) {
+                    return setSourceImage(ArrayFromFiles[0])
+                } else {
+                    const resolvedImagesPreviews = await Promise.all(ArrayFromFiles.map(file => readImageAsData(file)))
+                    const sourceValueClone = (field.value && isMulti) ? Array.isArray(field.value) ? [...field.value] : [field.value] : []
+                    const resolvedValues = sourceValueClone.concat(ArrayFromFiles)
+                    setFieldValue(article, resolvedValues)
+                    setImagePreview(prev => {
+                        const previewsClone = [...prev]
+                        const resolvedPreviews = isMulti ? previewsClone.concat(resolvedImagesPreviews) : resolvedImagesPreviews
+                        return resolvedPreviews
+                    })
+                }
             } else {
                 getErrorToast(intl.formatMessage({ id: isImageSizeAllowed ? "IMAGE.INCORRECT_FORMAT" : "IMAGE.INCORRECT_SIZE" }))
             }
@@ -164,6 +190,13 @@ const ComponentImage: React.FC<ComponentImageType> = ({ article, allowedFormats 
 
     return <div className="componentImage_container"
     >
+        <Modal show={Boolean(sourceImage)} onHide={() => setSourceImage(null)}>
+            <Modal.Header>
+                <Modal.Title>Редактирование фото</Modal.Title>
+            </Modal.Header>
+            <Modal.Body><ComponentImageEditor image={sourceImage} intl={intl} handleUploadEditedPhoto={handleUploadEditedPhoto} /></Modal.Body>
+        </Modal>
+
         <div className={`componentImage_uploader ${imagePreview ? " withPreview" : ""}`}
             onDragEnter={handleDragEnter}
             onDragLeave={handleDragLeave}

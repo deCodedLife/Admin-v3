@@ -130,7 +130,8 @@ export const Component = React.memo<ModuleFormFieldType>((props) => {
             return <ComponentImage
                 article={article}
                 allowedFormats={props.settings?.allowed_formats}
-                is_multiply={props.settings?.is_multiply} />
+                is_multiply={props.settings?.is_multiply}
+                is_editor={props.settings?.is_editor} />
         case "editor":
             return <ComponentTextEditor article={article} />
         case "file":
@@ -308,7 +309,7 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
     const isSuccess = useFormDataRequest ? isSuccessMutateWithFiles : isSuccessClassicMutate
     const isLoading = useFormDataRequest ? isMutateWithFilesLoading : isClassicMutateLoading
     const responseData = useFormDataRequest ? responseOnMutateWithFilesData : responseOnClassicMutate
-    console.log(mainButtons)
+
     /* функция проверяет, есть ли у формы кнопка submit с переданным url для перехода после отправки формы, и, если есть, осуществляет переход.
     Сам переход выполняется в двух случаях: после успешного запроса или при отсутствии изменении в форме редактирования (отправка запроса игнорируется)  */
     const afterSubmitAction = useCallback((buttons: Array<ComponentButtonType>) => {
