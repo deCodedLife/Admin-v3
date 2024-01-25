@@ -36,12 +36,12 @@ const HeaderUserMenu: FC = () => {
             <img src={userAvatar} style={{ objectFit: "cover" }} alt="menu_user_avatar" />
           </div>
 
-          <div className='d-flex flex-column'>
+          <div className='d-flex flex-column' style={{maxWidth: "calc(100% - 50px - 1.25rem)"}}>
             <div className='fw-bolder d-flex align-items-center fs-5'>
               {currentUser?.last_name} {currentUser?.first_name}
               {/*  <span className='badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2'>Pro</span> */}
             </div>
-            <a href='#' className='fw-bold text-muted text-hover-primary fs-7'>
+            <a href={`mailto:${currentUser?.email}`} className='fw-bold text-muted text-hover-primary fs-7' style={{overflow: "hidden", textOverflow: "ellipsis"}}>
               {currentUser?.email}
             </a>
           </div>

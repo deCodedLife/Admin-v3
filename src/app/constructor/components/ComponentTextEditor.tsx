@@ -46,7 +46,7 @@ const ComponentTextEditor: React.FC<{ article: string, variables?: Array<any>, t
                     type: 'tabpanel',
                     tabs: Array.isArray(variables) ? variables.map((table: any) => {
                         return {
-                            name: table.title,
+                            name: table.name ?? table.title,
                             title: table.title,
                             items: Array.isArray(table.variables) ? table.variables.map((variable: any) => {
                                 return {

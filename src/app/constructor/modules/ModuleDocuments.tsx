@@ -23,6 +23,7 @@ import { getErrorToast } from "../helpers/toasts"
 import { useIsSubpage } from "./helpers"
 import { useHandleSubmitContext } from "../../page/DynamicPage"
 import { isEqual } from "lodash"
+import { useSetupContext } from "../helpers/SetupContext"
 
 
 type TModuleDocumentsButtons = {
@@ -59,6 +60,7 @@ const ModuleDocumentsButtons = React.memo<TModuleDocumentsButtons>(props => {
 })
 
 const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
+    const applicationContext = useSetupContext()
     const intl = useIntl()
     const { settings } = props
     const { object, command, fields_list } = settings
@@ -67,6 +69,8 @@ const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
     const { data: serverVariables, isLoading: isVariablesLoading } = useRequest('admin', "get-variables", {})
     const { mutate, isSuccess } = useMutate(object, command)
     const [editBlock, setEditBlock] = useState<{ type: "header" | "footer", content: string } | null>(null)
+
+    const isFullVariablesList = applicationContext.variables === "multiple"
 
     const isSubpage = useIsSubpage()
 
@@ -151,38 +155,61 @@ const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
         }
         variables = variables.concat(globalVariables)
         if (serverVariables) {
-            const serverVariablesAsArray = Object.entries<any>(serverVariables)
-            const [variablesObject, bindedVariables] = serverVariablesAsArray[serverVariablesAsArray.length - 1]
-            if (bindedVariables && bindedVariables.variables) {
-                const restructuredVariables = Object.entries<{ title: string, field_type: string, inner_variables?: any }>(bindedVariables.variables)
-                /* Сначала формируем раздел с переменными без вложенности (общий раздел) */
-                const resolvedBindedVariables = {
-                    title: `${bindedVariables.title} ${intl.formatMessage({ id: "DOCUMENTS.COMMON_VARIABLES_POSTFIX" })}`,
-                    variables: restructuredVariables.filter(([key, variableProps]) => !variableProps.inner_variables).map(([key, variableProps]) => ({
+            const serverVariablesAsArray = Object.entries<{title: string, variables: {[key: string]: {title: string, field_type: string, inner_variables?: {[key: string]: {title: string, field_type: string}}}}}>(serverVariables)
+            if (isFullVariablesList) {
+                const resolvedVariables = serverVariablesAsArray.map(([sectionKey, sectionProps]) => ({
+                    title: sectionProps.title,
+                    name: sectionKey,
+                    variables: Object.entries(sectionProps.variables).reduce((acc, currentValue) => {
+                        const [variableKey, variableProps] = currentValue
+                        const resolvedValue = variableProps.field_type === "list" && variableProps.inner_variables ?
+                         Object.entries(variableProps.inner_variables).map(([innerVariableKey, innerVariableProps]) => ({
+                            title: `${variableProps.title}.${innerVariableProps.title}`,
+                            variable: `${sectionKey}/${variableKey}:${variableProps.field_type}:${innerVariableKey}:${innerVariableProps.field_type}`
+                         })) : {
+                            title: variableProps.title,
+                            variable: `${sectionKey}/${variableKey}:${variableProps.field_type}`
+                         }
+                        return acc.concat(resolvedValue)
+                    }, [] as Array<any>)
+                })).filter(value => value.title.includes("Заявки"))
+                variables = variables.concat(resolvedVariables)
+            } else {
+                const [variablesObject, bindedVariables] = serverVariablesAsArray[serverVariablesAsArray.length - 1]
+                if (bindedVariables && bindedVariables.variables) {
+                    const restructuredVariables = Object.entries<{ title: string, field_type: string, inner_variables?: any }>(bindedVariables.variables)
+                    /* Сначала формируем раздел с переменными без вложенности (общий раздел) */
+                    const resolvedBindedVariables = {
+                        title: `${bindedVariables.title} ${intl.formatMessage({ id: "DOCUMENTS.COMMON_VARIABLES_POSTFIX" })}`,
+                        name: variablesObject,
+                        variables: restructuredVariables.filter(([key, variableProps]) => !variableProps.inner_variables).map(([key, variableProps]) => ({
+                            title: variableProps.title,
+                            variable: `${variablesObject}/${key}:${variableProps.field_type}`,
+                        }))
+                    }
+                    /* переменные с вложенностью (внутренними переменными) делаем отдельным разделом каждую */
+                    const variablesWithInnerVariables = restructuredVariables.filter(([key, variableProps]) => variableProps.inner_variables).map(([key, variableProps]) => ({
                         title: variableProps.title,
-                        variable: `${variablesObject}/${key}:${variableProps.field_type}`,
-                    }))
-                }
-                /* переменные с вложенностью (внутренними переменными) делаем отдельным разделом каждую */
-                const variablesWithInnerVariables = restructuredVariables.filter(([key, variableProps]) => variableProps.inner_variables).map(([key, variableProps]) => ({
-                    title: variableProps.title,
-                    variables: Object.entries<{ title: string, field_type: string }>(variableProps.inner_variables).map(([variableKey, innerVariableProps]) => ({
-                        title: innerVariableProps.title,
-                        variable: `${variablesObject}/${key}:${variableProps.field_type}:${variableKey}:${innerVariableProps.field_type}`
-                    }))
-                }))
-                /* связываем все разделы в один массив (разделы с глобальными переменными, общий, с вложенными переменными) */
-                variables = variables.concat(resolvedBindedVariables, variablesWithInnerVariables)
-                /* формируем переменные для динамической таблицы */
-                tableVariables = restructuredVariables.filter(([key, variableProps]) => variableProps.field_type === "list" && variableProps.inner_variables)
-                    .map(([key, variableProps]) => ({
-                        title: variableProps.title,
+                        name: key,
                         variables: Object.entries<{ title: string, field_type: string }>(variableProps.inner_variables).map(([variableKey, innerVariableProps]) => ({
                             title: innerVariableProps.title,
                             variable: `${variablesObject}/${key}:${variableProps.field_type}:${variableKey}:${innerVariableProps.field_type}`
                         }))
                     }))
+                    /* связываем все разделы в один массив (разделы с глобальными переменными, общий, с вложенными переменными) */
+                    variables = variables.concat(resolvedBindedVariables, variablesWithInnerVariables)
+                    /* формируем переменные для динамической таблицы */
+                    tableVariables = restructuredVariables.filter(([key, variableProps]) => variableProps.field_type === "list" && variableProps.inner_variables)
+                        .map(([key, variableProps]) => ({
+                            title: variableProps.title,
+                            variables: Object.entries<{ title: string, field_type: string }>(variableProps.inner_variables).map(([variableKey, innerVariableProps]) => ({
+                                title: innerVariableProps.title,
+                                variable: `${variablesObject}/${key}:${variableProps.field_type}:${variableKey}:${innerVariableProps.field_type}`
+                            }))
+                        }))
+                }
             }
+            
         }
         return {
             variables,
