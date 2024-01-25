@@ -172,7 +172,7 @@ const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
                          }
                         return acc.concat(resolvedValue)
                     }, [] as Array<any>)
-                })).filter(value => value.title.includes("Заявки"))
+                }))
                 variables = variables.concat(resolvedVariables)
             } else {
                 const [variablesObject, bindedVariables] = serverVariablesAsArray[serverVariablesAsArray.length - 1]

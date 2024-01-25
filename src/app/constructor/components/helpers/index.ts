@@ -71,23 +71,31 @@ export const useHook = (article: string, values: any, setFieldValue: (article: s
 }
 //функции для автоподстановки переменных в документ
 const getFormattedValue = (type: string, value: any, context: ApiSetupType) => {
-    switch (type) {
-        case "date":
-            return moment(value).format("DD.MM.YYYY г.")
-        case "time":
-            return moment(value, "HH:mm").format("HH:mm")
-        case "datetime":
-            /*
-            --- может быть формат типа гггг-мм-дд чч:мм - чч:мм 
-            */
-            const splitedTime = value.replace(" - ", "-").split(" ")[1].split("-")
-            const isTimeSpectr = splitedTime.length === 2
-            return isTimeSpectr ? `${moment(value.split(" ")[0]).format("DD.MM.YYYY")} ${splitedTime[0]} - ${splitedTime[1]}` : moment(value).format("DD.MM.YYYY HH:mm")
-        case "price":
-        case "phone":
-            return getMaskedString(value, type, context)
-        default:
-            return value ?? "-"
+    if (!value) {
+        return "-"
+    } else {
+        switch (type) {
+            case "date":
+                return moment(value).format("DD.MM.YYYY г.")
+            case "time":
+                return moment(value, "HH:mm").format("HH:mm")
+            case "datetime":
+                /*
+                --- может быть формат типа гггг-мм-дд чч:мм - чч:мм 
+                */
+                const splitedTime = value.replace(" - ", "-").split(" ")[1].split("-")
+                const isTimeSpectr = splitedTime.length === 2
+                return isTimeSpectr ? `${moment(value.split(" ")[0]).format("DD.MM.YYYY")} ${splitedTime[0]} - ${splitedTime[1]}` : moment(value).format("DD.MM.YYYY HH:mm")
+            case "price":
+            case "phone":
+                return getMaskedString(value, type, context)
+            case "list":
+                return Array.isArray(value) ?
+                    value.reduce((acc, value, index) => acc + `${value?.title ?? value}${index < value.length - 1 ? ", " : ""}`, "") :
+                    value?.title ?? value
+            default:
+                return value
+        }
     }
 }
 
@@ -187,7 +195,7 @@ export const autocompleteDocument = async (
             const value = variablePath.split("/").reduce((acc, path, index) => {
                 const value = acc?.[path]
                 /* если объект не найдет в переменных (только для 0 индекса - который является ключом основного объекта), использовать первый попавшийся объект */
-                return (!value && index === 0) ? Object.entries<{[key:string]: any}>(acc).filter(([key, values]) => key !== "globalVariables")[0][1] : value
+                return (!value && index === 0) ? Object.entries<{ [key: string]: any }>(acc).filter(([key, values]) => key !== "globalVariables")[0][1] : value
             }, variables) /* ??
             /* при наличии внутреннего пути нужно проверить, массив ли это, т.к. объекты тоже передаются с типом list */
             const resolvedValue = innerVariablePath && value ? Array.isArray(value) ?
