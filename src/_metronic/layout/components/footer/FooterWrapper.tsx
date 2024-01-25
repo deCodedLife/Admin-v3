@@ -4,8 +4,8 @@ import { Footer } from './Footer'
 
 const FooterWrapper = () => {
   const { config } = useLayout()
-  const {footer} = useSetupContext()
-  
+  const { context: { footer } } = useSetupContext()
+
   if (!footer/* !config.app?.footer?.display */) {
     return null
   }

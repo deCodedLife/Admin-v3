@@ -17,8 +17,8 @@ const initialValues = {
 }
 
 export function Registration() {
-  const setup = useSetupContext()
-  const haveRegistration = Boolean(setup.sign_up)
+  const { context } = useSetupContext()
+  const haveRegistration = Boolean(context.sign_up)
   const intl = useIntl()
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -225,20 +225,20 @@ export function Registration() {
   }
 
   return <div className="auth_form">
-  <div className='text-center mb-8'>
-    <h1 className='auth_formTitle'>{intl.formatMessage({ id: "AUTH.REGISTRATION_CLOSED_REGISTRATION_TITLE" })}</h1>
-    <div className='auth_formDescription'>{intl.formatMessage({ id: "AUTH.REGISTRATION_CLOSED_REGISTRATION_DESCRIPTION" })}</div>
+    <div className='text-center mb-8'>
+      <h1 className='auth_formTitle'>{intl.formatMessage({ id: "AUTH.REGISTRATION_CLOSED_REGISTRATION_TITLE" })}</h1>
+      <div className='auth_formDescription'>{intl.formatMessage({ id: "AUTH.REGISTRATION_CLOSED_REGISTRATION_DESCRIPTION" })}</div>
+    </div>
+    <div className='d-grid mb-5'>
+      <Link to='/auth'>
+        <button
+          type='button'
+          id='kt_login_signup_form_cancel_button'
+          className='auth_button btn btn-secondary w-100'
+        >
+          {intl.formatMessage({ id: "BUTTON.PREVIOUS" })}
+        </button>
+      </Link>
+    </div>
   </div>
-  <div className='d-grid mb-5'>
-    <Link to='/auth'>
-      <button
-        type='button'
-        id='kt_login_signup_form_cancel_button'
-        className='auth_button btn btn-secondary w-100'
-      >
-        {intl.formatMessage({ id: "BUTTON.PREVIOUS" })}
-      </button>
-    </Link>
-  </div>
-</div>
 }

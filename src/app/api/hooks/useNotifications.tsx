@@ -18,6 +18,7 @@ const useNotifications = () => {
         refetchOnWindowFocus: false,
         enabled: Boolean(userId),
         refetchInterval: 4000,
+        refetchIntervalInBackground: true,
         select: (data: ApiResponseType<Array<NotificationItemType>>) => data.data,
         onError: (error: any) => {} /* getErrorToast(error.message) */,
     }

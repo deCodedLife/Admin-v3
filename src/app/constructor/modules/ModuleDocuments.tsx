@@ -60,7 +60,7 @@ const ModuleDocumentsButtons = React.memo<TModuleDocumentsButtons>(props => {
 })
 
 const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
-    const applicationContext = useSetupContext()
+    const { context } = useSetupContext()
     const intl = useIntl()
     const { settings } = props
     const { object, command, fields_list } = settings
@@ -70,7 +70,7 @@ const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
     const { mutate, isSuccess } = useMutate(object, command)
     const [editBlock, setEditBlock] = useState<{ type: "header" | "footer", content: string } | null>(null)
 
-    const isFullVariablesList = applicationContext.variables === "multiple"
+    const isFullVariablesList = context.variables === "multiple"
 
     const isSubpage = useIsSubpage()
 
@@ -155,7 +155,7 @@ const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
         }
         variables = variables.concat(globalVariables)
         if (serverVariables) {
-            const serverVariablesAsArray = Object.entries<{title: string, variables: {[key: string]: {title: string, field_type: string, inner_variables?: {[key: string]: {title: string, field_type: string}}}}}>(serverVariables)
+            const serverVariablesAsArray = Object.entries<{ title: string, variables: { [key: string]: { title: string, field_type: string, inner_variables?: { [key: string]: { title: string, field_type: string } } } } }>(serverVariables)
             if (isFullVariablesList) {
                 const resolvedVariables = serverVariablesAsArray.map(([sectionKey, sectionProps]) => ({
                     title: sectionProps.title,
@@ -163,13 +163,13 @@ const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
                     variables: Object.entries(sectionProps.variables).reduce((acc, currentValue) => {
                         const [variableKey, variableProps] = currentValue
                         const resolvedValue = variableProps.field_type === "list" && variableProps.inner_variables ?
-                         Object.entries(variableProps.inner_variables).map(([innerVariableKey, innerVariableProps]) => ({
-                            title: `${variableProps.title}.${innerVariableProps.title}`,
-                            variable: `${sectionKey}/${variableKey}:${variableProps.field_type}:${innerVariableKey}:${innerVariableProps.field_type}`
-                         })) : {
-                            title: variableProps.title,
-                            variable: `${sectionKey}/${variableKey}:${variableProps.field_type}`
-                         }
+                            Object.entries(variableProps.inner_variables).map(([innerVariableKey, innerVariableProps]) => ({
+                                title: `${variableProps.title}.${innerVariableProps.title}`,
+                                variable: `${sectionKey}/${variableKey}:${variableProps.field_type}:${innerVariableKey}:${innerVariableProps.field_type}`
+                            })) : {
+                                title: variableProps.title,
+                                variable: `${sectionKey}/${variableKey}:${variableProps.field_type}`
+                            }
                         return acc.concat(resolvedValue)
                     }, [] as Array<any>)
                 }))
@@ -209,7 +209,7 @@ const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
                         }))
                 }
             }
-            
+
         }
         return {
             variables,
@@ -251,7 +251,7 @@ const ModuleDocuments: React.FC<ModuleDocumentsType> = (props) => {
             }
             return documentClone
         } else {
-            const initials: {[key: string]: any} = {
+            const initials: { [key: string]: any } = {
                 title: "",
                 type_id: 2, //убрать, пока обязательный параметр для сервера
                 document_header: "",

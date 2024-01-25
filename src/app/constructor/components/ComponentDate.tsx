@@ -21,7 +21,7 @@ registerLocale("lv", lv)
 const ComponentDate: React.FC<ComponentDateType> = (props) => {
     const { article, field_type, is_disabled, hook, onBlurSubmit, className = "", custom_format = false, placeholder, customHandler } = props
     const intl = useIntl()
-    const context = useSetupContext()
+    const { context } = useSetupContext()
     const [field, meta] = useField(article)
     const { values, setFieldValue, handleSubmit } = useFormikContext<any>()
     const { value } = field

@@ -25,8 +25,8 @@ const initialValues = {
 */
 
 export function Login() {
-  const setup = useSetupContext()
-  const haveRegistration = Boolean(setup.sign_up)
+  const { context, refetch: contextRefetch } = useSetupContext()
+  const haveRegistration = Boolean(context.sign_up)
   const intl = useIntl()
   const [loading, setLoading] = useState(false)
   const { saveAuth, setCurrentUser } = useAuth()
@@ -52,6 +52,7 @@ export function Login() {
         const { data: token } = await api("users", "sign-in", { email: values.email, password: values.password })
         localStorage.setItem("authToken", token)
         const { data: user } = await api("users", "get-current")
+        contextRefetch()
         setCurrentUser(user)
         /*  saveAuth(auth)
          const {data: user} = await getUserByToken(auth.api_token)
@@ -146,7 +147,7 @@ export function Login() {
 
         {/* begin::Link */}
         <Link to='/auth/forgot-password' className='link-primary'>
-         {intl.formatMessage({ id: "AUTH.LOGIN_FORGOT_PASSWORD_LINK" })}
+          {intl.formatMessage({ id: "AUTH.LOGIN_FORGOT_PASSWORD_LINK" })}
         </Link>
         {/* end::Link */}
       </div>

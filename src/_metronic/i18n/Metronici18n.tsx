@@ -51,8 +51,8 @@ const useLang = () => {
 }
 
 const MetronicI18nProvider: FC<WithChildren> = ({ children }) => {
-  const setupContext = useSetupContext()
-  const lang = getConfig(setupContext.lang)
+  const { context } = useSetupContext()
+  const lang = getConfig(context.lang)
   useEffect(() => {
     moment.locale(lang.selectedLang)
   }, [lang])

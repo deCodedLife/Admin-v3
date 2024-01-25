@@ -41,13 +41,13 @@ const Field = React.memo<TField>(props => {
 })
 
 const ComponentPrice: React.FC<ComponentPriceType> = ({ article, data_type, hook, is_disabled, onBlurSubmit, placeholder = "", className = "", customHandler }) => {
-    const applicationContext = useSetupContext()
+    const { context } = useSetupContext()
     const [field, meta] = useField(article)
     const { name, value, onBlur, onChange } = field
     const { values, setFieldValue, handleSubmit } = useFormikContext()
     const isError = Boolean(meta.error && meta.touched)
     const allowDecimal = data_type === "float"
-    const valueSymbol = applicationContext.currency ?? '₽'
+    const valueSymbol = context.currency ?? '₽'
     const defaultMaskOptions = {
         prefix: '',
         suffix: valueSymbol,

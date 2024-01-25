@@ -14,13 +14,13 @@ import ComponentSelect from "./ComponentSelect"
 import { getErrorToast } from "../helpers/toasts"
 
 const ComponentPhone: React.FC<ComponentPhoneType> = ({ article, is_disabled, hook, script, customHandler }) => {
-    const applicationContext = useSetupContext()
+    const { context } = useSetupContext()
     const { currentUser } = useAuth()
     const [field, meta] = useField<string>(article)
     const { name, value, onBlur } = field
     const { values, setFieldValue } = useFormikContext()
     const isError = Boolean(meta.error && meta.touched)
-    const { mask, placeholder, pure_length } = getMaskedPhone(applicationContext.phone_format)
+    const { mask, placeholder, pure_length } = getMaskedPhone(context.phone_format)
 
     const setValueForHook = useHook(name, values, setFieldValue, hook)
 
@@ -28,8 +28,8 @@ const ComponentPhone: React.FC<ComponentPhoneType> = ({ article, is_disabled, ho
     /*
     --- Проверка формата телефона, отображения кнопки звонка и корректности заполненного телефона 
     */
-    const isRussianNumberFormat = !applicationContext.phone_format || applicationContext.phone_format === "ru"
-    const showCallButton = Boolean(applicationContext.dom_ru && currentUser?.domru_login)
+    const isRussianNumberFormat = !context.phone_format || context.phone_format === "ru"
+    const showCallButton = Boolean(context.dom_ru && currentUser?.domru_login)
     const isValueInCurrentFormat = value?.length === pure_length
 
 
@@ -86,8 +86,8 @@ const ComponentPhone: React.FC<ComponentPhoneType> = ({ article, is_disabled, ho
     --- возможно, иногда маска не успевает сформироваться, а динамически не меняется 
     */
     const uniqueKey = useMemo(() => {
-        return String(applicationContext?.phone_format)
-    }, [applicationContext])
+        return String(context?.phone_format)
+    }, [context])
 
     const list = useMemo(() => [
         { title: "Да", value: true },

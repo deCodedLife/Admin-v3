@@ -399,7 +399,7 @@ const InfiniteScroll: React.FC<ModuleListInfiniteScrollType> = (props) => {
 const nonClickableCellsTypes = ["email", "phone", "buttons", "audio_player", "link", "link_list"]
 
 const ListCell: React.FC<ModuleListCellType> = ({ article, type, row, page, filterable, suffix, setFilter }) => {
-    const context = useSetupContext()
+    const { context } = useSetupContext()
     const data = row[article]
     const navigate = useNavigate()
 
@@ -586,7 +586,7 @@ const HeaderCell: React.FC<ModuleListHeaderCellType> = ({ article, title, type, 
         ><KTSVG path='/media/crm/icons/sort.svg' /></button> : null}</th>
 }
 
-const ModuleList = React.memo<ModuleListType>((props) => { 
+const ModuleList = React.memo<ModuleListType>((props) => {
     const intl = useIntl()
     const { settings, components, hook } = props
     const { headers, filters: initialFilters, is_csv, is_exel, is_edit = true, context: initialContext, linked_filter, link, is_infinite } = settings
@@ -682,8 +682,8 @@ const ModuleList = React.memo<ModuleListType>((props) => {
     const detail = isSetSearchData ? searchResponse?.detail :
         withInfiniteScroll ? infiniteResponse?.pages[0]?.detail : response?.detail
     const isDataFetching = isSetSearchData ? isSearchFetching : withInfiniteScroll ? false : isFetching
-    const isEmptyData = isSetSearchData ? (!searchLoading && data?.length === 0) : 
-    withInfiniteScroll ? (!isInifiniteDataLoading && data?.length === 0) : (!loading && data?.length === 0)
+    const isEmptyData = isSetSearchData ? (!searchLoading && data?.length === 0) :
+        withInfiniteScroll ? (!isInifiniteDataLoading && data?.length === 0) : (!loading && data?.length === 0)
 
 
     useEffect(() => {

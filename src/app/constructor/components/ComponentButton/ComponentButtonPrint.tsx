@@ -24,7 +24,7 @@ type Tdocument = { title: string, article: string, object?: string, structure: A
 
 const ComponentButtonPrint: React.FC<ComponentButtonPrintType> = ({ settings, defaultLabel = "title", className = "" }) => {
     const ref = useRef<HTMLButtonElement | null>(null)
-    const applicationContext = useSetupContext()
+    const {context: applicationContext} = useSetupContext()
     const { currentUser } = useAuth()
     const intl = useIntl()
     const { data, context, visible = true, afterSubmit = false } = settings

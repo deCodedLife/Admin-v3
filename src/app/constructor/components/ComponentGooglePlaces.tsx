@@ -11,7 +11,7 @@ const ComponentGooglePlaces: React.FC<ComponentGooglePlacesType> = ({ article, i
     const { setFieldValue } = useFormikContext()
     const isError = meta.error && meta.touched
 
-    const context = useSetupContext()
+    const { context } = useSetupContext()
     const apiKey = context.google_places
 
 
@@ -21,7 +21,7 @@ const ComponentGooglePlaces: React.FC<ComponentGooglePlacesType> = ({ article, i
     const uniqKey = useMemo(() => Math.random(), [field.value])
 
     if (!apiKey) {
-        return <input placeholder={intl.formatMessage({id: "GOOGLE_PLACES.WITHOUT_KEY"})} className={`form-control form-control-solid${isError ? " invalid" : ""}`} disabled />
+        return <input placeholder={intl.formatMessage({ id: "GOOGLE_PLACES.WITHOUT_KEY" })} className={`form-control form-control-solid${isError ? " invalid" : ""}`} disabled />
     }
     if (is_disabled) {
         return <input className={`form-control form-control-solid${isError ? " invalid" : ""}`} value={field.value} disabled />

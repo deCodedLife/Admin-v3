@@ -5,7 +5,7 @@ import { getMaskedString } from "../modules/helpers"
 import { useSetupContext } from "../helpers/SetupContext"
 
 const ComponentInfo: React.FC<ComponentInfoType> = ({ value, field_type }) => {
-    const context = useSetupContext()
+    const { context } = useSetupContext()
     if (Array.isArray(value) ? value.length : value) {
         switch (field_type) {
             case "email":
@@ -27,7 +27,7 @@ const ComponentInfo: React.FC<ComponentInfoType> = ({ value, field_type }) => {
     } else {
         return <div className="componentInfo">-</div>
     }
-    
+
 }
 
 export default ComponentInfo

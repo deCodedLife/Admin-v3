@@ -83,7 +83,7 @@ const ComponentNotifications: React.FC = () => {
 
 const Navbar = () => {
   const { config } = useLayout()
-  const context = useSetupContext()
+  const { context } = useSetupContext()
   const chat = context.dialog_widget
   const enableGlobalSearch = Boolean(context.global_search)
   const enableDomRuModule = Boolean(context.dom_ru)
@@ -101,8 +101,8 @@ const Navbar = () => {
 
   return (
     <div className='app-navbar flex-shrink-0'>
-      {showSalaryWidget ?  <ModuleSalaryWidgets /> : null}
-     
+      {showSalaryWidget ? <ModuleSalaryWidgets /> : null}
+
       {enableDomRuModule ? <ModuleDomRu /> : null}
       {
         enableGlobalSearch ? <div className={clsx('app-navbar-item', itemClass)}>
@@ -129,7 +129,7 @@ const Navbar = () => {
           <ModuleDeveloper toggleBtnClass={clsx('btn-active-light-primary btn-custom')} />
         </div> : null
       }
-      
+
       <div className={clsx('app-navbar-item', itemClass)}>
         <div
           className={clsx('cursor-pointer symbol', userAvatarClass)}
