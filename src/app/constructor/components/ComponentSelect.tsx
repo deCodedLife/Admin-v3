@@ -9,35 +9,36 @@ import { useIntl } from "react-intl"
 import { isEqual } from "lodash";
 
 
-const DefaultSelect = React.memo<{placeholder?: string,
+const DefaultSelect = React.memo<{
+    placeholder?: string,
     list?: Array<{
-   title: string;
-   value: string | number | boolean;
-   joined_field_value?: string | undefined;
-   menu_title?: string | undefined;
-}>, isMulti?: boolean,
-isDisabled?: boolean, 
-isVisible?: boolean,
-isClearable?: boolean,
-isDuplicate?: boolean,
-prefix?: string,
-isSearchable?: boolean,
-menuPortal?: boolean,
-isLoading?: boolean,
-joined_field?: string,
-joined_field_filter?: string,
-object?: string,
-select?: string,
-formValue: any,
-joinedFieldValue?: any,
-isError: boolean,
-error?: string,
-handleChange: (value: any) => void, 
-     handleBlur: FormikHandlers["handleBlur"]
+        title: string;
+        value: string | number | boolean;
+        joined_field_value?: string | undefined;
+        menu_title?: string | undefined;
+    }>, isMulti?: boolean,
+    isDisabled?: boolean,
+    isVisible?: boolean,
+    isClearable?: boolean,
+    isDuplicate?: boolean,
+    prefix?: string,
+    isSearchable?: boolean,
+    menuPortal?: boolean,
+    isLoading?: boolean,
+    joined_field?: string,
+    joined_field_filter?: string,
+    object?: string,
+    select?: string,
+    formValue: any,
+    joinedFieldValue?: any,
+    isError: boolean,
+    error?: string,
+    handleChange: (value: any) => void,
+    handleBlur: FormikHandlers["handleBlur"]
 }>((props) => {
     const {
         placeholder,
-        list, isMulti, 
+        list, isMulti,
         isDisabled, isVisible = true, isClearable,
         isDuplicate, prefix,
         isSearchable = true, menuPortal = true, isLoading = false,
@@ -152,7 +153,7 @@ handleChange: (value: any) => void,
     </>
 })
 
-type SelectOptionType = { label: string, value: string | number, menu_label: string }
+type SelectOptionType = { label: string, value: string | number, innerValue?: string | number, menu_label: string }
 type SelectValueType = SelectOptionType | Array<SelectOptionType> | null
 
 const SearchSelect = React.memo<{
@@ -166,18 +167,19 @@ const SearchSelect = React.memo<{
     menuPortal?: boolean,
     joined_field?: string,
     joined_field_filter?: string,
+    isDuplicate?: boolean,
     isError: boolean,
     formValue: any, joinedFieldValue: any, value: any, error?: string,
-     setValue: (value: any) => void,
-      handleChange: (value: any) => void, 
-      handleBlur: FormikHandlers["handleBlur"]
+    setValue: (value: any) => void,
+    handleChange: (value: any) => void,
+    handleBlur: FormikHandlers["handleBlur"]
 }>((props) => {
     const {
         placeholder, isMulti, value, setValue, error,
         isDisabled, isVisible = true,
         isClearable, search, isError, formValue, joinedFieldValue,
         prefix, menuPortal = true, handleBlur, handleChange,
-        joined_field, joined_field_filter
+        joined_field, joined_field_filter, isDuplicate
     } = props
 
 
@@ -201,7 +203,10 @@ const SearchSelect = React.memo<{
             .assign({ context: { block: "select" }, search: inputValue }, joined_field ? { [joined_field_filter ?? joined_field]: joinedFieldValue } : {})
         const id = setTimeout(async () => {
             const response = await api<Array<any>>(search, "search", additionalRequestData)
-            callback(response.data.map((item: any) => ({ label: item.title, value: item.value, menu_label: item.menu_title ?? item.title })))
+            callback(response.data.map((item: any) => {
+                return isDuplicate ? { label: item.title, innerValue: item.value, value: Math.random(), menu_label: item.menu_title ?? item.title }
+                 : { label: item.title, value: item.value, menu_label: item.menu_title ?? item.title }
+            }))
             setTimeoutId(null)
         }, 500)
         setTimeoutId(id)
@@ -212,12 +217,13 @@ const SearchSelect = React.memo<{
     */
     const handleInitialValues = async () => {
         const initialIds = formValue ? Array.isArray(formValue) ? formValue : [formValue] : []
-        const valueIds = value ? Array.isArray(value) ? value.map(option => option.value) : [value.value] : []
+        const valueIds = value ? Array.isArray(value) ? value.map(option => isDuplicate ? option.innerValue : option.value) : [value.value] : []
         if (!isEqual(initialIds, valueIds)) {
             const initialValues = await Promise.all(initialIds.map(id => api<Array<any>>(search, "get", { context: { block: "select" }, id }).then(data => data.data[0])))
-            const resolvedInitialValues = initialValues.map((item: { title: string, value: string | number, menu_title?: string }) => (
-                { label: item.title, value: item.value, menu_label: item.menu_title ?? item.title }
-            ))
+            const resolvedInitialValues = initialValues.map((item: { title: string, value: string | number, menu_title?: string }) => {
+                return isDuplicate ? { label: item.title, innerValue: item.value, value: Math.random(), menu_label: item.menu_title ?? item.title } :
+                    { label: item.title, value: item.value, menu_label: item.menu_title ?? item.title }
+            })
             setValue(resolvedInitialValues)
         }
 
@@ -277,7 +283,7 @@ const ComponentSelect: React.FC<ComponentSelectType> = (props) => {
             return customHandler(value)
         } else {
             const isCleaningValue = value === null || (Array.isArray(value) && !value.length)
-            const resolvedValue = value ? Array.isArray(value) ? value.map(item => item.value) : value.value : value
+            const resolvedValue = value ? Array.isArray(value) ? value.map(option => (isDuplicate && option.innerValue) ? option.innerValue : option.value) : value.value : value
             if (isCleaningValue) {
                 setValue(null)
                 setFieldValue(article, null)
@@ -340,31 +346,32 @@ const ComponentSelect: React.FC<ComponentSelectType> = (props) => {
             handleChange={handleAsyncChange}
             joined_field={props.joined_field}
             joined_field_filter={props.joined_field_filter}
+            isDuplicate={props.isDuplicate}
         />
     } else {
         return <DefaultSelect
-        placeholder={props.placeholder}
-        isMulti={props.isMulti}
-        error={meta.error}
-        isDisabled={props.isDisabled}
-        isVisible={props.isVisible}
-        isClearable={props.isClearable}
-        isError={isError}
-        formValue={field.value}
-        joinedFieldValue={joinedFieldValue}
-        prefix={props.prefix}
-        menuPortal={props.menuPortal}
-        handleBlur={handleBlur}
-        handleChange={handleChange}
-        joined_field={props.joined_field}
-        joined_field_filter={props.joined_field_filter}
-        isDuplicate={props.isDuplicate}
-        isLoading={props.isLoading}
-        isSearchable={props.isSearchable}
-        list={props.list}
-        object={props.object}
-        select={props.select}
-         />
+            placeholder={props.placeholder}
+            isMulti={props.isMulti}
+            error={meta.error}
+            isDisabled={props.isDisabled}
+            isVisible={props.isVisible}
+            isClearable={props.isClearable}
+            isError={isError}
+            formValue={field.value}
+            joinedFieldValue={joinedFieldValue}
+            prefix={props.prefix}
+            menuPortal={props.menuPortal}
+            handleBlur={handleBlur}
+            handleChange={handleChange}
+            joined_field={props.joined_field}
+            joined_field_filter={props.joined_field_filter}
+            isDuplicate={props.isDuplicate}
+            isLoading={props.isLoading}
+            isSearchable={props.isSearchable}
+            list={props.list}
+            object={props.object}
+            select={props.select}
+        />
     }
 }
 
