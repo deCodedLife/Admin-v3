@@ -3,7 +3,8 @@ import React from "react"
 import { ComponentInfoType } from "../../types/components"
 import { getMaskedString } from "../modules/helpers"
 import { useSetupContext } from "../helpers/SetupContext"
-
+import parse from "html-react-parser"
+import { unescape } from "lodash"
 const ComponentInfo: React.FC<ComponentInfoType> = ({ value, field_type }) => {
     const { context } = useSetupContext()
     if (Array.isArray(value) ? value.length : value) {
@@ -21,6 +22,8 @@ const ComponentInfo: React.FC<ComponentInfoType> = ({ value, field_type }) => {
                 return <div className="componentInfo">{moment(value, "HH:mm").format("HH:mm")}</div>
             case "datetime":
                 return <div className="componentInfo">{moment(value).format("DD.MM.YYYY HH:mm")}</div>
+            case "editor":
+                return <div className="componentInfo">{parse(unescape(value as string | undefined ?? ""))}</div>
             default:
                 return <div className="componentInfo">{Array.isArray(value) ? value.map((item, index) => `${item}${index < value.length - 1 ? ", " : ""}`) : value}</div>
         }
