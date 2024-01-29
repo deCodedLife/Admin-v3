@@ -116,6 +116,7 @@ export const Component = React.memo<ModuleFormFieldType>((props) => {
         case "dadata_local_area":
         case "dadata_city":
         case "dadata_street":
+        case "dadata_passport":
             return <ComponentAddress
                 article={article}
                 field_type={field_type}

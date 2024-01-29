@@ -1,11 +1,12 @@
 import { useField, useFormikContext } from "formik";
 import React, { useCallback, useMemo } from "react"
-import { AddressSuggestions, DaDataAddress, DaDataSuggestion } from "react-dadata";
+import { AddressSuggestions, DaDataAddress, DaDataSuggestion,  } from "react-dadata";
 import 'react-dadata/dist/react-dadata.css'
 import { ComponentAddressType } from "../../types/components";
 
 type TField = {
     article: string,
+    field_type: string,
     value?: string,
     className: string,
     is_disabled?: boolean,
@@ -17,9 +18,10 @@ type TField = {
 }
 
 const Field = React.memo<TField>(props => {
-    const { article, value, is_disabled, className, searchLimitation, onChange, onInput, onBlur } = props
+    const { article, field_type, value, is_disabled, className, searchLimitation, onChange, onInput, onBlur } = props
     return <AddressSuggestions
         token="e4f7fbcbf49276babe7b49b636c34a51e07afb81"
+        url={field_type === "dadata_passport" ? "http://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/fms_unit" : undefined}
         //@ts-ignore
         value={{ value: value ?? "" }}
         onChange={onChange}
@@ -92,6 +94,7 @@ const ComponentAddress: React.FC<ComponentAddressType> = ({ article, field_type,
 
     return <Field
         article={article}
+        field_type={field_type}
         value={field.value}
         className={resolvedClassName}
         is_disabled={is_disabled}

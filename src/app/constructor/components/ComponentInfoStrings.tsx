@@ -8,10 +8,13 @@ const ComponentInfoStrings: React.FC<{article: string}> = ({article}) => {
 
     const valueWithCount = useMemo(() => {
         if (Array.isArray(value) && value.length) {
-            const uniqueValues = uniq(value)
+            const resolvedValue = value.map(item => item?.title ?? item)
+            const uniqueValues = uniq(resolvedValue)
             const valuesWithCount = uniqueValues.map((uniqueValue: string) => {
-                const count = value.filter((initialValue: string) => initialValue === uniqueValue).length
-                return {title: uniqueValue, count}
+                const count = value
+                .filter((initialValue: {title: string, link?: string} | string) => uniqueValue === (typeof initialValue === "object" ? initialValue.title : initialValue)).length
+                const link = value.find(value => value?.title === uniqueValue)?.link
+                return {title: uniqueValue, count, link}
             })
             return valuesWithCount
         } else {
