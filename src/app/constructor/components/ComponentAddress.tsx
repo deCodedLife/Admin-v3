@@ -21,7 +21,7 @@ const Field = React.memo<TField>(props => {
     const { article, field_type, value, is_disabled, className, searchLimitation, onChange, onInput, onBlur } = props
     return <AddressSuggestions
         token="e4f7fbcbf49276babe7b49b636c34a51e07afb81"
-        url={field_type === "dadata_passport" ? "http://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/fms_unit" : undefined}
+        url={field_type === "dadata_passport" ? "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/fms_unit" : undefined}
         //@ts-ignore
         value={{ value: value ?? "" }}
         onChange={onChange}
