@@ -1,6 +1,6 @@
 import { useField } from "formik"
 import { uniq } from "lodash"
-import React, { useMemo, useState } from "react"
+import React, { useCallback, useMemo, useState } from "react"
 import ComponentModal from "./ComponentModal"
 
 const ComponentInfoStrings: React.FC<{ article: string }> = ({ article }) => {
@@ -15,7 +15,7 @@ const ComponentInfoStrings: React.FC<{ article: string }> = ({ article }) => {
             const valuesWithCount = uniqueValues.map((uniqueValue: string) => {
                 const count = value
                     .filter((initialValue: { title: string, link?: string } | string) => uniqueValue === (typeof initialValue === "object" ? initialValue.title : initialValue)).length
-                const link = value.find(value => value?.title === uniqueValue)?.link
+                const link = value.find(value => value?.title === uniqueValue)?.link as string | undefined
                 return { title: uniqueValue, count, link }
             })
             return valuesWithCount
@@ -24,11 +24,17 @@ const ComponentInfoStrings: React.FC<{ article: string }> = ({ article }) => {
         }
     }, [value])
 
+    const handleClick = useCallback((link? : string) => {
+        if (link) {
+            setShow(link)
+        }
+    } , [])
+
 
     return <>
         <div className="componentInfoStrings_list">
-            {valueWithCount.map((value, index) => <div key={value.title + index} className={`componentInfoStrings_container${value.link ? " cliackable" : ""}`}>
-                <div className="componentInfoStrings form-control form-control-solid">{value.title}</div>
+            {valueWithCount.map((value, index) => <div key={value.title + index} className="componentInfoStrings_container">
+                <div onClick={() => handleClick(value.link)} className={`componentInfoStrings form-control form-control-solid${value.link ? " clickable" : ""}`}>{value.title}</div>
                 {value.count > 1 ? <div className="componentInfoStrings_counter form-control form-control-solid">{`x${value.count}`}</div> : null}
 
             </div>)}

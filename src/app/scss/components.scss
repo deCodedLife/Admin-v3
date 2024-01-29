@@ -85,7 +85,7 @@
             background-color: var(--kt-danger-active);
         }
     }
-    
+
     &.warning {
         background-color: var(--kt-warning);
 
@@ -245,7 +245,8 @@
         padding: 0 !important;
     }
 
-    &__multi-value__label, &__single-value {
+    &__multi-value__label,
+    &__single-value {
         color: inherit !important;
         white-space: unset !important;
         text-overflow: unset !important;
@@ -912,7 +913,7 @@
         display: flex;
         align-items: center;
     }
-    
+
     &_editorScale {
         flex-grow: 1;
         margin-right: 1rem;
@@ -1194,6 +1195,17 @@
         width: unset;
         margin-left: 0.5rem;
         flex-shrink: 0;
+    }
+
+    &.clickable {
+        user-select: none;
+        cursor: pointer;
+        transition: color 0.3s, background-color 0.3s;
+
+        &:hover {
+            background-color: var(--kt-primary);
+            color: var(--kt-primary-inverse);
+        }
     }
 
 }
