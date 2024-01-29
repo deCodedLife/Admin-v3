@@ -10,7 +10,8 @@ import setModalIndex from "../helpers/setModalIndex"
 type TComponentModal = {
     page?: string | null,
     show: boolean | { [key: string]: any } | null,
-    setShow: (value: null | false) => void, refresh: () => void,
+    setShow: (value: null | false) => void,
+    refresh?: () => void,
     size?: "sm" | "lg" | "xl"
 }
 type TContext = {

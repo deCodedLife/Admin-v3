@@ -66,7 +66,7 @@ const getFieldValidation = (field: ModuleFormFieldType) => {
 export const getValidationSchema = (fields: Array<ModuleFormFieldType>) => {
     const validationSchema = fields.reduce((acc: any, field) => {
         /* !!! сделать валидацию smart_list */
-        if (field.field_type !== "smart_list" && field.field_type !== "image" && field.field_type !== "file") {
+        if (field.field_type !== "smart_list" && field.field_type !== "image" && field.field_type !== "file" && field.field_type !== "info_strings") {
             acc[field.article] = getFieldValidation(field)
         }
         return acc
