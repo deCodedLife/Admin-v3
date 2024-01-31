@@ -1183,6 +1183,7 @@
 
     &_container {
         display: flex;
+        user-select: none;
 
         &:not(:last-child) {
             margin-bottom: 0.5rem;
@@ -1198,7 +1199,7 @@
     }
 
     &.clickable {
-        user-select: none;
+
         cursor: pointer;
         transition: color 0.3s, background-color 0.3s;
 

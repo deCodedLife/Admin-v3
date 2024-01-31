@@ -72,6 +72,8 @@ const ModuleAccordion: React.FC<ModuleAccordionType> = ({ settings }) => {
 
     const handleEdit = useCallback((document: {id: number, body: string}) => setEditableItem(document), [])
 
+    const showPagination = data?.data.length
+
     useEffect(() => {
         if (isSuccess || isUpdateSuccess) {
             setEditableItem(null)
@@ -92,7 +94,8 @@ const ModuleAccordion: React.FC<ModuleAccordionType> = ({ settings }) => {
                 handleEdit={handleEdit}
             />)}     
         </Accordion>
-        <Pagination detail={data?.detail}  filter={filter} setFilter={setFilter}/>
+        {showPagination ? <Pagination detail={data?.detail}  filter={filter} setFilter={setFilter}/> : null}
+        
         <Modal show={Boolean(editableItem)} onHide={() => setEditableItem(null)} size="xl" onEntering={setModalIndex}>
             <Modal.Header>
                 <Modal.Title>

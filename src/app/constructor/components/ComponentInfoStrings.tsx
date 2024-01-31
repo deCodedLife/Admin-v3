@@ -3,7 +3,21 @@ import { uniq } from "lodash"
 import React, { useCallback, useMemo, useState } from "react"
 import ComponentModal from "./ComponentModal"
 
-const ComponentInfoStrings: React.FC<{ article: string }> = ({ article }) => {
+
+type TComponentInfoString = { article: string }
+type TField = { title: string, link?: string, count: number, handleClick: (link?: string) => void }
+
+const Field = React.memo<TField>(props => {
+    const { title, link, count, handleClick } = props
+    const resolvedClassName = `componentInfoStrings form-control form-control-solid${link ? " clickable" : ""}`
+
+    return <div className="componentInfoStrings_container">
+        <div className={resolvedClassName} onClick={() => handleClick(link)}>{title}</div>
+        {count > 1 ? <div className="componentInfoStrings_counter form-control form-control-solid">{`x${count}`}</div> : null}
+    </div>
+})
+
+const ComponentInfoStrings: React.FC<TComponentInfoString> = ({ article }) => {
     const [field] = useField(article)
     const { value } = field
     const [show, setShow] = useState<string | null>(null)
@@ -24,22 +38,18 @@ const ComponentInfoStrings: React.FC<{ article: string }> = ({ article }) => {
         }
     }, [value])
 
-    const handleClick = useCallback((link? : string) => {
+    const handleClick = useCallback((link?: string) => {
         if (link) {
             setShow(link)
         }
-    } , [])
+    }, [])
 
 
     return <>
         <div className="componentInfoStrings_list">
-            {valueWithCount.map((value, index) => <div key={value.title + index} className="componentInfoStrings_container">
-                <div onClick={() => handleClick(value.link)} className={`componentInfoStrings form-control form-control-solid${value.link ? " clickable" : ""}`}>{value.title}</div>
-                {value.count > 1 ? <div className="componentInfoStrings_counter form-control form-control-solid">{`x${value.count}`}</div> : null}
-
-            </div>)}
+            {valueWithCount.map((value, index) => <Field key={value.title + index} {...value} handleClick={handleClick} />)}
         </div>
-        <ComponentModal page={show} show={Boolean(show)} setShow={() => setShow(null)}   />
+        <ComponentModal page={show} show={Boolean(show)} setShow={() => setShow(null)} />
     </>
 }
 
