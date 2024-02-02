@@ -32,7 +32,7 @@ const ModuleCalendar: React.FC<ModuleCalendarType> = (props) => {
 
   const [selectedSlots, setSelectedSlots] = useState<{ start_from: string, start_to: string, event_from: string, event_to: string } | null>(null)
   const handleCloseDayEventModal = useCallback((value: any) => setSelectedSlots(null), [])
-  const [selectedEventId, setSelectedEventId] = useState<number | null>(null)
+  const [selectedEvent, setSelectedEvent] = useState<{id: number, date: string} | null>(null)
   const [showEditModal, setShowEditModal] = useState(false)
 
   const { filter, isInitials, setFilter, resetFilter } = useFilter(`${props.type}_${object}`, resolvedInitialFilterValues)
@@ -44,12 +44,11 @@ const ModuleCalendar: React.FC<ModuleCalendarType> = (props) => {
 
   useEffect(() => {
     if (isSuccess) {
-      setSelectedEventId(null)
+      setSelectedEvent(null)
       refetch()
     }
   }, [isSuccess])
 
-  const handleDeleteEvent = () => selectedEventId ? mutate({ id: selectedEventId }) : null
 
   const handleClearCalendar = () => {
     if (Array.isArray(events)) {
@@ -159,7 +158,9 @@ const ModuleCalendar: React.FC<ModuleCalendarType> = (props) => {
           date={date}
           onNavigate={handleNavigateChange}
           onRangeChange={handleRangeChange}
-          onSelectEvent={event => setSelectedEventId(Number(event.id))}
+          onSelectEvent={event => {
+            setSelectedEvent({id: Number(event.id), date: moment(event.start).format("YYYY-MM-DD")})
+          }}
           onSelectSlot={handleSlotSelect}
           selectable={Boolean(add)}
           eventPropGetter={(event) => {
@@ -177,13 +178,13 @@ const ModuleCalendar: React.FC<ModuleCalendarType> = (props) => {
       />
 
       <ComponentModal
-        page={selectedEventId ? update + `/${selectedEventId}` : undefined}
+        page={selectedEvent ? update + `/${selectedEvent.id}` : undefined}
         size="sm"
         centered
-        show={selectedEventId ? { id: selectedEventId } : false}
-        setShow={() => setSelectedEventId(null)}
+        show={selectedEvent ?? false}
+        setShow={() => setSelectedEvent(null)}
         refresh={() => {
-          setSelectedEventId(null)
+          setSelectedEvent(null)
           refetch()
         }} />
       {/* <Modal size="sm" show={Boolean(selectedEventId)} onHide={() => setSelectedEventId(null)} centered onEntering={setModalIndex}>

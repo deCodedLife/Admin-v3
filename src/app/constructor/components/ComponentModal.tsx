@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { Modal } from "react-bootstrap"
 import useItem from "../../api/hooks/useItem"
 import { isEqual } from "lodash"
@@ -35,8 +35,10 @@ const ComponentModal: React.FC<TComponentModal> = ({ page, show, size = "xl", ce
             setContext(prev => isEqual(prev.initialData, show) ? prev : { ...prev, initialData: show })
         }
     }, [show])
+    console.log(page)
+    const resolvedRequestProps = useMemo(() => Object.assign({ page }, show && typeof show === "object" ? { context: show } : {}), [page])
 
-    const { data, isFetching } = useItem("pages", { page }, Boolean(page))
+    const { data, isFetching } = useItem("pages", resolvedRequestProps, Boolean(page))
 
     return <Modal
         size={size}
