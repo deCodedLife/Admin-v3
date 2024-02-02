@@ -2,6 +2,7 @@ import { MenuItemType } from "./global"
 import {
     ModuleAccordionType,
     ModuleAppEditorType,
+    ModuleButtonsType,
     ModuleCalendarType,
     ModuleChatType, ModuleDayPlanningType, ModuleDocumentsType, ModuleFormType, ModuleFunnelType, ModuleHeaderType,
     ModuleInfoType, ModuleLinksBlockType, ModuleListType, ModuleLogsType, ModuleMiniChatType, ModuleNewsType, ModuleQueueType,
@@ -23,7 +24,7 @@ export type ApiModuleType = ModuleHeaderType | ModuleFormType | ModuleInfoType |
     ModuleWidgetsType | ModuleRolesType | ModuleScheduleType | ModuleTabsType |
     ModuleChatType | ModuleMiniChatType | ModuleCalendarType | ModuleDocumentsType | ModuleFunnelType |
     ModuleNewsType | ModuleLogsType | ModuleLinksBlockType | ModuleAppEditorType | ModuleAccordionType |
-    ModuleDayPlanningType | ModuleQueueType | ModuleYandexMapType
+    ModuleDayPlanningType | ModuleQueueType | ModuleYandexMapType | ModuleButtonsType
 //тип ответа запроса страницы
 export type ApiPageType = Array<ApiModuleType>
 //тип ответа запроса роли 

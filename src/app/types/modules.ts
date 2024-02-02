@@ -505,7 +505,7 @@ export type ModuleMiniChatType = DefaultModuleType<"mini_chat", any, {
 //модуль Calendar
 export type ModuleCalendarType = DefaultModuleType<"calendar", { filters: Array<ComponentFilterType>, buttons: Array<ComponentButtonType> }, {
     object: string,
-    events: { add: string, update: string }
+    events: { add: string, update: string },
     context_keys: Array<string>,
     filters: any
 }>
@@ -700,3 +700,6 @@ export type ModuleQueueType = DefaultModuleType<"queue", { filters: Array<Compon
 
 //модуль YandexMap
 export type ModuleYandexMapType = DefaultModuleType<"yandex_map", { filters: Array<ComponentFilterType> }, { object: string, filters: any }>
+
+//модуль Buttons
+export type ModuleButtonsType = DefaultModuleType<"buttons", { buttons: Array<ComponentButtonType> }>

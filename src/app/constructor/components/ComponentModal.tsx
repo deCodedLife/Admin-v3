@@ -13,13 +13,14 @@ type TComponentModal = {
     setShow: (value: null | false) => void,
     refresh?: () => void,
     size?: "sm" | "lg" | "xl"
+    centered?: boolean
 }
 type TContext = {
     setShow: TComponentModal["setShow"],
     initialData: { [key: string]: any },
     insideModal: boolean
 }
-const ComponentModal: React.FC<TComponentModal> = ({ page, show, size = "xl", setShow, refresh }) => {
+const ComponentModal: React.FC<TComponentModal> = ({ page, show, size = "xl", centered = false, setShow, refresh }) => {
 
     const handleClose = useCallback((value: any) => {
         if (refresh) {
@@ -43,6 +44,7 @@ const ComponentModal: React.FC<TComponentModal> = ({ page, show, size = "xl", se
         show={Boolean(show) && Boolean(data)}
         onHide={() => setShow(null)}
         onEntering={setModalIndex}
+        centered={centered}
     >
         <Modal.Header closeButton className="modal-emptyHeader" />
         <Modal.Body className="scroll-y">

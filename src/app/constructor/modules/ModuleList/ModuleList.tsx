@@ -437,9 +437,8 @@ const ListCell: React.FC<ModuleListCellType> = ({ article, type, row, page, filt
             case "list":
                 return Array.isArray(data) ? data.map((option, index, array) => {
                     const isLastElement = index === array.length - 1
-                    return <span className={`moduleList_cellWrapper${option?.color ? ` bg-${option.color}` : ""}`}>
+                    return <span key={option.value + index} className={`moduleList_cellWrapper${option?.color ? ` bg-${option.color}` : ""}`}>
                         <span
-                            key={option.value + index}
                             className={`moduleList_cellData${filterable ? " filterable" : ""}`}
                             onClick={() => handleCellDataClick(option.value)}>{`${option.title?.trim()}${isLastElement ? "" : ", "}`}</span>
                     </span>

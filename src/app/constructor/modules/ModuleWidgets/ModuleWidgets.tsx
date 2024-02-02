@@ -87,7 +87,7 @@ const ModuleWidgetsHardReport: React.FC<{ data: { report: Array<any>, status: "n
             status === "updating" ? <div className="moduleWidgets_infoCard">
                 <span>Отчёт в процессе формирования. Пожалуйста, ожидайте.</span>
             </div> :
-                report.map(widget => <Widget key={widget.description + widget.value} data={widget} />)}
+                report?.map(widget => <Widget key={widget.description + widget.value} data={widget} />)}
     </div>
 }
 const ModuleWidgetsToolbar: React.FC<{ updated_at: string | null, status: "no_cache" | "updating" | "updated", handleUpdateHardReport: () => Promise<void> }> = (props) => {

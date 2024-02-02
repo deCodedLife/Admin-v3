@@ -3231,3 +3231,12 @@ $moduleQueueHeight: calc(100vh - var(--kt-app-header-height) - 30px * 2 - 51px -
         }
     }
 }
+
+//модуль Buttons
+.moduleButtons {
+    display: flex;
+    flex-direction: column;
+    & > *:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+}

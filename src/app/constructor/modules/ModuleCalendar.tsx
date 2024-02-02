@@ -110,7 +110,7 @@ const ModuleCalendar: React.FC<ModuleCalendarType> = (props) => {
   }), [])
 
   const formValues = useMemo(() => {
-    const values: {[key: string]: any} = {}
+    const values: { [key: string]: any } = {}
     if (Array.isArray(context_keys)) {
       context_keys.forEach(key => {
         values[key] = filter[key]
@@ -170,7 +170,7 @@ const ModuleCalendar: React.FC<ModuleCalendarType> = (props) => {
       </div>
       <ComponentModal
         page={add}
-        show={selectedSlots ? {...selectedSlots, ...formValues} : null}
+        show={selectedSlots ? { ...selectedSlots, ...formValues } : null}
         size="lg"
         setShow={handleCloseDayEventModal}
         refresh={refetch}
@@ -178,14 +178,15 @@ const ModuleCalendar: React.FC<ModuleCalendarType> = (props) => {
 
       <ComponentModal
         page={selectedEventId ? update + `/${selectedEventId}` : undefined}
-        size="lg"
-        show={showEditModal && selectedEventId ? { id: selectedEventId } : false}
-        setShow={() => setShowEditModal(false)}
+        size="sm"
+        centered
+        show={selectedEventId ? { id: selectedEventId } : false}
+        setShow={() => setSelectedEventId(null)}
         refresh={() => {
           setSelectedEventId(null)
           refetch()
         }} />
-      <Modal size="sm" show={Boolean(selectedEventId)} onHide={() => setSelectedEventId(null)} centered onEntering={setModalIndex}>
+      {/* <Modal size="sm" show={Boolean(selectedEventId)} onHide={() => setSelectedEventId(null)} centered onEntering={setModalIndex}>
         <Modal.Body>
           <div className="moduleCalendar_actionsModalContainer">
             <ComponentButton
@@ -200,7 +201,7 @@ const ModuleCalendar: React.FC<ModuleCalendarType> = (props) => {
             />
           </div>
         </Modal.Body>
-      </Modal>
+      </Modal> */}
     </ModuleContext.Provider>
 
   </>
