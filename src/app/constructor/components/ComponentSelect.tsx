@@ -28,7 +28,7 @@ const DefaultSelect = React.memo<{
     joined_field?: string,
     joined_field_filter?: string,
     object?: string,
-    select?: string,
+    select?: Array<string> | string,
     formValue: any,
     joinedFieldValue?: any,
     isError: boolean,
@@ -88,13 +88,13 @@ const DefaultSelect = React.memo<{
                                     {
                                         context: { block: "select" },
                                         [joined_field_filter ?? joined_field]: joinedFieldValue,
-                                        select: [select]
+                                        select: Array.isArray(select) ? select : [select]
                                     }
                                 )
                                 currentOptions = data.map(item => ({ label: item.title, value: item.value, menu_label: item.menu_title ?? item.title }))
                             }
                         } else if (!options.length) {
-                            const { data } = await api<Array<{ title: string, value: string | number | boolean, menu_title?: string }>>(object, "get", { context: { block: "select" }, select: [select] })
+                            const { data } = await api<Array<{ title: string, value: string | number | boolean, menu_title?: string }>>(object, "get", { context: { block: "select" }, select: Array.isArray(select) ? select : [select] })
                             currentOptions = data.map(item => ({ label: item.title, value: item.value, menu_label: item.menu_title ?? item.title }))
                         }
                     }
@@ -170,6 +170,7 @@ const SearchSelect = React.memo<{
     isDuplicate?: boolean,
     isError: boolean,
     formValue: any, joinedFieldValue: any, value: any, error?: string,
+    select?: Array<string> | string,
     setValue: (value: any) => void,
     handleChange: (value: any) => void,
     handleBlur: FormikHandlers["handleBlur"]
@@ -179,7 +180,7 @@ const SearchSelect = React.memo<{
         isDisabled, isVisible = true,
         isClearable, search, isError, formValue, joinedFieldValue,
         prefix, menuPortal = true, handleBlur, handleChange,
-        joined_field, joined_field_filter, isDuplicate
+        joined_field, joined_field_filter, isDuplicate, select
     } = props
 
 
@@ -200,7 +201,7 @@ const SearchSelect = React.memo<{
         }
 
         const additionalRequestData = Object
-            .assign({ context: { block: "select" }, search: inputValue }, joined_field ? { [joined_field_filter ?? joined_field]: joinedFieldValue } : {})
+            .assign({ context: { block: "select" }, search: inputValue, select: Array.isArray(select) ? select : [select] }, joined_field ? { [joined_field_filter ?? joined_field]: joinedFieldValue } : {})
         const id = setTimeout(async () => {
             const response = await api<Array<any>>(search, "search", additionalRequestData)
             callback(response.data.map((item: any) => {
@@ -219,7 +220,7 @@ const SearchSelect = React.memo<{
         const initialIds = formValue ? Array.isArray(formValue) ? formValue : [formValue] : []
         const valueIds = value ? Array.isArray(value) ? value.map(option => isDuplicate ? option.innerValue : option.value) : [value.value] : []
         if (!isEqual(initialIds, valueIds)) {
-            const initialValues = await Promise.all(initialIds.map(id => api<Array<any>>(search, "get", { context: { block: "select" }, id }).then(data => data.data[0])))
+            const initialValues = await Promise.all(initialIds.map(id => api<Array<any>>(search, "get", { context: { block: "select" }, id, select: Array.isArray(select) ? select : [select] }).then(data => data.data[0])))
             const resolvedInitialValues = initialValues.map((item: { title: string, value: string | number, menu_title?: string }) => {
                 return isDuplicate ? { label: item.title, innerValue: item.value, value: Math.random(), menu_label: item.menu_title ?? item.title } :
                     { label: item.title, value: item.value, menu_label: item.menu_title ?? item.title }
@@ -347,6 +348,7 @@ const ComponentSelect: React.FC<ComponentSelectType> = (props) => {
             joined_field={props.joined_field}
             joined_field_filter={props.joined_field_filter}
             isDuplicate={props.isDuplicate}
+            select={props.select}
         />
     } else {
         return <DefaultSelect

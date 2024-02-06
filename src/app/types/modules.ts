@@ -41,7 +41,7 @@ type ModuleFormFieldPriceType = DefaultModuleFormFieldType<"price", null, { min_
 type ModuleFormFieldPhoneType = DefaultModuleFormFieldType<"phone", null, { min_value?: number, max_value?: number, script?: ComponentPhoneType["script"] }>
 type ModuleFormFieldDateType = DefaultModuleFormFieldType<"date" | "time" | "datetime" | "month", null, { min_value?: number, max_value?: number }>
 type ModuleFormFieldCheckboxType = DefaultModuleFormFieldType<"checkbox", null, { min_value?: number, max_value?: number }>
-type ModuleFormFieldSelectType = DefaultModuleFormFieldType<"list", { is_duplicate: boolean, object: string, select: string } | null, {
+type ModuleFormFieldSelectType = DefaultModuleFormFieldType<"list", { is_duplicate: boolean, object: string, select: Array<string> } | null, {
     list?: Array<{
         title: string,
         value: string | number,

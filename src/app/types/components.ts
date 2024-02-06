@@ -150,7 +150,7 @@ export type ComponentSelectType = {
     joined_field?: string,
     joined_field_filter?: string,
     object?: string,
-    select?: string,
+    select?: Array<string> | string,
     search?: string,
     hook?: string,
     onChangeSubmit?: boolean,
