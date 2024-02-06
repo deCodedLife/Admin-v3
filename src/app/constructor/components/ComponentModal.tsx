@@ -35,7 +35,7 @@ const ComponentModal: React.FC<TComponentModal> = ({ page, show, size = "xl", ce
             setContext(prev => isEqual(prev.initialData, show) ? prev : { ...prev, initialData: show })
         }
     }, [show])
-    console.log(page)
+                      
     const resolvedRequestProps = useMemo(() => Object.assign({ page }, show && typeof show === "object" ? { context: show } : {}), [page])
 
     const { data, isFetching } = useItem("pages", resolvedRequestProps, Boolean(page))

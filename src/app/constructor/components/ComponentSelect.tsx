@@ -86,7 +86,7 @@ const DefaultSelect = React.memo<{
                                 setPreviousJoinedFieldValue(joinedFieldValue)
                                 const { data } = await api<Array<{ title: string, value: string | number | boolean, menu_title?: string }>>(object, "get",
                                     {
-                                        context: { block: "form_list" },
+                                        context: { block: "select" },
                                         [joined_field_filter ?? joined_field]: joinedFieldValue,
                                         select: [select]
                                     }
@@ -94,7 +94,7 @@ const DefaultSelect = React.memo<{
                                 currentOptions = data.map(item => ({ label: item.title, value: item.value, menu_label: item.menu_title ?? item.title }))
                             }
                         } else if (!options.length) {
-                            const { data } = await api<Array<{ title: string, value: string | number | boolean, menu_title?: string }>>(object, "get", { context: { block: "form_list" }, select: [select] })
+                            const { data } = await api<Array<{ title: string, value: string | number | boolean, menu_title?: string }>>(object, "get", { context: { block: "select" }, select: [select] })
                             currentOptions = data.map(item => ({ label: item.title, value: item.value, menu_label: item.menu_title ?? item.title }))
                         }
                     }
