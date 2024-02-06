@@ -19,7 +19,7 @@ import { useIntl } from "react-intl"
 import setModalIndex from "../../helpers/setModalIndex"
 import { ApiScheduleType } from "../../../types/api"
 
-export const ModalContext = React.createContext({})
+export const ModalContext = React.createContext<{[key: string]: any}>({})
 
 
 const getEmployeeSchedule = (schedule: Array<ModuleScheduleServerCellType>, steps_list: Array<string>) => {

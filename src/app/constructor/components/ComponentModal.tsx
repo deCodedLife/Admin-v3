@@ -18,7 +18,8 @@ type TComponentModal = {
 type TContext = {
     setShow: TComponentModal["setShow"],
     initialData: { [key: string]: any },
-    insideModal: boolean
+    insideModal: boolean,
+    saveInStorage: boolean
 }
 const ComponentModal: React.FC<TComponentModal> = ({ page, show, size = "xl", centered = false, setShow, refresh }) => {
 
@@ -29,7 +30,7 @@ const ComponentModal: React.FC<TComponentModal> = ({ page, show, size = "xl", ce
         setShow(false)
     }, [setShow, refresh])
 
-    const [context, setContext] = useState<TContext>({ setShow: handleClose, initialData: {}, insideModal: true })
+    const [context, setContext] = useState<TContext>({ setShow: handleClose, initialData: {}, insideModal: true, saveInStorage: false  })
     useEffect(() => {
         if (show && typeof show === "object") {
             setContext(prev => isEqual(prev.initialData, show) ? prev : { ...prev, initialData: show })
