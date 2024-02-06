@@ -25,7 +25,7 @@ const AccordionItem: React.FC<ModuleAccordionItemType> = ({ id, title, body, use
     const handleTitleClick = (event: React.MouseEvent<HTMLDivElement>) => {
         return event.target instanceof Element && !event.target.closest(".componentButton") ? handleAccordionToggle(event) : null
     }
-    const handlePrint = () => printer.printHtml(body)
+    const handlePrint = () => printer.printHtml(unescape(body))
     const handleDelete = () => mutate({ id })
 
     return <Card className="moduleAccordion_item">
