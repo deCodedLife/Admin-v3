@@ -23,6 +23,10 @@ type TContext = {
 }
 const ComponentModal: React.FC<TComponentModal> = ({ page, show, size = "xl", centered = false, setShow, refresh }) => {
 
+    //если модалка находится внутри другой модалки, то не сохранять фильтры 
+    const outterModalContext = React.useContext(ModalContext)
+    const saveInStorage = !(outterModalContext.insideModal)
+
     const handleClose = useCallback((value: any) => {
         if (refresh) {
             refresh()
@@ -30,7 +34,7 @@ const ComponentModal: React.FC<TComponentModal> = ({ page, show, size = "xl", ce
         setShow(false)
     }, [setShow, refresh])
 
-    const [context, setContext] = useState<TContext>({ setShow: handleClose, initialData: {}, insideModal: true, saveInStorage: false  })
+    const [context, setContext] = useState<TContext>({ setShow: handleClose, initialData: {}, insideModal: true, saveInStorage  })
     useEffect(() => {
         if (show && typeof show === "object") {
             setContext(prev => isEqual(prev.initialData, show) ? prev : { ...prev, initialData: show })

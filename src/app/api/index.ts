@@ -9,6 +9,7 @@ export const getApiUrl = () => {
     const currentDomain = url.length === 3 ? url[1] : url[0]
     const currentSubdomain = url.length === 3 ? url[0] : null
     let apiUrl = `https://${currentSubdomain ? `${currentSubdomain}.` : ""}`
+    
     switch (currentDomain) {
         case "docacrm":
             apiUrl += "docacrm.com"
@@ -26,7 +27,7 @@ export const getApiUrl = () => {
             apiUrl += "animocrm.ru"
             break
         default:
-            apiUrl = "https://yazdorov.docacrm.com"
+            apiUrl = "https://demo.docacrm.com"
     }
 
     if (currentDomain === "mewbas" && currentSubdomain === "crm-admin") {
