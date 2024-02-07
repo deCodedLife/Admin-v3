@@ -43,6 +43,7 @@ import usePrevious from "../../helpers/usePrevious"
 import { isEqual } from "lodash"
 import { useRefetchSubscribers, useSubscribeOnRefetch } from "../helpers/PageContext"
 import useInfiniteListData from "../../../api/hooks/useInfiniteListData"
+import ComponentModal from "../../components/ComponentModal"
 
 export const getButtonKey = (button: ComponentButtonType) => `${button.type}-${button.settings.title}-${button.settings.icon}`
 
@@ -398,7 +399,7 @@ const InfiniteScroll: React.FC<ModuleListInfiniteScrollType> = (props) => {
 
 const nonClickableCellsTypes = ["email", "phone", "buttons", "audio_player", "link", "link_list"]
 
-const ListCell: React.FC<ModuleListCellType> = ({ article, type, row, page, filterable, suffix, setFilter }) => {
+const ListCell: React.FC<ModuleListCellType> = ({ article, type, row, page, filterable, suffix, setFilter, setIndividualPage }) => {
     const { context } = useSetupContext()
     const data = row[article]
     const navigate = useNavigate()
@@ -486,11 +487,11 @@ const ListCell: React.FC<ModuleListCellType> = ({ article, type, row, page, filt
                     return <span
                         key={option.value + index}
                         className={`moduleList_linkCell${!option?.href ? " disabled" : ""}`}
-                        onClick={() => option?.href ? navigate(option.href) : null}>{`${option.title?.trim()}${isLastElement ? "" : ", "}`}</span>
+                        onClick={() => option?.href ? setIndividualPage(option.href) : null}>{`${option.title?.trim()}${isLastElement ? "" : ", "}`}</span>
                 }) :
                     <span
                         className={`moduleList_linkCell${!data?.href ? " disabled" : ""}`}
-                        onClick={() => data?.href ? navigate(data.href) : null}>
+                        onClick={() => data?.href ? setIndividualPage(data.href) : null}>
                         {data?.title}
                     </span>
             case "link":
@@ -503,7 +504,7 @@ const ListCell: React.FC<ModuleListCellType> = ({ article, type, row, page, filt
 }
 
 
-const ListRow: React.FC<ModuleListRowType> = ({ data, headers, page, filterKeys, isListEditable, setFilter }) => {
+const ListRow: React.FC<ModuleListRowType> = ({ data, headers, page, filterKeys, isListEditable, setFilter, setIndividualPage }) => {
 
     const { values, setFieldValue } = useFormikContext<{ selectedItems: Array<any> }>()
 
@@ -536,6 +537,7 @@ const ListRow: React.FC<ModuleListRowType> = ({ data, headers, page, filterKeys,
             page={page}
             filterable={filterKeys.includes(cell.article)}
             setFilter={setFilter}
+            setIndividualPage={setIndividualPage}
             suffix={cell.suffix}
         />
         )}
@@ -753,7 +755,13 @@ const ModuleList = React.memo<ModuleListType>((props) => {
         }
     }
 
+
+    //модальное окно отрытия отдельной от всей строки ссылки
+    const [individualPage, setIndividualPage] = useState<string | null>(null)
+    const isModuleHaveIndividualModal = resolvedHeaders.some(header => header.type === "link_list")
+
     return <ModuleContext.Provider value={contextValue}>
+        {isModuleHaveIndividualModal ? <ComponentModal show={Boolean(individualPage)} page={individualPage} setShow={() => setIndividualPage(null)} /> : null}
         {haveFilter ? <ComponentFilters
             type="string"
             data={components.filters}
@@ -869,6 +877,7 @@ const ModuleList = React.memo<ModuleListType>((props) => {
                                                     filterKeys={filterKeys}
                                                     isListEditable={isListEditable}
                                                     setFilter={setFilter}
+                                                    setIndividualPage={setIndividualPage}
                                                 />
                                             })
                                                 : null

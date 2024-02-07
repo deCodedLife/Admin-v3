@@ -172,6 +172,7 @@ export type ModuleListCellType = {
     page: string | null,
     filterable: boolean,
     setFilter: (values: any) => void,
+    setIndividualPage: (page: string | null) => void
     suffix?: string
 }
 export type ModuleListHeadersType = Array<{
@@ -186,7 +187,8 @@ export type ModuleListRowType = {
     page: string | null,
     filterKeys: Array<string>,
     isListEditable: boolean,
-    setFilter: (values: any) => void
+    setFilter: (values: any) => void,
+    setIndividualPage: (page: string | null) => void
 }
 export type ModuleListHeaderCellType = {
     article: string,
