@@ -75,7 +75,16 @@ const ModuleSalaryWidget: React.FC<{ salary: SalaryType }> = ({ salary }) => {
 }
 const ModuleSalaryWidgets: React.FC = () => {
     const { data } = useSalary()
-    const previousValue = usePrevious(data)
+
+    const resolvedData = useMemo(() => {
+        if (Array.isArray(data)) {
+            return data.filter(salary => salary?.values?.length)
+        } else {
+            return null
+        }
+    }, [data])
+
+    const previousValue = usePrevious(resolvedData)
     const audioRef = useRef<HTMLAudioElement | null>(null)
 
 
@@ -84,31 +93,31 @@ const ModuleSalaryWidgets: React.FC = () => {
     */
     const [currentSlaryIndex, setCurrentSalaryIndex] = useState(0)
     const handleSwitchSalary = () => setCurrentSalaryIndex(prev => {
-        if (data) {
-            return data.length > prev + 1 ? prev + 1 : 0
+        if (resolvedData) {
+            return resolvedData.length > prev + 1 ? prev + 1 : 0
         } else {
             return prev
         }
     })
 
     useEffect(() => {
-        if (Array.isArray(previousValue) && !isEqual(data, previousValue)) {
+        if (Array.isArray(previousValue) && !isEqual(resolvedData, previousValue)) {
             audioRef.current?.play()
         }
-    }, [data])
+    }, [resolvedData])
     
-    if (!data || !data?.length) {
+    if (!resolvedData || !resolvedData?.length) {
         return null
     }
     
     return <div className="moduleSalaryWidgets">
         <audio ref={audioRef} src={toAbsoluteUrl("/media/crm/sounds/kpi.mp3")} />
         {
-            data.length > 1 ? <button className="moduleSalaryWidgets_switchSalaryButton" type="button" onClick={handleSwitchSalary}>
+            resolvedData.length > 1 ? <button className="moduleSalaryWidgets_switchSalaryButton" type="button" onClick={handleSwitchSalary}>
                 <KTSVG path='/media/crm/icons/arrow_2.svg' />
             </button> : null
         }
-        <ModuleSalaryWidget salary={data[currentSlaryIndex]} />
+        <ModuleSalaryWidget salary={resolvedData[currentSlaryIndex]} />
     </div>
 
 
