@@ -1,6 +1,6 @@
 import { FormikHandlers, useField, useFormikContext } from "formik"
 import React, { useCallback, useEffect, useState } from "react"
-import Select, { GroupBase, OptionsOrGroups } from "react-select"
+import Select, { GroupBase, OptionsOrGroups, components } from "react-select"
 import AsyncSelect from 'react-select/async';
 import api from "../../api"
 import { ComponentSelectType } from "../../types/components"
@@ -8,8 +8,10 @@ import { useHook } from "./helpers"
 import { useIntl } from "react-intl"
 import { isEqual } from "lodash";
 
+type SelectOptionType = { label: string, value: string | number, innerValue?: string | number, menu_label: string }
+type SelectValueType = SelectOptionType | Array<SelectOptionType> | null
 
-const DefaultSelect = React.memo<{
+type TDefaultSelect = {
     placeholder?: string,
     list?: Array<{
         title: string;
@@ -34,16 +36,42 @@ const DefaultSelect = React.memo<{
     isError: boolean,
     error?: string,
     handleChange: (value: any) => void,
+    handleAppendDuplicate: (label: any, prevValue: any) => void,
     handleBlur: FormikHandlers["handleBlur"]
-}>((props) => {
+}
+
+type TSearchSelect = {
+    placeholder?: string,
+    isMulti?: boolean,
+    isDisabled?: boolean,
+    isVisible?: boolean,
+    isClearable?: boolean,
+    search?: string,
+    prefix?: string,
+    menuPortal?: boolean,
+    joined_field?: string,
+    joined_field_filter?: string,
+    isDuplicate?: boolean,
+    isError: boolean,
+    formValue: any, joinedFieldValue: any, value: any, error?: string,
+    select?: Array<string> | string,
+    setValue: (value: any) => void,
+    handleChange: (value: any) => void,
+    handleAppendDuplicate: (label: any, prevValue: any) => void,
+    handleBlur: FormikHandlers["handleBlur"]
+}
+
+
+const DefaultSelect = React.memo<TDefaultSelect>(props => {
     const {
         placeholder,
         list, isMulti,
         isDisabled, isVisible = true, isClearable,
         isDuplicate, prefix,
         isSearchable = true, menuPortal = true, isLoading = false,
-        joined_field, formValue, joinedFieldValue, isError, error, object,
-        select, joined_field_filter, handleChange, handleBlur
+        joined_field, formValue, joinedFieldValue, isError,
+        error, object, select, joined_field_filter,
+        handleChange, handleBlur, handleAppendDuplicate
     } = props
     const [options, setOptions] = useState<Array<any>>([])
     const [previousJoinedFieldValue, setPreviousJoinedFieldValue] = useState<any>(null)
@@ -146,6 +174,19 @@ const DefaultSelect = React.memo<{
             formatOptionLabel={(option: { label: string, value: any, menu_label: string }, { context }) => <div>{context === "value" ? option.label : option.menu_label}</div>}
             isLoading={isLoading}
             noOptionsMessage={() => intl.formatMessage({ id: "SEARCH.EMPTY_LIST" })}
+            openMenuOnClick={false}
+            components={isDuplicate ? {
+                MultiValueContainer: (props) => {
+                    return <components.MultiValueContainer {...props}>
+                        {props.children}
+                        <div className={`${resolvedClassNamePrefix}__multi-value__add`}
+                            role="button"
+                            onClick={event => handleAppendDuplicate(props.data, props.selectProps.value)} >+</div>
+                    </components.MultiValueContainer>
+
+
+                }
+            } : undefined}
         />
         {isError ? <div className="invalid_feedback">
             {error}
@@ -153,34 +194,15 @@ const DefaultSelect = React.memo<{
     </>
 })
 
-type SelectOptionType = { label: string, value: string | number, innerValue?: string | number, menu_label: string }
-type SelectValueType = SelectOptionType | Array<SelectOptionType> | null
 
-const SearchSelect = React.memo<{
-    placeholder?: string,
-    isMulti?: boolean,
-    isDisabled?: boolean,
-    isVisible?: boolean,
-    isClearable?: boolean,
-    search?: string,
-    prefix?: string,
-    menuPortal?: boolean,
-    joined_field?: string,
-    joined_field_filter?: string,
-    isDuplicate?: boolean,
-    isError: boolean,
-    formValue: any, joinedFieldValue: any, value: any, error?: string,
-    select?: Array<string> | string,
-    setValue: (value: any) => void,
-    handleChange: (value: any) => void,
-    handleBlur: FormikHandlers["handleBlur"]
-}>((props) => {
+const SearchSelect = React.memo<TSearchSelect>(props => {
     const {
         placeholder, isMulti, value, setValue, error,
         isDisabled, isVisible = true,
         isClearable, search, isError, formValue, joinedFieldValue,
-        prefix, menuPortal = true, handleBlur, handleChange,
-        joined_field, joined_field_filter, isDuplicate, select
+        prefix, menuPortal = true, joined_field, joined_field_filter,
+        isDuplicate, select, handleBlur, handleChange,
+        handleAppendDuplicate,
     } = props
 
 
@@ -206,7 +228,7 @@ const SearchSelect = React.memo<{
             const response = await api<Array<any>>(search, "search", additionalRequestData)
             callback(response.data.map((item: any) => {
                 return isDuplicate ? { label: item.title, innerValue: item.value, value: Math.random(), menu_label: item.menu_title ?? item.title }
-                 : { label: item.title, value: item.value, menu_label: item.menu_title ?? item.title }
+                    : { label: item.title, value: item.value, menu_label: item.menu_title ?? item.title }
             }))
             setTimeoutId(null)
         }, 500)
@@ -257,7 +279,19 @@ const SearchSelect = React.memo<{
             menuPortalTarget={resolvedMenuTargetPortal}
             maxMenuHeight={150}
             formatOptionLabel={(option, { context }) => <div>{context === "value" ? option.label : option.menu_label}</div>}
+            openMenuOnClick={false}
+            components={isDuplicate ? {
+                MultiValueContainer: (props) => {
+                    return <components.MultiValueContainer {...props}>
+                        {props.children}
+                        <div className={`${resolvedClassNamePrefix}__multi-value__add`}
+                            role="button"
+                            onClick={event => handleAppendDuplicate(props.data, props.selectProps.value)} >+</div>
+                    </components.MultiValueContainer>
 
+
+                }
+            } : undefined}
         />
         {isError ? <div className="invalid_feedback">
             {error}
@@ -304,7 +338,7 @@ const ComponentSelect: React.FC<ComponentSelectType> = (props) => {
     }, [])
 
 
-    const handleChange = useCallback((value: Array<{ label: string, value: string | number, innerValue?: string | number }> | { label: string, value: string | number } | null) => {
+    const handleChange = useCallback((value: SelectValueType) => {
         if (customHandler) {
             return customHandler(value)
         } else {
@@ -312,12 +346,35 @@ const ComponentSelect: React.FC<ComponentSelectType> = (props) => {
                 setFieldValue(article, value)
             } else {
                 const resolvedValue = Array.isArray(value) ? value.map(option => (isDuplicate && option.innerValue) ? option.innerValue : option.value) : value.value
-                const valueInCurrentFormat = data_type === "integer" ? Number(resolvedValue) : data_type === "boolean" ? Boolean(resolvedValue) : resolvedValue
-                setFieldValue(article, valueInCurrentFormat)
+                /* переработать преобразование типов */
+                /* const valueInCurrentFormat = data_type === "integer" ? Number(resolvedValue) : data_type === "boolean" ? Boolean(resolvedValue) : resolvedValue */
+                setFieldValue(article, resolvedValue)
                 if (hook) {
                     setValueForHook(resolvedValue)
                 }
             }
+
+            if (onChangeSubmit) {
+                handleSubmit()
+            }
+        }
+    }, [])
+
+    const handleAppendDuplicate = useCallback((currentLabel: SelectOptionType, prevValue: Array<SelectOptionType>) => {
+        const newCurrentLabelInstance = { ...currentLabel, value: Math.random() }
+        const value = prevValue.concat(newCurrentLabelInstance)
+        if (customHandler) {
+            return customHandler(value)
+        } else {
+            const resolvedValue = value.map(option => option.innerValue)
+            if (isAsyncSelect) {
+                setValue(value)
+            }
+            setFieldValue(article, resolvedValue)
+            if (hook) {
+                setValueForHook(resolvedValue)
+            }
+
 
             if (onChangeSubmit) {
                 handleSubmit()
@@ -345,6 +402,7 @@ const ComponentSelect: React.FC<ComponentSelectType> = (props) => {
             menuPortal={props.menuPortal}
             handleBlur={handleBlur}
             handleChange={handleAsyncChange}
+            handleAppendDuplicate={handleAppendDuplicate}
             joined_field={props.joined_field}
             joined_field_filter={props.joined_field_filter}
             isDuplicate={props.isDuplicate}
@@ -365,6 +423,7 @@ const ComponentSelect: React.FC<ComponentSelectType> = (props) => {
             menuPortal={props.menuPortal}
             handleBlur={handleBlur}
             handleChange={handleChange}
+            handleAppendDuplicate={handleAppendDuplicate}
             joined_field={props.joined_field}
             joined_field_filter={props.joined_field_filter}
             isDuplicate={props.isDuplicate}

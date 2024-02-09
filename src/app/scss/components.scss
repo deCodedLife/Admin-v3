@@ -245,6 +245,23 @@
         padding: 0 !important;
     }
 
+    &__multi-value {
+        &__add {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+            border-radius: 2px;
+            width: 22px;
+            font-weight: 700;
+            transition: color 0.3s, background-color 0.3s;
+            &:hover {
+                background-color: var(--kt-primary);
+                color: var(--kt-primary-inverse);
+            }
+        }
+    }
+
     &__multi-value__label,
     &__single-value {
         color: inherit !important;
