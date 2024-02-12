@@ -9,7 +9,7 @@ export const getApiUrl = () => {
     const currentDomain = url.length === 3 ? url[1] : url[0]
     const currentSubdomain = url.length === 3 ? url[0] : null
     let apiUrl = `https://${currentSubdomain ? `${currentSubdomain}.` : ""}`
-
+    
     switch (currentDomain) {
         case "docacrm":
             apiUrl += "docacrm.com"
@@ -34,13 +34,12 @@ export const getApiUrl = () => {
 
         apiUrl = "https://crm-api.mewbas.com"
 
-    } else if (currentDomain === "docacrm") {
-        if (currentSubdomain === "astragreenv3admin") {
-            apiUrl = "https://astragreenv3.docacrm.com/"
-        } else if (currentSubdomain === "demo" || currentSubdomain === "yazdorov") {
-            apiUrl = "https://domru.docacrm.com/"
-        }
+    } else if (currentDomain === "docacrm" && currentSubdomain === "astragreenv3admin") {
+
+        apiUrl = "https://astragreenv3.docacrm.com/"
+        
     }
+
     return apiUrl
 }
 
