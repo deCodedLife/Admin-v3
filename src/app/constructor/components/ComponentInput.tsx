@@ -91,7 +91,7 @@ const StringField = React.memo<TStringField>(props => {
 const NumberField = React.memo<TNumberField>(props => {
 
     const { currencyMask, resolvedClassName, name, value, handleChange, handleBlur, is_disabled, placeholder, isError, error } = props
-    
+
     return <>
         <MaskedInput
             mask={currencyMask}
@@ -113,7 +113,7 @@ const NumberField = React.memo<TNumberField>(props => {
 
 
 const ComponentInput: React.FC<ComponentInputType> = props => {
-    const { article, field_type, is_disabled, hook, onBlurSubmit, placeholder, className, suffix,  customHandler } = props
+    const { article, field_type, is_disabled, hook, onBlurSubmit, placeholder, className, suffix, customHandler } = props
     const { values, setFieldValue, handleSubmit } = useFormikContext<any>()
     const [{ name, value, onBlur }, { error, touched }] = useField(article)
     const isMaskedInput = field_type === "integer" || field_type === "float"
@@ -154,18 +154,23 @@ const ComponentInput: React.FC<ComponentInputType> = props => {
                 const resolvedValue = Number(event?.target.value.replace(/[^\d]/g, ""))
                 return setFieldValue(name, resolvedValue)
             } else {
-                let resolvedValue
                 const inputValue = event.target.value
-                switch (name) {
-                    case "first_name":
-                    case "last_name":
-                    case "patronymic":
-                        resolvedValue = inputValue.slice(0, 1).toUpperCase() + inputValue.slice(1).toLowerCase()
-                        break
-                    default:
-                        resolvedValue = inputValue
+                if (inputValue === "") {
+                    return setFieldValue(name, undefined)
+                } else {
+                    let resolvedValue
+                    switch (name) {
+                        case "first_name":
+                        case "last_name":
+                        case "patronymic":
+                            resolvedValue = inputValue.slice(0, 1).toUpperCase() + inputValue.slice(1).toLowerCase()
+                            break
+                        default:
+                            resolvedValue = inputValue
+                    }
+                    return setFieldValue(name, resolvedValue)
                 }
-                return setFieldValue(name, resolvedValue)
+
             }
         }
     }, [])
@@ -184,7 +189,7 @@ const ComponentInput: React.FC<ComponentInputType> = props => {
         }
     }, [])
 
-  
+
 
     if (isMaskedInput) {
         return <NumberField
