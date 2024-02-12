@@ -38,6 +38,10 @@ export const getApiUrl = () => {
 
         apiUrl = "https://astragreenv3.docacrm.com/"
         
+    } else if (currentDomain === "docacrm" && currentSubdomain === "demo") {
+
+        apiUrl = "https://domru.docacrm.com/"
+        
     }
 
     return apiUrl
