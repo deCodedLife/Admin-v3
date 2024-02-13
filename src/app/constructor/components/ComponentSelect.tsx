@@ -78,6 +78,8 @@ const DefaultSelect = React.memo<TDefaultSelect>(props => {
     const [isLoadingOption, setIsLoadingOption] = useState(false)
     const intl = useIntl()
 
+    const resolvedSelect = select ? Array.isArray(select) ? select : [select] : undefined
+
     const resolvedMenuTargetPortal = menuPortal ? document.body : null
     /* если у поля есть зависимость от другого поля, то отрисовывать только те пункты, которые привязаны к конкретному значению поля, от которого зависимы */
     const getOptions = async () => {
@@ -116,13 +118,13 @@ const DefaultSelect = React.memo<TDefaultSelect>(props => {
                                     {
                                         context: { block: "select" },
                                         [joined_field_filter ?? joined_field]: joinedFieldValue,
-                                        select: Array.isArray(select) ? select : [select]
+                                        select: resolvedSelect
                                     }
                                 )
                                 currentOptions = data.map(item => ({ label: item.title, value: item.value, menu_label: item.menu_title ?? item.title }))
                             }
                         } else if (!options.length) {
-                            const { data } = await api<Array<{ title: string, value: string | number | boolean, menu_title?: string }>>(object, "get", { context: { block: "select" }, select: Array.isArray(select) ? select : [select] })
+                            const { data } = await api<Array<{ title: string, value: string | number | boolean, menu_title?: string }>>(object, "get", { context: { block: "select" }, select: resolvedSelect })
                             currentOptions = data.map(item => ({ label: item.title, value: item.value, menu_label: item.menu_title ?? item.title }))
                         }
                     }
@@ -211,6 +213,8 @@ const SearchSelect = React.memo<TSearchSelect>(props => {
 
     const resolvedClassNamePrefix = `${isError ? "invalid " : ""}${prefix ? `${prefix} ` : ""} ${formValue ? "selected" : ""} componentSelect`
     const resolvedMenuTargetPortal = menuPortal ? document.body : null
+    
+    const resolvedSelect = select ? Array.isArray(select) ? select : [select] : undefined
 
     /*
     --- поиск отложенный. Id прошлого timeout хранится в состоянии 
@@ -223,7 +227,7 @@ const SearchSelect = React.memo<TSearchSelect>(props => {
         }
 
         const additionalRequestData = Object
-            .assign({ context: { block: "select" }, search: inputValue, select: Array.isArray(select) ? select : [select] }, joined_field ? { [joined_field_filter ?? joined_field]: joinedFieldValue } : {})
+            .assign({ context: { block: "select" }, search: inputValue, select: resolvedSelect  }, joined_field ? { [joined_field_filter ?? joined_field]: joinedFieldValue } : {})
         const id = setTimeout(async () => {
             const response = await api<Array<any>>(search, "search", additionalRequestData)
             callback(response.data.map((item: any) => {
@@ -242,7 +246,7 @@ const SearchSelect = React.memo<TSearchSelect>(props => {
         const initialIds = formValue ? Array.isArray(formValue) ? formValue : [formValue] : []
         const valueIds = value ? Array.isArray(value) ? value.map(option => isDuplicate ? option.innerValue : option.value) : [value.value] : []
         if (!isEqual(initialIds, valueIds)) {
-            const initialValues = await Promise.all(initialIds.map(id => api<Array<any>>(search, "get", { context: { block: "select" }, id, select: Array.isArray(select) ? select : [select] }).then(data => data.data[0])))
+            const initialValues = await Promise.all(initialIds.map(id => api<Array<any>>(search, "get", { context: { block: "select" }, id, select: resolvedSelect }).then(data => data.data[0])))
             const resolvedInitialValues = initialValues.map((item: { title: string, value: string | number, menu_title?: string }) => {
                 return isDuplicate ? { label: item.title, innerValue: item.value, value: Math.random(), menu_label: item.menu_title ?? item.title } :
                     { label: item.title, value: item.value, menu_label: item.menu_title ?? item.title }
