@@ -113,7 +113,7 @@ const ComponentButtonPrint: React.FC<ComponentButtonPrintType> = ({ settings, de
             backdropClassName={isMinimize ? "hidden" : ""}
             show={showEditModal}
             onEntering={setModalIndex}
-            onHide={() => setShowEditModal(false)}
+            onHide={() => setIsMinimize(true)}
         >
             <Modal.Header>
                 <Modal.Title>
