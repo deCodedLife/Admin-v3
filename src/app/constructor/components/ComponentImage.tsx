@@ -62,7 +62,7 @@ const ComponentImageEditor: React.FC<{ image: File | null, handleUploadEditedPho
 
     </>
 }
-const ComponentImage: React.FC<ComponentImageType> = ({ article, allowedFormats = [], is_multiply, is_editor }) => {
+const ComponentImage: React.FC<ComponentImageType> = ({ article, allowedFormats = [], is_multiply, is_editor, is_disabled }) => {
     const intl = useIntl()
     const { setFieldValue } = useFormikContext<any>()
     const [field] = useField(article)
@@ -160,6 +160,9 @@ const ComponentImage: React.FC<ComponentImageType> = ({ article, allowedFormats 
     const handleUploadPhotoAsDrop = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault()
         event.currentTarget.classList.remove("active")
+        if (is_disabled) {
+            return
+        }
         const files = event.dataTransfer.files
         validationUploadedFile(files)
     }
@@ -204,7 +207,7 @@ const ComponentImage: React.FC<ComponentImageType> = ({ article, allowedFormats 
             onDrop={handleUploadPhotoAsDrop}
         >
             {
-                haveUploadedImages ? <ComponentButton
+                haveUploadedImages && !is_disabled ? <ComponentButton
                     className="componentImage_uploadMoreButton"
                     type="custom"
                     settings={{ title: intl.formatMessage({ id: isMulti ? "IMAGE.UPLOAD_MORE" : "IMAGE.REFRESH_IMAGE" }), icon: "upload", background: "dark" }}
@@ -225,11 +228,12 @@ const ComponentImage: React.FC<ComponentImageType> = ({ article, allowedFormats 
                     <div className="componentImage_imageContainer">
                         {
                             fullscreenCarousel ? <div className="componentImage_imageToolbar">
-                                <ComponentDropdown buttons={[{
+                                {!is_disabled ?  <ComponentDropdown buttons={[{
                                     type: "custom",
                                     settings: { title: intl.formatMessage({ id: "BUTTON.DELETE" }), icon: "", background: "dark" },
                                     customHandler: () => handleDeletePhoto(index)
-                                }]} />
+                                }]} /> : null}
+                               
                                 <ComponentButton
                                     type="custom"
                                     settings={{ title: intl.formatMessage({ id: "BUTTON.CLOSE" }), icon: "close", background: "dark" }}

@@ -285,7 +285,7 @@ export type ComponentSmartListType = {
 }
 
 //компонент Image
-export type ComponentImageType = { article: string, allowedFormats?: Array<string>, is_multiply?: boolean, is_editor?: boolean }
+export type ComponentImageType = { article: string, allowedFormats?: Array<string>, is_multiply?: boolean, is_editor?: boolean, is_disabled?: boolean}
 
 //компонент File
 export type ComponentFileType = { article: string, is_multiply?: boolean, request_object?: string, object_id?: number | string }

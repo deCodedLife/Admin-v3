@@ -132,7 +132,8 @@ export const Component = React.memo<ModuleFormFieldType>((props) => {
                 article={article}
                 allowedFormats={props.settings?.allowed_formats}
                 is_multiply={props.settings?.is_multiply}
-                is_editor={props.settings?.is_editor} />
+                is_editor={props.settings?.is_editor}
+                is_disabled={Boolean(is_disabled)} />
         case "editor":
             return <ComponentTextEditor article={article} />
         case "file":
@@ -290,7 +291,7 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
     //контекст нужен для передачи дополнительных инит значений (прим.: модалка в расписании)
     const modalContext = useContext<any>(ModalContext)
     const initialData = Object.assign({}, modalContext.initialData ?? {}, settings.data ?? {})
-    const { object, command, command_type, areas, type, close_after_submit = true } = settings
+    const { object, command, command_type, areas, type, close_after_submit = true, is_disabled } = settings
     const buttons = useMemo(() => Array.isArray(components) ? [] : components.buttons, [components])
     const mainButtons = useMemo(() => buttons.filter(button => !button.settings.field_place), [buttons])
     const fieldButtons = useMemo(() => buttons.filter(button => button.settings.field_place), [buttons])
@@ -348,7 +349,7 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
     const formConfiguration = useMemo(() => {
         const fields = getFields(areas)
         return {
-            initialValues: getInitialValues(fields, isCreating, id && !initialData?.id ? { ...initialData, id } : initialData),
+            initialValues: getInitialValues(fields, isCreating, id && !initialData?.id ? { ...initialData, id } : initialData, is_disabled),
             validationSchema: getValidationSchema(fields)
         }
     }, [areas, initialData])

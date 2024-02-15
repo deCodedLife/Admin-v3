@@ -14,7 +14,7 @@ export const getFields = (areas: Array<ModuleFormAreaType>) => {
     return areas?.reduce((acc: Array<ModuleFormFieldType>, area) => acc.concat(area?.blocks?.reduce((acc: Array<ModuleFormFieldType>, block) => acc.concat(block.fields), [])), []) ?? []
 }
 //функция для получения инит. значений из массива полей
-export const getInitialValues = (fields: Array<ModuleFormFieldType>, isCreating: boolean, additionalInitials: any = {}) => {
+export const getInitialValues = (fields: Array<ModuleFormFieldType>, isCreating: boolean, additionalInitials: any = {}, isFormDisabled?: boolean) => {
     const initialValues: any = {
         fieldsVisibility: {},
         fieldsDescriptions: {},
@@ -28,7 +28,7 @@ export const getInitialValues = (fields: Array<ModuleFormFieldType>, isCreating:
         }
         initialValues.fieldsVisibility[field.article] = field.is_visible
         initialValues.fieldsDescriptions[field.article] = field.description
-        initialValues.fieldsDisabled[field.article] = field.is_disabled
+        initialValues.fieldsDisabled[field.article] = isFormDisabled ? isFormDisabled : field.is_disabled
     })
     return isCreating ? Object.assign({}, initialValues, additionalInitials) : Object.assign({}, additionalInitials, initialValues)
 }
