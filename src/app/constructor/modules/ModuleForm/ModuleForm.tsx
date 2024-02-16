@@ -75,6 +75,7 @@ export const Component = React.memo<ModuleFormFieldType>((props) => {
                 isDuplicate={settings?.is_duplicate ?? false}
                 object={settings?.object}
                 select={settings?.select}
+                select_menu={settings?.select_menu}
                 search={search}
                 isClearable={(is_clearable === false) ? is_clearable : true}
                 onChangeSubmit={on_change_submit}
