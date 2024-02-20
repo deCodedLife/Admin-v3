@@ -27,7 +27,7 @@ export const getApiUrl = () => {
             apiUrl += "animocrm.ru"
             break
         default:
-            apiUrl = "https://demo.docacrm.com"
+            apiUrl = "https://test.docacrm.com"
     }
 
     if (currentDomain === "mewbas" && currentSubdomain === "crm-admin") {

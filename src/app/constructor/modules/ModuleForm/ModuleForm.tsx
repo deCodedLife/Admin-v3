@@ -361,7 +361,8 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
         delete values.fieldsVisibility
         delete values.fieldsDescriptions
         delete values.fieldsDisabled
-        if (isLoading) {
+        delete values.modal_info
+        if (isLoading || (isSuccess && modalContext.settings?.close_after_submit)) {
             return
         } else {
             if (isCreating) {
