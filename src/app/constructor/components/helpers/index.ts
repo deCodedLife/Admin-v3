@@ -17,7 +17,8 @@ export const hookAfterChange = async (
     //
 
     //использую lodash по причине наличия вложенности во многих артикулах
-    const valuesWithCurrentFieldValue = set({ ...values }, field_article, field_value)
+    const context = {trigger: field_article}
+    const valuesWithCurrentFieldValue = set({ ...values, context }, field_article, field_value)
     unset(valuesWithCurrentFieldValue, fieldsVisibilityArticle)
     unset(valuesWithCurrentFieldValue, fieldsDescriptionsArticle)
     unset(valuesWithCurrentFieldValue, fieldsDisabledArticle)
