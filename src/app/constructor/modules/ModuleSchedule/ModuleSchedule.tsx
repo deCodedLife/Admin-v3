@@ -245,11 +245,11 @@ const ModuleScheduleScrollButtons = React.memo<ModuleScheduleScrollButtonsType>(
     </div>
 })
 const ModuleScheduleModalForm = React.memo<ModuleScheduleModalType>(({ requestObject, selectedCell, setSelectedCell }) => {
-    const { data, isFetching } = useScheduleForm(requestObject, selectedCell)
+    const { data, isFetching, refetch } = useScheduleForm(requestObject, selectedCell)
     const navigate = useNavigate()
     const location = useLocation()
     const modalContext = useMemo(() => {
-        return Object.assign({ setShow: setSelectedCell }, selectedCell ? {
+        return Object.assign({ setShow: setSelectedCell, refetchPage: refetch }, selectedCell ? {
             initialData: {
                 id: selectedCell.event?.id ?? undefined,
                 start_at: `${selectedCell.date} ${selectedCell.time}:00`,

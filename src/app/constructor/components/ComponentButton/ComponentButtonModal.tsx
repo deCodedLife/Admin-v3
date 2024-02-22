@@ -21,7 +21,7 @@ const ComponentButtonModal: React.FC<ComponentButtonModalType> = ({ settings, de
     const { insert_to_field, refresh_after_submit = false, close_after_submit = true, close_previous_modal = false, modal_size = "xl", context } = settings
     const [showModal, setShowModal] = useState(false)
     const resolvedRequestProps = useMemo(() => Object.assign({ page: settings.page }, context && typeof context === "object" ? { context } : {}), [])
-    const { data, isFetching } = useItem("pages", resolvedRequestProps)
+    const { data, isFetching, refetch } = useItem("pages", resolvedRequestProps)
     const formContext = useFormikContext<any>()
     const setFieldValue = formContext ? formContext.setFieldValue : null
     const outerFormValues = formContext ? formContext.values : null
@@ -59,6 +59,7 @@ const ComponentButtonModal: React.FC<ComponentButtonModalType> = ({ settings, de
             handleResponse,
             //если передать в setShow функцию, то, после отправки формы, закроется модалка
             setShow: handleClose,
+            refetchPage: refetch,
             insideModal: true,
             settings: {
                 close_after_submit

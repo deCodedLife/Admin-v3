@@ -315,7 +315,7 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
 
     /* функция проверяет, есть ли у формы кнопка submit с переданным url для перехода после отправки формы, и, если есть, осуществляет переход.
     Сам переход выполняется в двух случаях: после успешного запроса или при отсутствии изменении в форме редактирования (отправка запроса игнорируется)  */
-    const afterSubmitAction = useCallback((buttons: Array<ComponentButtonType>) => {
+    const afterSubmitAction = useCallback((buttons: Array<ComponentButtonType>, isValuesChanged: boolean) => {
         //смысла нет разбивать на find и проверку наличия, т.к. ts не определит, что это кнопка типа submit. Переделать в дальнейшем
         //@ts-ignore 
         const redirectUrl = buttons.find(button => button.type === "submit")?.settings?.href ?? ""
@@ -334,13 +334,15 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
             }
         } else if (modalContext.setShow && close_after_submit) {
             modalContext.setShow(false)
+        } else if (modalContext.refetchPage && isValuesChanged) {
+            modalContext.refetchPage()
         }
     }, [])
 
 
     useEffect(() => {
         if (isSuccess) {
-            afterSubmitAction(buttons)
+            afterSubmitAction(buttons, true)
             if (modalContext.handleResponse) {
                 modalContext.handleResponse(responseData)
             }
@@ -378,7 +380,7 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
                 if (valuesKeysAsArray.length > 1 || (valuesKeysAsArray.length === 1 && !valuesKeysAsArray.includes("id"))) {
                     mutate(changedValues)
                 } else {
-                    afterSubmitAction(buttons)
+                    afterSubmitAction(buttons, false)
                 }
             }
         }

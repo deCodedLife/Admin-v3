@@ -17,6 +17,7 @@ type TComponentModal = {
 }
 type TContext = {
     setShow: TComponentModal["setShow"],
+    refetchPage: () => void,
     initialData: { [key: string]: any },
     insideModal: boolean,
     saveInStorage: boolean
@@ -34,16 +35,21 @@ const ComponentModal: React.FC<TComponentModal> = ({ page, show, size = "xl", ce
         setShow(false)
     }, [setShow, refresh])
 
-    const [context, setContext] = useState<TContext>({ setShow: handleClose, initialData: {}, insideModal: true, saveInStorage  })
+
+    const resolvedRequestProps = useMemo(() => Object.assign({ page }, show && typeof show === "object" ? { context: show } : {}), [page])
+    const { data, isFetching, refetch } = useItem("pages", resolvedRequestProps, Boolean(page))
+
+
+    const [context, setContext] = useState<TContext>({ setShow: handleClose, refetchPage: refetch, initialData: {}, insideModal: true, saveInStorage  })
     useEffect(() => {
         if (show && typeof show === "object") {
             setContext(prev => isEqual(prev.initialData, show) ? prev : { ...prev, initialData: show })
         }
     }, [show])
                       
-    const resolvedRequestProps = useMemo(() => Object.assign({ page }, show && typeof show === "object" ? { context: show } : {}), [page])
+   
 
-    const { data, isFetching } = useItem("pages", resolvedRequestProps, Boolean(page))
+    
 
     return <Modal
         size={size}

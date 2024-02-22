@@ -18,8 +18,8 @@ const useScheduleForm = (requestObject: string, cell: {type: "available" | "busy
         select: (data: ApiResponseType<ApiPageType>) => data.data,
         onError: (error: any) => getErrorToast(error.message)
     }
-    const { isLoading, isFetching, error, data } = useQuery(fetchKey, fetchFunction, hookConfiguration)
-    return { isLoading, isFetching, error, data }
+    const { isLoading, isFetching, error, data, refetch } = useQuery(fetchKey, fetchFunction, hookConfiguration)
+    return { isLoading, isFetching, error, data, refetch }
 }
 
 export default useScheduleForm
