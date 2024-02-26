@@ -510,23 +510,34 @@ const ListRow: React.FC<ModuleListRowType> = ({ data, headers, page, filterKeys,
 
     const { selectedItems } = values
 
-    const indexOfId = selectedItems.findIndex(item => item.id === data.id)
+    /*
+    --- Для строк без id отключаем чекбокс выбора строки
+    */
+    const isCheckboxEnabled = Boolean(data.id)
 
-    const isRowChecked = indexOfId !== -1
+    const indexOfRow = isCheckboxEnabled ? selectedItems.findIndex(selectedItem => selectedItem.id === data.id) : -1
+
+    const isRowChecked = indexOfRow !== -1
+    
 
     const handleDeleteCheckboxClick = () => {
+        if (!isCheckboxEnabled) {
+            return
+        }
+
         const itemsToDeleteClone = [...selectedItems]
-        if (indexOfId !== -1) {
-            itemsToDeleteClone.splice(indexOfId, 1)
+        if (isRowChecked) {
+            itemsToDeleteClone.splice(indexOfRow, 1)
         } else {
             itemsToDeleteClone.push(data)
         }
         return setFieldValue("selectedItems", itemsToDeleteClone)
     }
+
     return <tr className={`moduleList_row ${isRowChecked ? " selected" : ""}`}>
         {
             isListEditable ? <td className="moduleList_cell deleteCheckbox">
-                <ComponentCheckbox customChecked={isRowChecked} customHandler={handleDeleteCheckboxClick} />
+                <ComponentCheckbox customChecked={isRowChecked} customHandler={handleDeleteCheckboxClick} is_disabled={!isCheckboxEnabled} />
             </td> : null
         }
         {headers.map(cell => <ListCell
@@ -686,6 +697,13 @@ const ModuleList = React.memo<ModuleListType>((props) => {
     const isEmptyData = isSetSearchData ? (!searchLoading && data?.length === 0) :
         withInfiniteScroll ? (!isInifiniteDataLoading && data?.length === 0) : (!loading && data?.length === 0)
 
+    const dataWithIds = useMemo(() => {
+        if (Array.isArray(data)) {
+            return data.filter(item => item.id)
+        } else {
+            return []
+        }
+    }, [data])
 
     useEffect(() => {
         if (successDelete) {
@@ -800,9 +818,14 @@ const ModuleList = React.memo<ModuleListType>((props) => {
                 >
                     {({ values, setFieldValue, handleSubmit }) => {
                         const { selectedItems } = values
-                        const isMassCheckboxChecked = data?.every?.(item => selectedItems.find(selectedItem => item.id === selectedItem.id)) && Boolean(data.length)
+                        const isMassCheckboxChecked = Boolean(dataWithIds.length) && dataWithIds.every(item => selectedItems.find(selectedItem => item.id === selectedItem.id))
                         const handleMassCheckboxClick = () => {
-                            const currentItemsToCheck = !isMassCheckboxChecked && Array.isArray(data) ? data.map(item => item) : []
+
+                            if (!dataWithIds.length) {
+                                return 
+                            }
+
+                            const currentItemsToCheck = isMassCheckboxChecked ? [] : dataWithIds
                             return setFieldValue("selectedItems", currentItemsToCheck)
                         }
                         return <FormikForm>
@@ -848,7 +871,7 @@ const ModuleList = React.memo<ModuleListType>((props) => {
                                                     <ComponentCheckbox
                                                         customChecked={isMassCheckboxChecked}
                                                         customHandler={handleMassCheckboxClick}
-                                                        is_disabled={isEmptyData}
+                                                        is_disabled={isEmptyData || !dataWithIds.length}
                                                     />
 
                                                 </th> : null
