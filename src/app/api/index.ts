@@ -26,6 +26,9 @@ export const getApiUrl = () => {
         case "animocrm":
             apiUrl += "animocrm.ru"
             break
+        case "flowerbloom":
+            apiUrl += "flowerbloom-api.ru"
+            break
         default:
             apiUrl = "https://test.docacrm.com"
     }
@@ -34,11 +37,7 @@ export const getApiUrl = () => {
 
         apiUrl = "https://crm-api.mewbas.com"
 
-    } else if (currentDomain === "docacrm" && currentSubdomain === "astragreenv3admin") {
-
-        apiUrl = "https://astragreenv3.docacrm.com/"
-        
-    }
+    } 
 
     return apiUrl
 }
