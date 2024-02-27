@@ -107,7 +107,7 @@ const ModuleDeveloper: React.FC<Props> = (props) => {
         navigate(0)
     }, [])
 
-    const handleUpdateApplication = useCallback(async (type: "crm" | "api") => {
+    const handleUpdateApplication = useCallback(async (type: "crm" | "crm-test" | "api") => {
         try {
             await api("admin", `update-${type}`)
             getSuccessToast("Успешно")
@@ -189,7 +189,20 @@ const ModuleDeveloper: React.FC<Props> = (props) => {
                     <span className='menu-icon' data-kt-element='icon'>
                         <KTSVG path='/media/crm/icons/desktop.svg' className='svg-icon-3' />
                     </span>
-                    <span className='menu-title'>Обновить админку</span>
+                    <span className='menu-title'>Обновить админку (релиз)</span>
+                </a>
+            </div>
+
+            <div className='menu-item px-3 my-0'>
+                <a
+                    href='#'
+                    className={clsx('menu-link px-3 py-2')}
+                    onClick={() => handleUpdateApplication("crm-test")}
+                >
+                    <span className='menu-icon' data-kt-element='icon'>
+                        <KTSVG path='/media/crm/icons/desktop.svg' className='svg-icon-3' />
+                    </span>
+                    <span className='menu-title'>Обновить админку (разработка) </span>
                 </a>
             </div>
 
