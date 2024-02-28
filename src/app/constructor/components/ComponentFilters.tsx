@@ -27,8 +27,8 @@ const useToggle = () => {
     return { show, handleToggle }
 }
 
-const ComponentFilter = React.memo<ComponentFilterType & { className?: string }>((props) => {
-    const { type, settings, placeholder, title, className = "" } = props
+const ComponentFilter = React.memo<ComponentFilterType & { className?: string, custom_format?: boolean }>((props) => {
+    const { type, settings, placeholder, title, className = "", custom_format } = props
     switch (type) {
         case "date":
             return <ComponentDate
@@ -37,7 +37,7 @@ const ComponentFilter = React.memo<ComponentFilterType & { className?: string }>
                 field_type={type}
                 placeholder={placeholder}
                 onBlurSubmit
-                custom_format
+                custom_format={custom_format}
             />
         case "list":
             return <ComponentSelect
@@ -166,7 +166,7 @@ const ComponentFiltersBlock: React.FC<ComponentFiltersType> = (props) => {
                 return <FormikForm className="componentFilters_blockForm">
                     <div className="componentFilters_blockContainer">
                         {props.data.map(filter => <div key={getFilterKey(filter)} className="componentFilters_blockFilter">
-                            <ComponentFilter {...filter} placeholder={filter.title ?? ""} />
+                            <ComponentFilter {...filter} placeholder={filter.title ?? ""} custom_format />
                         </div>)}
                     </div>
                     {showClearFilterButton ?
@@ -231,7 +231,7 @@ const ComponentFiltersString: React.FC<ComponentFiltersType> = (props) => {
 
                 return <FormikForm className="componentFilters_stringForm">
                     {props.data.map(filter => <div key={getFilterKey(filter)} className="componentFilters_stringFilterContainer">
-                        <ComponentFilter {...filter} placeholder={filter.title ?? ""} className="componentFilters_stringFilter" />
+                        <ComponentFilter {...filter} placeholder={filter.title ?? ""} className="componentFilters_stringFilter" custom_format />
                     </div>)}
                     {showClearFilterButton ?
                         <ComponentButton
