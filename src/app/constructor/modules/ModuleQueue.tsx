@@ -117,7 +117,7 @@ const ModuleQueue: React.FC<ModuleQueueType> = (props) => {
             sound.play()
             setTalonData(talon)
             if (!talon.is_alert) {
-                api("visits", "update", { id: talon.id, is_alert: true })
+                api(talon.object, "update", { id: talon.id, is_alert: true })
             }
             setTimeout(() => {
                 setSpeakQueue(prev => prev.filter((talonFromQueue, index) => index !== 0))

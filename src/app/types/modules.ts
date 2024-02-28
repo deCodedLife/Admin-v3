@@ -697,6 +697,7 @@ export type ModuleQueueTalonType = {
     talon: string,
     cabinet: string,
     voice: string,
+    object: string,
     detail: Array<string>
 }
 export type ModuleQueueType = DefaultModuleType<"queue", { filters: Array<ComponentFilterType> }, { object: string }>
