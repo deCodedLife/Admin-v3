@@ -57,15 +57,20 @@ const ComponentButtonPrint: React.FC<ComponentButtonPrintType> = ({ settings, de
         }
     }, [isSuccess])
 
-    useEffect(() => {
-        if (isMinimize && !insideOutterModal) {
+
+    const handleMinimize = () => {
+        setIsMinimize(true)
+        if (!insideOutterModal) {
             document.body.setAttribute("style", "padding-right: 4px")
         }
-    }, [isMinimize])
+    }
 
     const handleClick = async () => {
         if (isMinimize) {
             setIsMinimize(false)
+            if (!insideOutterModal) {
+                document.body.setAttribute("style", "overflow: hidden; padding-right: 4px")
+            }
         } else {
             const documentsResponse = document_article ? await api<Array<Tdocument>>("documents", "get", { article: document_article }) : null
             const documentFromResponse = documentsResponse ? documentsResponse.data[0] : null
@@ -124,13 +129,13 @@ const ComponentButtonPrint: React.FC<ComponentButtonPrintType> = ({ settings, de
             backdropClassName={isMinimize ? "hidden" : ""}
             show={showEditModal}
             onEntering={setModalIndex}
-            onHide={() => setIsMinimize(true)}
+            onHide={handleMinimize}
         >
             <Modal.Header>
                 <Modal.Title>
                     {intl.formatMessage({ id: "BUTTON_PRINT.MODAL_TITLE" })}
                 </Modal.Title>
-                <button type="button" className="componentButton_modalButton modalMinimize" onClick={() => setIsMinimize(true)}>-</button>
+                <button type="button" className="componentButton_modalButton modalMinimize" onClick={handleMinimize}>-</button>
                 <button type="button" className="componentButton_modalButton modalClose" onClick={() => setShowEditModal(false)}>x</button>
             </Modal.Header>
             <Formik enableReinitialize initialValues={initialValues} onSubmit={handleSubmit}>
