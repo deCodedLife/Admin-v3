@@ -52,6 +52,12 @@ const ComponentButtonPrint: React.FC<ComponentButtonPrintType> = ({ settings, de
         }
     }, [isSuccess])
 
+    useEffect(() => {
+        if (isMinimize) {
+            document.body.setAttribute("style", "padding-right: 4px")
+        }
+    }, [isMinimize])
+
     const handleClick = async () => {
         if (isMinimize) {
             setIsMinimize(false)
