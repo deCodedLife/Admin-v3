@@ -18,6 +18,7 @@ import { Formik, Form as FormikForm } from "formik"
 import ComponentSelect from "../ComponentSelect"
 import ComponentTextEditor from "../ComponentTextEditor"
 import { useFormContext } from "../../modules/ModuleForm/ModuleForm"
+import { ModalContext } from "../../modules/ModuleSchedule/ModuleSchedule"
 
 
 type Tdocument = { title: string, article: string, object?: string, structure: Array<{ block_type: string, settings: { document_body: string } }> }
@@ -38,6 +39,10 @@ const ComponentButtonPrint: React.FC<ComponentButtonPrintType> = ({ settings, de
     const isIconBased = defaultLabel === "icon"
     const { isSuccess } = useFormContext()
 
+    //проверка на нахождение внутри другого модального окна
+    const outterModalContext = React.useContext(ModalContext)
+    const insideOutterModal = Boolean(outterModalContext.insideModal)
+
     const handleScriptAction = useCallback((title: string, body: string) => {
         if (script) {
             const resolvedTitle = `${title} (${moment().format("DD.MM.YY г.")})`
@@ -53,7 +58,7 @@ const ComponentButtonPrint: React.FC<ComponentButtonPrintType> = ({ settings, de
     }, [isSuccess])
 
     useEffect(() => {
-        if (isMinimize) {
+        if (isMinimize && !insideOutterModal) {
             document.body.setAttribute("style", "padding-right: 4px")
         }
     }, [isMinimize])
