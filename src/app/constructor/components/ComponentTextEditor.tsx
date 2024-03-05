@@ -70,7 +70,7 @@ const ComponentTextEditor: React.FC<{ article: string, variables?: Array<any>, t
                 },
             });
         };
-        console.log(tableVariables)
+
         const openVariablesTableModal = () => {
             return editor.windowManager.open({
                 title: intl.formatMessage({ id: "TEXT_EDITOR.SELECT_VARIABLES" }),

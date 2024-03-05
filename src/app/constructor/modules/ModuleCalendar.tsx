@@ -5,14 +5,12 @@ import { Calendar, SlotInfo, View, momentLocalizer } from 'react-big-calendar'
 import useCalendar from "../../api/hooks/useCalendar"
 import ComponentDashboard from "../components/ComponentDashboard"
 import ComponentButton from "../components/ComponentButton"
-import { Modal } from "react-bootstrap"
 import useMutate from "../../api/hooks/useMutate"
 import { useIntl } from "react-intl"
 import { ModuleContext } from "./helpers/useModuleContent"
 import ComponentModal from "../components/ComponentModal"
 import ComponentFilters from "../components/ComponentFilters"
 import { useFilter } from "./helpers"
-import setModalIndex from "../helpers/setModalIndex"
 
 
 const ModuleCalendar: React.FC<ModuleCalendarType> = (props) => {
@@ -33,7 +31,6 @@ const ModuleCalendar: React.FC<ModuleCalendarType> = (props) => {
   const [selectedSlots, setSelectedSlots] = useState<{ start_from: string, start_to: string, event_from: string, event_to: string } | null>(null)
   const handleCloseDayEventModal = useCallback((value: any) => setSelectedSlots(null), [])
   const [selectedEvent, setSelectedEvent] = useState<{id: number, date: string} | null>(null)
-  const [showEditModal, setShowEditModal] = useState(false)
 
   const { filter, isInitials, setFilter, resetFilter } = useFilter(`${props.type}_${object}`, resolvedInitialFilterValues)
   const { data, refetch } = useCalendar(object, filter)
@@ -88,7 +85,8 @@ const ModuleCalendar: React.FC<ModuleCalendarType> = (props) => {
 
   const events = useMemo(() => {
     if (data) {
-      return Object.entries<Array<{ id: string, title: string, from: string, to: string, background: string }>>(data).reduce((acc, value) => {
+      return Object.entries<Array<{ id: string, title: string, from: string, to: string, background: string }>>(data)
+      .reduce<Array<{ id: string, title: string, start: Date, end: Date }>>((acc, value) => {
         const [date, events] = value
         const currentFormatEvents = events.map(event => ({
           id: event.id,
@@ -98,7 +96,7 @@ const ModuleCalendar: React.FC<ModuleCalendarType> = (props) => {
           background: event.background
         }))
         return acc.concat(currentFormatEvents)
-      }, [] as Array<{ id: string, title: string, start: Date, end: Date }>)
+      }, [])
     } else {
       return []
     }
@@ -187,22 +185,6 @@ const ModuleCalendar: React.FC<ModuleCalendarType> = (props) => {
           setSelectedEvent(null)
           refetch()
         }} />
-      {/* <Modal size="sm" show={Boolean(selectedEventId)} onHide={() => setSelectedEventId(null)} centered onEntering={setModalIndex}>
-        <Modal.Body>
-          <div className="moduleCalendar_actionsModalContainer">
-            <ComponentButton
-              type="custom"
-              settings={{ title: intl.formatMessage({ id: "BUTTON.EDIT" }), icon: "", background: "dark" }}
-              customHandler={() => setShowEditModal(true)}
-            />
-            <ComponentButton
-              type="custom"
-              settings={{ title: intl.formatMessage({ id: "BUTTON.DELETE" }), icon: "", background: "danger", attention_modal: true }}
-              customHandler={handleDeleteEvent}
-            />
-          </div>
-        </Modal.Body>
-      </Modal> */}
     </ModuleContext.Provider>
 
   </>

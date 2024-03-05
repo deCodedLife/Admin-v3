@@ -109,7 +109,14 @@ const ModuleDeveloper: React.FC<Props> = (props) => {
 
     const handleUpdateApplication = useCallback(async (type: "crm" | "crm-test" | "api") => {
         try {
-            await api("admin", `update-${type}`)
+            switch (type) {
+                case "crm":
+                    await api("admin", `update-crm-test`)
+                    await api("admin", `update-${type}`)
+                    break
+                default:
+                    await api("admin", `update-${type}`)
+            }
             getSuccessToast("Успешно")
         } catch (error: any) {
             getErrorToast(error.message)
