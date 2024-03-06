@@ -489,7 +489,10 @@ export type ModuleSchemesPageStructureRowType = {
 export type ModuleTabsType = DefaultModuleType<"tabs", any, Array<{
     title: string,
     body: Array<ApiModuleType>,
-    counter?: number
+    settings?: {
+        counter?: number,
+        is_visible?: boolean
+    }
 }>>
 
 //модуль Chat

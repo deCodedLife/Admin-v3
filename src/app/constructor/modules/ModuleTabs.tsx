@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext as useReactContext } from "react"
+import React, { useEffect, useState, useContext as useReactContext, useMemo } from "react"
 import { Tab, Tabs } from "react-bootstrap"
 import PageBuilder from "../../page/PageBuilder"
 import { ModuleTabsType } from "../../types/modules"
@@ -6,7 +6,12 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { ModalContext } from "./ModuleSchedule/ModuleSchedule"
 
 const ModuleTabs = React.memo<ModuleTabsType>((props) => {
-    const { settings } = props
+    const { settings: sourceSettings } = props
+    
+    const settings = useMemo(() => {
+        return sourceSettings.filter(tab => tab.settings?.is_visible !== false)
+    }, [sourceSettings])
+
     const initialKey = settings.length ? settings[0].title : null
     const [key, setKey] = useState<string | null>(initialKey)
     const navigate = useNavigate()
@@ -38,7 +43,7 @@ const ModuleTabs = React.memo<ModuleTabsType>((props) => {
 
         >
             {settings.map(tab => <Tab key={tab.title} eventKey={tab.title}
-             title={<div className="moduleTabs_tabTitle">{tab.title}{tab.counter ? <span className="moduleTabs_tabCounter badge badge-primary">{tab.counter}</span> : null}</div>}>
+             title={<div className="moduleTabs_tabTitle">{tab.title}{tab.settings?.counter ? <span className="moduleTabs_tabCounter badge badge-primary">{tab.settings?.counter }</span> : null}</div>}>
                 <PageBuilder data={tab.body} isFetching={false} showProgressBar={false} />
             </Tab>)}
         </Tabs>
