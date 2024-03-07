@@ -27,8 +27,26 @@ const ComponentDate: React.FC<ComponentDateType> = (props) => {
     const { value } = field
     const isError = meta.error && meta.touched
     const currentFormatDate = useMemo(() => {
-        const resolvedValue = value?.value ?? value
-        return resolvedValue ? field_type === "time" ? new Date(moment().format(`YYYY-MM-DD ${resolvedValue}`)) : new Date(resolvedValue) : undefined
+        const resolvedValue: string | undefined = value?.value ?? value
+        if (!resolvedValue) {
+            return undefined
+        }
+
+        switch (field_type) {
+            case "time":
+                const currentDate = new Date()
+                const currentTimeAsArray = resolvedValue.split(":").map(item => Number(item))
+                currentDate.setHours(currentTimeAsArray[0], currentTimeAsArray[1], currentTimeAsArray[2] ?? 0)
+                return currentDate
+            case "datetime":
+                return new Date(resolvedValue.split(" ").join("T"))
+            default:
+                return new Date(resolvedValue)
+        }
+        /*
+        --- некорректно работает на WebKit 
+        */
+        /* return resolvedValue ? field_type === "time" ? new Date(moment().format(`YYYY-MM-DD ${resolvedValue}`)) : new Date(resolvedValue) : undefined */
     }, [value])
 
     const fieldSettings = useMemo(() => {

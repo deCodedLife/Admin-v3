@@ -30,7 +30,7 @@ export const getApiUrl = () => {
             apiUrl += "flowerbloom-api.ru"
             break
         default:
-            apiUrl = "https://test.docacrm.com"
+            apiUrl = "https://yazdorov.docacrm.com"
     }
 
     if (currentDomain === "mewbas" && currentSubdomain === "crm-admin") {
