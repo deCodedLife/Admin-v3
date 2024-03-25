@@ -66,7 +66,7 @@ type ModuleFormFieldImageType = DefaultModuleFormFieldType<"image", null | { is_
 type ModuleFormFieldEditorType = DefaultModuleFormFieldType<"editor", null, { min_value?: number, max_value?: number }>
 type ModuleFormFieldFileType = DefaultModuleFormFieldType<"file", null | { is_multiply?: boolean }, { min_value?: number, max_value?: number }>
 type ModuleFormFieldStringsType = DefaultModuleFormFieldType<"info_strings", null, { min_value?: number, max_value?: number }>
-type ModuleFormFieldSmartListType = DefaultModuleFormFieldType<"smart_list", { properties: Array<ModuleFormFieldType> }, { min_value?: number, max_value?: number }>
+type ModuleFormFieldSmartListType = DefaultModuleFormFieldType<"smart_list", { properties: Array<ModuleFormFieldType>, is_headers_shown?: boolean }, { min_value?: number, max_value?: number }>
 type ModuleFormFieldLayoutType = DefaultModuleFormFieldType<"layout", null | { is_edit?: boolean }, { min_value?: number, max_value?: number }>
 export type ModuleFormFieldType = (ModuleFormFieldInputType | ModuleFormFieldTextareaType | ModuleFormFieldPriceType |
     ModuleFormFieldPhoneType | ModuleFormFieldDateType | ModuleFormFieldCheckboxType | ModuleFormFieldSelectType |
@@ -196,7 +196,8 @@ export type ModuleListHeaderCellType = {
     title: string,
     type: string,
     filter: { sort_by?: string, sort_order?: string },
-    setFilter: (values: any) => void
+    setFilter: (values: any) => void,
+    isListEditable: boolean
 }
 export type ModuleListType = DefaultModuleType<"list", { filters: Array<ComponentFilterType>, buttons: Array<ComponentButtonType>, search?: boolean }, {
     object: string,

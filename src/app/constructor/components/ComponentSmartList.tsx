@@ -8,12 +8,13 @@ import { ComponentSmartListPropertiesRowType, ComponentSmartListPropertyType, Co
 import { useIntl } from "react-intl"
 import ComponentTooltip from "./ComponentTooltip"
 
-const ComponentSmartListProperty: React.FC<ComponentSmartListPropertyType> = React.memo<ComponentSmartListPropertyType>((props) => {
-    const { title, is_required, size } = props
+const ComponentSmartListProperty = React.memo<ComponentSmartListPropertyType & { index: number, is_headers_shown?: boolean }>((props) => {
+    const { title, is_required, size, is_headers_shown, index } = props
+    const showTitle = title && (is_headers_shown ? true : index === 0 ? true : false)
     const resolvedSize = size ? size * 3 : 3
     return <Form.Group className="componentSmartList_property" as={Col} md={resolvedSize}>
         {
-            title ? <Form.Group as={Col} md={12}>
+            showTitle ? <Form.Group as={Col} md={12}>
                 <ComponentTooltip title={title}>
                     <label className={`componentSmartList_propertyLabel${is_required ? " required" : ""}`}>
                         {title}
@@ -27,16 +28,24 @@ const ComponentSmartListProperty: React.FC<ComponentSmartListPropertyType> = Rea
     </Form.Group>
 })
 
-const ComponentSmartListPropertiesRow: React.FC<ComponentSmartListPropertiesRowType> = ({ parentArticle, properties, hook, handleDeleteRow }) => {
+const ComponentSmartListPropertiesRow: React.FC<ComponentSmartListPropertiesRowType> = props => {
+    const { parentArticle, properties, is_headers_shown, parentIndex, hook, handleDeleteRow } = props
     return <div className="componentSmartList_propertiesRow">
         <button type="button" className="componentSmartList_propertiesRowButton" onClick={handleDeleteRow}>
             <KTSVG path="/media/crm/icons/close.svg" />
         </button>
-        {properties.map(field => <ComponentSmartListProperty key={field.article} {...field} article={`${parentArticle}.${field.article}`} hook={hook} />)}
+        {properties.map(field => <ComponentSmartListProperty
+            key={field.article}
+            index={parentIndex}
+            {...field}
+            article={`${parentArticle}.${field.article}`}
+            hook={hook}
+            is_headers_shown={is_headers_shown}
+        />)}
     </div>
 }
 
-const ComponentSmartList: React.FC<ComponentSmartListType> = ({ article, properties, hook }) => {
+const ComponentSmartList: React.FC<ComponentSmartListType> = ({ article, properties, hook, is_headers_shown }) => {
     const intl = useIntl()
     const [field] = useField(article)
     const { value } = field
@@ -59,12 +68,14 @@ const ComponentSmartList: React.FC<ComponentSmartListType> = ({ article, propert
         <div className="componentSmartList_propertiesContainer">
             {value?.map?.((value: any, index: number) => {
                 return <ComponentSmartListPropertiesRow
-                key={`${article}[${index}]`}
-                parentArticle={`${article}[${index}]`}
-                properties={properties}
-                hook={hook}
-                handleDeleteRow={() => handleDeleteRow(index)}
-            />
+                    key={`${article}[${index}]`}
+                    parentArticle={`${article}[${index}]`}
+                    parentIndex={index}
+                    properties={properties}
+                    is_headers_shown={is_headers_shown}
+                    hook={hook}
+                    handleDeleteRow={() => handleDeleteRow(index)}
+                />
             })}
         </div>
         <ComponentButton

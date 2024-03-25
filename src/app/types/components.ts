@@ -1,6 +1,5 @@
 import React from "react"
 import { ModuleFormFieldType } from "./modules"
-import StateManagedSelect from "react-select/dist/declarations/src/stateManager"
 import { Placement } from "react-bootstrap/esm/types"
 
 //компонент Button
@@ -276,13 +275,16 @@ export type ComponentSmartListPropertyType = ModuleFormFieldType
 export type ComponentSmartListPropertiesRowType = {
     parentArticle: string,
     properties: Array<ComponentSmartListPropertyType>,
+    is_headers_shown?: boolean,
+    parentIndex: number,
     hook?: string,
-    handleDeleteRow: () => void
+    handleDeleteRow: () => void,
 }
 export type ComponentSmartListType = {
     article: string,
     properties: Array<ComponentSmartListPropertyType>,
-    hook?: string
+    hook?: string,
+    is_headers_shown?: boolean
 }
 
 //компонент Image

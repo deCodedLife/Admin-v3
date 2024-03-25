@@ -148,8 +148,8 @@ export const Component = React.memo<ModuleFormFieldType>((props) => {
         case "info_strings":
             return <ComponentInfoStrings article={article} />
         case "smart_list":
-            const { properties } = props.settings
-            return <ComponentSmartList article={article} properties={properties} hook={hook} />
+            const { properties, is_headers_shown } = props.settings
+            return <ComponentSmartList article={article} properties={properties} hook={hook} is_headers_shown={is_headers_shown} />
         case "layout":
             const is_edit = Boolean(props.settings?.is_edit)
             return <ComponentLayout article={article} is_edit={is_edit} />

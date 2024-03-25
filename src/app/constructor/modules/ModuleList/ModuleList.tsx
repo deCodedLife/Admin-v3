@@ -556,26 +556,30 @@ const ListRow: React.FC<ModuleListRowType> = ({ data, headers, page, filterKeys,
 }
 
 
-const HeaderCell: React.FC<ModuleListHeaderCellType> = ({ article, title, type, filter, setFilter }) => {
+const HeaderCell: React.FC<ModuleListHeaderCellType> = ({ article, title, type, filter, setFilter, isListEditable }) => {
 
     const isSortableData = useMemo(() => {
-        switch (type) {
-            case "string":
-            case "year":
-            case "integer":
-            case "float":
-            case "email":
-            case "date":
-            case "time":
-            case "datetime":
-            case "phone":
-            case "price":
-            case "checkbox":
-                return true
-            default:
-                return false
+        if (!isListEditable) {
+            return false
+        } else {
+            switch (type) {
+                case "string":
+                case "year":
+                case "integer":
+                case "float":
+                case "email":
+                case "date":
+                case "time":
+                case "datetime":
+                case "phone":
+                case "price":
+                case "checkbox":
+                    return true
+                default:
+                    return false
+            }
         }
-    }, [type])
+    }, [type, isListEditable])
 
     const isDataSortedByCurrentArticle = isSortableData && filter.sort_by === article
     const isReverseSort = isDataSortedByCurrentArticle && filter.sort_order === "desc"
@@ -822,7 +826,7 @@ const ModuleList = React.memo<ModuleListType>((props) => {
                         const handleMassCheckboxClick = () => {
 
                             if (!dataWithIds.length) {
-                                return 
+                                return
                             }
 
                             const currentItemsToCheck = isMassCheckboxChecked ? [] : dataWithIds
@@ -883,6 +887,7 @@ const ModuleList = React.memo<ModuleListType>((props) => {
                                                 type={column.type}
                                                 filter={filter}
                                                 setFilter={setFilter}
+                                                isListEditable={isListEditable}
                                             />)}
 
                                         </tr>
