@@ -90,6 +90,7 @@ type DefaultComponentFilterType<type = string, settings = any> = {
 export type ComponentFilterListType = DefaultComponentFilterType<"list", {
     donor_object: string,
     donor_property_title: string,
+    select_menu?: string | Array<string>
     is_search: boolean,
     list?: Array<{
         title: string,

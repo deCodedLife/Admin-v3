@@ -51,6 +51,7 @@ const ComponentFilter = React.memo<ComponentFilterType & { className?: string, c
                 search={settings.is_search ? settings.donor_object : undefined}
                 object={settings.donor_object}
                 select={settings.donor_property_title}
+                select_menu={settings.select_menu}
                 onChangeSubmit />
         case "integer":
             return <ComponentInput className={className} article={settings.recipient_property} field_type="integer" placeholder={placeholder} onBlurSubmit />
