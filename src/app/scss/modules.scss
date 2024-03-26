@@ -951,6 +951,10 @@ $moduleScheduleBorderColor: var(--kt-gray-300);
                 background-color: var(--kt-gray-300);
             }
 
+            &.azure {
+                @include moduleSchedule_cellColor(#838B8B, 35%)
+            }
+
             &.light_blue {
                 @include moduleSchedule_cellColor(deepskyblue, 35%)
             }
