@@ -767,7 +767,7 @@ const ModuleList = React.memo<ModuleListType>((props) => {
             const link = document.createElement('a')
             //@ts-ignore
             link.href = URL.createObjectURL(new Blob([loadedExcel]))
-            const filename = `${settings.object} (${moment().format("DD.MM.YY")}).xlsx`
+            const filename = `${settings.object} (${moment().format("DD.MM.YY")}).xlx`
             link.setAttribute('download', `${filename}`)
             document.body.appendChild(link)
             link.click()
