@@ -12,6 +12,8 @@ export const getProjectName = () => {
       return document.title = "RitzipCRM"
     case "adwanto":
       return document.title = "Adwanto"
+    case "flowerbloom":
+      return document.title = "Flowerbloom"
     case "mewbas":
       if (currentSubdomain === "crm-admin") {
         return document.title = "OxCRM"
@@ -36,6 +38,9 @@ export const setDocumentTitle = () => {
     case "adwanto":
       document.title = "Adwanto"
       return favicon.href = toAbsoluteUrl("media/crm/favicon/adwanto.ico")
+    case "flowerbloom":
+      document.title = "Flowerbloom"
+      return favicon.href = toAbsoluteUrl("media/crm/favicon/flowerbloom.ico")
     case "mewbas":
       if (currentSubdomain === "crm-admin") {
         document.title = "OxCRM"
@@ -59,6 +64,8 @@ export const getBackground = () => {
       return "adwanto.jpg"
     case "mewbas":
       return currentSubdomain === "crm-admin" ? "oxcrm.jpg" : "doca.jpg"
+    case "flowerbloom":
+      return "flowerbloom.jpg"
     default:
       return "doca.jpg"
   }
@@ -85,6 +92,11 @@ export const getLogo = () => {
         light: "animo_light.png",
         dark: "animo_dark.png",
       }
+    case "flowerbloom":
+      return {
+        light: "flowerbloom.png",
+        dark: "flowerbloom.png",
+      }
     case "mewbas":
       return {
         light: currentSubdomain === "crm-admin" ? "oxcrm_light.png" : "doca.svg",
@@ -98,12 +110,17 @@ export const getLogo = () => {
   }
 }
 
-export const setStyles = async (theme?: "2023" | string) => {
+export const setStyles = async (theme?: "2023" | "flowerbloom" | string) => {
   switch (theme) {
     case "2023":
       localStorage.setItem("data-app-theme", "theme_1")
       document.documentElement.setAttribute("data-app-theme", "theme_1")
       setTimeout(() => document.body.setAttribute("data-kt-app-layout", "light-sidebar"), 0)
+      break
+    case "flowerbloom":
+      localStorage.setItem("data-app-theme", "theme_2")
+      document.documentElement.setAttribute("data-app-theme", "theme_2")
+      setTimeout(() => document.body.setAttribute("data-kt-app-layout", "dark-sidebar"), 0)
       break
     default:
       localStorage.setItem("data-app-theme", "")

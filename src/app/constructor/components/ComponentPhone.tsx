@@ -129,7 +129,7 @@ const ComponentPhone: React.FC<ComponentPhoneType> = ({ article, is_disabled, ho
             <MaskedInput
                 key={uniqueKey}
                 mask={mask}
-                className={`componentPhone form-control form-control-solid${isError ? " invalid" : ""}`}
+                className={`componentPhone form-control form-control-solid${isError ? " invalid" : ""}${showCallButton ? " withButton" : ""}`}
                 type="text"
                 name={name}
                 value={value}

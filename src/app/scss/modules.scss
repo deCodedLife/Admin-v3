@@ -42,7 +42,6 @@
     &_actionButton.componentButton {
         color: var(--kt-text-muted);
         background-color: var(--kt-light);
-        transition: color 0.3s;
 
         & svg g,
         svg [fill] {

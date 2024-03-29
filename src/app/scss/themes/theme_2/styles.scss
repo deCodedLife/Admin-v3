@@ -1,0 +1,281 @@
+[data-app-theme=theme_2] #kt_app_body {
+    --kt-app-bg-color: #f8f9fa;
+    --kt-app-header-height: 80px;
+    --kt-app-sidebar-width: 240px;
+    --kt-app-sidebar-width-actual: 240px;
+    --kt-card-bg: var(--kt-app-bg-color);
+    --kt-input-solid-bg: #fff;
+    --kt-input-solid-color: #21212e;
+    --application-theme-color: #d7ee53;
+    --app-layout-bg-color: #514554;
+    --app-border-color: #dbdbdb;
+    --kt-app-header-base-bg-color: var(--app-layout-bg-color);
+    --kt-primary: #d7ee53;
+    --kt-primary-active: #cbe14c;
+    --kt-primary-inverse: #21212e;
+    --kt-secondary: transparent;
+    --kt-secondary-active: var(--app-border-color);
+    --kt-secondary-inverse: var(--kt-primary-inverse);
+    --kt-text-dark: #21212e;
+    --kt-text-primary: var(--kt-primary);
+    --kt-card-border-color: var(--app-border-color);
+
+    & .app-header {
+        box-shadow: none;
+    }
+
+    & #kt_app_sidebar_toggle {
+        display: none;
+    }
+
+    & .btn,
+    .componentButton {
+        &.btn-secondary {
+            border: 1px solid var(--app-border-color);
+        }
+
+        &.dark-light {
+            color: var(--kt-primary-inverse);
+            background-color: var(--kt-primary);
+
+            &:hover {
+                background-color: var(--kt-primary-active);
+            }
+        }
+
+        &.moduleList_actionButton {
+            background-color: #fff;
+            color: var(--kt-primary-inverse);
+
+            & .svg-icon {
+                color: inherit;
+
+                & svg g,
+                svg [fill] {
+                    fill: currentColor;
+                }
+            }
+
+            &:hover {
+                background-color: var(--kt-primary-active);
+            }
+        }
+    }
+
+    & .menu {
+        & .menu-item {
+            & .menu-link.active, .menu-link:hover:not(.disabled):not(.active):not(.here) {
+                background-color: lighten(#514554, 10%);
+            }
+        }
+    }
+
+    & .app-sidebar {
+        background-color: var(--app-layout-bg-color);
+
+        & .app-sidebar-logo {
+            border-bottom: none;
+        }
+
+        & .menu .menu-item {
+            &.hover:not(.here)> {
+                & .menu-link:not(.disabled):not(.active):not(.here) {
+                    color: var(--application-theme-color);
+
+                    & .menu-arrow:after {
+                        background-color: currentColor;
+                    }
+                }
+            }
+
+            & .menu-link {
+                color: #f6f4f5;
+                transition: color 0.3s;
+
+                & .menu-title {
+                    color: inherit;
+                }
+
+                & .menu-icon {
+                    color: inherit;
+
+                    & .svg-icon {
+                        color: inherit;
+                    }
+                }
+
+                & .menu-bullet .bullet {
+                    background-color: currentColor;
+                }
+
+                &:hover:not(.disabled):not(.active):not(.here) {
+                    color: var(--application-theme-color);
+
+                    & .menu-arrow:after {
+                        background-color: currentColor;
+                    }
+                }
+
+                &.active {
+                    background-color: lighten(#514554, 10%);
+                    color: var(--application-theme-color);
+
+                    & .menu-arrow:after {
+                        background-color: currentColor;
+                    }
+                }
+            }
+
+
+        }
+
+    }
+
+    & .app-navbar {
+        & .btn {
+            --kt-text-muted: #f6f4f5;
+
+            &.btn-active-light:hover:not(.btn-active),
+            &.btn-active-light.show,
+            &.btn-active-light-primary:hover:not(.btn-active),
+            &.btn-active-light-primary.show,
+            &.btn-active-light-primary:focus:not(.btn-active) {
+
+                background-color: lighten(#514554, 10%) !important;
+
+            }
+        }
+
+    }
+
+    & .card {
+        border: none;
+        box-shadow: none;
+    }
+
+    & .componentTooltip {
+        & .tooltip-inner {
+            background-color: #fff;
+        }
+
+        & .tooltip-arrow::before {
+            border-top-color: #fff;
+        }
+    }
+
+    & .componentCheckbox {
+        &.form-check-custom.form-check-solid .form-check-input {
+            background-color: var(--kt-input-solid-bg);
+            border: 1px solid var(--app-border-color);
+
+            &:checked {
+                background-color: var(--kt-primary-active);
+                border-color: var(--kt-primary-active);
+            }
+        }
+    }
+
+    & .componentImage {
+
+        &_uploader {
+            border: 1px solid var(--app-border-color);
+
+            &.active {
+                border-color: var(--kt-primary-active);
+            }
+        }
+
+        &_uploaderButton {
+            border: 1px solid var(--app-border-color);
+
+            &:hover {
+                border-color: var(--kt-primary-active);
+                background-color: var(--kt-primary-active);
+                color: var(--kt-primary-inverse);
+            }
+        }
+    }
+
+    & .componentFilters_stringFilter.componentSelect__control {
+        --kt-gray-300: var(--kt-input-solid-bg);
+    }
+
+     & .pagination {
+        --kt-pagination-hover-color: var(--kt-primary-inverse);
+        --bs-pagination-active-bg: var(--kt-primary-active);
+        --kt-pagination-active-color: var(--kt-primary-inverse);
+
+        &_limit {
+            &__option {
+
+                &:hover,
+                &:active,
+                &:focus,
+                &.pagination_limit__option--is-focused,
+                &.pagination_limit__option--is-selected  {
+                    color: var(--kt-primary-inverse) !important;
+                    background-color: var(--kt-primary) !important;
+                }
+            }
+        }
+    }
+
+
+    & body::-webkit-scrollbar-thumb,
+    main::-webkit-scrollbar-thumb,
+    span::-webkit-scrollbar-thumb,
+    ol::-webkit-scrollbar-thumb,
+    ul::-webkit-scrollbar-thumb,
+    pre::-webkit-scrollbar-thumb,
+    div::-webkit-scrollbar-thumb,
+    body:hover::-webkit-scrollbar-thumb,
+    main:hover::-webkit-scrollbar-thumb,
+    span:hover::-webkit-scrollbar-thumb,
+    ol:hover::-webkit-scrollbar-thumb,
+    ul:hover::-webkit-scrollbar-thumb,
+    pre:hover::-webkit-scrollbar-thumb,
+    div:hover::-webkit-scrollbar-thumb {
+        --kt-primary: var(--application-theme-color);
+    }
+
+    & .moduleList {
+        & .table {
+            & thead tr {
+                --kt-text-muted: #514554;
+                border-top: 1px solid var(--app-border-color);
+                border-bottom: 1px solid var(--app-border-color);
+            }
+
+            & tr.moduleList_row {
+                border-bottom: 1px solid var(--app-border-color);
+            }
+        }
+    }
+
+
+
+    & .notificationTitleContainer {
+        --kt-text-white: var(--kt-primary-inverse);
+    }
+
+    /*  & .moduleSchedule_stepsDropdown {
+        & #moduleSchedule_stepsButton {
+            &:hover {
+                background-color: var(--kt-card-bg) !important;
+            }
+        }
+    } */
+
+    /*   .moduleSchedule {
+        &_cellContainer {
+            & .card {
+                border: none;
+            }
+        }
+    } */
+
+    .react-loading-skeleton.skeleton {
+        --base-color: var(--kt-form-check-input-bg-solid);
+        --highlight-color: var(--kt-input-solid-bg);
+    }
+}

@@ -156,7 +156,7 @@ const ComponentInput: React.FC<ComponentInputType> = props => {
             } else {
                 const inputValue = event.target.value
                 if (inputValue === "") {
-                    return setFieldValue(name, undefined)
+                    return setFieldValue(name, null)
                 } else {
                     let resolvedValue
                     switch (name) {

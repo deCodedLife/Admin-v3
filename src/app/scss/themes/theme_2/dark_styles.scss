@@ -1,0 +1,250 @@
+[data-app-theme=theme_1][data-theme=dark] #kt_app_body {
+    --custom-primary-app-color: #171818;
+    --custom-secondary-app-color: #262626;
+    --custom-border-color: #343434;
+    --custom-text-color: #969798;
+    --custom-icon-color: #626262;
+    --custom-primary-button-color: var(--custom-icon-color);
+    --custom-primary-button-color-active: #525252;
+    --custom-light-button-color: #d9d9d9;
+    --custom-light-button-color-active: #c2c2c2;
+
+
+    --kt-app-bg-color: var(--custom-primary-app-color);
+    --kt-app-header-base-bg-color: var(--custom-primary-app-color);
+    --kt-app-header-base-bg-color-mobile: var(--custom-primary-app-color);
+    --kt-app-sidebar-light-bg-color: var(--custom-primary-app-color);
+    --kt-body-bg: var(--custom-primary-app-color);
+    --kt-card-bg: var(--custom-secondary-app-color);
+    --kt-card-border-color: var(--custom-border-color);
+    --kt-border-color: var(--custom-border-color);
+    --kt-text-muted: var(--custom-text-color);
+    --kt-input-solid-bg: transperent;
+    --kt-input-solid-bg-focus: var(--kt-input-solid-bg);
+    --kt-input-solid-color: var(--custom-text-color);
+    --kt-input-border-color: var(--custom-border-color);
+    --kt-dropdown-bg: var(--custom-secondary-app-color);
+    --kt-dropdown-link-hover-bg: var(--custom-icon-color);
+    --kt-menu-dropdown-bg-color: var(--custom-secondary-app-color);
+    --kt-menu-link-bg-color-hover: var(--custom-icon-color);
+    --kt-menu-link-bg-color-active: var(--custom-icon-color);
+    --kt-form-label-color: var(--custom-text-color);
+    --kt-form-check-label-color: #868788;
+    --kt-form-check-label-color-checked: var(--custom-text-color);
+    --kt-dark-light: var(--custom-icon-color);
+
+
+
+    --kt-gray-100: var(--custom-text-color);
+    --kt-gray-200: var(--custom-text-color);
+    --kt-gray-300: var(--custom-text-color);
+    --kt-gray-400: var(--custom-text-color);
+    --kt-gray-500: var(--custom-text-color);
+    --kt-gray-600: var(--custom-text-color);
+    --kt-gray-700: var(--custom-text-color);
+    --kt-gray-800: var(--custom-text-color);
+    --kt-gray-900: var(--custom-text-color);
+
+    --kt-text-gray-100: var(--custom-text-color);
+    --kt-text-gray-200: var(--custom-text-color);
+    --kt-text-gray-300: var(--custom-text-color);
+    --kt-text-gray-400: var(--custom-text-color);
+    --kt-text-gray-500: var(--custom-text-color);
+    --kt-text-gray-600: var(--custom-text-color);
+    --kt-text-gray-700: var(--custom-text-color);
+    --kt-text-gray-800: var(--custom-text-color);
+    --kt-text-gray-900: var(--custom-text-color);
+
+
+
+    & input::placeholder {
+        color: var(--custom-text-color);
+    }
+
+    & .app-sidebar {
+        & .hover-scroll-overlay-y::-webkit-scrollbar-thumb {
+            background-color: var(--custom-icon-color);
+        }
+        & .menu .menu-item {
+            & .menu-link {
+                & .menu-icon .svg-icon {
+                    color: var(--custom-icon-color);
+                }
+
+                & .menu-arrow::after {
+                    background-color: var(--custom-icon-color);
+                }
+
+                &.active {
+                    background-color: var(--custom-icon-color);
+
+                    & .menu-title,
+                    & .menu-icon .svg-icon {
+                        color: inherit;
+                    }
+                }
+
+                &:hover {
+
+                    & .menu-title,
+                    & .menu-icon .svg-icon {
+                        color: inherit;
+                    }
+
+                    & .menu-arrow::after {
+                        background-color: currentColor;
+                    }
+                }
+            }
+        }
+    }
+
+    & .card {
+        border-color: var(--custom-border-color);
+    }
+
+    & .modal {
+        --kt-modal-bg: var(--custom-secondary-app-color);
+        --kt-modal-header-border-color: var(--custom-border-color);
+        --bs-modal-footer-border-color: var(--custom-border-color);
+    }
+
+    & .form-control.form-control-solid {
+        border-color: var(--custom-border-color);
+    }
+
+    & .componentSelect {
+        &__control {
+            border-color: var(--custom-border-color) !important;
+        }
+        &__multi-value {
+            background-color: var(--custom-icon-color);
+        }
+    }
+
+    & .form-check-custom.form-check-solid .form-check-input {
+        &:not(:checked) {
+            background-color: transparent;
+        }
+        border: 1px solid var(--custom-border-color);
+    }
+
+    & .btn {
+        background-color: var(--custom-secondary-app-color);
+
+        &:hover {
+            background-color: var(--custom-secondary-app-color) !important;
+        }
+
+        &.btn-icon-muted .svg-icon {
+            color: var(--custom-icon-color);
+        }
+    }
+
+    & .componentButton {
+        --kt-primary: var(--custom-primary-button-color);
+        --kt-primary-active: var(--custom-primary-button-color-active);
+        --kt-primary-light: var(--custom-text-color);
+        --kt-light: var(--custom-light-button-color);
+        --kt-light-active: var(--custom-light-button-color-active);
+        &.gray {
+            color: inherit;
+        }
+    }
+
+    & .componentDate.react-datepicker {
+        --border-color: var(--custom-border-color);
+        color: var(--custom-text-color);
+    }
+
+    & .componentSmartList {
+        --border-color: var(--custom-border-color);
+    }
+
+    & .pagination {
+        --bs-pagination-color: var(--custom-text-color); 
+        --bs-pagination-hover-color: var(--custom-text-color); 
+        --bs-pagination-hover-bg: var(--custom-icon-color);
+        --bs-pagination-active-bg: var(--custom-primary-button-color);
+    }
+
+    & .table {
+        --kt-gray-300: var(--custom-border-color);
+    }
+
+    & .notifications {
+        &_count {
+            background-color: var(--custom-secondary-app-color);
+        }
+    }
+
+    & body::-webkit-scrollbar-thumb,
+    main::-webkit-scrollbar-thumb,
+    span::-webkit-scrollbar-thumb,
+    ol::-webkit-scrollbar-thumb,
+    ul::-webkit-scrollbar-thumb,
+    pre::-webkit-scrollbar-thumb,
+    div::-webkit-scrollbar-thumb,
+    body:hover::-webkit-scrollbar-thumb,
+    main:hover::-webkit-scrollbar-thumb,
+    span:hover::-webkit-scrollbar-thumb,
+    ol:hover::-webkit-scrollbar-thumb,
+    ul:hover::-webkit-scrollbar-thumb,
+    pre:hover::-webkit-scrollbar-thumb,
+    div:hover::-webkit-scrollbar-thumb {
+        --kt-primary: var(--custom-icon-color);
+    }
+
+    & .moduleSchedule {
+        &_cell {
+            &.available {
+                border-color: var(--custom-border-color);
+                &::before, &::after {
+                    background-color: var(--custom-icon-color);
+                }
+            }
+        }
+    }
+
+    & .moduleCalendar {
+        & .rbc-month-row+.rbc-month-row,
+    & .rbc-time-header-content,
+    & .rbc-timeslot-group,
+    & .rbc-time-header.rbc-overflowing,
+    & .rbc-time-content,
+    & .rbc-events-container,
+    & .rbc-timeslot-group,
+    & .rbc-time-content>*+*>*,
+    & .rbc-agenda-view table.rbc-agenda-table tbody>tr>td+td,
+    & .rbc-agenda-view table.rbc-agenda-table tbody>tr+tr,
+    & .rbc-day-bg,
+    & .rbc-header,
+    & .rbc-month-view,
+    & .rbc-time-view,
+    & .rbc-agenda-view,
+    & .rbc-agenda-view table.rbc-agenda-table {
+        border-color: var(--custom-border-color);
+    }
+    }
+
+    & .moduleLogs {
+        &_logIcon {
+            background-color: var(--custom-border-color);
+        }
+    }
+
+    & .moduleLinksBlock {
+        &_block {
+            color: var(--custom-text-color);
+        }
+        &_blockIcon {
+            color: var(--custom-icon-color);
+        }
+    }
+
+    .react-loading-skeleton.skeleton {
+        --base-color: var(--custom-primary-app-color); 
+        --highlight-color: var(--custom-secondary-app-color);
+    }
+
+}

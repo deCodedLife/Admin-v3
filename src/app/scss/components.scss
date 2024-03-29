@@ -9,7 +9,7 @@
     white-space: nowrap;
     border: none;
     border-radius: 0.425rem;
-    transition: background-color 0.3s;
+    transition: color 0.3s, background-color 0.3s;
     z-index: 1;
 
     &:disabled {
@@ -280,8 +280,9 @@
         &:hover,
         &:active,
         &:focus,
-        &.componentSelect__option--is-focused {
-            color: #fff !important;
+        &.componentSelect__option--is-focused,
+        &.componentSelect__option--is-selected  {
+            color: var(--kt-primary-inverse) !important;
             background-color: var(--kt-primary) !important;
         }
     }
@@ -399,7 +400,7 @@
 
             &.selected:not(:focus) {
                 background-color: var(--application-theme-color);
-                color: #fff;
+                color: var(--kt-primary-inverse);
                 border-color: var(--application-theme-color);
             }
         }
@@ -418,7 +419,7 @@
 
                 &.selected:not(.componentSelect__control--is-focused) {
                     background-color: var(--application-theme-color) !important;
-                    color: #fff !important;
+                    color: var(--kt-primary-inverse) !important;
                     border-color: var(--application-theme-color) !important;
 
                     & .componentSelect__indicator,
@@ -466,7 +467,7 @@
             background-color: var(--application-theme-color);
 
             & svg g {
-                fill: #fff;
+                fill: var(--kt-primary-inverse);
             }
         }
     }
@@ -1429,7 +1430,10 @@
 //компонент Phone
 .componentPhone {
     flex-grow: 1;
-    margin-right: 1rem;
+
+    &.withButton {
+        margin-right: 1rem;
+    }
 
     &_container {
         display: flex;
