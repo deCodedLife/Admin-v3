@@ -80,9 +80,15 @@
 
     &.danger {
         background-color: var(--kt-danger);
-
+        color: var(--kt-danger-inverse);
         &:hover {
             background-color: var(--kt-danger-active);
+        }
+
+        & svg,
+        svg g,
+        svg [fill] {
+            fill: var(--kt-danger-inverse);
         }
     }
 
@@ -110,7 +116,7 @@
     & svg,
     svg g,
     svg [fill] {
-        fill: #fff;
+        fill: var(--kt-primary-inverse);
     }
 
     &.icon_based {

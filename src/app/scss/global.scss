@@ -578,6 +578,12 @@ div::-webkit-scrollbar-corner {
     line-height: 1.2;
 }
 
+.pulse {
+    &.pulse-primary .pulse-ring {
+        border-color: var(--kt-primary);
+    }
+}
+
 //хак для "отключения" заднего фона полей с автозаполнением
 /* input:-webkit-autofill,
 input:-webkit-autofill:hover, 

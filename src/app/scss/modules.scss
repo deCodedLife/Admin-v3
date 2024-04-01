@@ -765,7 +765,6 @@ $moduleScheduleBorderColor: var(--kt-gray-300);
         top: calc($moduleScheduleCellHeight - 0.3rem - 1px);
 
         & #moduleSchedule_stepsButton {
-            background-color: transparent;
             padding: 0;
             color: var(--kt-primary);
             height: calc($moduleScheduleCellHeight + 1px);
@@ -774,16 +773,12 @@ $moduleScheduleBorderColor: var(--kt-gray-300);
             border-radius: 0;
             border-bottom: 1px solid $moduleScheduleBorderColor;
             border-top: 1px solid $moduleScheduleBorderColor;
-            background-color: var(--kt-primary-light
-                    /* --kt-gray-200 */
-                ) !important;
+            background-color: var(--kt-primary-light);
             transition: background-color 0.5s;
 
-            &:hover {
+            &:hover, &:focus {
                 color: var(--kt-primary-inverse);
-                background-color: var(--kt-primary
-                        /* --kt-card-bg */
-                    ) !important;
+                background-color: var(--kt-primary);
             }
 
             &::after {
@@ -2841,7 +2836,7 @@ html[data-theme="dark"] {
         &.active,
         &:hover {
             background-color: var(--application-theme-color);
-            color: var(--kt-danger-inverse);
+            color: var(--kt-primary-inverse);
 
             &>* {
                 color: inherit;
@@ -2986,7 +2981,7 @@ $moduleQueueHeight: calc(100vh - var(--kt-app-header-height) - 30px * 2 - 51px -
     &_talonsHeader {
         height: 70px;
         background-color: var(--application-theme-color);
-        color: #fff;
+        color: var(--kt-primary-inverse);
         font-size: 3rem;
         border-radius: 0.625rem;
     }

@@ -1,14 +1,15 @@
 [data-app-theme=theme_2] #kt_app_body {
+    --application-theme-color: #d7ee53;
+    --app-layout-bg-color: #514554;
+    --app-border-color: #dbdbdb;
     --kt-app-bg-color: #f8f9fa;
     --kt-app-header-height: 80px;
+    --kt-app-header-base-bg-color-mobile: var(--app-layout-bg-color);
     --kt-app-sidebar-width: 240px;
     --kt-app-sidebar-width-actual: 240px;
     --kt-card-bg: var(--kt-app-bg-color);
     --kt-input-solid-bg: #fff;
     --kt-input-solid-color: #21212e;
-    --application-theme-color: #d7ee53;
-    --app-layout-bg-color: #514554;
-    --app-border-color: #dbdbdb;
     --kt-app-header-base-bg-color: var(--app-layout-bg-color);
     --kt-primary: #d7ee53;
     --kt-primary-active: #cbe14c;
@@ -43,6 +44,12 @@
             }
         }
 
+        &.light {
+            background-color: var(--kt-app-bg-color);
+            color: var(--kt-text-dark);
+            border: 1px solid var(--app-border-color);
+        }
+
         &.moduleList_actionButton {
             background-color: #fff;
             color: var(--kt-primary-inverse);
@@ -64,7 +71,9 @@
 
     & .menu {
         & .menu-item {
-            & .menu-link.active, .menu-link:hover:not(.disabled):not(.active):not(.here) {
+
+            & .menu-link.active,
+            .menu-link:hover:not(.disabled):not(.active):not(.here) {
                 background-color: lighten(#514554, 10%);
             }
         }
@@ -196,11 +205,71 @@
         }
     }
 
-    & .componentFilters_stringFilter.componentSelect__control {
-        --kt-gray-300: var(--kt-input-solid-bg);
+    & .componentFilters {
+        &_stringFilter.componentSelect__control {
+            --kt-gray-300: var(--kt-input-solid-bg);
+        }
+
+        &_dropdownContainer {
+            & .dropdown {
+                & .componentFilters_dropdown {
+                    background-color: var(--kt-app-bg-color);
+                    color: var(--kt-text-dark);
+                    border: 1px solid var(--app-border-color);
+
+                    & .svg-icon {
+                        color: var(--kt-text-dark);
+                    }
+
+                    &:focus,
+                    &:hover {
+                        background-color: var(--kt-primary);
+                        color: var(--kt-primary-inverse);
+                        border-color: var(--kt-primary);
+
+                        & .svg-icon {
+                            color: var(--kt-primary-inverse);
+                        }
+                    }
+                }
+                &.show {
+                    & .componentFilters_dropdown {
+                        background-color: var(--kt-primary-active);
+                        color: var(--kt-primary-inverse);
+                        border-color: var(--kt-primary-active);
+
+                        & .svg-icon {
+                            color: var(--kt-primary-inverse);
+                        }
+                    }
+                }
+            }
+        }
+
+        &_dropdownFilter {
+            --kt-input-solid-bg: var(--kt-app-bg-color);
+        }
     }
 
-     & .pagination {
+    & .componentRadio {
+        &_button {
+            background-color: transparentize(#d7ee53, 0.7);
+            color: var(--kt-primary-inverse);
+            &:hover {
+                background-color: var(--kt-primary);
+            }
+            &.selected {
+                background-color: var(--kt-primary-active);
+            }
+
+        }
+    }
+
+    .componentSmartList {
+        --border-color: var(--app-border-color);
+    }
+
+    & .pagination {
         --kt-pagination-hover-color: var(--kt-primary-inverse);
         --bs-pagination-active-bg: var(--kt-primary-active);
         --kt-pagination-active-color: var(--kt-primary-inverse);
@@ -212,7 +281,7 @@
                 &:active,
                 &:focus,
                 &.pagination_limit__option--is-focused,
-                &.pagination_limit__option--is-selected  {
+                &.pagination_limit__option--is-selected {
                     color: var(--kt-primary-inverse) !important;
                     background-color: var(--kt-primary) !important;
                 }
@@ -252,7 +321,83 @@
         }
     }
 
+    & .moduleSalaryWidgets {
+        &_title {
+            color: var(--kt-primary);
+        }
+    }
 
+    & .moduleSchedule {
+        &_scrollButton {
+            background-color: var(--kt-app-bg-color);
+            border: 1px solid var(--app-border-color);
+            color: var(--app-border-color);
+
+            &:hover {
+                border-color: var(--kt-primary);
+                background-color: var(--kt-primary);
+                color: var(--kt-primary-inverse);
+            }
+        }
+
+        &_employeeColumnHeader,
+        &_stepsDropdown #moduleSchedule_stepsButton {
+            background-color: var(--kt-app-bg-color);
+            color: var(--kt-primary-inverse);
+            border-color: var(--app-border-color);
+
+            &:hover {
+                background-color: var(--kt-primary);
+                border-color: var(--kt-primary);
+            }
+        }
+
+        &_cell {
+            --kt-gray-300: var(--app-border-color);
+        }
+    }
+
+    & .moduleAccordion {
+        &_itemHeader {
+            &:hover {
+                background-color: var(--kt-primary);
+                color: var(--kt-primary-inverse);
+            }
+
+            &.active {
+                background-color: var(--kt-primary-active);
+                color: var(--kt-primary-inverse);
+                border-color: var(--kt-primary-active);
+            }
+        }
+    }
+
+    & .moduleCalendar {
+        & .rbc-btn-group button {
+            background-color: transparentize(#d7ee53, 0.7);
+            color: var(--kt-primary-inverse);
+            &:hover {
+                background-color: var(--kt-primary);
+            }
+            &.rbc-active {
+                background-color: var(--kt-primary-active);
+            }
+        }
+
+    }
+
+    & .nav-tabs .nav-link.active {
+        color: var(--kt-primary-inverse);
+
+    }
+
+
+    & .notifications {
+        &_count {
+            background-color: var(--kt-primary);
+            color: var(--kt-primary-inverse);
+        }
+    }
 
     & .notificationTitleContainer {
         --kt-text-white: var(--kt-primary-inverse);
