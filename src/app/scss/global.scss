@@ -485,10 +485,12 @@ button {
     }
 }
 
+.modal-content {
+    background-color: var(--kt-app-bg-color);
+}
+
 .customModal {
     & .modal-content {
-        position: relative;
-        background-color: var(--kt-app-bg-color);
 
         & .modal-emptyHeader {
             padding: 0;

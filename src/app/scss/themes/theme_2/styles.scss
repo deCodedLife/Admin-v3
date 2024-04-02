@@ -2,6 +2,7 @@
     --application-theme-color: #d7ee53;
     --app-layout-bg-color: #514554;
     --app-border-color: #dbdbdb;
+    --app-text-color: #21212e;
     --kt-app-bg-color: #f8f9fa;
     --kt-app-header-height: 80px;
     --kt-app-header-base-bg-color-mobile: var(--app-layout-bg-color);
@@ -9,7 +10,7 @@
     --kt-app-sidebar-width-actual: 240px;
     --kt-card-bg: var(--kt-app-bg-color);
     --kt-input-solid-bg: #fff;
-    --kt-input-solid-color: #21212e;
+    --kt-input-solid-color: var(--app-text-color);
     --kt-app-header-base-bg-color: var(--app-layout-bg-color);
     --kt-primary: #d7ee53;
     --kt-primary-active: #cbe14c;
@@ -17,7 +18,7 @@
     --kt-secondary: transparent;
     --kt-secondary-active: var(--app-border-color);
     --kt-secondary-inverse: var(--kt-primary-inverse);
-    --kt-text-dark: #21212e;
+    --kt-text-dark: var(--app-text-color);
     --kt-text-primary: var(--kt-primary);
     --kt-card-border-color: var(--app-border-color);
 
@@ -44,11 +45,6 @@
             }
         }
 
-        &.light {
-            background-color: var(--kt-app-bg-color);
-            color: var(--kt-text-dark);
-            border: 1px solid var(--app-border-color);
-        }
 
         &.moduleList_actionButton {
             background-color: #fff;
@@ -83,7 +79,7 @@
         background-color: var(--app-layout-bg-color);
 
         & .app-sidebar-logo {
-            border-bottom: none;
+            border-color: var(--app-border-color);
         }
 
         & .menu .menu-item {
@@ -162,16 +158,6 @@
         box-shadow: none;
     }
 
-    & .componentTooltip {
-        & .tooltip-inner {
-            background-color: #fff;
-        }
-
-        & .tooltip-arrow::before {
-            border-top-color: #fff;
-        }
-    }
-
     & .componentCheckbox {
         &.form-check-custom.form-check-solid .form-check-input {
             background-color: var(--kt-input-solid-bg);
@@ -206,7 +192,7 @@
     }
 
     & .componentFilters {
-        &_stringFilter.componentSelect__control {
+        &_stringFilter {
             --kt-gray-300: var(--kt-input-solid-bg);
         }
 
@@ -328,6 +314,7 @@
     }
 
     & .moduleSchedule {
+        --kt-gray-300: var(--app-border-color);
         &_scrollButton {
             background-color: var(--kt-app-bg-color);
             border: 1px solid var(--app-border-color);
@@ -343,11 +330,12 @@
         &_employeeColumnHeader,
         &_stepsDropdown #moduleSchedule_stepsButton {
             background-color: var(--kt-app-bg-color);
-            color: var(--kt-primary-inverse);
+            color: var(--app-text-color);
             border-color: var(--app-border-color);
 
             &:hover {
                 background-color: var(--kt-primary);
+                color: var(--kt-primary-inverse);
                 border-color: var(--kt-primary);
             }
         }
@@ -370,6 +358,13 @@
                 border-color: var(--kt-primary-active);
             }
         }
+        &_itemButtons {
+            & > .componentButton {
+                &.light {
+                    border: 1px solid var(--app-border-color);
+                }
+            }
+        }
     }
 
     & .moduleCalendar {
@@ -388,7 +383,6 @@
 
     & .nav-tabs .nav-link.active {
         color: var(--kt-primary-inverse);
-
     }
 
 
@@ -420,7 +414,7 @@
     } */
 
     .react-loading-skeleton.skeleton {
-        --base-color: var(--kt-form-check-input-bg-solid);
-        --highlight-color: var(--kt-input-solid-bg);
+        --base-color: var(--kt-input-solid-bg);
+        --highlight-color: var(--app-border-color);
     }
 }
