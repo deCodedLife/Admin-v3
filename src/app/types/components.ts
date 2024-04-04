@@ -25,8 +25,9 @@ type ComponentButtonScriptType = DefaultComponentButtonType<"script", {
 }>
 export type ComponentButtonSubmitType = DefaultComponentButtonType<"submit", { href?: string }>
 type ComponentButtonCustomType = DefaultComponentButtonType<"custom", {}>
+type ComponentButtonDownloadType = DefaultComponentButtonType<"download", { href: string }>
 
-export type ComponentButtonClassicType = ComponentButtonHrefType | ComponentButtonScriptType | ComponentButtonSubmitType | ComponentButtonCustomType
+export type ComponentButtonClassicType = ComponentButtonHrefType | ComponentButtonScriptType | ComponentButtonSubmitType | ComponentButtonCustomType | ComponentButtonDownloadType
 
 export type ComponentButtonModalType = DefaultComponentButtonType<"modal",
     {

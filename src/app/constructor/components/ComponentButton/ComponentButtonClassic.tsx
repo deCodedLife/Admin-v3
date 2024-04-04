@@ -29,6 +29,17 @@ const ComponentButtonClassic: React.FC<ComponentButtonClassicType> = ({ type, se
         switch (type) {
             case "href":
                 return navigate(`${settings.page}`)
+            case "download":
+                if (settings.href) {
+                    const link = document.createElement('a')
+                    link.href = settings.href
+                    link.setAttribute('download', "")
+                    document.body.appendChild(link)
+                    link.click()
+                    return link.remove()
+                } else {
+                    return getErrorToast(intl.formatMessage({ id: "LIST.DOWNLOADER_FILE_ERROR" }))
+                }
             case "submit":
             //внутренний тип приложения
             case "custom":
