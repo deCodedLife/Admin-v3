@@ -122,13 +122,12 @@ const getModuleKey = (module: ModuleType) => {
 
 const PageBuilder: React.FC<PageBuilderType> = ({ data, isFetching, showProgressBar = true }) => {
     const { pathname } = useLocation()
-
     return <PageProvider>
         <div className={`pageBuilder_container${isFetching ? " loading" : ""}`}>
             {showProgressBar ? <PageProgressBar isFetching={isFetching} /> : null}
             {data?.map(module => {
                 const uniqKey = pathname + getModuleKey(module)
-                return <Form.Group className="pageBuilder_module" key={uniqKey} as={Col} md={module.size * 3}>
+                return <Form.Group className={`pageBuilder_module ${module.size === 4 ? "" : " withPaddings"}`} key={uniqKey} as={Col} md={module.size * 3}>
                     <Module {...module} />
                 </Form.Group>
             })}
