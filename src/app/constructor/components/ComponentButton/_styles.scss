@@ -1,0 +1,194 @@
+.componentButton {
+    position: relative;
+    font-size: 0.925rem;
+    font-weight: 600;
+    color: var(--kt-primary-inverse);
+    padding: calc(0.55rem + 1px) calc(1.25rem + 1px);
+    background-color: var(--kt-primary);
+    white-space: nowrap;
+    border: none;
+    border-radius: 0.425rem;
+    transition: color 0.3s, background-color 0.3s;
+    z-index: 1;
+
+    &:disabled {
+        opacity: 0.5;
+    }
+
+    &.hidden {
+        display: none;
+    }
+
+    &:hover {
+        background-color: var(--kt-primary-active);
+    }
+
+    &_container {
+        display: flex;
+        justify-content: flex-end;
+        padding: 0 0.75rem;
+        margin-bottom: 10px;
+
+        &.between {
+            justify-content: space-between;
+        }
+
+        &.inverse {
+            justify-content: flex-start;
+        }
+
+        & .componentButton:not(:last-child) {
+            margin-right: 1rem;
+        }
+
+        &.marginless {
+            margin-bottom: 0;
+        }
+
+        &.paddingless {
+            padding: 0;
+        }
+    }
+
+    &.dark-light {
+        background-color: var(--kt-primary-light);
+        color: var(--kt-primary);
+        border: 0;
+
+        &:hover {
+            background-color: var(--kt-primary);
+            color: var(--kt-primary-inverse);
+        }
+    }
+
+    &.light {
+        color: var(--kt-light-inverse);
+        background-color: var(--kt-light);
+
+        & svg,
+        svg g,
+        svg [fill] {
+            fill: var(--kt-text-gray-700);
+        }
+
+        &:hover {
+            background-color: var(--kt-light-active);
+        }
+
+    }
+
+    &.danger {
+        background-color: var(--kt-danger);
+        color: var(--kt-danger-inverse);
+        &:hover {
+            background-color: var(--kt-danger-active);
+        }
+
+        & svg,
+        svg g,
+        svg [fill] {
+            fill: var(--kt-danger-inverse);
+        }
+    }
+
+    &.warning {
+        background-color: var(--kt-warning);
+
+        &:hover {
+            background-color: var(--kt-warning-active);
+        }
+    }
+
+    &.success {
+        background-color: var(--kt-success);
+
+        &:hover {
+            background-color: var(--kt-success-active);
+        }
+    }
+
+    &.gray {
+        background-color: var(--kt-text-gray-300);
+        color: var(--kt-text-gray-700);
+    }
+
+    & svg,
+    svg g,
+    svg [fill] {
+        fill: var(--kt-primary-inverse);
+    }
+
+    &.icon_based {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        height: calc(1.5em + 1.1rem + 2px);
+        width: calc(1.5em + 1.1rem + 2px);
+    }
+
+    &_content {
+        display: flex;
+        justify-content: center;
+
+        & .svg-icon {
+            display: flex;
+            align-items: center;
+            margin-right: 4px;
+        }
+    }
+
+    &_modalButton {
+        position: absolute;
+        height: 30px;
+        width: 50px;
+        font-weight: 700;
+        border: none;
+        background-color: transparent;
+        color: var(--kt-primary-inverse);
+
+        &.modalMinimize {
+            top: 0;
+            right: 50px;
+            background-color: var(--kt-primary);
+            border: 1px solid var(--kt-primary);
+            border-bottom-left-radius: calc(0.625rem - 1px);
+            transition: 0.3s;
+
+            &:hover {
+                color: var(--kt-primary);
+                background-color: transparent;
+            }
+
+        }
+
+        &.modalClose {
+            top: 0;
+            right: 0;
+            background-color: var(--kt-danger);
+            border: 1px solid var(--kt-danger);
+            border-top-right-radius: 0.4rem;
+            transition: 0.3s;
+
+            &:hover {
+                color: var(--kt-danger);
+                background-color: transparent;
+            }
+        }
+
+    }
+
+    &.minimized {
+        &::after {
+            content: " ";
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 10px;
+            width: 10px;
+            border-radius: 4rem;
+            transform: translate(50%, -50%);
+            background-color: var(--kt-warning);
+        }
+    }
+}

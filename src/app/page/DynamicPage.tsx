@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import usePage from '../api/hooks/usePage'
 import PageError from './PageError'
 import PageBuilder from './PageBuilder'
@@ -6,10 +6,10 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import ComponentButton from '../constructor/components/ComponentButton'
 import { useIntl } from 'react-intl'
 import { useIsSubpage } from '../constructor/modules/helpers'
-import { ComponentButtonSubmitType } from '../types/components'
+import { TComponentButtonSubmit } from '../constructor/components/ComponentButton/_types'
 
 
-const HandleSubmitContext = React.createContext<React.Dispatch<React.SetStateAction<ComponentButtonSubmitType | null>>>(() => { })
+const HandleSubmitContext = React.createContext<React.Dispatch<React.SetStateAction<TComponentButtonSubmit | null>>>(() => { })
 export const useHandleSubmitContext = () => useContext(HandleSubmitContext)
 
 const DynamicPageComponent = React.memo(() => {
@@ -25,7 +25,7 @@ const DynamicPage: React.FC = () => {
     const intl = useIntl()
     const { pathname } = useLocation()
     const navigate = useNavigate()
-    const [submitButton, setSubmitButton] = useState<ComponentButtonSubmitType | null>(null)
+    const [submitButton, setSubmitButton] = useState<TComponentButtonSubmit | null>(null)
 
     useEffect(() => {
         const pathsArray = sessionStorage.getItem("paths") ?? JSON.stringify([])

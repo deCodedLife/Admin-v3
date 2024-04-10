@@ -1,0 +1,25 @@
+.componentAnnotation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--kt-text-muted);
+    flex-shrink: 0;
+    transition: color 0.3s;
+
+    &:hover {
+        color: var(--kt-primary-active);
+    }
+
+    & .svg-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: inherit;
+
+        & svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+    }
+}

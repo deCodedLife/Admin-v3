@@ -3,75 +3,7 @@ import { ModuleFormFieldType } from "./modules"
 import { Placement } from "react-bootstrap/esm/types"
 
 //компонент Button
-type DefaultComponentButtonType<type = string, settings = any> = {
-    type: type,
-    settings: settings & {
-        title: string,
-        background: "dark" | "light" | "danger" | "warning" | "success" | "gray",
-        icon: string,
-        attention_modal?: boolean
-    },
-    defaultLabel?: string,
-    className?: string,
-    disabled?: boolean,
-    customHandler?: () => void
-}
-type ComponentButtonHrefType = DefaultComponentButtonType<"href", { page: string }>
-type ComponentButtonScriptType = DefaultComponentButtonType<"script", {
-    object: string,
-    command: string,
-    data: any,
-    href?: string,
-}>
-export type ComponentButtonSubmitType = DefaultComponentButtonType<"submit", { href?: string }>
-type ComponentButtonCustomType = DefaultComponentButtonType<"custom", {}>
-type ComponentButtonDownloadType = DefaultComponentButtonType<"download", { href: string }>
 
-export type ComponentButtonClassicType = ComponentButtonHrefType | ComponentButtonScriptType | ComponentButtonSubmitType | ComponentButtonCustomType | ComponentButtonDownloadType
-
-export type ComponentButtonModalType = DefaultComponentButtonType<"modal",
-    {
-        insert_to_field?: string,
-        refresh_after_submit?: boolean,
-        close_after_submit?: boolean,
-        close_previous_modal?: boolean,
-        modal_size?: "sm" | "lg" | "xl",
-        context?: Object,
-        page: string
-    }
->
-export type ComponentButtonPrintType = DefaultComponentButtonType<"print", {
-    data: {
-        document_article?: string,
-        scheme_name: string,
-        row_id: string | number,
-        is_edit: boolean,
-        script?: {
-            command: string,
-            object: string,
-            properties: any
-        }
-    },
-    context?: { [key: string]: any },
-    afterSubmit?: boolean,
-    visible?: boolean
-}>
-
-
-export type ComponentButtonDrawerType = DefaultComponentButtonType<"drawer",
-    {
-        insert_to_field?: string,
-        refresh_after_submit?: boolean,
-        close_after_submit?: boolean,
-        close_previous_modal?: boolean,
-        direction?: "top" | "right" | "bottom" | "left"
-        context?: Object,
-        page: string
-    }
->
-
-
-export type ComponentButtonType = ComponentButtonClassicType | ComponentButtonModalType | ComponentButtonPrintType | ComponentButtonDrawerType
 
 
 //компонент Error
@@ -162,18 +94,7 @@ export type ComponentSelectType = {
     isSearchable?: boolean
 }
 
-//компонент Checkbox
-export type ComponentCheckboxType = {
-    article?: string,
-    customChecked?: boolean,
-    label?: string,
-    description?: string,
-    is_disabled?: boolean,
-    hook?: string,
-    className?: string,
-    onChangeSubmit?: boolean,
-    customHandler?: () => void
-}
+
 
 //компонент Array 
 export type ComponentArrayFieldType = {
@@ -227,12 +148,6 @@ export type ComponentPhoneType = {
     customHandler?: (value: any) => void,
 }
 
-//компонент Address
-export type ComponentAddressType = {
-    article: string,
-    field_type: string,
-    is_disabled?: boolean
-}
 
 //компонент GooglePlaces
 export type ComponentGooglePlacesType = {
@@ -303,5 +218,3 @@ export type ComponentTooltipType = {
     children: React.ReactElement,
 }
 
-//компонент Annotation 
-export type ComponentAnnotationType = { annotation: string, placement?: string }

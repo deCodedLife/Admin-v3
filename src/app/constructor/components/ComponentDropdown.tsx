@@ -2,7 +2,7 @@ import React from "react"
 import { Dropdown } from "react-bootstrap";
 import { KTSVG } from "../../../_metronic/helpers";
 import ComponentButton from "./ComponentButton";
-import { ComponentButtonType } from "../../types/components";
+import { TComponentButton } from "./ComponentButton/_types";
 
 
 const ActionsDropdown: React.FC<{ children: any, onClick: (value: any) => void }> = React.forwardRef(({ children, onClick }, ref) => {
@@ -22,7 +22,7 @@ const ActionsDropdown: React.FC<{ children: any, onClick: (value: any) => void }
     </button>
 })
 
-const ComponentDropdown: React.FC<{ buttons: Array<ComponentButtonType> }> = ({ buttons }) => {
+const ComponentDropdown: React.FC<{ buttons: Array<TComponentButton> }> = ({ buttons }) => {
     return <Dropdown className="componentDropdown" drop="start"  >
         <Dropdown.Toggle as={ActionsDropdown} />
         <Dropdown.Menu popperConfig={{strategy: "fixed"}} renderOnMount>

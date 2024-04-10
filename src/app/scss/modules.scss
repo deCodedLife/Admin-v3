@@ -16,6 +16,16 @@
         font-size: 0.95rem;
         color: var(--kt-text-muted);
     }
+
+    &_buttons {
+        display: flex;
+        align-items: center;
+        & .componentButton {
+            &:not(:last-child) {
+                margin-right: 0.5rem;
+            }
+        }
+    }
 }
 
 //модуль List 

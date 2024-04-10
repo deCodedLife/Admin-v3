@@ -8,7 +8,6 @@ import useListData from "../../../api/hooks/useListData"
 import useMutate from "../../../api/hooks/useMutate"
 import useRequest from "../../../api/hooks/useRequest"
 import useSearchRequest from "../../../api/hooks/useSearchRequest"
-import { ComponentButtonType } from "../../../types/components"
 import {
     ModuleListActionButtonsType, ModuleListCellType, ModuleListDownloaderType, ModuleListHeaderCellType,
     ModuleListInfiniteScrollType,
@@ -44,8 +43,9 @@ import { isEqual } from "lodash"
 import { useRefetchSubscribers, useSubscribeOnRefetch } from "../helpers/PageContext"
 import useInfiniteListData from "../../../api/hooks/useInfiniteListData"
 import ComponentModal from "../../components/ComponentModal"
+import { TComponentButton } from "../../components/ComponentButton/_types"
 
-export const getButtonKey = (button: ComponentButtonType) => `${button.type}-${button.settings.title}-${button.settings.icon}`
+export const getButtonKey = (button: TComponentButton) => `${button.type}-${button.settings.title}-${button.settings.icon}`
 
 const DownloaderModule: React.FC<ModuleListDownloaderType> = ({ title, handleDownload, columns }) => {
     const intl = useIntl()

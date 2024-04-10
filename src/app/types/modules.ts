@@ -1,6 +1,7 @@
 import moment from "moment"
 import { ApiDatabaseSchemeType, ApiModuleType, ApiNotificationTypesType, ApiObjectSchemeType, ApiPageSchemeType, ApiPermissionType, ApiRoleType, ApiScheduleType, ApiWidgetType } from "./api"
-import { ComponentButtonType, ComponentFilterType, ComponentInfoType, ComponentInputType, ComponentPhoneType, ComponentSelectType } from "./components"
+import { ComponentFilterType, ComponentInfoType, ComponentInputType, ComponentPhoneType, ComponentSelectType } from "./components"
+import { TComponentButton } from "../constructor/components/ComponentButton/_types"
 
 //тип модуля по умолчанию. Используется для создания типов конкретных модулей
 export type DefaultModuleType<type = string, components = any, settings = any> = {
@@ -12,10 +13,10 @@ export type DefaultModuleType<type = string, components = any, settings = any> =
 }
 
 //модуль Header
-export type ModuleHeaderType = DefaultModuleType<"header", { buttons: Array<ComponentButtonType> }, { title: string, description: string }>
+export type ModuleHeaderType = DefaultModuleType<"header", { buttons: Array<TComponentButton> }, { title: string, description: string }>
 
 //модуль Form
-type ModuleFormButtonType = ComponentButtonType & { settings: { field_place?: string, visible?: boolean } }
+type ModuleFormButtonType = TComponentButton & { settings: { field_place?: string, visible?: boolean } }
 type DefaultModuleFormFieldType<field_type = string, settings = null, additionals = {}> = {
     annotation?: string,
     title?: string,
@@ -118,7 +119,7 @@ export type ModuleInfoAreaType = {
     blocks: Array<ModuleInfoBlockType>
 }
 export type ModuleInfoType = DefaultModuleType<"info", {
-    buttons: Array<ComponentButtonType>
+    buttons: Array<TComponentButton>
 }, {
     areas: Array<ModuleInfoAreaType>,
     command: string,
@@ -152,7 +153,7 @@ export type ModuleListUpdateModalType = {
     selectedItems: Array<any>
 }
 export type ModuleListActionButtonsType = {
-    data: Array<ComponentButtonType>
+    data: Array<TComponentButton>
 }
 export type ModuleListPaginationType = {
     detail: { pages_count: number, rows_count: number } | undefined,
@@ -199,7 +200,7 @@ export type ModuleListHeaderCellType = {
     setFilter: (values: any) => void,
     isListEditable: boolean
 }
-export type ModuleListType = DefaultModuleType<"list", { filters: Array<ComponentFilterType>, buttons: Array<ComponentButtonType>, search?: boolean }, {
+export type ModuleListType = DefaultModuleType<"list", { filters: Array<ComponentFilterType>, buttons: Array<TComponentButton>, search?: boolean }, {
     object: string,
     headers: ModuleListHeadersType,
     filters: { [key: string]: any },
@@ -262,7 +263,7 @@ export type ModuleWidgetsWidgetType = {
 export type ModuleWidgetsViewType = { data?: ApiWidgetType, is_hard: boolean }
 
 export type ModuleWidgetsType = DefaultModuleType<"analytic_widgets",
-    { filters: Array<ComponentFilterType>, buttons: Array<ComponentButtonType> },
+    { filters: Array<ComponentFilterType>, buttons: Array<TComponentButton> },
     { filters: { [key: string]: any }, widgets_group: string, is_hard: boolean, linked_filter?: string }>
 
 //модуль Roles
@@ -377,7 +378,7 @@ export type ModuleScheduleModalType = {
     selectedCell: any,
     setSelectedCell: (value: null) => void
 }
-export type ModuleScheduleType = DefaultModuleType<"schedule", { filters: Array<ComponentFilterType>, buttons: Array<ComponentButtonType> }, {
+export type ModuleScheduleType = DefaultModuleType<"schedule", { filters: Array<ComponentFilterType>, buttons: Array<TComponentButton> }, {
     object: string,
     filters: Object
 }>
@@ -510,7 +511,7 @@ export type ModuleMiniChatType = DefaultModuleType<"mini_chat", any, {
 }>
 
 //модуль Calendar
-export type ModuleCalendarType = DefaultModuleType<"calendar", { filters: Array<ComponentFilterType>, buttons: Array<ComponentButtonType> }, {
+export type ModuleCalendarType = DefaultModuleType<"calendar", { filters: Array<ComponentFilterType>, buttons: Array<TComponentButton> }, {
     object: string,
     events: { add: string, update: string },
     context_keys: Array<string>,
@@ -546,7 +547,7 @@ export type ModuleFunnelColumnType = {
     handleOnDrop: (columnId: number) => void
     handleClick: (id: number, currentColumnId: number) => void,
 }
-export type ModuleFunnelType = DefaultModuleType<"funnel", { filters: Array<ComponentFilterType>, buttons: Array<ComponentButtonType> }, { object: string, property: string, filter: string }>
+export type ModuleFunnelType = DefaultModuleType<"funnel", { filters: Array<ComponentFilterType>, buttons: Array<TComponentButton> }, { object: string, property: string, filter: string }>
 
 //модуль News
 export type ModuleNewsCardType = {
@@ -688,7 +689,7 @@ export type ModuleDayPlanningRowType = {
     color: string,
     description: string,
     id: string | number,
-    links: Array<{ title: string, link: string }>, time: string, buttons?: Array<ComponentButtonType>,
+    links: Array<{ title: string, link: string }>, time: string, buttons?: Array<TComponentButton>,
     setSelectedPage: (value: string | null) => void
 }
 export type ModuleDayPlanningDateType = { date: moment.Moment, filter: any, handleDateClick: (date: moment.Moment) => void }
@@ -710,4 +711,4 @@ export type ModuleQueueType = DefaultModuleType<"queue", { filters: Array<Compon
 export type ModuleYandexMapType = DefaultModuleType<"yandex_map", { filters: Array<ComponentFilterType> }, { object: string, filters: any }>
 
 //модуль Buttons
-export type ModuleButtonsType = DefaultModuleType<"buttons", { buttons: Array<ComponentButtonType> }>
+export type ModuleButtonsType = DefaultModuleType<"buttons", { buttons: Array<TComponentButton> }>

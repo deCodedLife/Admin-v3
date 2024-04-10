@@ -8,7 +8,6 @@ import useMutate from "../../../api/hooks/useMutate"
 import { getFields, getInitialValues, getValidationSchema, useIsSubpage } from "../helpers"
 import { useLocation, useNavigate } from "react-router-dom"
 import { ModuleFormAreaType, ModuleFormBlockType, ModuleFormFieldType, ModuleFormType } from "../../../types/modules"
-import { ComponentButtonType } from "../../../types/components"
 import ComponentInCreation from "../../components/ComponentInCreation"
 import ComponentTextarea from "../../components/ComponentTextarea"
 import ComponentPrice from "../../components/ComponentPrice"
@@ -31,6 +30,7 @@ import InfoModal from "./InfoModal"
 import ComponentGooglePlaces from "../../components/ComponentGooglePlaces"
 import { useHandleSubmitContext } from "../../../page/DynamicPage"
 import { isEqual } from "lodash"
+import { TComponentButton } from "../../components/ComponentButton/_types"
 
 //контекст
 const FormContext = React.createContext<{isSuccess?: boolean}>({})
@@ -252,7 +252,7 @@ const getAreaKey = (area: ModuleFormAreaType) => {
 
 type TModuleFormButtons = {
     className: string,
-    buttons: Array<ComponentButtonType>,
+    buttons: Array<TComponentButton>,
     isSubpage: boolean,
     isFormInsideModal: boolean,
     handleSubmit: (e?: React.FormEvent<HTMLFormElement> | undefined) => void
@@ -315,7 +315,7 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
 
     /* функция проверяет, есть ли у формы кнопка submit с переданным url для перехода после отправки формы, и, если есть, осуществляет переход.
     Сам переход выполняется в двух случаях: после успешного запроса или при отсутствии изменении в форме редактирования (отправка запроса игнорируется)  */
-    const afterSubmitAction = useCallback((buttons: Array<ComponentButtonType>, isValuesChanged: boolean) => {
+    const afterSubmitAction = useCallback((buttons: Array<TComponentButton>, isValuesChanged: boolean) => {
         //смысла нет разбивать на find и проверку наличия, т.к. ts не определит, что это кнопка типа submit. Переделать в дальнейшем
         //@ts-ignore 
         const redirectUrl = buttons.find(button => button.type === "submit")?.settings?.href ?? ""

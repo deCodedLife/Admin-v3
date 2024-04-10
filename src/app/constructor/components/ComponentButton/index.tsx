@@ -1,10 +1,10 @@
 import React from "react"
 import { KTSVG } from "../../../../_metronic/helpers"
-import { ComponentButtonType } from "../../../types/components"
-import ComponentButtonModal from "./ComponentButtonModal"
-import ComponentButtonPrint from "./ComponentButtonPrint"
-import ComponentButtonClassic from "./ComponentButtonClassic"
-import ComponentButtonDrawer from "./ComponentButtonDrawer"
+import ComponentButtonModal from "./src/ComponentButtonModal"
+import ComponentButtonPrint from "./src/ComponentButtonPrint"
+import ComponentButtonClassic from "./src/ComponentButtonClassic"
+import ComponentButtonDrawer from "./src/ComponentButtonDrawer"
+import { TComponentButton } from "./_types"
 
 export const getLabel = (defaultLabel: string, settings: any) => {
     switch (defaultLabel) {
@@ -18,7 +18,7 @@ export const getLabel = (defaultLabel: string, settings: any) => {
     }
 }
 
-const ComponentButton: React.FC<ComponentButtonType> = (props) => {
+const ComponentButton: React.FC<TComponentButton> = (props) => {
     switch (props.type) {
         case "modal":
             return <ComponentButtonModal {...props} />
