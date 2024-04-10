@@ -68,6 +68,7 @@
             flex-shrink: 0;
             font-weight: 700;
             transition: color 0.3s, background-color 0.3s;
+
             &:hover {
                 background-color: var(--kt-primary);
                 color: var(--kt-primary-inverse);
@@ -93,7 +94,7 @@
         &:active,
         &:focus,
         &.componentSelect__option--is-focused,
-        &.componentSelect__option--is-selected  {
+        &.componentSelect__option--is-selected {
             color: var(--kt-primary-inverse) !important;
             background-color: var(--kt-primary) !important;
         }
@@ -1162,19 +1163,26 @@
 //компонент Layout
 .componentLayout {
 
-    & table  tr {
-        &:nth-child(odd)  {
-            background-color: var(--kt-app-bg-color);
+    & table {
+        width: 100%;
+
+        tr {
+            &:nth-child(odd) {
+                background-color: var(--kt-app-bg-color);
+            }
+
+            &:nth-child(even) {
+                background-color: var(--kt-card-bg);
+            }
+
+            & td {
+                padding: 0.5rem;
+            }
         }
-        &:nth-child(even)  {
-            background-color: var(--kt-card-bg);
+
+        &_editButton {
+            margin-bottom: 0.5rem;
         }
-        & td {
-            padding: 0.5rem;
-        }
-    }
-    &_editButton {
-        margin-bottom: 0.5rem;
     }
 }
 
