@@ -583,7 +583,7 @@ const HeaderCell: React.FC<ModuleListHeaderCellType> = ({ article, title, type, 
 
     const isDataSortedByCurrentArticle = isSortableData && filter.sort_by === article
     const isReverseSort = isDataSortedByCurrentArticle && filter.sort_order === "desc"
-    const currentClassList = `moduleList_headerCell${type === "image" ? "" : " min-w-150px"}`
+    const currentClassList = `moduleList_headerCell ${type}`
     const currentTitle = type === "image" ? "" : title
 
     const handleSort = () => setFilter((prev: any) => {

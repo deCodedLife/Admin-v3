@@ -161,18 +161,7 @@ export type ComponentDashboardType = {
     inverse?: boolean
 }
 
-//компонет Date 
-export type ComponentDateType = {
-    article: string,
-    field_type: string,
-    custom_format?: boolean,
-    is_disabled?: boolean,
-    hook?: string,
-    onBlurSubmit?: boolean,
-    className?: string,
-    placeholder?: string,
-    customHandler?: (value: any) => void
-}
+
 
 //компонент Radio 
 export type ComponentRadioButtonType = {

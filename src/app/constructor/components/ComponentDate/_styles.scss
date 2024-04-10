@@ -1,0 +1,168 @@
+.componentDate {
+    &.react-datepicker {
+        --border-color: var(--kt-gray-300);
+        --background-color: var(--kt-card-bg);
+        display: flex;
+        background-color: var(--background-color);
+        border-color: var(--border-color);
+        border-radius: 0.625rem;
+        color: inherit;
+
+        & .react-datepicker {
+
+            &__current-month,
+            &__day-name,
+            &-time__header {
+                color: inherit;
+            }
+
+            &__month-container {
+                padding-bottom: 27px;
+            }
+
+            &__navigation {
+                &:hover {
+                    & *::before {
+                        border-color: var(--kt-primary);
+                    }
+                }
+
+                &--years {
+                    height: 26px;
+
+                    &::before {
+                        content: " ";
+                        position: absolute;
+                        left: 50%;
+                        top: 50%;
+                        width: 2px;
+                        height: calc(50% - 4px);
+                        background-color: var(--kt-gray-300);
+                        transform: translate(-50%, -50%);
+                    }
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        left: 50%;
+                        top: 50%;
+                        height: 6px;
+                        width: 6px;
+                        border-left: 2px solid var(--kt-gray-300);
+                        border-bottom: 2px solid var(--kt-gray-300);
+                        transform: translate(-50%, -100%) rotate(135deg);
+                    }
+
+                    &.react-datepicker__navigation--years-previous {
+                        &::after {
+                            transform: translate(-50%, 0) rotate(315deg);
+                        }
+                    }
+                }
+            }
+
+            &__header {
+                background-color: var(--background-color);
+                border-bottom: 1px dashed var(--border-color);
+            }
+
+            &__header__dropdown {
+                display: flex;
+                justify-content: space-evenly;
+            }
+
+            &__time-container {
+                right: -86px;
+                top: -1px;
+                border-color: var(--border-color);
+
+                & .react-datepicker__time {
+                    background-color: var(--background-color);
+
+                    & .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected {
+                        background-color: var(--kt-primary-active);
+                        color: var(--kt-primary-inverse);
+                    }
+                }
+            }
+
+            &__day {
+                color: inherit;
+
+                &--outside-month {
+                    opacity: 0.3;
+                }
+
+                &--selected,
+                &--keyboard-selected {
+                    background-color: var(--kt-primary-active);
+                    color: var(--kt-primary-inverse);
+                    outline: none;
+                }
+            }
+
+            &__today-button {
+                background-color: var(--kt-primary);
+                color: var(--kt-primary-inverse);
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                transition: background-color 0.3s;
+
+                &:hover {
+                    background-color: var(--kt-primary-active);
+                }
+            }
+
+            &__month-read-view,
+            &__year-read-view {
+                display: flex;
+                flex-direction: row-reverse;
+                color: inherit;
+                background-color: transparent;
+                border: 2px solid var(--border-color);
+                border-radius: 0.625rem;
+                padding: 0 3px;
+                transition: border-color 0.3s;
+
+                &:hover {
+                    border-color: var(--kt-primary);
+                }
+
+                &--down-arrow {
+                    margin-left: 3px;
+                    position: relative;
+                    right: unset;
+                    top: unset;
+                    align-self: center;
+                    height: 7px;
+                    width: 7px;
+                }
+            }
+
+            &__month-dropdown,
+            &__year-dropdown {
+                background-color: var(--background-color);
+                border-color: var(--border-color);
+            }
+
+            &__month-select,
+            &__year-select {
+                color: inherit;
+                background-color: transparent;
+                border: 2px solid var(--border-color);
+                border-radius: 0.625rem;
+                outline: none;
+                transition: border-color 0.3s;
+
+                &:hover {
+                    border-color: var(--kt-primary);
+                }
+            }
+        }
+    }
+
+    &_popper.react-datepicker-popper {
+        z-index: 2000;
+    }
+}

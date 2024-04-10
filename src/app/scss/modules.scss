@@ -73,11 +73,19 @@
     &_headerCell {
         vertical-align: middle;
         white-space: nowrap;
+        min-width: 125px;
 
         &.deleteCheckbox {
             & .componentCheckbox {
                 margin-right: 0;
             }
+        }
+
+        &.string {
+            min-width: 200px;
+        }
+        &.image, &.deleteCheckbox {
+            min-width: unset;
         }
     }
 

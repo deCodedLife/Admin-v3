@@ -7,18 +7,18 @@ import en from 'date-fns/locale/en-US';
 import lv from 'date-fns/locale/lv';
 
 import moment from "moment";
-import { ComponentDateType } from "../../../types/components";
 import { hookAfterChange } from "../helpers";
 import MaskedInput from "react-text-mask"
 import { useIntl } from "react-intl";
 import { useSetupContext } from "../../helpers/SetupContext";
 import { getDateFormat } from "../../modules/helpers";
+import { TComponentDate } from "./_types";
 
 registerLocale("ru", ru)
 registerLocale("en", en)
 registerLocale("lv", lv)
 
-const ComponentDate: React.FC<ComponentDateType> = (props) => {
+const ComponentDate: React.FC<TComponentDate> = (props) => {
     const { article, field_type, is_disabled, hook, onBlurSubmit, className = "", custom_format = false, placeholder, customHandler } = props
     const intl = useIntl()
     const { context } = useSetupContext()
