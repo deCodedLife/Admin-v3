@@ -1,0 +1,1 @@
+export type TComponentSearch = { value: string, setValue: (search: string) => void }

@@ -5,14 +5,14 @@ import moment from "moment"
 import ComponentSelect from "../components/ComponentSelect"
 import { useFilter } from "./helpers"
 import { Formik, Form as FormikForm } from "formik"
-import { ComponentFilterListType } from "../../types/components"
 import ComponentButton from "../components/ComponentButton"
 import useQueue from "../../api/hooks/useQueue"
 import api, { getApiUrl } from "../../api"
 import { useIntl } from "react-intl"
+import { TComponentFilterList } from "../components/ComponentFilters/_types"
 
 
-const Filters: React.FC<{ filters: Array<ComponentFilterListType>, initialValues: any, handleChange: (values: any) => void }> = ({ filters, initialValues, handleChange }) => {
+const Filters: React.FC<{ filters: Array<TComponentFilterList>, initialValues: any, handleChange: (values: any) => void }> = ({ filters, initialValues, handleChange }) => {
     return <div className="moduleQueue_filters">
         <Formik enableReinitialize initialValues={initialValues} onSubmit={(values) => handleChange(values)}>
             {() => <FormikForm>
@@ -143,7 +143,7 @@ const ModuleQueue: React.FC<ModuleQueueType> = (props) => {
         />
         <div ref={moduleRef} className="moduleQueue">
             <div className="moduleQueue_header">
-                <Filters filters={resolvedFilter as Array<ComponentFilterListType>} initialValues={filter} handleChange={setFilter} />
+                <Filters filters={resolvedFilter as Array<TComponentFilterList>} initialValues={filter} handleChange={setFilter} />
                 <div className="moduleQueue_dateContainer">
                     <div className="moduleQueue_time">{time}</div>
                     <div className="moduleQueue_date">{day}<br />{date}</div>

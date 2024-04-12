@@ -13,40 +13,7 @@ export type ComponentErrorType = {
     }
 }
 
-//компонент Filter
-type DefaultComponentFilterType<type = string, settings = any> = {
-    title: string,
-    type: type,
-    settings: { size?: number } & settings,
-    placeholder?: string,
-}
-export type ComponentFilterListType = DefaultComponentFilterType<"list", {
-    donor_object: string,
-    donor_property_title: string,
-    select_menu?: string | Array<string>
-    is_search: boolean,
-    list?: Array<{
-        title: string,
-        value: string | number
-    }>,
-    is_multi?: boolean,
-    is_clearable?: boolean,
-    recipient_property: string,
-    filterValues?: any,
-}>
-type ComponentFilterOtherTypes = DefaultComponentFilterType<"date" | "date_custom" | "price" | "integer" | "checkbox", {
-    recipient_property: string,
-    filterValues?: any,
-}>
-export type ComponentFilterType = ComponentFilterListType | ComponentFilterOtherTypes
-export type ComponentFiltersType = {
-    type: "dropdown" | "block" | "string",
-    data: Array<ComponentFilterType>,
-    filterValues?: any,
-    isInitials: boolean,
-    handleChange: (values: any) => void,
-    handleReset: () => void
-}
+
 
 //компонент Input 
 export type ComponentInputType = {
@@ -59,13 +26,6 @@ export type ComponentInputType = {
     className?: string,
     suffix?: string,
     customHandler?: (e: React.ChangeEvent<HTMLInputElement>) => void,
-}
-
-//компонент Info
-export type ComponentInfoType = {
-    value: string | number | Array<string> | Array<number>,
-    data_type: "email" | "string",
-    field_type: string
 }
 
 //компонент Select
@@ -96,28 +56,7 @@ export type ComponentSelectType = {
 
 
 
-//компонент Array 
-export type ComponentArrayFieldType = {
-    title: string,
-    article: string,
-    type: string,
-    list?: Array<{ title: string, value: string | boolean | number }>,
-    isMulti?: boolean,
-    resetOnChange?: boolean,
-    dependency?: {
-        article: string, value: Array<string> | string
-    }
-    is_required?: boolean,
-    size?: number
-}
-export type ComponentArrayType = {
-    label?: string,
-    article: string,
-    data_type: "string" | "number" | "object",
-    fields?: Array<ComponentArrayFieldType>,
-    customHandler?: (value: any) => void,
-    draggable?: boolean
-}
+
 
 //компонент Textarea
 export type ComponentTextareaType = {
@@ -155,26 +94,6 @@ export type ComponentGooglePlacesType = {
     is_disabled?: boolean
 }
 
-//компонент Dashboard 
-export type ComponentDashboardType = {
-    children: Array<React.ReactChild | null | Array<React.ReactChild>> | React.ReactChild | null,
-    inverse?: boolean
-}
-
-
-
-//компонент Radio 
-export type ComponentRadioButtonType = {
-    title: string,
-    isSelected: boolean,
-    handleClick: () => void
-}
-export type ComponentRadioType = {
-    article: string,
-    list: Array<{ title: string, value: string | number | boolean }>,
-    is_disabled?: boolean,
-    hook?: string,
-}
 
 //компонент SmartList 
 export type ComponentSmartListPropertyType = ModuleFormFieldType
@@ -193,11 +112,7 @@ export type ComponentSmartListType = {
     is_headers_shown?: boolean
 }
 
-//компонент Image
-export type ComponentImageType = { article: string, allowedFormats?: Array<string>, is_multiply?: boolean, is_editor?: boolean, is_disabled?: boolean}
 
-//компонент File
-export type ComponentFileType = { article: string, is_multiply?: boolean, request_object?: string, object_id?: number | string }
 
 //компонент Tooltip
 export type ComponentTooltipType = {

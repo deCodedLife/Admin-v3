@@ -33,7 +33,7 @@ import { isEqual } from "lodash"
 import { TComponentButton } from "../../components/ComponentButton/_types"
 
 //контекст
-const FormContext = React.createContext<{isSuccess?: boolean}>({})
+const FormContext = React.createContext<{ isSuccess?: boolean }>({})
 export const useFormContext = () => useContext(FormContext)
 
 //Тип поля
@@ -132,13 +132,20 @@ export const Component = React.memo<ModuleFormFieldType>((props) => {
             return <ComponentImage
                 article={article}
                 allowedFormats={props.settings?.allowed_formats}
+                max_size={props.settings?.max_size}
                 is_multiply={props.settings?.is_multiply}
                 is_editor={props.settings?.is_editor}
                 is_disabled={Boolean(is_disabled)} />
         case "editor":
             return <ComponentTextEditor article={article} />
         case "file":
-            return <ComponentFile article={article} is_multiply={props.settings?.is_multiply} request_object={request_object} object_id={object_id} />
+            return <ComponentFile
+                article={article}
+                allowedFormats={props.settings?.allowed_formats}
+                max_size={props.settings?.max_size}
+                is_multiply={props.settings?.is_multiply}
+                request_object={request_object}
+                object_id={object_id} />
         case "radio":
             return <ComponentRadio
                 article={article}
@@ -262,7 +269,7 @@ const ModuleFormButtons = React.memo<TModuleFormButtons>(props => {
     const { className, buttons, isSubpage, isFormInsideModal, handleSubmit } = props
     const setHandleSubmit = useHandleSubmitContext()
     const resolvedClassName = `componentButton_container ${className}`
-    
+
     const resolvedButtons = useMemo(() => {
         if (isSubpage && !isFormInsideModal) {
             return buttons.filter(button => button.type !== "submit")
@@ -277,7 +284,7 @@ const ModuleFormButtons = React.memo<TModuleFormButtons>(props => {
 
     useEffect(() => {
         if (isSubpage && !isFormInsideModal && submitButton) {
-            setHandleSubmit({...submitButton, type: "submit", customHandler: handleSubmit})
+            setHandleSubmit({ ...submitButton, type: "submit", customHandler: handleSubmit })
             return () => setHandleSubmit(prev => isEqual(prev?.customHandler, handleSubmit) ? null : prev)
         }
     }, [])
@@ -399,23 +406,23 @@ const ModuleForm: React.FC<ModuleFormType> = ({ components, settings }) => {
 
     return <FormContext.Provider value={contextValue}>
         <Formik
-        enableReinitialize
-        initialValues={formConfiguration.initialValues}
-        onSubmit={handleSubmit}
-        validationSchema={formConfiguration.validationSchema}
-    >
-        {({ handleSubmit }) => {
-            return <div className="moduleForm">
-                <FormikForm>
-                    <div className="moduleForm_container">
-                        {areas.map(area => <ModuleFormArea key={getAreaKey(area)} {...area} buttons={fieldButtons} request_object={object} object_id={id} />)}
-                    </div>
-                    <ModuleFormButtons className={buttonsContainerAdditionalClass} buttons={mainButtons} handleSubmit={handleSubmit} isSubpage={isSubpage} isFormInsideModal={isFormInsideModal} />
-                </FormikForm>
-                <InfoModal />
-            </div>
-        }}
-    </Formik>
+            enableReinitialize
+            initialValues={formConfiguration.initialValues}
+            onSubmit={handleSubmit}
+            validationSchema={formConfiguration.validationSchema}
+        >
+            {({ handleSubmit }) => {
+                return <div className="moduleForm">
+                    <FormikForm>
+                        <div className="moduleForm_container">
+                            {areas.map(area => <ModuleFormArea key={getAreaKey(area)} {...area} buttons={fieldButtons} request_object={object} object_id={id} />)}
+                        </div>
+                        <ModuleFormButtons className={buttonsContainerAdditionalClass} buttons={mainButtons} handleSubmit={handleSubmit} isSubpage={isSubpage} isFormInsideModal={isFormInsideModal} />
+                    </FormikForm>
+                    <InfoModal />
+                </div>
+            }}
+        </Formik>
     </FormContext.Provider>
 }
 

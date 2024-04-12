@@ -1,0 +1,34 @@
+.componentRadio {
+    width: 100%;
+
+    &.disabled {
+        opacity: 0.5;
+    }
+
+    &_button {
+        font-size: 0.925rem;
+        font-weight: 600;
+        padding: calc(0.55rem + 1px) calc(1.25rem + 1px);
+        white-space: nowrap;
+        border: 1px solid transparent;
+        transition: background-color 0.3s, border-color 0.3s;
+        background-color: var(--kt-primary-light);
+        color: var(--kt-primary);
+
+        &:first-child {
+            border-top-left-radius: 0.425rem;
+            border-bottom-left-radius: 0.425rem;
+        }
+
+        &:last-child {
+            border-top-right-radius: 0.425rem;
+            border-bottom-right-radius: 0.425rem;
+        }
+
+        &.selected,
+        &:hover:not(.disabled) {
+            color: var(--kt-primary-inverse);
+            background-color: var(--kt-primary);
+        }
+    }
+}

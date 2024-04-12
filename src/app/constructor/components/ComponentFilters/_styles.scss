@@ -1,0 +1,175 @@
+.componentFilters {
+    &_dropdown {
+        background-color: var(--kt-gray-300);
+    }
+
+    &_dropdownContainer {
+        flex-grow: 1;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    &_dropdownMenu {
+        & .componentButton {
+            width: 100%;
+            margin-top: 1.25rem;
+        }
+
+        & .componentCheckbox {
+            & .form-check-label {
+                font-size: 1.05rem;
+                font-weight: 600;
+            }
+        }
+    }
+
+    &_dropdownFiltersContainer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        max-height: 500px;
+        overflow-y: auto;
+    }
+
+    &_dropdownFilter {
+        padding: 0 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    &_block {
+        flex-grow: 1;
+    }
+
+    &_blockForm {
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    &_blockContainer {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    &_blockButton {
+        margin-left: 10px;
+    }
+
+    &_blockFilter {
+        width: 20%;
+        flex-shrink: 0;
+
+        &:not(:last-child) {
+            margin-right: 5%;
+        }
+    }
+
+    &_stringForm {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        &>*:not(:last-child) {
+            margin: 0 1rem 2rem 0;
+        }
+    }
+
+    &_stringFilterContainer {
+        width: calc(16% - 1rem);
+        min-width: 200px;
+    }
+
+    &_stringFilter {
+
+        &.form-control.componentDate_input,
+        &.form-control.form-control-solid {
+            border: 1px solid var(--kt-gray-300);
+            color: var(--kt-text-muted);
+            padding: 0.5rem;
+            transition: all 0s;
+
+            &:focus {
+                border-color: var(--application-theme-color);
+                color: inherit;
+                background-color: transparent;
+            }
+
+            &.selected:not(:focus) {
+                background-color: var(--application-theme-color);
+                color: var(--kt-primary-inverse);
+                border-color: var(--application-theme-color);
+            }
+        }
+
+
+
+        &.componentSelect {
+            &__control {
+                border: 1px solid var(--kt-gray-300) !important;
+                color: inherit !important;
+                min-height: unset;
+
+                &--is-focused {
+                    border-color: var(--application-theme-color) !important;
+                }
+
+                &.selected:not(.componentSelect__control--is-focused) {
+                    background-color: var(--application-theme-color) !important;
+                    color: var(--kt-primary-inverse) !important;
+                    border-color: var(--application-theme-color) !important;
+
+                    & .componentSelect__indicator,
+                    & .componentSelect__value-container {
+                        color: inherit;
+                    }
+                }
+            }
+
+            &__placeholder {
+                color: var(--kt-text-muted) !important;
+            }
+
+            &__value-container,
+            &__indicator {
+                padding: 0.5rem !important;
+            }
+        }
+
+        &.componentCheckbox {
+            height: 100%;
+            margin-right: 0;
+
+            & .form-check-input:checked {
+                background-color: var(--application-theme-color);
+            }
+
+            & .form-check-label {
+                font-size: 1.1rem;
+                font-weight: 500;
+            }
+        }
+
+    }
+
+    &_stringButton.componentButton {
+        border: 1px solid var(--kt-gray-300);
+
+        & svg g {
+            fill: var(--kt-text-muted);
+        }
+
+        &:hover {
+            border-color: var(--application-theme-color);
+            background-color: var(--application-theme-color);
+
+            & svg g {
+                fill: var(--kt-primary-inverse);
+            }
+        }
+    }
+
+    &_hiddenDropdown {
+        display: none;
+    }
+}

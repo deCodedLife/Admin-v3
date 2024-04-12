@@ -1,0 +1,50 @@
+.componentArray {
+    display: flex;
+    flex-wrap: wrap;
+
+    &_item {
+        position: relative;
+        background-color: var(--kt-input-solid-bg);
+        border: 1px solid var(--kt-input-solid-bg);
+        border-radius: 0.475rem;
+        color: var(--kt-input-solid-color);
+        padding: 0.775rem 1rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        line-height: 1.5;
+        margin: 10px 10px 10px 0;
+        cursor: pointer;
+        transition: border-color 0.3s;
+
+        &:hover {
+            border-color: var(--kt-danger);
+        }
+    }
+
+    &_button {
+        align-self: center;
+    }
+
+    &_form {
+        display: flex;
+        flex-wrap: wrap;
+        min-width: 250px;
+
+        &_field {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0 0.5rem;
+            margin-bottom: 10px;
+        }
+    }
+
+    &_formButtons {
+        width: 100%;
+        padding: 0 0.5rem;
+
+        & .componentButton:first-child {
+            margin-right: 10px;
+        }
+    }
+}

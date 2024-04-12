@@ -1,0 +1,76 @@
+.componentDrawer {
+    --drawer-variable: 640px;
+    position: fixed;
+    background-color: var(--kt-app-bg-color);
+    transition: transform 0.5s;
+    padding: 1rem 0.5rem;
+    overflow: auto;
+
+    &_wrapper {
+        position: fixed;
+        top: 0;
+        right: 0;
+
+        background-color: rgba($color: #000000, $alpha: 0.5);
+
+        &.active {
+            bottom: 0;
+            left: 0;
+        }
+    }
+
+    &.top {
+        width: 100%;
+        height: var(--drawer-variable);
+        top: 0;
+        left: 0;
+        transform: translateY(-100%);
+
+        &.active {
+            transform: translateY(0);
+        }
+    }
+
+    &.right {
+        width: var(--drawer-variable);
+        height: 100vh;
+        top: 0;
+        right: 0;
+        transform: translateX(100%);
+
+        &.active {
+            transform: translateX(0);
+        }
+    }
+
+    &.bottom {
+        width: 100%;
+        height: var(--drawer-variable);
+        bottom: 0;
+        left: 0;
+        transform: translateY(100%);
+
+        &.active {
+            transform: translateY(0);
+        }
+    }
+
+    &.left {
+        width: var(--drawer-variable);
+        height: 100vh;
+        top: 0;
+        left: 0;
+        transform: translateX(-100%);
+
+        &.active {
+            transform: translateX(0);
+        }
+    }
+
+    & .btn-close {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        z-index: 2;
+    }
+}

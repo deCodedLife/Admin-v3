@@ -1,0 +1,1 @@
+export type TComponentTextEditor = { article: string, variables?: Array<any>, tableVariables?: Array<any> }

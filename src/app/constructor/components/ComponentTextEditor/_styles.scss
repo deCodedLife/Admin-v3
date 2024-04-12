@@ -1,0 +1,33 @@
+.componentTextEditor {
+    &_signature {
+        height: 300px;
+        width: 100%;
+        border: 1px dashed var(--kt-gray-300);
+        border-radius: 0.625rem;
+    }
+
+    &_signatureModal {
+        z-index: 9999;
+    }
+
+    &_signatureModalBackdrop {
+        z-index: 9998;
+    }
+
+    &.invalid {
+        & .tox-tinymce {
+            border-color: var(--kt-danger);
+        }
+    }
+}
+
+.tox {
+    & .tox-dialog-wrap .tox-dialog {
+        max-width: 80vw;
+        overflow: auto;
+    }
+
+    & .tox-dialog__body-nav {
+        overflow: auto;
+    }
+}

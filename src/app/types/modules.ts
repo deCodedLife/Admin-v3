@@ -1,7 +1,9 @@
 import moment from "moment"
 import { ApiDatabaseSchemeType, ApiModuleType, ApiNotificationTypesType, ApiObjectSchemeType, ApiPageSchemeType, ApiPermissionType, ApiRoleType, ApiScheduleType, ApiWidgetType } from "./api"
-import { ComponentFilterType, ComponentInfoType, ComponentInputType, ComponentPhoneType, ComponentSelectType } from "./components"
+import { ComponentInputType, ComponentPhoneType, ComponentSelectType } from "./components"
 import { TComponentButton } from "../constructor/components/ComponentButton/_types"
+import { TComponentInfo } from "../constructor/components/ComponentInfo/_types"
+import { TComponentFilter } from "../constructor/components/ComponentFilters/_types"
 
 //тип модуля по умолчанию. Используется для создания типов конкретных модулей
 export type DefaultModuleType<type = string, components = any, settings = any> = {
@@ -63,9 +65,10 @@ type ModuleFormFieldRadioType = DefaultModuleFormFieldType<"radio", null, {
 type ModuleFormFieldAddressType = DefaultModuleFormFieldType<"dadata_address" | "dadata_country" | "dadata_region" |
     "dadata_local_area" | "dadata_city" | "dadata_street" | "dadata_passport", null, { min_value?: number, max_value?: number }>
 type ModuleFormFieldGoogleAddressType = DefaultModuleFormFieldType<"google_address", null, { min_value?: number, max_value?: number }>
-type ModuleFormFieldImageType = DefaultModuleFormFieldType<"image", null | { is_multiply?: boolean, allowed_formats?: Array<string>, is_editor?: boolean }, { min_value?: number, max_value?: number }>
+type ModuleFormFieldImageType = DefaultModuleFormFieldType<"image",
+    null | { is_multiply?: boolean, allowed_formats?: Array<string>, max_size?: number, is_editor?: boolean }, { min_value?: number, max_value?: number }>
 type ModuleFormFieldEditorType = DefaultModuleFormFieldType<"editor", null, { min_value?: number, max_value?: number }>
-type ModuleFormFieldFileType = DefaultModuleFormFieldType<"file", null | { is_multiply?: boolean }, { min_value?: number, max_value?: number }>
+type ModuleFormFieldFileType = DefaultModuleFormFieldType<"file", null | { is_multiply?: boolean, allowed_formats?: Array<string>, max_size?: number }, { min_value?: number, max_value?: number }>
 type ModuleFormFieldStringsType = DefaultModuleFormFieldType<"info_strings", null, { min_value?: number, max_value?: number }>
 type ModuleFormFieldSmartListType = DefaultModuleFormFieldType<"smart_list", { properties: Array<ModuleFormFieldType>, is_headers_shown?: boolean }, { min_value?: number, max_value?: number }>
 type ModuleFormFieldLayoutType = DefaultModuleFormFieldType<"layout", null | { is_edit?: boolean }, { min_value?: number, max_value?: number }>
@@ -106,7 +109,7 @@ export type ModuleFormType = DefaultModuleType<"form", { buttons: Array<ModuleFo
 export type ModuleInfoFieldType = {
     title: string,
     article: string,
-    data_type: ComponentInfoType["data_type"],
+    data_type: TComponentInfo["data_type"],
     field_type: string,
     value: string | number | Array<string> | Array<number>
 }
@@ -200,7 +203,7 @@ export type ModuleListHeaderCellType = {
     setFilter: (values: any) => void,
     isListEditable: boolean
 }
-export type ModuleListType = DefaultModuleType<"list", { filters: Array<ComponentFilterType>, buttons: Array<TComponentButton>, search?: boolean }, {
+export type ModuleListType = DefaultModuleType<"list", { filters: Array<TComponentFilter>, buttons: Array<TComponentButton>, search?: boolean }, {
     object: string,
     headers: ModuleListHeadersType,
     filters: { [key: string]: any },
@@ -263,7 +266,7 @@ export type ModuleWidgetsWidgetType = {
 export type ModuleWidgetsViewType = { data?: ApiWidgetType, is_hard: boolean }
 
 export type ModuleWidgetsType = DefaultModuleType<"analytic_widgets",
-    { filters: Array<ComponentFilterType>, buttons: Array<TComponentButton> },
+    { filters: Array<TComponentFilter>, buttons: Array<TComponentButton> },
     { filters: { [key: string]: any }, widgets_group: string, is_hard: boolean, linked_filter?: string }>
 
 //модуль Roles
@@ -378,7 +381,7 @@ export type ModuleScheduleModalType = {
     selectedCell: any,
     setSelectedCell: (value: null) => void
 }
-export type ModuleScheduleType = DefaultModuleType<"schedule", { filters: Array<ComponentFilterType>, buttons: Array<TComponentButton> }, {
+export type ModuleScheduleType = DefaultModuleType<"schedule", { filters: Array<TComponentFilter>, buttons: Array<TComponentButton> }, {
     object: string,
     filters: Object
 }>
@@ -511,7 +514,7 @@ export type ModuleMiniChatType = DefaultModuleType<"mini_chat", any, {
 }>
 
 //модуль Calendar
-export type ModuleCalendarType = DefaultModuleType<"calendar", { filters: Array<ComponentFilterType>, buttons: Array<TComponentButton> }, {
+export type ModuleCalendarType = DefaultModuleType<"calendar", { filters: Array<TComponentFilter>, buttons: Array<TComponentButton> }, {
     object: string,
     events: { add: string, update: string },
     context_keys: Array<string>,
@@ -547,7 +550,7 @@ export type ModuleFunnelColumnType = {
     handleOnDrop: (columnId: number) => void
     handleClick: (id: number, currentColumnId: number) => void,
 }
-export type ModuleFunnelType = DefaultModuleType<"funnel", { filters: Array<ComponentFilterType>, buttons: Array<TComponentButton> }, { object: string, property: string, filter: string }>
+export type ModuleFunnelType = DefaultModuleType<"funnel", { filters: Array<TComponentFilter>, buttons: Array<TComponentButton> }, { object: string, property: string, filter: string }>
 
 //модуль News
 export type ModuleNewsCardType = {
@@ -570,7 +573,7 @@ export type ModuleLogsLogType = {
     table_name: string,
     users_id: Array<{ title: string, value: number }> | null
 }
-export type ModuleLogsType = DefaultModuleType<"logs", { filters: Array<ComponentFilterType> }, { object: string, filters: Array<any> | Object }>
+export type ModuleLogsType = DefaultModuleType<"logs", { filters: Array<TComponentFilter> }, { object: string, filters: Array<any> | Object }>
 
 //модуль LinksBlock 
 export type ModuleLinksBlockLinkType = {
@@ -705,10 +708,10 @@ export type ModuleQueueTalonType = {
     object: string,
     detail: Array<string>
 }
-export type ModuleQueueType = DefaultModuleType<"queue", { filters: Array<ComponentFilterType> }, { object: string }>
+export type ModuleQueueType = DefaultModuleType<"queue", { filters: Array<TComponentFilter> }, { object: string }>
 
 //модуль YandexMap
-export type ModuleYandexMapType = DefaultModuleType<"yandex_map", { filters: Array<ComponentFilterType> }, { object: string, filters: any }>
+export type ModuleYandexMapType = DefaultModuleType<"yandex_map", { filters: Array<TComponentFilter> }, { object: string, filters: any }>
 
 //модуль Buttons
 export type ModuleButtonsType = DefaultModuleType<"buttons", { buttons: Array<TComponentButton> }>

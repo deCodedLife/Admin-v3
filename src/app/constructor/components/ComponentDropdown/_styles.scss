@@ -1,0 +1,41 @@
+.componentDropdown {
+    &_toggle {
+        color: var(--kt-text-muted);
+        background-color: transparent;
+        border: none;
+        border-radius: 4rem;
+        outline: none;
+        padding: 8px;
+        transition: 0.3s;
+
+        & .svg-icon {
+            color: inherit;
+
+            svg {
+                width: 1.75rem;
+                height: 1.75rem;
+            }
+        }
+
+        &:hover {
+            color: var(--kt-primary-active);
+            background-color: var(--kt-light);
+        }
+    }
+
+    & .dropdown-menu {
+        background-color: transparent;
+        padding: 0;
+        box-shadow: none;
+    }
+
+    & .dropdown-item {
+        border-radius: 0.425rem;
+        padding: 0;
+    }
+
+    & .componentButton {
+        border: 1px solid var(--kt-text-muted);
+        width: 100%;
+    }
+}

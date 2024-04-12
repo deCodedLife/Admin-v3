@@ -1,0 +1,1 @@
+export type TComponentInCreation = { type: string }

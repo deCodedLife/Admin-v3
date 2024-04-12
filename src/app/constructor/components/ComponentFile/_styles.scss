@@ -1,0 +1,112 @@
+.componentFile {
+    &_container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    &_uploader {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        width: 100%;
+        min-height: 100px;
+        padding: 1.1rem 0 0 1.1rem;
+        border: 1px dashed var(--kt-input-border-color);
+        border-radius: 0.475rem;
+        background-color: transparent;
+        transition: border-color 0.3s;
+
+
+        &.active {
+            border-color: var(--kt-primary);
+        }
+    }
+
+    &_uploadMoreButtonContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+        width: 150px;
+        margin-bottom: 1.1rem;
+    }
+
+    &_uploadMoreButton.componentButton {
+        border: 1px solid var(--kt-input-border-color);
+        border-radius: 0.475rem;
+        width: 100%;
+    }
+
+    &_uploaderText {
+        width: 100%;
+        margin: 0;
+        font-size: 12px;
+        -webkit-user-select: none;
+        user-select: none;
+        text-align: center;
+        color: var(--kt-text-muted);
+        margin-bottom: 1.1rem;
+    }
+
+    &_uploadLink {
+        font-size: 1.1rem;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    &_props {
+        max-width: 250px;
+        font-size: 0.85rem;
+        color: var(--kt-text-muted);
+        margin-top: 0.5rem;
+        text-align: center;
+    }
+
+    &_allowedFormat, &_maxSize {
+        font-weight: 600;
+        color: var(--kt-text-dark);
+    }
+
+    &_preview {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid var(--kt-input-border-color);
+        border-radius: 0.475rem;
+        height: 100px;
+        width: 150px;
+        margin: 0 1.1rem 1.1rem 0;
+        padding: 0 0.5rem;
+    }
+
+    &_previewIcon {
+        margin-bottom: 10px;
+
+        & svg {
+            width: 50px;
+            height: 50px;
+        }
+    }
+
+    &_previewLink {
+        font-weight: 500;
+        white-space: nowrap;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &_deleteButton.componentButton {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(50%, -50%);
+        border: 1px solid var(--kt-input-border-color);
+        border-radius: 4rem;
+        height: 30px;
+        width: 30px;
+    }
+}
