@@ -1,109 +1,14 @@
+//компонент Button 
 @import "../constructor/components/ComponentButton/styles";
 
 //компонент Input 
-.componentInput {
-    &_passwordCheckboxContainer {
-        margin: 5px 0;
-    }
-}
+@import "../constructor/components/ComponentInput/styles";
 
 //компонент Textarea
-.componentTextarea {
-    resize: none;
-
-    &::-webkit-scrollbar {
-        background-color: transparent;
-        width: 3px;
-        height: 3px;
-        border-left: none;
-        background-image: none;
-
-        &-thumb {
-            background-color: var(--kt-scrollbar-color);
-            border-radius: 10px;
-        }
-    }
-}
+@import  "../constructor/components/ComponentTextarea/styles";
 
 //компонент Select. постфиксы классов нужно смотреть в документации по react-select или в DOM-дереве
-.componentSelect {
-    &__control {
-        height: 100%;
-        background-color: var(--kt-input-solid-bg) !important;
-        border-color: var(--kt-input-solid-bg) !important;
-        border-radius: 0.475rem !important;
-        color: var(--kt-input-solid-color);
-        font-size: 1.1rem;
-        font-weight: 500;
-        box-shadow: none !important;
-
-        &.invalid {
-            border-color: var(--kt-danger) !important;
-        }
-    }
-
-    &__value-container {
-        padding: 0.775rem 0 0.775rem 1rem !important;
-
-        & .componentSelect__multi-value {
-            background-color: var(--kt-card-bg);
-            border-radius: 0.475rem;
-        }
-    }
-
-    &__input-container {
-        color: inherit !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-
-    &__multi-value {
-        &__add {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 4px;
-            border-radius: 2px;
-            width: 22px;
-            flex-shrink: 0;
-            font-weight: 700;
-            transition: color 0.3s, background-color 0.3s;
-
-            &:hover {
-                background-color: var(--kt-primary);
-                color: var(--kt-primary-inverse);
-            }
-        }
-    }
-
-    &__multi-value__label,
-    &__single-value {
-        color: inherit !important;
-        white-space: unset !important;
-        text-overflow: unset !important;
-    }
-
-    &__menu {
-        background-color: var(--kt-card-bg) !important;
-        color: var(--kt-input-solid-color);
-    }
-
-    &__option {
-
-        &:hover,
-        &:active,
-        &:focus,
-        &.componentSelect__option--is-focused,
-        &.componentSelect__option--is-selected {
-            color: var(--kt-primary-inverse) !important;
-            background-color: var(--kt-primary) !important;
-        }
-    }
-
-    &__indicator-separator {
-        display: none;
-    }
-}
+@import "../constructor/components/ComponentSelect/styles";
 
 //компонент Info
 @import "../constructor/components/ComponentInfo/styles";
@@ -151,156 +56,30 @@
 @import "../constructor/components/ComponentInfoStrings/styles";
 
 //компонент SmartList
-.componentSmartList {
-    --border-color: var(--kt-card-border-color);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+@import "../constructor/components/ComponentSmartList/styles";
 
-    &_addButton {
-        width: 25%;
-    }
-
-    &_propertiesContainer {
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-
-    &_propertiesRow {
-        position: relative;
-        display: flex;
-        flex-wrap: wrap;
-        padding: 1rem 0.75rem;
-        border: 1px solid var(--border-color);
-        border-radius: 0.625rem;
-
-        &:not(:last-child) {
-            margin-bottom: 1rem;
-        }
-    }
-
-    &_propertiesRowButton {
-        position: absolute;
-        top: 1px;
-        right: 1px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: none;
-        background-color: transparent;
-        width: 20px;
-        height: 20px;
-
-        & .svg-icon {
-            transition: color 0.3s;
-        }
-
-        &:hover {
-            & .svg-icon {
-                color: var(--kt-danger);
-            }
-        }
-    }
-
-    &_property {
-        padding: 0 0.5rem 0.5rem;
-    }
-
-    &_propertyLabel {
-        max-width: 100%;
-        margin-bottom: 0;
-        font-size: 0.9rem;
-        font-weight: 600;
-        line-height: 1.5;
-        color: var(--kt-form-label-color);
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-
-    }
-}
-
+//компонент Annotation
 @import "../constructor/components/ComponentAnnotation/styles";
 
 //компонент Tooltip 
-.componentTooltip {
-    position: fixed;
-    white-space: pre-wrap;
-    z-index: 10000;
+@import "../constructor/components/ComponentTooltip/styles";
 
-    & .tooltip-inner {
-        max-width: 300px;
-        text-align: left;
-        background-color: var(--kt-card-bg);
-        color: inherit;
-    }
-
-    & .tooltip-arrow::before {
-        border-top-color: var(--kt-card-bg);
-    }
-
-    &.centered .tooltip-inner {
-        text-align: center;
-    }
-}
-
-//компонент Popover 
-.componentPopover {
-    position: fixed;
-}
-
+//компонент Audio 
 @import "../constructor/components/ComponentAudio/styles";
 
 //компонент Phone
-.componentPhone {
-    flex-grow: 1;
-
-    &.withButton {
-        margin-right: 1rem;
-    }
-
-    &_container {
-        display: flex;
-        align-items: center;
-    }
-
-    &_button {
-        flex-shrink: 0;
-    }
-}
+@import "../constructor/components/ComponentPhone/styles";
 
 //компонент Layout
-.componentLayout {
-
-    & table {
-        width: 100%;
-
-        tr {
-            &:nth-child(odd) {
-                background-color: var(--kt-app-bg-color);
-            }
-
-            &:nth-child(even) {
-                background-color: var(--kt-card-bg);
-            }
-
-            & td {
-                padding: 0.5rem;
-            }
-        }
-
-        &_editButton {
-            margin-bottom: 0.5rem;
-        }
-    }
-}
-
+@import "../constructor/components/ComponentLayout/styles";
 
 //компонент Drawer 
 @import "../constructor/components/ComponentDrawer/styles";
 
+//компонент GooglePlaces
+@import "../constructor/components/ComponentGooglePlaces/styles" ;
 
-//контейнер выпадающего списка GoogleAddress
-.pac-container {
-    z-index: 2000;
+//компонент Popover 
+.componentPopover {
+    position: fixed;
 }

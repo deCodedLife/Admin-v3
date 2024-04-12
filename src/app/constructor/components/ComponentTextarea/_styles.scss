@@ -1,0 +1,16 @@
+.componentTextarea {
+    resize: none;
+
+    &::-webkit-scrollbar {
+        background-color: transparent;
+        width: 3px;
+        height: 3px;
+        border-left: none;
+        background-image: none;
+
+        &-thumb {
+            background-color: var(--kt-scrollbar-color);
+            border-radius: 10px;
+        }
+    }
+}

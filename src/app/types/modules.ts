@@ -1,9 +1,11 @@
 import moment from "moment"
-import { ApiDatabaseSchemeType, ApiModuleType, ApiNotificationTypesType, ApiObjectSchemeType, ApiPageSchemeType, ApiPermissionType, ApiRoleType, ApiScheduleType, ApiWidgetType } from "./api"
-import { ComponentInputType, ComponentPhoneType, ComponentSelectType } from "./components"
+import { ApiDatabaseSchemeType, ApiModuleType, ApiNotificationTypesType, ApiObjectSchemeType, ApiPageSchemeType, ApiPermissionType, ApiRoleType, ApiWidgetType } from "./api"
 import { TComponentButton } from "../constructor/components/ComponentButton/_types"
 import { TComponentInfo } from "../constructor/components/ComponentInfo/_types"
 import { TComponentFilter } from "../constructor/components/ComponentFilters/_types"
+import { TComponentInput } from "../constructor/components/ComponentInput/_types"
+import { TComponentSelect } from "../constructor/components/ComponentSelect/_types"
+import { TComponentPhone } from "../constructor/components/ComponentPhone/_types"
 
 //тип модуля по умолчанию. Используется для создания типов конкретных модулей
 export type DefaultModuleType<type = string, components = any, settings = any> = {
@@ -38,10 +40,10 @@ type DefaultModuleFormFieldType<field_type = string, settings = null, additional
     object_id?: string | number,
     request_object?: string
 } & additionals
-type ModuleFormFieldInputType = DefaultModuleFormFieldType<ComponentInputType["field_type"], null, { min_value?: number, max_value?: number, suffix?: string }>
+type ModuleFormFieldInputType = DefaultModuleFormFieldType<TComponentInput["field_type"], null, { min_value?: number, max_value?: number, suffix?: string }>
 type ModuleFormFieldTextareaType = DefaultModuleFormFieldType<"textarea", { rows?: number } | null, { min_value?: number, max_value?: number }>
 type ModuleFormFieldPriceType = DefaultModuleFormFieldType<"price", null, { min_value?: number, max_value?: number }>
-type ModuleFormFieldPhoneType = DefaultModuleFormFieldType<"phone", null, { min_value?: number, max_value?: number, script?: ComponentPhoneType["script"] }>
+type ModuleFormFieldPhoneType = DefaultModuleFormFieldType<"phone", null, { min_value?: number, max_value?: number, script?: TComponentPhone["script"] }>
 type ModuleFormFieldDateType = DefaultModuleFormFieldType<"date" | "time" | "datetime" | "month", null, { min_value?: number, max_value?: number }>
 type ModuleFormFieldCheckboxType = DefaultModuleFormFieldType<"checkbox", null, { min_value?: number, max_value?: number }>
 type ModuleFormFieldSelectType = DefaultModuleFormFieldType<"list", { is_duplicate: boolean, object: string, select: Array<string> | string, select_menu: Array<string> | string } | null, {
@@ -50,7 +52,7 @@ type ModuleFormFieldSelectType = DefaultModuleFormFieldType<"list", { is_duplica
         value: string | number,
         joined_field_value?: string,
     }>,
-    data_type: ComponentSelectType["data_type"],
+    data_type: TComponentSelect["data_type"],
     joined_field?: string,
     joined_field_filter?: string,
     on_change_submit?: boolean,
@@ -141,7 +143,7 @@ export type ModuleListUpdateFieldType = {
     title: string,
     article: string,
     field_type: ModuleFormFieldType["field_type"],
-    data_type: ComponentSelectType["data_type"],
+    data_type: TComponentSelect["data_type"],
     list?: Array<{
         title: string,
         value: string | number

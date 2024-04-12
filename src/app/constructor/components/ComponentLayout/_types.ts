@@ -1,0 +1,1 @@
+export type TComponentLayout = { article: string, is_edit?: boolean }

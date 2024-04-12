@@ -1,0 +1,68 @@
+.componentSmartList {
+    --border-color: var(--kt-card-border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &_addButton {
+        width: 25%;
+    }
+
+    &_propertiesContainer {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    &_propertiesRow {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 1rem 0.75rem;
+        border: 1px solid var(--border-color);
+        border-radius: 0.625rem;
+
+        &:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+    }
+
+    &_propertiesRowButton {
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background-color: transparent;
+        width: 20px;
+        height: 20px;
+
+        & .svg-icon {
+            transition: color 0.3s;
+        }
+
+        &:hover {
+            & .svg-icon {
+                color: var(--kt-danger);
+            }
+        }
+    }
+
+    &_property {
+        padding: 0 0.5rem 0.5rem;
+    }
+
+    &_propertyLabel {
+        max-width: 100%;
+        margin-bottom: 0;
+        font-size: 0.9rem;
+        font-weight: 600;
+        line-height: 1.5;
+        color: var(--kt-form-label-color);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+    }
+}

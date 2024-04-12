@@ -1,0 +1,24 @@
+.componentLayout {
+
+    & table {
+        width: 100%;
+
+        tr {
+            &:nth-child(odd) {
+                background-color: var(--kt-app-bg-color);
+            }
+
+            &:nth-child(even) {
+                background-color: var(--kt-card-bg);
+            }
+
+            & td {
+                padding: 0.5rem;
+            }
+        }
+
+        &_editButton {
+            margin-bottom: 0.5rem;
+        }
+    }
+}

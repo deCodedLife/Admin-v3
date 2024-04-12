@@ -1,0 +1,20 @@
+.componentTooltip {
+    position: fixed;
+    white-space: pre-wrap;
+    z-index: 10000;
+
+    & .tooltip-inner {
+        max-width: 300px;
+        text-align: left;
+        background-color: var(--kt-card-bg);
+        color: inherit;
+    }
+
+    & .tooltip-arrow::before {
+        border-top-color: var(--kt-card-bg);
+    }
+
+    &.centered .tooltip-inner {
+        text-align: center;
+    }
+}
