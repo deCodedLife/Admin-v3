@@ -1,4 +1,4 @@
-import {TDefaultModule} from "../../../types/modules";
+import { TDefaultModule } from "../_types"
 import React from "react";
 
 export type TModuleAppEditorHandleDropItem = { type: "field", areaIndex: number, blockIndex: number, source: any } |

@@ -1,0 +1,54 @@
+.moduleRoles {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 300px;
+
+    &_cardContainer {
+        padding: 0 calc(var(--bs-gutter-x) * 0.5);
+        margin-bottom: 10px;
+    }
+
+    &_card {
+        height: 100%;
+    }
+
+    &_field {
+        margin-bottom: 2.5rem;
+    }
+
+    &_field_label {
+        max-width: 100%;
+        margin-bottom: 0.5rem;
+        font-size: 1.25rem;
+        font-weight: 600;
+        line-height: 1.5;
+        color: var(--kt-form-label-color);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &_buttonsContainer {
+        display: flex;
+        margin-top: 3.75rem;
+        justify-content: center;
+
+        & .componentButton:first-child {
+            margin-right: 10px;
+        }
+    }
+
+    &_permission {
+        width: 25%;
+        margin-bottom: 5px;
+        overflow-x: hidden;
+    }
+
+    & .card-footer {
+        display: flex;
+        & > *:not(:last-child) {
+            margin-right: 1rem;
+        } 
+    }
+}

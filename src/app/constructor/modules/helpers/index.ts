@@ -5,7 +5,7 @@ import { conformToMask } from 'react-text-mask';
 import { createNumberMask } from 'text-mask-addons';
 import * as Yup from 'yup';
 import { isEqual } from 'lodash';
-import { ApiSetupType } from '../../../types/api';
+import { TApiSetup } from '../../../types/api';
 import { ModalContext } from '../ModuleSchedule';
 import {TModuleFormArea, TModuleFormField} from "../ModuleForm/_types";
 
@@ -80,7 +80,7 @@ export const titleFileFormatRemover = (name: string) => name.replace(/\.\w+/, ""
 
 
 //функция для получения маски телефона
-export const getMaskedPhone = (format: ApiSetupType["phone_format"]) => {
+export const getMaskedPhone = (format: TApiSetup["phone_format"]) => {
     switch (format) {
         case "usa":
             return {
@@ -106,7 +106,7 @@ export const getMaskedPhone = (format: ApiSetupType["phone_format"]) => {
 
 
 //функция для форматирования наложения маски на телефон (строка)
-export const getMaskedString = (value: any, type: "phone" | "price" | "float" | "integer", context: ApiSetupType, suffix = "") => {
+export const getMaskedString = (value: any, type: "phone" | "price" | "float" | "integer", context: TApiSetup, suffix = "") => {
     if ((!value && typeof value !== "number") || value === "null" || value === "undefined") {
         return ""
     } else {
@@ -151,7 +151,7 @@ export const getMaskedString = (value: any, type: "phone" | "price" | "float" | 
 
 
 //функция для выдачи формата дат в зависимости от настройки приложения
-export const getDateFormat = (type: "time" | "date" | "datetime" | "month", context: ApiSetupType, useIn: "string" | "field") => {
+export const getDateFormat = (type: "time" | "date" | "datetime" | "month", context: TApiSetup, useIn: "string" | "field") => {
     const { lang } = context
     switch (type) {
         case "time":

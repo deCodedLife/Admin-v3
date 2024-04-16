@@ -1,0 +1,57 @@
+.moduleDeveloper {
+    &_requestsWrapper {
+        display: none;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1040;
+
+        &.show {
+            display: block;
+        }
+    }
+
+    &_requests {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        max-height: 75%;
+        background-color: var(--kt-card-bg);
+        padding: 1rem;
+        transform: translateY(-100%);
+        transition: transform 0.5s;
+        z-index: 1041;
+
+        &.show {
+            transform: translateY(0);
+            box-shadow: var(--bs-card-box-shadow);
+        }
+    }
+
+    &_requestsForm {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &_requestsResponse {
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+
+    &_requestsButtons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-left: 1rem;
+
+        &>*:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    }
+}

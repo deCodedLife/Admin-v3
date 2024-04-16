@@ -1,6 +1,6 @@
 import { useQuery } from "react-query"
 import api from ".."
-import { ApiResponseType } from "../../types/api"
+import { TApiResponse } from "../../types/api"
 import { getErrorToast } from "../../constructor/helpers/toasts"
 
 
@@ -19,7 +19,7 @@ const useSchemes = <dataType = any>(type = "main", scheme_type?: string, scheme_
         enabled,
         keepPreviousData: true,
         refetchOnWindowFocus: false,
-        select: (data: ApiResponseType<dataType>) => data.data,
+        select: (data: TApiResponse<dataType>) => data.data,
         onError: (error: any) => getErrorToast(error.message)
     }
     const { isLoading, isFetching, error, data, refetch } = useQuery(fetchKey, fetchFunction, hookConfiguration)

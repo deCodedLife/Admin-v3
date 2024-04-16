@@ -1,0 +1,169 @@
+.moduleSchemes {
+
+    &_searchContainer {
+        margin-bottom: 1rem;
+    }
+
+    &_schemeList {
+        flex-grow: 1;
+        list-style-type: none;
+        padding-left: 0;
+        padding-right: 10px;
+        overflow-y: auto;
+
+        &_container {
+            flex: 0 0 auto;
+            width: 25%;
+            padding-right: 10px;
+
+            & form {
+                display: flex;
+                flex-direction: column;
+                height: calc(100vh - var(--kt-app-header-height) - 30px * 2 - (2rem + 2.25rem) - 52px);
+            }
+        }
+
+        &_item {
+            margin-bottom: 5px;
+            transition: background-color 0.3s;
+            padding: 5px;
+            border-radius: 0.425rem;
+            user-select: none;
+            cursor: pointer;
+
+            &.selected {
+                background-color: var(--kt-primary-active);
+                color: var(--kt-primary-inverse);
+            }
+        }
+    }
+
+    &_content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 0 0 auto;
+        width: 75%;
+        padding-left: 10px;
+    }
+
+    &_form {
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - var(--kt-app-header-height) - 30px * 2 - (2rem + 2.25rem) - 52px);
+
+        &_container {
+            width: 100%;
+            height: 100%;
+        }
+
+    }
+
+    &_fieldsSection {
+        width: 100%;
+        margin-bottom: 10px;
+
+        &.propertiesSection {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+    }
+
+    &_fieldsSectionTitle {
+        margin-bottom: 15px;
+    }
+
+    &_fieldsRow {
+        display: flex;
+        width: 100%;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+    }
+
+    &_field {
+        padding: 0 5px;
+
+        &_label {
+            width: 100%;
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+            font-weight: 500;
+            line-height: 1.5;
+            color: var(--kt-form-label-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    &_buttonsContainer {
+        display: flex;
+
+        & .componentButton:not(:last-child) {
+            margin-right: 10px;
+        }
+    }
+
+    &_propertyControls {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &>*:not(:last-child) {
+            margin-bottom: 5px;
+        }
+    }
+
+    &_propertySwapButton {
+        & .svg-icon svg {
+            transform: rotate(90deg);
+        }
+
+        &.down .svg-icon svg {
+            transform: rotate(-90deg);
+        }
+    }
+
+    &_propertyCheckbox {
+        margin-right: 0;
+    }
+
+    &_pageTab {
+        position: relative;
+        border: 2px dashed var(--kt-card-border-color);
+        border-radius: 0.625rem;
+        padding: 10px;
+        margin-bottom: 30px;
+    }
+
+    &_pageTabButton {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+
+        & .svg-icon svg {
+            transform: rotate(90deg);
+        }
+
+        &.down {
+            top: unset;
+            bottom: 10px;
+
+            & .svg-icon svg {
+                transform: rotate(-90deg);
+            }
+        }
+    }
+
+    &_actionsCell {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &_actionsCellHead {
+        width: 100px;
+    }
+
+}

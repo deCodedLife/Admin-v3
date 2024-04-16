@@ -3,9 +3,9 @@ import React from 'react'
 import { SidebarMenuItemWithSub } from './SidebarMenuItemWithSub'
 import { SidebarMenuItem } from './SidebarMenuItem'
 import useMenu from '../../../../../app/api/hooks/useMenu'
-import { MenuItemType } from '../../../../../app/types/global'
+import { TMenuItem } from '../../../../../app/types/global'
 
-const MenuItem: React.FC<MenuItemType> = (props) => {
+const MenuItem: React.FC<TMenuItem> = (props) => {
   const { children, href, icon, title } = props
   const hasBullet = !Boolean(icon)
   const resolvedIconPath = icon ? `/media/crm/icons/${icon}.svg` : undefined

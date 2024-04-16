@@ -1,6 +1,6 @@
 import { useQuery } from "react-query"
 import api from ".."
-import { ApiResponseType } from "../../types/api"
+import { TApiResponse } from "../../types/api"
 import { getErrorToast } from "../../constructor/helpers/toasts"
 
 
@@ -13,7 +13,7 @@ const useCalendar = <dataType = any>(object: string, requestData: any) => {
     const hookConfiguration = {
         retry: false,
         refetchOnWindowFocus: false,
-        select: (data: ApiResponseType<dataType>) => data.data,
+        select: (data: TApiResponse<dataType>) => data.data,
         onError: (error: any) => getErrorToast(error.message),
     }
     const { isLoading, isFetching, error, data, refetch } = useQuery(fetchKey, fetchFunction, hookConfiguration)

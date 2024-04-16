@@ -1,0 +1,98 @@
+.moduleFunnel {
+    display: flex;
+    flex-wrap: wrap;
+
+    &_column {
+        width: 33%;
+        padding: 0 0.75rem;
+        margin-bottom: 50px;
+
+        &.dragEnter {
+            & .moduleFunnel_columnReport {
+                top: -50px;
+            }
+        }
+    }
+
+    &_columnReport {
+        background-color: var(--kt-primary);
+        position: relative;
+        top: 0;
+        transition: top 0.3s;
+        width: 100%;
+        height: 230px;
+        border-radius: 0.625rem;
+        padding: 1.75rem 2.25rem 0;
+        user-select: none;
+    }
+
+    &_columnReportContent {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--kt-text-white);
+        padding-top: 2rem;
+    }
+
+    &_columnReportTitle {
+        margin: 0;
+        font-size: 1.35rem;
+        font-weight: 600;
+        color: inherit;
+    }
+
+    &_columnReportCounter {
+        padding-top: 0.25rem;
+        font-size: 2rem;
+        font-weight: 600;
+    }
+
+
+    &_columnList {
+        position: relative;
+        height: 400px;
+        overflow: auto;
+        background-color: var(--kt-body-bg);
+        margin: -100px 2.25rem 2.25rem;
+        padding: 2.25rem 1.5rem;
+        box-shadow: var(--kt-box-shadow-xs);
+        border-radius: 0.625rem;
+        z-index: 1;
+    }
+
+    &_item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 1.5rem;
+    }
+
+    &_itemMainProps {
+        width: calc(100% - 0.5rem - 35px);
+    }
+
+    &_itemTitle {
+        white-space: nowrap;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: 600;
+        font-size: 1.15rem;
+        color: var(--kt-text-gray-800);
+        transition: color 0.2s;
+        margin: 0;
+    }
+
+    &_itemTags {
+        &>* {
+            margin: 0 0.5rem 0.5rem 0;
+        }
+    }
+
+    &_modalField {
+        padding: 0 0.75rem;
+        margin-bottom: 10px;
+    }
+}

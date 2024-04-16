@@ -1,6 +1,6 @@
 import { useQuery } from "react-query"
 import api from ".."
-import { ApiResponseType } from "../../types/api"
+import { TApiResponse } from "../../types/api"
 import { getErrorToast } from "../../constructor/helpers/toasts"
 
 
@@ -14,7 +14,7 @@ const useRequest = <dataType = any>(object: string, command: string, requestData
         retry: false,
         refetchOnWindowFocus: false,
         enabled,
-        select: (data: ApiResponseType<dataType>) => data.data,
+        select: (data: TApiResponse<dataType>) => data.data,
         /* временно убрать тосты, т.к. запрос на получение полей редактирования (List) работает только у RitZip */
         onError: (error: any) => {}/* getErrorToast(error.message) */,
     }

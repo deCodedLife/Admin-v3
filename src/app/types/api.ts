@@ -1,39 +1,46 @@
-import { MenuItemType } from "./global"
-import {
-    ModuleAccordionType,
-
-    ModuleButtonsType,
-    ModuleCalendarType,
-    ModuleChatType, ModuleDayPlanningType, ModuleFunnelType, ModuleHeaderType,
-    ModuleInfoType, ModuleLinksBlockType, ModuleLogsType, ModuleMiniChatType, ModuleNewsType, ModuleQueueType,
-    ModuleRolesType, ModuleTabsType,
-    ModuleYandexMapType
-} from "./modules"
-import {TModuleAppEditor} from "../constructor/modules/ModuleAppEditor/_types";
-import {TModuleDocuments} from "../constructor/modules/ModuleDocuments/_types";
-import {TModuleSchedule, TModuleScheduleServerCell} from "../constructor/modules/ModuleSchedule/_types";
-import {TModuleWidgets} from "../constructor/modules/ModuleWidgets/_types";
-import {TModuleList} from "../constructor/modules/ModuleList/_types";
-import {TModuleForm} from "../constructor/modules/ModuleForm/_types";
+import { TMenuItem } from "./global"
+import { TModuleAppEditor } from "../constructor/modules/ModuleAppEditor/_types";
+import { TModuleDocuments } from "../constructor/modules/ModuleDocuments/_types";
+import { TModuleSchedule, TModuleScheduleServerCell } from "../constructor/modules/ModuleSchedule/_types";
+import { TModuleWidgets } from "../constructor/modules/ModuleWidgets/_types";
+import { TModuleList } from "../constructor/modules/ModuleList/_types";
+import { TModuleForm } from "../constructor/modules/ModuleForm/_types";
+import { TModuleHeader } from "../constructor/modules/ModuleHeader/_types";
+import { TModuleInfo } from "../constructor/modules/ModuleInfo/_types";
+import { TModuleRoles } from "../constructor/modules/ModuleRoles/_types";
+import { TModuleTabs } from "../constructor/modules/ModuleTabs/_types";
+import { TModuleChat } from "../constructor/modules/ModuleChat/_types";
+import { TModuleMiniChat } from "../constructor/modules/ModuleMiniChat/_types";
+import { TModuleCalendar } from "../constructor/modules/ModuleCalendar/_types";
+import { TModuleFunnel } from "../constructor/modules/ModuleFunnel/_types";
+import { TModuleNews } from "../constructor/modules/ModuleNews/_types";
+import { TModuleLogs } from "../constructor/modules/ModuleLogs/_types";
+import { TModuleLinksBlock } from "../constructor/modules/ModuleLinksBlock/_types";
+import { TModuleAccordion } from "../constructor/modules/ModuleAccordion/_types";
+import { TModuleDayPlanning } from "../constructor/modules/ModuleDayPlanning/_types";
+import { TModuleQueue } from "../constructor/modules/ModuleQueue/_types";
+import { TModuleYandexMap } from "../constructor/modules/ModuleYandexMap/_types";
+import { TModuleButtons } from "../constructor/modules/ModuleButtons/_types";
 
 //общий тип ответа серверного Api
-export type ApiResponseType<data> = {
+export type TApiResponse<data> = {
     status: number,
     data: data,
     detail: any
 }
 //тип ответа запроса меню
-export type ApiMenuType = Array<MenuItemType>
+export type TApiMenu = Array<TMenuItem>
 //тип всех возможных модулей, приходящих с сервера
-export type ApiModuleType = ModuleHeaderType | TModuleForm | ModuleInfoType | TModuleList |
-    TModuleWidgets | ModuleRolesType | TModuleSchedule | ModuleTabsType |
-    ModuleChatType | ModuleMiniChatType | ModuleCalendarType | TModuleDocuments | ModuleFunnelType |
-    ModuleNewsType | ModuleLogsType | ModuleLinksBlockType | TModuleAppEditor | ModuleAccordionType |
-    ModuleDayPlanningType | ModuleQueueType | ModuleYandexMapType | ModuleButtonsType
+export type TApiModule = TModuleHeader | TModuleForm | TModuleInfo | TModuleList |
+    TModuleWidgets | TModuleRoles | TModuleSchedule | TModuleTabs |
+    TModuleChat | TModuleMiniChat | TModuleCalendar | TModuleDocuments |
+    TModuleFunnel | TModuleNews | TModuleLogs | TModuleLinksBlock |
+    TModuleAppEditor | TModuleAccordion | TModuleDayPlanning | TModuleQueue |
+    TModuleYandexMap | TModuleButtons
 //тип ответа запроса страницы
-export type ApiPageType = Array<ApiModuleType>
+export type TApiPage = Array<TApiModule>
 //тип ответа запроса роли 
-export type ApiRoleType = {
+export type TApiRole = {
     article: string,
     id: number,
     permissions: Array<{
@@ -47,7 +54,7 @@ export type ApiRoleType = {
     title: string,
 }
 //тип запроса доступов 
-export type ApiPermissionType = {
+export type TApiPermission = {
     group_description: string | null,
     group_id: number,
     group_parent: number,
@@ -61,7 +68,7 @@ export type ApiPermissionType = {
     }>
 }
 //тип запроса типов уведомлений 
-export type ApiNotificationTypesType = Array<{
+export type TApiNotificationTypes = Array<{
     article: string,
     id: number,
     title: string,
@@ -69,7 +76,7 @@ export type ApiNotificationTypesType = Array<{
     description?: string
 }>
 //тип ответа расписания 
-export type ApiScheduleType = {
+export type TApiSchedule = {
     schedule?: {
         [key: string]: {
             [key: string | number]: {
@@ -86,14 +93,14 @@ export type ApiScheduleType = {
     steps_list: Array<string>
 }
 //тип ответа на общий запрос схем БД
-export type ApiSchemesType = {
+export type TApiSchemes = {
     command: any,
     page: any,
     object: Array<string>,
     db: Array<string>
 }
 //тип ответа на схему БД (Команда)
-export type ApiCommandSchemeType = {
+export type TApiCommandScheme = {
     title: string,
     type: string,
     object_scheme: string,
@@ -101,7 +108,7 @@ export type ApiCommandSchemeType = {
     permissions: Array<string>
 }
 //тип ответа на схему БД (База)
-export type ApiDatabaseSchemeType = {
+export type TApiDatabaseScheme = {
     title: string,
     properties: Array<{
         title: string,
@@ -112,7 +119,7 @@ export type ApiDatabaseSchemeType = {
     }>
 }
 //тип ответа на схему БД (Объект)
-export type ApiObjectSchemeType = {
+export type TApiObjectScheme = {
     title: string,
     table: string,
     is_trash: boolean,
@@ -124,7 +131,7 @@ export type ApiObjectSchemeType = {
     }>
 }
 //тип ответа на схему БД (Страница)
-export type ApiPageSchemeType = {
+export type TApiPageScheme = {
     required_modules: Array<string>,
     required_permissions: Array<string>,
     structure: Array<{
@@ -137,7 +144,7 @@ export type ApiPageSchemeType = {
 }
 
 //тип ответа инициализационных настроек 
-export type ApiSetupType = {
+export type TApiSetup = {
     theme?: string,
     dialog_widget?: {
         groups: { object: string, property: string },
@@ -157,4 +164,4 @@ export type ApiSetupType = {
 }
 
 //тип ответа виджетов
-export type TApiWidget = Array<any> | {report: Array<any>, status: "no_cache" | "updating" | "updated", updated_at: null | string}
+export type TApiWidget = Array<any> | { report: Array<any>, status: "no_cache" | "updating" | "updated", updated_at: null | string }

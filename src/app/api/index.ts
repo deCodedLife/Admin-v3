@@ -1,5 +1,5 @@
 import axios from "axios"
-import { ApiResponseType } from "../types/api"
+import { TApiResponse } from "../types/api"
 import { getErrorToast } from "../constructor/helpers/toasts"
 
 
@@ -54,7 +54,7 @@ const api = async <dataType = any>(object: string | undefined, command: string, 
     if (!object) {
         throw new Error("Отсутствует объект запроса")
     }
-    const { data: responseData, headers } = await instanse.post<ApiResponseType<dataType>>(`?q=${object}__${command}`, {
+    const { data: responseData, headers } = await instanse.post<TApiResponse<dataType>>(`?q=${object}__${command}`, {
         object,
         command,
         data,
@@ -84,7 +84,7 @@ export const fileApi = async <dataType = any>(object: string | undefined, comman
     if (!object) {
         throw new Error("Отсутствует объект запроса")
     }
-    const { data: responseData, headers } = await fileInstance.post<ApiResponseType<dataType>>(`?q=${object}__${command}`, {
+    const { data: responseData, headers } = await fileInstance.post<TApiResponse<dataType>>(`?q=${object}__${command}`, {
         object,
         command,
         data,
@@ -111,7 +111,7 @@ export const uploadFiles = async (object: string, command: string, data: any) =>
         }
     }
 
-    const { data: responseData } = await instanse.post<ApiResponseType<any>>(`?q=${object}__${command}`, formData, {
+    const { data: responseData } = await instanse.post<TApiResponse<any>>(`?q=${object}__${command}`, formData, {
         headers: {
             "Content-Type": "multipart/form-data"
         }

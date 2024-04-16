@@ -1,0 +1,23 @@
+.moduleInCreation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 300px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 0.425rem;
+
+    & .moduleInCreation_image {
+        & svg {
+            width: 100px !important;
+            height: 100px !important;
+        }
+    }
+
+    &_description {
+        margin-top: 10px;
+        font-weight: 600;
+        color: var(--kt-text-dark);
+    }
+}

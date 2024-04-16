@@ -12,7 +12,7 @@ import SplashScreen from "../../helpers/SplashScreen"
 import { useFilter } from "../helpers"
 import { useIntl } from "react-intl"
 import setModalIndex from "../../helpers/setModalIndex"
-import { ApiScheduleType } from "../../../types/api"
+import { TApiSchedule } from "../../../types/api"
 import {
     TModuleSchedule,
     TModuleScheduleCell,
@@ -58,7 +58,7 @@ const getEmployeeSchedule = (schedule: Array<TModuleScheduleServerCell>, steps_l
         }
     }, [])
 }
-const getScheduleAsArray = (data?: ApiScheduleType) => {
+const getScheduleAsArray = (data?: TApiSchedule) => {
     if (data && data.schedule) {
         const { schedule, steps_list } = data
         return Object.entries(schedule).map(([header, body]) => ({

@@ -81,7 +81,6 @@ const ComponentFile: React.FC<TComponentFile> = props => {
     const validationUploadedFile = async (files: FileList | null) => {
         if (files?.length) {
             const ArrayFromFiles = isMulti ? Array.from(files) : [files[0]]
-            console.log(ArrayFromFiles)
             const isFileSizeAllowed = ArrayFromFiles.every(file => file.size <= resolvedMaxSize)
             const isFileFormatAllowed = allowedFormats.length ? ArrayFromFiles.every(file => allowedFormats.some(format => file.type.includes(format) || file.name.includes(format))) : true
             if (isFileFormatAllowed && isFileSizeAllowed) {
@@ -170,7 +169,7 @@ const ComponentFile: React.FC<TComponentFile> = props => {
         />
     </div>
     {allowedFormats?.length ? <div className="componentFile_props">
-            {intl.formatMessage({ id: "FILE.ALLOWED_FORMATS" })} {allowedFormats.map((format, index, array) => <span
+            {intl.formatMessage({ id: "FILE.ALLOWED_FORMATS" })} {allowedFormats.map((format, index, array) => <span key={format}
                 className="componentFile_allowedFormat">{`${format}${index !== array.length - 1 ? ", " : "."}`}</span>)}
         </div> : null}
         <div className="componentFile_props">{intl.formatMessage({ id: "FILE.MAX_SIZE" })} <span className="componentImage_maxSize">{`${resolvedMaxSizeAsMB} MB.`}</span></div>

@@ -2,7 +2,7 @@ import {TComponentButton} from "../../components/ComponentButton/_types";
 import {TComponentInput} from "../../components/ComponentInput/_types";
 import {TComponentPhone} from "../../components/ComponentPhone/_types";
 import {TComponentSelect} from "../../components/ComponentSelect/_types";
-import {TDefaultModule} from "../../../types/modules";
+import { TDefaultModule } from "../_types"
 
 type TModuleFormButton = TComponentButton & { settings: { field_place?: string, visible?: boolean } }
 type TDefaultModuleFormField<field_type = string, settings = null, additionals = {}> = {

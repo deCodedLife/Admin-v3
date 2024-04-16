@@ -1,0 +1,102 @@
+.moduleMiniChat {
+    &_messagesContainer {
+        height: 400px;
+        overflow: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &_emptyContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        font-weight: 700;
+        font-size: 24px;
+        color: var(--kt-gray-400);
+    }
+
+    &_messageContainer {
+        display: flex;
+        flex-direction: column;
+
+        &:not(:last-child) {
+            margin-bottom: 2.5rem;
+        }
+
+        &.author {
+            align-items: flex-end;
+
+            & .moduleMiniChat_messageProperties {
+                flex-direction: row-reverse;
+            }
+
+            & .moduleMiniChat_messageDescription {
+                margin-left: 0;
+                margin-right: 0.75rem;
+                flex-direction: row-reverse;
+            }
+
+            & .moduleMiniChat_messageAuthor {
+                margin-left: 0.25rem;
+                margin-right: 0;
+            }
+
+            & .moduleMiniChat_messageContent {
+                background-color: var(--kt-primary-light);
+            }
+        }
+    }
+
+    &_messageProperties {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+
+    &_messagePhoto {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+    }
+
+    &_messageDescription {
+        display: flex;
+        align-items: baseline;
+        margin-left: 0.75rem;
+    }
+
+    &_messageAuthor {
+        color: var(--kt-text-gray-900);
+        font-weight: 600;
+        font-size: 1.15rem;
+        margin-right: 0.25rem;
+    }
+
+    &_messageDate {
+        color: var(--kt-text-muted);
+        font-size: 0.95rem;
+    }
+
+    &_messageContent {
+        padding: 1.25rem;
+        border-radius: 0.475rem;
+        max-width: 400px;
+        background-color: var(--kt-info-light);
+    }
+
+    &_messagesTextarea {
+        flex-grow: 1;
+        padding-top: 15px;
+        background-color: var(--kt-card-bg);
+        border-radius: calc(0.625rem - 1px);
+        margin-bottom: 0.75rem;
+
+    }
+
+    &_messagesButtonsContainer {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+}

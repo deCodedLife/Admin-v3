@@ -18,8 +18,8 @@ import ModuleRoles from "../constructor/modules/ModuleRoles"
 import ModuleSchedule from "../constructor/modules/ModuleSchedule"
 import ModuleTabs from "../constructor/modules/ModuleTabs"
 import ModuleWidgets from "../constructor/modules/ModuleWidgets"
-import { ApiModuleType as ModuleType } from "../types/api"
-import { PageBuilderType } from "../types/global"
+import { TApiModule as ModuleType } from "../types/api"
+import { TPageBuilder } from "../types/global"
 import { useLocation } from "react-router-dom"
 import ModuleAccordion from "../constructor/modules/ModuleAccordion"
 import ModuleDayPlanning from "../constructor/modules/ModuleDayPlanning"
@@ -120,7 +120,7 @@ const getModuleKey = (module: ModuleType) => {
     }
 }
 
-const PageBuilder: React.FC<PageBuilderType> = ({ data, isFetching, showProgressBar = true }) => {
+const PageBuilder: React.FC<TPageBuilder> = ({ data, isFetching, showProgressBar = true }) => {
     const { pathname } = useLocation()
     return <PageProvider>
         <div className={`pageBuilder_container${isFetching ? " loading" : ""}`}>

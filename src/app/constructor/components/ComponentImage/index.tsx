@@ -271,7 +271,7 @@ const ComponentImage: React.FC<TComponentImage> = ({ article, allowedFormats = [
             multiple={isMulti}
         />
         {allowedFormats?.length ? <div className="componentImage_props">
-            {intl.formatMessage({ id: "IMAGE.ALLOWED_FORMATS" })} {allowedFormats.map((format, index, array) => <span
+            {intl.formatMessage({ id: "IMAGE.ALLOWED_FORMATS" })} {allowedFormats.map((format, index, array) => <span key={format}
                 className="componentImage_allowedFormat">{`${format}${index !== array.length - 1 ? ", " : "."}`}</span>)}
         </div> : null}
         <div className="componentImage_props">{intl.formatMessage({ id: "IMAGE.MAX_SIZE" })} <span className="componentImage_maxSize">{`${resolvedMaxSizeAsMB} MB.`}</span></div>

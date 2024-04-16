@@ -1,6 +1,6 @@
 import { useQuery } from "react-query"
 import api from ".."
-import { ApiResponseType } from "../../types/api"
+import { TApiResponse } from "../../types/api"
 import { getErrorToast } from "../../constructor/helpers/toasts"
 import { useDebounce } from "../../../_metronic/helpers"
 
@@ -17,7 +17,7 @@ const useSearchRequest = (props: {object: string, context: string, value: string
         retry: false,
         refetchOnWindowFocus: false,
         enabled: isRequestEnabled,
-        select: (data: ApiResponseType<Array<any>>) => {
+        select: (data: TApiResponse<Array<any>>) => {
             return data
         },
         onError: (error: any) => getErrorToast(error.message)

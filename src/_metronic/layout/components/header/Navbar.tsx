@@ -10,7 +10,7 @@ import useMutate from '../../../../app/api/hooks/useMutate'
 import ModuleDomRu from '../../../../app/constructor/modules/ModuleDomRu'
 import usePrevious from '../../../../app/constructor/helpers/usePrevious'
 import useNotifications from '../../../../app/api/hooks/useNotifications'
-import ModuleDialog from '../../../../app/constructor/modules/ModuleDIalog'
+import ModuleDialog from '../../../../app/constructor/modules/ModuleDialog'
 import ModuleDeveloper from '../../../../app/constructor/modules/ModuleDeveloper'
 import ModuleSalaryWidgets from '../../../../app/constructor/modules/ModuleSalaryWidgets'
 

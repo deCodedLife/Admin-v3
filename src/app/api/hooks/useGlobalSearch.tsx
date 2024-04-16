@@ -1,20 +1,20 @@
 import { useQuery } from "react-query"
 import api from ".."
-import { ApiResponseType } from "../../types/api"
-import { GlobalSearchSectionType } from "../../types/global"
+import { TApiResponse } from "../../types/api"
+import { TGlobalSearchSection } from "../../types/global"
 import { getErrorToast } from "../../constructor/helpers/toasts"
 
 const useGlobalSerach = (search: string) => {
     const fetchKey = ["global-search", search]
 
-    const fetchFunction = () => api<Array<GlobalSearchSectionType>>("admin", "global-search", { search })
+    const fetchFunction = () => api<Array<TGlobalSearchSection>>("admin", "global-search", { search })
     const isRequestEnabled = search.length > 3 || search.length === 0
     const hookConfiguration = {
         retry: false,
         refetchOnWindowFocus: false,
         enabled: isRequestEnabled,
         keepPreviousData: true,
-        select: (data: ApiResponseType<Array<GlobalSearchSectionType>>) => {
+        select: (data: TApiResponse<Array<TGlobalSearchSection>>) => {
             return data.data
         },
         onError: (error: any) => getErrorToast(error.message)

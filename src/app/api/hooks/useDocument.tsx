@@ -2,7 +2,7 @@ import { useMemo } from "react"
 import { useQuery } from "react-query"
 import { useLocation } from "react-router-dom"
 import api from ".."
-import { ApiResponseType } from "../../types/api"
+import { TApiResponse } from "../../types/api"
 import { getErrorToast } from "../../constructor/helpers/toasts"
 
 
@@ -31,7 +31,7 @@ const useDocument = () => {
         retry: false,
         refetchOnWindowFocus: false,
         enabled,
-        select: (data: ApiResponseType<Array<{
+        select: (data: TApiResponse<Array<{
             title: string,
             structure?: Array<{
                 block_position: number | null,

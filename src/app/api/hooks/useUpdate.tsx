@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useQuery } from "react-query"
 import api from ".."
 import { useAuth } from "../../modules/auth"
-import { ApiResponseType } from "../../types/api"
+import { TApiResponse } from "../../types/api"
 import { getErrorToast } from "../../constructor/helpers/toasts"
 
 
@@ -19,7 +19,7 @@ const useUpdate = (updateFunctions: Array<{ active: boolean, update: () => void 
         refetchOnWindowFocus: false,
         refetchInterval,
         enabled: isEnabled,
-        select: (data: ApiResponseType<string | number>) => data.data,
+        select: (data: TApiResponse<string | number>) => data.data,
         onError: (error: any) => getErrorToast(error.message),
 
     }

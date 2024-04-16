@@ -1,0 +1,174 @@
+/*  
+    70px - высота шапки
+    30px * 2 - поля контейнера
+    51px - кнопка полного экрана
+    10px - общий нижний отступ для модулей
+*/
+$moduleQueueHeight: calc(100vh - var(--kt-app-header-height) - 30px * 2 - 51px - 10px);
+
+.moduleQueue {
+
+    @keyframes textBlink {
+        0% {
+            color: transparent;
+        }
+
+        100% {
+            color: inherit;
+        }
+    }
+
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.625rem;
+    background-color: var(--kt-app-bg-color);
+    padding: 0 1rem;
+    min-height: $moduleQueueHeight;
+
+    &_fullscreenButton {
+        margin-bottom: 1rem;
+    }
+
+    &::backdrop {
+        background-color: inherit;
+    }
+
+    &_header {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        color: var(--application-theme-color);
+    }
+
+    &_filters {
+        flex-grow: 1;
+        display: flex;
+
+        &>*:not(:last-child) {
+            margin-right: 1rem;
+        }
+    }
+
+    &_filter {
+        &.componentSelect__control {
+            color: inherit;
+            background-color: transparent !important;
+            border: none !important;
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+    }
+
+    &_dateContainer {
+        display: flex;
+        align-items: center;
+    }
+
+    &_time {
+        font-size: 2.5rem;
+        margin-right: 1rem;
+        font-weight: 500;
+    }
+
+    &_date {
+        flex-shrink: 0;
+        font-size: 1.25rem;
+    }
+
+    &_talonsList {
+        position: relative;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: inherit;
+        font-size: 6rem;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    &_talonsHeader {
+        height: 70px;
+        background-color: var(--application-theme-color);
+        color: var(--kt-primary-inverse);
+        font-size: 3rem;
+        border-radius: 0.625rem;
+    }
+
+    &_talonsHeader,
+    &_talonRow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &>* {
+            flex-shrink: 0;
+        }
+    }
+
+    &_talonRow {
+        :not(:last-child) {
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    &_talon,
+    &_cabinet {
+        width: 20%;
+        white-space: nowrap;
+    }
+
+    &_direction {
+        width: 10%;
+    }
+
+    &_detail {
+        width: 50%;
+    }
+
+    &_detail {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        font-weight: 500;
+        line-height: 1.25;
+
+        &.hide {
+            color: transparent;
+        }
+    }
+
+    &_announce {
+        display: none;
+        position: absolute;
+        top: 70px;
+        right: 0;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: inherit;
+        width: 50%;
+        height: calc(100% - 70px);
+        color: var(--application-theme-color);
+
+        &.active {
+            display: flex;
+
+            & .moduleQueue_announceText {
+                animation: textBlink 1s infinite alternate;
+            }
+        }
+    }
+
+    &_notice {
+        color: var(--kt-text-muted);
+        font-size: 4rem;
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+}

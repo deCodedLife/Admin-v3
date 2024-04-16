@@ -1,0 +1,207 @@
+.moduleDialog {
+
+    &_sectionTitle {
+        margin: 0 0.25rem 0.5rem 0;
+        font-size: 1.25rem;
+        font-weight: 700;
+        line-height: 1;
+        color: var(--kt-text-gray-900);
+        transition: color 0.2s ease;
+        user-select: none;
+
+        &:hover {
+            color: var(--kt-primary);
+        }
+    }
+
+    &_body {
+        flex-grow: 1;
+        overflow-x: hidden;
+        overflow-y: auto;
+        position: relative;
+
+        &.card-body {
+            padding: 0;
+        }
+    }
+
+    &_groupsWrapper {
+        min-height: 100%;
+        max-height: 100%;
+        overflow-y: auto;
+        padding: 2rem 2.25rem;
+    }
+
+    &_groupsList,
+    &_chatsList {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+
+        &>*:not(:last-child) {
+            margin-bottom: 3px;
+        }
+    }
+
+    &_groupItem,
+    &_chatItem {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid transparent;
+        border-radius: 0.625rem;
+        padding: 1rem;
+        transition: all 0.3s;
+
+        &:hover {
+            color: var(--kt-primary);
+            border-color: var(--kt-primary);
+            user-select: none;
+            cursor: pointer;
+        }
+
+        &.selected {
+            background-color: var(--kt-primary);
+            color: var(--kt-primary-inverse);
+            border-color: transparent;
+        }
+    }
+
+    &_counter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 20px;
+        width: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        background-color: var(--kt-primary);
+        color: var(--kt-primary-inverse);
+        border-radius: 0.625rem;
+    }
+
+    &_chatsWrapper {
+        position: absolute;
+        background-color: var(--kt-card-bg);
+        min-height: 100%;
+        max-height: 100%;
+        overflow-y: auto;
+        width: 100%;
+        padding: 2rem 2.25rem;
+        top: 0;
+        left: 100%;
+        transition: left 0.3s;
+
+        &.active {
+            left: 0;
+        }
+    }
+
+    &_messagesWrapper {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--kt-card-bg);
+        min-height: 100%;
+        max-height: 100%;
+        width: 100%;
+        padding: 2rem 2.25rem;
+        top: 0;
+        left: 100%;
+        transition: left 0.3s;
+
+        &.active {
+            left: 0;
+        }
+    }
+
+    &_messagesContainer {
+        flex-grow: 1;
+        overflow-y: auto;
+        margin-bottom: 2rem;
+    }
+
+    &_messagesTextarea {
+        background-color: var(--kt-card-bg);
+        border-radius: calc(0.625rem - 1px);
+        margin-bottom: 0.75rem;
+    }
+
+    &_messagesButtonsContainer {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    &_emptyContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        flex-grow: 1;
+        font-weight: 700;
+        font-size: 24px;
+        color: var(--kt-gray-400);
+        user-select: none;
+    }
+
+    &_returnButton {
+        min-width: 35px;
+        min-height: 35px;
+        margin-right: 10px;
+
+        &.disabled {
+            opacity: 0;
+            pointer-events: none;
+        }
+    }
+}
+
+.messageToast {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid var(--kt-card-border-color);
+    background-color: var(--kt-card-bg);
+    border-radius: 0.625rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+
+    &.show {
+        opacity: 1;
+    }
+
+    &_avatar {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 4rem;
+        flex-shrink: 0;
+    }
+
+    &_content {
+        width: 280px;
+        margin-left: 0.5rem;
+    }
+
+    &_author {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &_message {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 0;
+    }
+
+    &_closeButton {
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        color: var(--kt-text-muted);
+        background-color: transparent;
+        border: none;
+    }
+}

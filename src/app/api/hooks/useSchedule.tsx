@@ -1,6 +1,6 @@
 import { useQuery } from "react-query"
 import api from ".."
-import { ApiResponseType, ApiScheduleType } from "../../types/api"
+import { TApiResponse, TApiSchedule } from "../../types/api"
 import { getErrorToast } from "../../constructor/helpers/toasts"
 
 
@@ -16,7 +16,7 @@ const useSchedule = (object: string, filters = {}) => {
         retry: false,
         keepPreviousData: true,
         refetchOnWindowFocus: false,
-        select: (data: ApiResponseType<ApiScheduleType>) => data.data,
+        select: (data: TApiResponse<TApiSchedule>) => data.data,
         onError: (error: any) => getErrorToast(error.message)
     }
     const { isLoading, isFetching, error, data, refetch } = useQuery(fetchKey, fetchFunction, hookConfiguration)

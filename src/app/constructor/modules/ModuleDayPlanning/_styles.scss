@@ -1,0 +1,201 @@
+@mixin moduleDayPlanning_bulletColor($color) {
+    background-color: $color;
+}
+
+@mixin moduleDayPlanning_timeColor($color, $percent) {
+    background-color: lighten($color, $percent);
+}
+
+.moduleDayPlanning {
+    &_rowsContainer {
+        min-height: 70px;
+        opacity: 1;
+        transition: opacity 0.5s;
+
+        &.loading {
+            opacity: 0.5;
+            pointer-events: none;
+            user-select: none;
+        }
+    }
+
+    &_row {
+        display: flex;
+        align-items: center;
+
+        &:not(:last-child) {
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    &_rowBullet {
+        display: flex;
+        min-height: 70px;
+        max-height: 100%;
+
+        &.bg-light_blue {
+            @include moduleDayPlanning_bulletColor(deepskyblue)
+        }
+
+        &.bg-blue {
+            @include moduleDayPlanning_bulletColor(#009ef7)
+        }
+
+        &.bg-yellow {
+            @include moduleDayPlanning_bulletColor(yellow)
+        }
+
+        &.bg-orange {
+            @include moduleDayPlanning_bulletColor(orange)
+        }
+
+        &.bg-green {
+            @include moduleDayPlanning_bulletColor(#50cd89)
+        }
+
+        &.bg-pink {
+            @include moduleDayPlanning_bulletColor(pink)
+        }
+
+        &.bg-red {
+            @include moduleDayPlanning_bulletColor(#f1416c)
+        }
+
+        &.bg-purple {
+            @include moduleDayPlanning_bulletColor(#7239ea)
+        }
+    }
+
+    &_rowBody {
+        flex-grow: 1;
+        padding: 0 1rem;
+    }
+
+    &_rowTime {
+        display: inline-flex;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.625rem;
+        font-size: 1.275rem;
+        font-weight: 600;
+        color: #181c32;
+
+        &.light_blue {
+            @include moduleDayPlanning_timeColor(deepskyblue, 35%)
+        }
+
+        &.blue, &.primary {
+            @include moduleDayPlanning_timeColor(#009ef7, 25%)
+        }
+
+        &.yellow {
+            @include moduleDayPlanning_timeColor(yellow, 40%)
+        }
+
+        &.orange {
+            @include moduleDayPlanning_timeColor(orange, 35%)
+        }
+
+        &.green {
+            @include moduleDayPlanning_timeColor(#50cd89, 25%)
+        }
+
+        &.pink {
+            @include moduleDayPlanning_timeColor(pink, 10%)
+        }
+
+        &.red {
+            @include moduleDayPlanning_timeColor(#f1416c, 25%)
+        }
+
+        &.purple {
+            @include moduleDayPlanning_timeColor(#7239ea, 25%)
+        }
+    }
+
+    &_rowContent {
+        font-size: 1.025rem;
+        font-weight: 500;
+        color: var(--kt-text-gray-700);
+    }
+
+    &_rowLinks {
+        font-size: 1.075rem;
+        font-weight: 500;
+        color: var(--kt-primary);
+    }
+
+    &_rowLink {
+        transition: color 0.3s;
+        cursor: pointer;
+        &:hover {
+            color: var(--kt-primary-active);
+        }
+        &:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    }
+
+    &_rowButtons {
+        display: flex;
+        align-items: center;
+
+        &>*:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    }
+
+    &_datesContainer {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+    }
+
+    &_date {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 50rem;
+        padding: 1rem 0.75rem;
+        transition: color 0.3s, background-color 0.3s;
+        user-select: none;
+        cursor: pointer;
+
+        &:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+
+        &.active,
+        &:hover {
+            background-color: var(--application-theme-color);
+            color: var(--kt-primary-inverse);
+
+            &>* {
+                color: inherit;
+            }
+        }
+    }
+
+    &_dateWeekDay {
+        font-size: 0.95rem;
+        color: var(--kt-text-muted);
+    }
+
+    &_dateMonthDay {
+        font-size: 1.075rem;
+        font-weight: 600;
+    }
+
+    &_emptyList {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        min-height: inherit;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--kt-text-muted);
+        user-select: none;
+    }
+}

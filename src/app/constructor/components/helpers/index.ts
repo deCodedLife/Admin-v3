@@ -2,7 +2,7 @@ import moment from "moment"
 import api from "../../../api"
 import { set, unset } from "lodash"
 import { getMaskedString } from "../../modules/helpers"
-import { ApiSetupType } from "../../../types/api"
+import { TApiSetup } from "../../../types/api"
 import { useEffect, useState } from "react"
 
 //функция вызова хука у поля после изменения значений
@@ -71,7 +71,7 @@ export const useHook = (article: string, values: any, setFieldValue: (article: s
     return setValueForHook
 }
 //функции для автоподстановки переменных в документ
-const getFormattedValue = (type: string, value: any, context: ApiSetupType) => {
+const getFormattedValue = (type: string, value: any, context: TApiSetup) => {
     if (!value) {
         return "-"
     } else {
@@ -106,7 +106,7 @@ export const autocompleteDocument = async (
     row_id: string | number,
     scheme_name: string,
     currentUser: any,
-    applicationContext: ApiSetupType
+    applicationContext: TApiSetup
 ) => {
     const variables: any = {
         globalVariables: {

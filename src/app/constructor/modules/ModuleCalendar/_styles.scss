@@ -1,0 +1,125 @@
+.moduleCalendar {
+    &_container {
+        padding: 2rem 2.25rem;
+        border-radius: 0.625rem;
+        background-color: var(--kt-card-bg);
+    }
+
+    & .rbc-toolbar {
+        justify-content: unset;
+    }
+
+    & .rbc-btn-group button {
+        color: var(--kt-primary);
+        background-color: var(--kt-primary-light);
+        font-size: 13px;
+        border: 0;
+        padding: 0.75rem 1.25rem;
+        transition: all 0.3s;
+
+        &:hover,
+        &.rbc-active {
+            color: var(--kt-primary-inverse);
+            background-color: var(--kt-primary);
+            box-shadow: none;
+        }
+    }
+
+    & .rbc-toolbar-label {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--bs-gray-800);
+    }
+
+    & .rbc-event {
+        border-color: var(--kt-primary);
+        background-color: var(--kt-primary);
+        outline: none;
+
+        &.success {
+            border-color: var(--kt-success);
+            background-color: var(--kt-success);
+        }
+
+        &.danger {
+            border-color: var(--kt-danger);
+            background-color: var(--kt-danger);
+        }
+    }
+
+    & .rbc-month-view,
+    & .rbc-time-view,
+    & .rbc-agenda-view {
+        border-radius: 0.475rem;
+        border-color: #f4f4f4;
+        font-size: 1rem;
+    }
+
+    & .rbc-agenda-view table.rbc-agenda-table {
+        border-radius: 0.475rem;
+        border-color: #f4f4f4;
+    }
+
+    & .rbc-time-header-content .rbc-row {
+        min-height: 40px;
+    }
+
+    & .rbc-header {
+        font-size: 1rem;
+        border-color: #f4f4f4;
+        padding: 0.75rem 0.5rem;
+    }
+
+    & .rbc-off-range-bg {
+        background-color: transparent;
+        opacity: 0.3;
+    }
+
+    & .rbc-date-cell.rbc-off-range {
+        opacity: 0.3;
+    }
+
+    & .rbc-today {
+        background-color: rgb(232, 255, 243);
+    }
+
+    & .rbc-month-row+.rbc-month-row,
+    & .rbc-time-header-content,
+    & .rbc-timeslot-group,
+    & .rbc-time-header.rbc-overflowing,
+    & .rbc-time-content,
+    & .rbc-events-container,
+    & .rbc-timeslot-group,
+    & .rbc-time-content>*+*>*,
+    & .rbc-agenda-view table.rbc-agenda-table tbody>tr>td+td,
+    & .rbc-agenda-view table.rbc-agenda-table tbody>tr+tr,
+    & .rbc-day-bg {
+        border-color: #f4f4f4;
+    }
+
+    & .rbc-time-slot {
+        font-size: 0.95rem;
+    }
+
+    &_actionsModalContainer {
+        display: flex;
+        flex-direction: column;
+
+        &>*:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+    }
+}
+
+html[data-theme="dark"] {
+    & .rbc-today {
+        background-color: rgb(28, 50, 56);
+    }
+    & .moduleList {
+        &_dateCell, &_cellWrapper {
+            &.bg-dark {
+                color: #181C32 !important;
+            }
+        }
+    }
+}

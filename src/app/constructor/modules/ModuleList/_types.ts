@@ -2,7 +2,7 @@ import {TModuleFormField} from "../ModuleForm/_types";
 import {TComponentSelect} from "../../components/ComponentSelect/_types";
 import {TComponentButton} from "../../components/ComponentButton/_types";
 import {TComponentFilter} from "../../components/ComponentFilters/_types";
-import {TDefaultModule} from "../../../types/modules";
+import { TDefaultModule } from "../_types"
 
 export type TModuleListDownloader = {
     title: string,

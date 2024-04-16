@@ -1,7 +1,7 @@
 import React from "react"
 import { useLocation } from "react-router-dom"
 import ModuleInCreation from "../constructor/modules/ModuleInCreation"
-import ModuleSchemes from "../constructor/modules/ModuleSchemes/ModuleSchemes"
+import ModuleSchemes from "../constructor/modules/ModuleSchemes"
 
 const Module: React.FC<{
     type: string 

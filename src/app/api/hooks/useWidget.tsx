@@ -1,6 +1,6 @@
 import { useQuery } from "react-query"
 import api from ".."
-import { ApiResponseType, TApiWidget } from "../../types/api"
+import { TApiResponse, TApiWidget } from "../../types/api"
 import { getErrorToast } from "../../constructor/helpers/toasts"
 
 
@@ -14,7 +14,7 @@ const useWidget = (command: string, filter: any) => {
         retry: false,
         refetchOnWindowFocus: false,
         keepPreviousData: true,
-        select: (data: ApiResponseType<TApiWidget>) => data.data,
+        select: (data: TApiResponse<TApiWidget>) => data.data,
         onError: (error: any) => getErrorToast(error.message)
     }
     const { isLoading, isRefetching, error, data, refetch } = useQuery(fetchKey, fetchFunction, hookConfiguration)

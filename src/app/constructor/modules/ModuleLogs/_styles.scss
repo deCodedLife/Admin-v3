@@ -1,0 +1,100 @@
+.moduleLogs {
+    &_logsList {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    &_log {
+        position: relative;
+        display: flex;
+    }
+
+    &_logTimeline {
+        width: 40px;
+        position: absolute;
+        z-index: 0;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        transform: translate(50%);
+        border-left: 1px dashed var(--kt-gray-300);
+        z-index: 1;
+    }
+
+    &_logIcon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+        width: 40px;
+        border-radius: 4rem;
+        background-color: var(--kt-light);
+        margin-right: 1rem;
+        z-index: 2;
+        flex-shrink: 0;
+
+        & svg {
+            fill: currentColor;
+        }
+    }
+
+    &_logContent {
+        width: 100%;
+        margin-bottom: 2.5rem;
+    }
+
+    &_logBadge {
+        font-size: 0.95rem;
+    }
+
+    &_logDescription {
+        font-size: 1.15rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    &_logProperties {
+        display: flex;
+        align-items: center;
+
+        &>*:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    }
+
+    &_logDate {
+        font-size: 0.85rem;
+        margin-right: 0.5rem;
+        color: var(--kt-text-muted);
+    }
+
+    &_logAuthors {
+        font-size: 0.95rem;
+    }
+
+    &_logAuthor {
+        font-weight: 600;
+        text-decoration: none;
+        color: inherit;
+        transition: color 0.3s;
+
+        &:hover {
+            color: var(--kt-primary);
+        }
+    }
+
+    &_logAuthorIp {
+        font-size: 0.95rem;
+        color: var(--kt-text-muted);
+    }
+
+    &_emptyList {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        font-size: 20px;
+        color: var(--kt-text-muted);
+
+    }
+}

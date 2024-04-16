@@ -4,7 +4,7 @@ import { KTSVG, toAbsoluteUrl } from '../../../helpers'
 import useGlobalSerach from '../../../../app/api/hooks/useGlobalSearch'
 import ComponentSearch from '../../../../app/constructor/components/ComponentSearch'
 import { useNavigate } from 'react-router-dom'
-import { GlobalSearchRowType, GlobalSearchSectionType } from '../../../../app/types/global'
+import { TGlobalSearchRow, TGlobalSearchSection } from '../../../../app/types/global'
 import { Dropdown } from 'react-bootstrap'
 import { useIntl } from 'react-intl'
 import ComponentTooltip from '../../../../app/constructor/components/ComponentTooltip'
@@ -797,7 +797,7 @@ const LegacySearch: FC = () => {
   )
 }
 
-const Row: React.FC<GlobalSearchRowType> = ({ title, description, href }) => {
+const Row: React.FC<TGlobalSearchRow> = ({ title, description, href }) => {
   const navigate = useNavigate()
   const handleClick = () => navigate(href)
   return <div className="globalSearch_resultRow" onClick={handleClick}>
@@ -809,7 +809,7 @@ const Row: React.FC<GlobalSearchRowType> = ({ title, description, href }) => {
     </ComponentTooltip>
   </div>
 }
-const Section: React.FC<GlobalSearchSectionType> = ({ title, rows }) => {
+const Section: React.FC<TGlobalSearchSection> = ({ title, rows }) => {
   return <div className="globalSearch_resultSection">
     <h5 className="globalSearch_resultSectionTitle">
       {title}

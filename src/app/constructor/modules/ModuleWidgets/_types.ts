@@ -1,7 +1,7 @@
 import {TApiWidget} from "../../../types/api";
 import {TComponentFilter} from "../../components/ComponentFilters/_types";
 import {TComponentButton} from "../../components/ComponentButton/_types";
-import {TDefaultModule} from "../../../types/modules";
+import { TDefaultModule } from "../_types"
 
 export type TModuleWidgetsProgressBar = {
     type: "progress_bar",

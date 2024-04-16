@@ -1,12 +1,12 @@
 import React, { useEffect, useLayoutEffect, useMemo } from "react"
 import { createContext, useContext } from "react"
-import { ApiSetupType } from "../../types/api"
+import { TApiSetup } from "../../types/api"
 import { WithChildren } from "../../../_metronic/helpers"
 import useSetup from "../../api/hooks/useSetup"
 import { setDocumentTitle, setStyles } from "./dynamicStyles"
 
 
-type TSetupContext = { context: ApiSetupType, refetch: () => void }
+type TSetupContext = { context: TApiSetup, refetch: () => void }
 const SetupContext = createContext<TSetupContext>({ context: {}, refetch: () => { } })
 export const useSetupContext = () => useContext(SetupContext)
 

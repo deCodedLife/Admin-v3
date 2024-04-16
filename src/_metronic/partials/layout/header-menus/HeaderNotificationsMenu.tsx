@@ -4,12 +4,12 @@ import React, { useCallback, useRef, useState } from 'react'
 import { KTSVG, toAbsoluteUrl } from '../../../helpers'
 import { useIntl } from 'react-intl'
 import { Modal } from 'react-bootstrap'
-import { NotificationItemType, NotificationsType } from '../../../../app/types/global'
+import { TNotificationItem, TNotifications } from '../../../../app/types/global'
 import ComponentTooltip from '../../../../app/constructor/components/ComponentTooltip'
 import setModalIndex from '../../../../app/constructor/helpers/setModalIndex'
 
 
-const NotificationItem: React.FC<NotificationItemType> = ({ id, title, description, status, created_at, href, handleNotificationClick, handleReadNotification }) => {
+const NotificationItem: React.FC<TNotificationItem> = ({ id, title, description, status, created_at, href, handleNotificationClick, handleReadNotification }) => {
   const intl = useIntl()
   const linkRef = useRef<HTMLAnchorElement | null>(null)
 
@@ -47,7 +47,7 @@ const NotificationItem: React.FC<NotificationItemType> = ({ id, title, descripti
 }
 
 
-const HeaderNotificationsMenu: React.FC<NotificationsType> = ({ notifications, handleReadNotification }) => {
+const HeaderNotificationsMenu: React.FC<TNotifications> = ({ notifications, handleReadNotification }) => {
   const intl = useIntl()
   const [showModal, setShowModal] = useState(false)
   const [selectedNotification, setSelectedNotification] = useState<{ id: number, title: string, description: string } | null>(null)

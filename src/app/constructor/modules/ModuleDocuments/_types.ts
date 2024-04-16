@@ -1,6 +1,6 @@
 import {IntlShape} from "react-intl";
 import React from "react";
-import {TDefaultModule} from "../../../types/modules";
+import { TDefaultModule } from "../_types"
 import {TModuleFormField} from "../ModuleForm/_types";
 
 export type TResolvedVariable = {title: string, variable: string}

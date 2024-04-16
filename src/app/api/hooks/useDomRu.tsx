@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useQuery } from "react-query"
 import api from ".."
 import { useAuth } from "../../modules/auth"
-import { ApiResponseType } from "../../types/api"
+import { TApiResponse } from "../../types/api"
 import { getErrorToast } from "../../constructor/helpers/toasts"
 
 type ApiDomRuResponseType = {type: "phone", value: string} | {type: "page", value: string, phone: string} | false
@@ -17,7 +17,7 @@ const useDomRu = () => {
         retry: false,
         refetchOnWindowFocus: false,
         refetchInterval: 3000,
-        select: (data: ApiResponseType<ApiDomRuResponseType>) => data.data,
+        select: (data: TApiResponse<ApiDomRuResponseType>) => data.data,
         onError: (error: any) => getErrorToast(error.message),
 
     }

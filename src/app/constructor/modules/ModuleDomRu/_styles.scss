@@ -1,0 +1,50 @@
+.moduleDomRu {
+    @keyframes shake {
+        0% {
+            fill: var(--kt-primary);
+            scale: 1.25;
+            rotate: 30deg
+        }
+
+        10% {
+            fill: var(--kt-primary);
+            scale: 1.25;
+            rotate: 0deg
+        }
+
+        20% {
+            fill: var(--kt-primary);
+            scale: 1.25;
+            rotate: 30deg
+        }
+
+        30% {
+            fill: var(--kt-primary);
+            scale: 1.25;
+            rotate: 0deg
+        }
+
+        40% {
+            fill: var(--kt-primary);
+            scale: 1.25;
+            rotate: 30deg
+        }
+
+        50% {
+            fill: var(--kt-primary);
+            scale: 1;
+            rotate: 0deg
+        }
+    }
+
+    &_button {
+        width: 40px;
+        height: 40px;
+        background-color: transparent;
+        border: none;
+
+        & svg {
+            animation: shake 1.5s infinite;
+        }
+    }
+}
