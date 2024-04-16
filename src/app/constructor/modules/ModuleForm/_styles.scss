@@ -1,0 +1,95 @@
+.moduleForm {
+
+  &_container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  &_area {
+    padding: 0 0.5rem;
+
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+
+  }
+
+  &_block {
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+
+    &.disabled {
+      display: none;
+    }
+  }
+
+  &_block_fields {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+
+  &_field {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1 * var(--bs-gutter-y));
+    padding: 0 0.5rem;
+
+    &:not(:last-child) {
+      margin-bottom: 0.5rem;
+    }
+
+    &.marginless {
+      margin-bottom: 0;
+    }
+
+    &_labelContainer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    &_label {
+      font-size: 1.05rem;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--kt-form-label-color);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &_container {
+      display: flex;
+      align-items: center;
+    }
+
+    &_component {
+      flex-grow: 1;
+      max-width: 100%;
+    }
+
+    &_button {
+      flex-shrink: 0;
+      margin-left: 1rem;
+    }
+
+    &_description {
+      width: 100%;
+      min-height: 20px;
+      margin-top: 0.25rem;
+      font-weight: 700;
+      color: var(--kt-text-muted);
+    }
+
+    &.disabled {
+      display: none;
+    }
+  }
+
+}

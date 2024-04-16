@@ -1,0 +1,154 @@
+.moduleAppEditor {
+
+
+  &_toolbar {
+    background-color: var(--kt-card-bg);
+    border-radius: 0.625rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    min-height: 70px;
+    padding: 0 2.25rem;
+    color: var(--kt-card-cap-color);
+    border-bottom: 1px solid var(--kt-card-border-color);
+    margin-bottom: 1rem;
+  }
+
+  &_schemeSelector {
+    width: 30%;
+    margin-right: 10px;
+  }
+
+  &_buttonsContainer {
+    display: flex;
+
+    & *:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+
+  &_schemeContainer {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &_schemeArea {
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem;
+    border: 3px dashed transparent;
+    border-radius: 0.625rem;
+    min-height: 250px;
+    transition: border-color 0.3s;
+
+    &.blockOverArea {
+      border-color: var(--kt-danger);
+    }
+  }
+
+  &_schemeAreaBlocks {
+    flex-grow: 1;
+  }
+
+  &_schemeAreaToolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  &_schemeAreaButtons {
+    display: flex;
+    flex-wrap: wrap;
+
+    & *:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+
+  &_schemeAreaSizeContainer {
+    background-color: var(--kt-card-bg);
+    border-radius: 0.625rem;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+
+    & label {
+      white-space: nowrap;
+      margin-right: 5px;
+    }
+  }
+
+  &_schemeBlock {
+    padding-top: 0;
+    margin-bottom: 10px;
+    transition: padding-top 0.3s ease;
+
+    &.fieldOverBlock {
+      & .moduleAppEditor_schemeBlockButtons {
+        margin-top: 62px;
+      }
+    }
+
+    &.blockOverBlock {
+      padding-top: 160px;
+    }
+  }
+
+  &_schemeBlockCard {
+    padding: 2rem 2.25rem;
+    border-radius: 0.625rem;
+    background-color: var(--kt-card-bg);
+  }
+
+  &_schemeBlockButtons {
+    margin-top: 0;
+    display: flex;
+    transition: margin-top 0.3s ease;
+
+    & *:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+
+  &_schemeField {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 0;
+    margin-bottom: 1rem;
+    transition: padding-top 0.3s ease;
+
+    &.overField {
+      padding-top: 62px;
+    }
+  }
+
+  &_schemeFieldLabel {
+    color: var(--kt-form-label-color);
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &_schemeFieldValue {
+    background-color: var(--kt-input-solid-bg);
+    border: 1px solid var(--kt-input-border-color);
+    border-radius: 0.475rem;
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+
+  &_appendAreaButtonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    min-height: 250px;
+  }
+}

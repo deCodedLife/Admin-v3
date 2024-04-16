@@ -1,7 +1,7 @@
 import React, { useContext as useReactContext, useState } from "react"
 import { useIntl } from "react-intl"
 import { useModuleContext } from "../../../modules/helpers/useModuleContent"
-import { ModalContext } from "../../../modules/ModuleSchedule/ModuleSchedule"
+import { ModalContext } from "../../../modules/ModuleSchedule"
 import { useLocation, useNavigate } from "react-router-dom"
 import { getErrorToast, getSuccessToast } from "../../../helpers/toasts"
 import ComponentTooltip from "../../ComponentTooltip"

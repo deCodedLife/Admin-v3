@@ -1,0 +1,26 @@
+.moduleDocuments {
+  &_form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &_block {
+    margin-bottom: 0.75rem;
+  }
+
+  &_field {
+    margin-bottom: 1.5rem;
+    padding: 0 0.75rem;
+  }
+
+  //убрать по факту разработки собственного компонента
+  &_dropdown {
+    font-size: 0.925rem;
+    font-weight: 600;
+
+    &.btn:not(.btn-outline):not(.btn-dashed):not(.border-hover):not(.border-active):not(.btn-flush):not(.btn-icon) {
+      padding: calc(0.55rem + 1px) calc(1.25rem + 1px);
+    }
+  }
+
+}

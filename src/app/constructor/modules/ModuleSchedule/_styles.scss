@@ -1,0 +1,441 @@
+/*
+    70px - высота шапки
+    30px * 2 - поля контейнера
+    51px - фильтр + нижний отступ фильтра
+    10px - общий нижний отступ для модулей
+*/
+$moduleScheduleHeight: calc(100vh - var(--kt-app-header-height) - 30px * 2 - 61px - 10px);
+$moduleScheduleButtonsHeight: 28px;
+$moduleScheduleStepsColumnWidth: 65px;
+$moduleScheduleCellHeight: 3.15rem;
+$moduleScheduleBorderColor: var(--kt-gray-300);
+
+@mixin moduleSchedule_cellColor($color, $percent) {
+  border-color: $color;
+  background-color: lighten($color, $percent);
+  color: $color;
+
+  &::after {
+    background-color: $color;
+  }
+}
+
+.moduleSchedule {
+  position: relative;
+  border-radius: 0.625rem;
+
+  &.loading {
+    opacity: 0.5;
+  }
+
+  &_scrollButtons {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    z-index: 99;
+  }
+
+  &_scrollButtonContainer {
+    padding: 5px 5px 3px;
+    background-color: var(--kt-card-bg);
+  }
+
+  &_scrollButton {
+    height: $moduleScheduleCellHeight - 1rem;
+    padding: 0 1.25rem;
+    font-size: 1rem;
+    border: 0;
+    background-color: var(--kt-primary-light);
+    color: var(--kt-primary);
+    width: $moduleScheduleStepsColumnWidth - 10px;
+    border-radius: 0.625rem;
+    transition: background-color 0.3s;
+
+    & .svg-icon {
+      color: inherit;
+    }
+
+    & svg g,
+    svg g [fill] {
+      fill: currentColor;
+    }
+
+    &:hover {
+      color: var(--kt-primary-inverse);
+      background-color: var(--kt-primary);
+    }
+
+  }
+
+  &_table {
+    overflow: auto;
+    height: $moduleScheduleHeight;
+    padding: 0 3px 3px 0;
+  }
+
+  &_columns {
+    display: inline-flex;
+  }
+
+  &_steps {
+    position: sticky;
+    left: 0;
+    width: $moduleScheduleStepsColumnWidth;
+    flex-shrink: 0;
+    margin-top: calc($moduleScheduleCellHeight - 0.25rem - 1px);
+    display: flex;
+    flex-direction: column;
+    z-index: 98;
+    background-color: var(--kt-card-bg);
+  }
+
+  &_stepsCell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.25rem 0;
+    height: $moduleScheduleCellHeight;
+    width: 100%;
+  }
+
+  &_stepsDropdown {
+    width: 100%;
+    position: sticky;
+    top: calc($moduleScheduleCellHeight - 0.3rem - 1px);
+
+    & #moduleSchedule_stepsButton {
+      padding: 0;
+      color: var(--kt-primary);
+      height: calc($moduleScheduleCellHeight + 1px);
+      font-size: 1rem;
+      width: 100%;
+      border-radius: 0;
+      border-bottom: 1px solid $moduleScheduleBorderColor;
+      border-top: 1px solid $moduleScheduleBorderColor;
+      background-color: var(--kt-primary-light);
+      transition: background-color 0.5s;
+
+      &:hover, &:focus {
+        color: var(--kt-primary-inverse);
+        background-color: var(--kt-primary);
+      }
+
+      &::after {
+        color: inherit;
+        transform: translateY(50%);
+      }
+    }
+  }
+
+  &_filterStep {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.selected {
+      background-color: var(--kt-gray-200);
+    }
+  }
+
+  &_dateColumnHeader {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    margin: 0 0.25rem;
+    height: $moduleScheduleCellHeight - 0.25rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-left: 1px solid $moduleScheduleBorderColor;
+    border-right: 1px solid $moduleScheduleBorderColor;
+    border-bottom: 1px solid $moduleScheduleBorderColor;
+    position: sticky;
+    top: 0;
+    z-index: 97;
+    background-color: var(--kt-card-bg);
+    white-space: nowrap;
+  }
+
+  &_dateColumnContent {
+    position: sticky;
+    left: calc(65px + 0.75rem);
+  }
+
+  &_dateColumnBody {
+    display: flex;
+  }
+
+  &_employeeColumn {
+    width: 195px;
+    margin: 0 0.25rem;
+  }
+
+  &_employeeColumnHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    height: $moduleScheduleCellHeight;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 1px solid $moduleScheduleBorderColor;
+    border-top: 0;
+    position: sticky;
+    top: $moduleScheduleCellHeight - 0.25rem;
+    z-index: 97;
+    color: var(--kt-primary
+      /* --bs-body-color */
+    );
+    background-color: var(--kt-primary-light
+      /* --kt-gray-200 */
+    );
+    transition: background-color 0.5s;
+    user-select: none;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--kt-primary-inverse);
+      background-color: var(--kt-primary
+        /* --kt-card-bg */
+      );
+    }
+  }
+
+  &_employeeColumnTitle {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &_cellContainer {
+    padding: 0.25rem 0;
+  }
+
+  &_cell {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: $moduleScheduleCellHeight;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 1px solid $moduleScheduleBorderColor;
+    border-radius: 0.425rem;
+    background-color: var(--kt-gray-200);
+    transition: background-color 0.5s;
+    user-select: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--kt-card-bg);
+    }
+
+    &.disabled {
+      cursor: unset;
+      opacity: 0.4;
+
+      &:hover {
+        background-color: var(--kt-gray-200);
+      }
+    }
+
+    &.available {
+      &::before {
+        content: "";
+        display: block;
+        height: 2px;
+        width: 10px;
+        background-color: var(--kt-gray-400);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      &::after {
+        content: "";
+        display: block;
+        height: 10px;
+        width: 2px;
+        background-color: var(--kt-gray-400);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+      }
+    }
+
+    &.busy {
+      background-color: lighten(#E4E6EF, 35%);
+      padding-left: 6px;
+
+      color: var(--kt-gray-300);
+
+      &::after {
+        position: absolute;
+        left: 0;
+        top: 0;
+        content: "";
+        width: 6px;
+        height: 100%;
+        background-color: var(--kt-gray-300);
+      }
+
+      &.azure {
+        @include moduleSchedule_cellColor(#838B8B, 35%)
+      }
+
+      &.light_blue {
+        @include moduleSchedule_cellColor(deepskyblue, 35%)
+      }
+
+      &.blue {
+        @include moduleSchedule_cellColor(#009ef7, 25%)
+      }
+
+      &.yellow {
+        @include moduleSchedule_cellColor(yellow, 40%)
+      }
+
+      &.orange {
+        @include moduleSchedule_cellColor(orange, 35%)
+      }
+
+      &.green {
+        @include moduleSchedule_cellColor(#50cd89, 25%)
+      }
+
+      &.pink {
+        @include moduleSchedule_cellColor(pink, 10%)
+      }
+
+      &.red {
+        @include moduleSchedule_cellColor(#f1416c, 25%)
+      }
+
+      &.purple {
+        @include moduleSchedule_cellColor(#7239ea, 25%)
+      }
+    }
+
+  }
+
+  &_cellContentContainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+
+    &.minimize {
+      & .moduleSchedule_cellValue {
+        white-space: nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  &_cellWrapper {
+    & .moduleSchedule_cellValue {
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    & .moduleSchedule_cellContent {
+      &:not(:last-child) {
+        margin-bottom: 0.06rem;
+      }
+    }
+  }
+
+  &_cellOverlay {
+    & .moduleSchedule_cellContentContainer {
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 10px;
+      align-items: stretch;
+      justify-content: unset;
+
+      & .svg-icon {
+        margin-right: 5px;
+        color: inherit;
+
+        & svg g,
+        svg g [fill] {
+          fill: currentColor;
+        }
+      }
+    }
+
+    & .moduleSchedule_cellContent {
+      &:not(:last-child) {
+        margin-bottom: 0.17rem;
+      }
+    }
+  }
+
+  &_cellContent {
+    max-width: 100%;
+
+    &:not(:last-child) {
+      display: flex;
+    }
+  }
+
+  &_cellValue {
+    color: #181C32;
+  }
+
+  & .overlay {
+    &:hover {
+      & .overlay-layer {
+        align-items: flex-start;
+        z-index: 1;
+
+        & .moduleSchedule_cell {
+          transition: height 0.3s ease;
+          min-height: 100%;
+          height: 3.15 * 3 + 0.5 * 2rem !important;
+        }
+      }
+
+    }
+  }
+
+  &_cellIcons {
+    position: absolute;
+    display: flex;
+    flex-wrap: nowrap;
+    bottom: 2px;
+    overflow: hidden;
+    &.left {
+      left: 5px;
+    }
+    &.right {
+      right: 5px;
+    }
+  }
+
+  &_cellIcon {
+    color: #181C32;
+
+    &:not(:last-child) {
+      margin-right: 3px;
+    }
+
+    & svg {
+      fill: currentColor;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+}

@@ -11,7 +11,7 @@ import { Formik, Form as FormikForm } from "formik"
 import ComponentTextEditor from "../components/ComponentTextEditor"
 import setModalIndex from "../helpers/setModalIndex"
 import { unescape } from "lodash"
-import { Pagination } from "./ModuleList/ModuleList"
+import { Pagination } from "./ModuleList"
 import useListData from "../../api/hooks/useListData"
 
 

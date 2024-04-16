@@ -2,7 +2,7 @@ import React, { useContext as useReactContext, useMemo, useState, useCallback } 
 import useItem from "../../../../api/hooks/useItem"
 import { useFormikContext } from "formik"
 import { useModuleContext } from "../../../modules/helpers/useModuleContent"
-import { ModalContext } from "../../../modules/ModuleSchedule/ModuleSchedule"
+import { ModalContext } from "../../../modules/ModuleSchedule"
 import ComponentTooltip from "../../ComponentTooltip"
 import { getLabel } from ".."
 import { Modal } from "react-bootstrap"

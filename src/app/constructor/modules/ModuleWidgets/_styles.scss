@@ -1,0 +1,105 @@
+.moduleWidgets {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  /*   min-height: 173px; */
+
+  & .componentFilters_dropdownContainer {
+    padding: 0 0.5rem;
+  }
+
+  &_toolbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &_updateTime {
+    font-weight: 600;
+  }
+
+  &_widgetContainer {
+    padding: 0 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+
+  &_widgetContent.card-header {
+    padding: 1.25rem 2.25rem;
+  }
+
+  &_widgetValueContainer {
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  &_widgetValuePrefix {
+    color: var(--kt-text-gray-400);
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-right: 0.25rem;
+    align-self: flex-start;
+  }
+
+  &_widgetValue {
+    color: var(--kt-text-dark);
+    font-size: calc(1.375rem + 1.5vw);
+    font-weight: 600;
+    margin-right: 0.5rem;
+    line-height: 1;
+    letter-spacing: -0.115rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &_widgetDescription {
+    color: var(--kt-text-gray-400);
+    font-size: 1.075rem;
+    font-weight: 500;
+    padding-top: 0.25rem;
+  }
+
+  &_charModule {
+    height: 250px;
+    border-bottom-left-radius: 0.625rem;
+    border-bottom-right-radius: 0.625rem;
+  }
+
+  &_donutModule {
+    overflow-x: hidden;
+
+    & path {
+      stroke: var(--kt-card-bg);
+    }
+
+    & .apexcharts-legend-series {
+      color: var(--kt-text-dark);
+    }
+  }
+
+  &_hardReportContainer {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &_infoCard {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 150px;
+    background-color: var(--kt-card-bg);
+    border-radius: 0.625rem;
+    padding: 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--kt-text-muted);
+  }
+}

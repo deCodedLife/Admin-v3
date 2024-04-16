@@ -1,9 +1,9 @@
 import React from "react"
 import { KTSVG } from "../../../_metronic/helpers"
-import { DefaultModuleType } from "../../types/modules"
+import { TDefaultModule } from "../../types/modules"
 import { useIntl } from "react-intl"
 
-const ModuleInCreation: React.FC<DefaultModuleType> = ({ type }) => {
+const ModuleInCreation: React.FC<TDefaultModule> = ({ type }) => {
     const intl = useIntl()
     return <div className="moduleInCreation">
         <div className="moduleInCreation_image">

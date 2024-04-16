@@ -3,7 +3,7 @@ import { Tab, Tabs } from "react-bootstrap"
 import PageBuilder from "../../page/PageBuilder"
 import { ModuleTabsType } from "../../types/modules"
 import { useLocation, useNavigate } from "react-router-dom"
-import { ModalContext } from "./ModuleSchedule/ModuleSchedule"
+import { ModalContext } from "./ModuleSchedule"
 
 const ModuleTabs = React.memo<ModuleTabsType>((props) => {
     const { settings: sourceSettings } = props

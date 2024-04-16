@@ -1,15 +1,20 @@
 import { MenuItemType } from "./global"
 import {
     ModuleAccordionType,
-    ModuleAppEditorType,
+
     ModuleButtonsType,
     ModuleCalendarType,
-    ModuleChatType, ModuleDayPlanningType, ModuleDocumentsType, ModuleFormType, ModuleFunnelType, ModuleHeaderType,
-    ModuleInfoType, ModuleLinksBlockType, ModuleListType, ModuleLogsType, ModuleMiniChatType, ModuleNewsType, ModuleQueueType,
-    ModuleRolesType, ModuleScheduleServerCellType, ModuleScheduleType, ModuleTabsType,
-    ModuleWidgetsType,
+    ModuleChatType, ModuleDayPlanningType, ModuleFunnelType, ModuleHeaderType,
+    ModuleInfoType, ModuleLinksBlockType, ModuleLogsType, ModuleMiniChatType, ModuleNewsType, ModuleQueueType,
+    ModuleRolesType, ModuleTabsType,
     ModuleYandexMapType
 } from "./modules"
+import {TModuleAppEditor} from "../constructor/modules/ModuleAppEditor/_types";
+import {TModuleDocuments} from "../constructor/modules/ModuleDocuments/_types";
+import {TModuleSchedule, TModuleScheduleServerCell} from "../constructor/modules/ModuleSchedule/_types";
+import {TModuleWidgets} from "../constructor/modules/ModuleWidgets/_types";
+import {TModuleList} from "../constructor/modules/ModuleList/_types";
+import {TModuleForm} from "../constructor/modules/ModuleForm/_types";
 
 //общий тип ответа серверного Api
 export type ApiResponseType<data> = {
@@ -20,10 +25,10 @@ export type ApiResponseType<data> = {
 //тип ответа запроса меню
 export type ApiMenuType = Array<MenuItemType>
 //тип всех возможных модулей, приходящих с сервера
-export type ApiModuleType = ModuleHeaderType | ModuleFormType | ModuleInfoType | ModuleListType |
-    ModuleWidgetsType | ModuleRolesType | ModuleScheduleType | ModuleTabsType |
-    ModuleChatType | ModuleMiniChatType | ModuleCalendarType | ModuleDocumentsType | ModuleFunnelType |
-    ModuleNewsType | ModuleLogsType | ModuleLinksBlockType | ModuleAppEditorType | ModuleAccordionType |
+export type ApiModuleType = ModuleHeaderType | TModuleForm | ModuleInfoType | TModuleList |
+    TModuleWidgets | ModuleRolesType | TModuleSchedule | ModuleTabsType |
+    ModuleChatType | ModuleMiniChatType | ModuleCalendarType | TModuleDocuments | ModuleFunnelType |
+    ModuleNewsType | ModuleLogsType | ModuleLinksBlockType | TModuleAppEditor | ModuleAccordionType |
     ModuleDayPlanningType | ModuleQueueType | ModuleYandexMapType | ModuleButtonsType
 //тип ответа запроса страницы
 export type ApiPageType = Array<ApiModuleType>
@@ -74,7 +79,7 @@ export type ApiScheduleType = {
                 initials: {
                     [key: string]: any
                 }
-                schedule: Array<ModuleScheduleServerCellType>
+                schedule: Array<TModuleScheduleServerCell>
             }
         }
     },
@@ -152,4 +157,4 @@ export type ApiSetupType = {
 }
 
 //тип ответа виджетов
-export type ApiWidgetType = Array<any> | {report: Array<any>, status: "no_cache" | "updating" | "updated", updated_at: null | string}
+export type TApiWidget = Array<any> | {report: Array<any>, status: "no_cache" | "updating" | "updated", updated_at: null | string}

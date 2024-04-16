@@ -4,17 +4,17 @@ import { useLocation } from 'react-router-dom';
 import { conformToMask } from 'react-text-mask';
 import { createNumberMask } from 'text-mask-addons';
 import * as Yup from 'yup';
-import { ModuleFormAreaType, ModuleFormFieldType } from '../../../types/modules';
 import { isEqual } from 'lodash';
 import { ApiSetupType } from '../../../types/api';
-import { ModalContext } from '../ModuleSchedule/ModuleSchedule';
+import { ModalContext } from '../ModuleSchedule';
+import {TModuleFormArea, TModuleFormField} from "../ModuleForm/_types";
 
 //функция для получения массива полей из схемы формы
-export const getFields = (areas: Array<ModuleFormAreaType>) => {
-    return areas?.reduce((acc: Array<ModuleFormFieldType>, area) => acc.concat(area?.blocks?.reduce((acc: Array<ModuleFormFieldType>, block) => acc.concat(block.fields), [])), []) ?? []
+export const getFields = (areas: Array<TModuleFormArea>) => {
+    return areas?.reduce((acc: Array<TModuleFormField>, area) => acc.concat(area?.blocks?.reduce((acc: Array<TModuleFormField>, block) => acc.concat(block.fields), [])), []) ?? []
 }
 //функция для получения инит. значений из массива полей
-export const getInitialValues = (fields: Array<ModuleFormFieldType>, isCreating: boolean, additionalInitials: any = {}, isFormDisabled?: boolean) => {
+export const getInitialValues = (fields: Array<TModuleFormField>, isCreating: boolean, additionalInitials: any = {}, isFormDisabled?: boolean) => {
     const initialValues: any = {
         fieldsVisibility: {},
         fieldsDescriptions: {},
@@ -33,7 +33,7 @@ export const getInitialValues = (fields: Array<ModuleFormFieldType>, isCreating:
     return isCreating ? Object.assign({}, initialValues, additionalInitials) : Object.assign({}, additionalInitials, initialValues)
 }
 //функция для получения схемы валидации определенного поля
-const getFieldValidation = (field: ModuleFormFieldType) => {
+const getFieldValidation = (field: TModuleFormField) => {
     const pattern = ["isArray", "type", "length", "isRequired", "isPassword", "isEmail"]
     const value = pattern.reduce((acc, step) => {
         switch (step) {
@@ -64,7 +64,7 @@ const getFieldValidation = (field: ModuleFormFieldType) => {
     return value
 }
 //функция для получения схемы валидации всей формы
-export const getValidationSchema = (fields: Array<ModuleFormFieldType>) => {
+export const getValidationSchema = (fields: Array<TModuleFormField>) => {
     const validationSchema = fields.reduce((acc: any, field) => {
         /* !!! сделать валидацию smart_list */
         if (field.field_type !== "smart_list" && field.field_type !== "image" && field.field_type !== "file" && field.field_type !== "info_strings") {

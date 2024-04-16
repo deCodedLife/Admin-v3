@@ -16,8 +16,8 @@ import setModalIndex from "../../../helpers/setModalIndex"
 import { Formik, Form as FormikForm } from "formik"
 import ComponentSelect from "../../ComponentSelect"
 import ComponentTextEditor from "../../ComponentTextEditor"
-import { useFormContext } from "../../../modules/ModuleForm/ModuleForm"
-import { ModalContext } from "../../../modules/ModuleSchedule/ModuleSchedule"
+import { useFormContext } from "../../../modules/ModuleForm"
+import { ModalContext } from "../../../modules/ModuleSchedule"
 import { TComponentButtonPrint } from "../_types"
 
 

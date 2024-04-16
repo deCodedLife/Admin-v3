@@ -3,7 +3,7 @@ import { Modal } from "react-bootstrap"
 import useItem from "../../../api/hooks/useItem"
 import { isEqual } from "lodash"
 import PageBuilder from "../../../page/PageBuilder"
-import { ModalContext } from "../../modules/ModuleSchedule/ModuleSchedule"
+import { ModalContext } from "../../modules/ModuleSchedule"
 import setModalIndex from "../../helpers/setModalIndex"
 import { TComponentModal, TContext } from "./_types"
 

@@ -1,7 +1,7 @@
 import React from "react"
 import ComponentButton from "../ComponentButton"
 import { useField, useFormikContext } from "formik"
-import { Component } from "../../modules/ModuleForm/ModuleForm"
+import { Component } from "../../modules/ModuleForm"
 import { Col, Form } from "react-bootstrap"
 import { KTSVG } from "../../../../_metronic/helpers"
 import { useIntl } from "react-intl"
