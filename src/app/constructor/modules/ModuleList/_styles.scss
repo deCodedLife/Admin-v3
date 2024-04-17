@@ -146,6 +146,13 @@
     }
   }
 
+  &_colorCell {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 45px;
+  }
+
   & .moduleList_emptyTable {
     text-align: center;
     font-size: 20px;

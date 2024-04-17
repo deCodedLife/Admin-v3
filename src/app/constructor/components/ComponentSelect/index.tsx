@@ -1,14 +1,45 @@
 import { useField, useFormikContext } from "formik"
 import React, { useCallback, useEffect, useState } from "react"
-import Select, { GroupBase, OptionsOrGroups, components } from "react-select"
+import Select, { CSSObjectWithLabel, GroupBase, MultiValueProps, OptionProps, OptionsOrGroups, SingleValueProps, components } from "react-select"
 import AsyncSelect from 'react-select/async';
 import api from "../../../api"
 import { useHook } from "../helpers"
 import { useIntl } from "react-intl"
 import { isEqual } from "lodash";
-import {  TComponentSelect, TDefaultSelect, TSearchSelect, TSelectOption, TSelectValue } from "./_types";
+import { TComponentSelect, TDefaultSelect, TSearchSelect, TSelectOption, TSelectValue } from "./_types";
 
 
+const getStyles = (withColor?: boolean) => {
+    const dot = (color = "transparent") => ({
+        alignItems: "center",
+        display: "flex",
+
+        ":before": {
+            backgroundColor: color,
+            borderRadius: 10,
+            content: '" "',
+            display: "block",
+            marginRight: 8,
+            height: 10,
+            width: 10,
+        },
+    })
+
+    return {
+
+        menuPortal: (base: CSSObjectWithLabel) => ({ ...base, zIndex: 9999 }),
+        singleValue: (base: CSSObjectWithLabel, { data }: SingleValueProps<any, boolean, GroupBase<TSelectOption>>) => {
+            return Object.assign({}, {...base}, withColor ? { ...dot(data.value)} : {})
+        },
+        multiValueLabel: (base: CSSObjectWithLabel, { data }: MultiValueProps<any, boolean, GroupBase<TSelectOption>>) => {
+            return Object.assign({}, {...base}, withColor ? { ...dot(data.value)} : {})
+        },
+        option: (base: CSSObjectWithLabel, { data }: OptionProps<any, boolean, GroupBase<TSelectOption>>) => {
+            return Object.assign({}, {...base}, withColor ? { ...dot(data.value)} : {})
+        },
+
+    }
+};
 
 
 const DefaultSelect = React.memo<TDefaultSelect>(props => {
@@ -20,7 +51,8 @@ const DefaultSelect = React.memo<TDefaultSelect>(props => {
         isSearchable = true, menuPortal = true, isLoading = false,
         joined_field, formValue, joinedFieldValue, isError,
         error, object, select, select_menu,
-        joined_field_filter, handleChange, handleBlur, handleAppendDuplicate
+        joined_field_filter,
+        handleChange, handleBlur, handleAppendDuplicate
     } = props
     const [options, setOptions] = useState<Array<any>>([])
     const [previousJoinedFieldValue, setPreviousJoinedFieldValue] = useState<any>(null)
@@ -118,7 +150,7 @@ const DefaultSelect = React.memo<TDefaultSelect>(props => {
             onBlur={handleBlur}
             isMulti={isMulti}
             menuPortalTarget={resolvedMenuTargetPortal}
-            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+            styles={getStyles(props.withColor)}
             isDisabled={isDisabled}
             maxMenuHeight={150}
             isClearable={isClearable}
@@ -220,7 +252,7 @@ const SearchSelect = React.memo<TSearchSelect>(props => {
 
     return <>
         <AsyncSelect
-            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+            styles={getStyles(props.withColor)}
             classNamePrefix={resolvedClassNamePrefix}
             placeholder={placeholder ?? intl.formatMessage({ id: "SEARCH.PLACEHOLDER" })}
             loadingMessage={() => intl.formatMessage({ id: "SEARCH.LOADING" })}
@@ -364,6 +396,7 @@ const ComponentSelect: React.FC<TComponentSelect> = (props) => {
             isDuplicate={props.isDuplicate}
             select={props.select}
             select_menu={props.select_menu}
+            withColor={props.withColor}
         />
     } else {
         return <DefaultSelect
@@ -390,6 +423,7 @@ const ComponentSelect: React.FC<TComponentSelect> = (props) => {
             object={props.object}
             select={props.select}
             select_menu={props.select_menu}
+            withColor={props.withColor}
         />
     }
 }

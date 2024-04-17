@@ -61,6 +61,7 @@ export const Component = React.memo<TModuleFormField>((props) => {
             />
         case "list":
         case "link_list" as "list":
+        case "color_list" as "list":
             const { joined_field, joined_field_filter, search, settings, on_change_submit } = props
             return <ComponentSelect
                 article={article}
@@ -79,6 +80,7 @@ export const Component = React.memo<TModuleFormField>((props) => {
                 search={search}
                 isClearable={(is_clearable === false) ? is_clearable : true}
                 onChangeSubmit={on_change_submit}
+                withColor={field_type === "color_list" as "list"}
 
             />
         case "price":

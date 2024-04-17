@@ -28,6 +28,7 @@ export type TDefaultSelect = {
     joinedFieldValue?: any,
     isError: boolean,
     error?: string,
+    withColor?: boolean,
     handleChange: (value: any) => void,
     handleAppendDuplicate: (label: any, prevValue: any) => void,
     handleBlur: FormikHandlers["handleBlur"]
@@ -49,6 +50,7 @@ export type TSearchSelect = {
     formValue: any, joinedFieldValue: any, value: any, error?: string,
     select?: Array<string> | string,
     select_menu?: Array<string> | string,
+    withColor?: boolean,
     setValue: (value: any) => void,
     handleChange: (value: any) => void,
     handleAppendDuplicate: (label: any, prevValue: any) => void,
@@ -78,5 +80,6 @@ export type TComponentSelect = {
     customHandler?: (value: any) => void,
     prefix?: string,
     menuPortal?: boolean,
-    isSearchable?: boolean
+    isSearchable?: boolean,
+    withColor?: boolean
 }

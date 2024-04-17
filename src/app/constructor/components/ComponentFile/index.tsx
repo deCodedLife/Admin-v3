@@ -75,7 +75,7 @@ const ComponentFile: React.FC<TComponentFile> = props => {
 
      //Разрешенный максимальный размер файла
      const resolvedMaxSize = max_size ?? 2_000_000
-     const resolvedMaxSizeAsMB = resolvedMaxSize / 1024 / 1024
+     const resolvedMaxSizeAsMB = (resolvedMaxSize / 1024 / 1024).toFixed(2)
 
     //валидатор формата и загрузка изображений
     const validationUploadedFile = async (files: FileList | null) => {

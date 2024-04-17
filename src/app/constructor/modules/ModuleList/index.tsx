@@ -47,6 +47,7 @@ import {
     TModuleListPagination,
     TModuleListRow, TModuleListUpdateField, TModuleListUpdateModal
 } from "./_types";
+import ComponentTooltip from "../../components/ComponentTooltip"
 
 export const getButtonKey = (button: TComponentButton) => `${button.type}-${button.settings.title}-${button.settings.icon}`
 
@@ -509,6 +510,19 @@ const ListCell: React.FC<TModuleListCell> = props => {
                     </span>
             case "link":
                 return <span className={`moduleList_linkCell${!data?.href ? " disabled" : ""}`} onClick={() => data?.href ? navigate(data.href) : null}>{data?.title}</span>
+            case "color_list":
+                return Array.isArray(data) ? data.map(option => {
+                    return <ComponentTooltip key={option.value} title={option.title}>
+                        <span className="moduleList_cellWrapper">
+                            <span style={{ backgroundColor: option.value }} className="moduleList_colorCell" onClick={() => handleCellDataClick(option.value)} />
+                        </span>
+                    </ComponentTooltip>
+                }) :
+                    <ComponentTooltip title={data.title}>
+                        <span className="moduleList_cellWrapper">
+                            <span style={{ backgroundColor: data.value }} className="moduleList_colorCell" onClick={() => handleCellDataClick(data.value)} />
+                        </span>
+                    </ComponentTooltip>
             default:
                 return <span className={`moduleList_cellData${filterable ? " filterable" : ""}`} onClick={() => handleCellDataClick(data)}>{checkDatesInString(data)}</span>
         }
@@ -518,7 +532,7 @@ const ListCell: React.FC<TModuleListCell> = props => {
 
 
 const ListRow: React.FC<TModuleListRow> = props => {
-const { data, headers, page, filterKeys, isListEditable, setFilter, setIndividualPage } = props
+    const { data, headers, page, filterKeys, isListEditable, setFilter, setIndividualPage } = props
     const { values, setFieldValue } = useFormikContext<{ selectedItems: Array<any> }>()
 
     const { selectedItems } = values
@@ -531,7 +545,7 @@ const { data, headers, page, filterKeys, isListEditable, setFilter, setIndividua
     const indexOfRow = isCheckboxEnabled ? selectedItems.findIndex(selectedItem => selectedItem.id === data.id) : -1
 
     const isRowChecked = indexOfRow !== -1
-    
+
 
     const handleDeleteCheckboxClick = () => {
         if (!isCheckboxEnabled) {
@@ -570,7 +584,7 @@ const { data, headers, page, filterKeys, isListEditable, setFilter, setIndividua
 
 
 const HeaderCell: React.FC<TModuleListHeaderCell> = props => {
-const { article, title, type, filter, setFilter, isListEditable } = props
+    const { article, title, type, filter, setFilter, isListEditable } = props
     const isSortableData = useMemo(() => {
         if (!isListEditable) {
             return false
