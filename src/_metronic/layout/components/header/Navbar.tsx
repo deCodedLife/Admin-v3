@@ -119,7 +119,7 @@ const Navbar = () => {
       <ComponentNotifications />
 
       {/* чат отключен до рефакторинга */}
-      {/* {chat ? <ModuleDialog {...chat} /> : null} */}
+      {chat ? <ModuleDialog {...chat} /> : null}
 
       <div className={clsx('app-navbar-item', itemClass)}>
         <ThemeModeSwitcher toggleBtnClass={clsx('btn-active-light-primary btn-custom')} />
