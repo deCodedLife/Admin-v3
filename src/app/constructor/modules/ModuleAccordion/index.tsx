@@ -10,7 +10,7 @@ import { Formik, Form as FormikForm } from "formik"
 import ComponentTextEditor from "../../components/ComponentTextEditor"
 import setModalIndex from "../../helpers/setModalIndex"
 import { unescape } from "lodash"
-import { Pagination } from "../ModuleList"
+import { Pagination } from "../ModuleList/src/Pagination"
 import useListData from "../../../api/hooks/useListData"
 import { TModuleAccordion, TModuleAccordionItem } from "./_types"
 
