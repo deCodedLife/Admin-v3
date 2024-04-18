@@ -280,7 +280,8 @@ const ModuleDialogToggleButton: React.FC<TModuleDialogToggleButton> = ({ count, 
     </div>
 }
 
-const ModuleDialog: React.FC<TModuleDialog> = (props) => {
+const ModuleDialog: React.FC<TModuleDialog> = props => {
+    const { chats, groups, messages } = props
     const [selectedGroup, setSelectedGroup] = useState<{ id: number, title: string } | null>(null)
     const [selectedChat, setSelectedChat] = useState<{ id: number, title: string } | null>(null)
     const { data: messagesNotifications } = useMessageNotifications()
@@ -318,7 +319,10 @@ const ModuleDialog: React.FC<TModuleDialog> = (props) => {
         }
     }, [messagesNotifications])
 
-
+    if (!groups || !chats || !messages) {
+        return null
+    }
+    
     return <>
         <ModuleDialogToggleButton count={count} buttonRef={toggleButtonRef} />
         <ModuleDialogChat
