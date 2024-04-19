@@ -21,6 +21,11 @@ const ModuleListActionButtons: React.FC<TModuleListActionButtons> = ({ data }) =
 const ParsedCell = React.memo<TParsedCell>(props => {
     const { article, type, row, context, filterable, suffix, handleClick, setIndividualPage, navigate } = props
     const data = row[article]
+    
+    if (data === null || undefined) {
+        return null
+    }
+
     switch (type) {
         case "email":
             return <a href={`mailto:${data}`}>{data}</a>
