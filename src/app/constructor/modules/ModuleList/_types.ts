@@ -1,8 +1,10 @@
-import {TModuleFormField} from "../ModuleForm/_types";
-import {TComponentSelect} from "../../components/ComponentSelect/_types";
-import {TComponentButton} from "../../components/ComponentButton/_types";
-import {TComponentFilter} from "../../components/ComponentFilters/_types";
+import { TModuleFormField } from "../ModuleForm/_types";
+import { TComponentSelect } from "../../components/ComponentSelect/_types";
+import { TComponentButton } from "../../components/ComponentButton/_types";
+import { TComponentFilter } from "../../components/ComponentFilters/_types";
 import { TDefaultModule } from "../_types"
+import { TApiSetup } from "../../../types/api";
+import { NavigateFunction } from "react-router-dom";
 
 export type TModuleListDownloader = {
     title: string,
@@ -42,6 +44,17 @@ export type TModuleListInfiniteScroll = {
     hasNextPage?: boolean,
     isFetching: boolean,
     fetch: () => void
+}
+export type TParsedCell = {
+    article: string
+    type: string,
+    row: { [key: string]: any },
+    filterable: boolean,
+    context: TApiSetup,
+    suffix?: string,
+    handleClick: (data: any) => void,
+    setIndividualPage: (page: string | null) => void,
+    navigate: NavigateFunction,
 }
 export type TModuleListCell = {
     article: string,
