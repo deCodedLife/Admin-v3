@@ -85,10 +85,11 @@ const ComponentImage: React.FC<TComponentImage> = ({ article, allowedFormats = [
 
     //первичная установка превью 
     useEffect(() => {
-        if (field.value) {
+        const isInitImages = field.value ? Array.isArray(field.value) ? field.value.every(image => typeof image ===  "string") : typeof field.value === "string" : false
+        if (isInitImages) {
             setImagePreview(Array.isArray(field.value) ? field.value : [field.value])
         }
-    }, [])
+    }, [field.value])
 
     //полноэкранный режим карусели изображений (галерея) и отключение скролла
     const [fullscreenCarousel, setFullscreenCarousel] = useState(false)

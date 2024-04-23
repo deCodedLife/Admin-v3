@@ -301,6 +301,12 @@
         }
     }
 
+    .moduleWidgets {
+        &_widgetContainer {
+            padding: 0;
+        }
+    }
+
     .pagination {
         &_limitContainer, &_details, &_pages {
             width: 100%;

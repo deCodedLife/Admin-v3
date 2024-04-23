@@ -102,4 +102,7 @@
     font-weight: 600;
     color: var(--kt-text-muted);
   }
+  & .apexcharts-text tspan {
+    fill: currentColor;
+  }
 }

@@ -1,8 +1,9 @@
 [data-app-theme=theme_2][data-theme=dark] #kt_app_body {
-    --kt-app-bg-color: #443a46;
-    --app-border-color: #3b333e;
+    --kt-app-bg-color: #4c404e;
+    --app-border-color: #6b646f;
+    --kt-border-color: var(--app-border-color);
     --app-text-color: #f6f4f5;
-    --kt-input-solid-bg: #3e3540;
+    --kt-input-solid-bg: #443a46;
     --kt-input-solid-bg-focus: var(--kt-input-solid-bg);
     --kt-text-muted: #808080;
     --kt-light: #6c5c70;
@@ -68,7 +69,7 @@
     & .moduleList {
         & .table {
             & thead tr {
-                --kt-text-muted: #808080;
+                --kt-text-muted: var(--app-text-color);
             }
         }
     }

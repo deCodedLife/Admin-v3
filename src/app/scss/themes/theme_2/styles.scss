@@ -4,6 +4,7 @@
     --app-border-color: #dbdbdb;
     --app-text-color: #21212e;
     --kt-app-bg-color: #f8f9fa;
+    --kt-body-bg: var(--kt-app-bg-color);
     --kt-app-header-height: 80px;
     --kt-app-header-base-bg-color-mobile: var(--app-layout-bg-color);
     --kt-app-sidebar-width: 240px;
@@ -79,7 +80,7 @@
         background-color: var(--app-layout-bg-color);
 
         & .app-sidebar-logo {
-            border-color: var(--app-border-color);
+            border-bottom: 1px solid #6b646f;
         }
 
         & .menu .menu-item {
@@ -197,6 +198,8 @@
         }
 
         &_dropdownContainer {
+            padding: 0;
+
             & .dropdown {
                 & .componentFilters_dropdown {
                     background-color: var(--kt-app-bg-color);
@@ -218,6 +221,7 @@
                         }
                     }
                 }
+
                 &.show {
                     & .componentFilters_dropdown {
                         background-color: var(--kt-primary-active);
@@ -241,9 +245,11 @@
         &_button {
             background-color: transparentize(#d7ee53, 0.7);
             color: var(--kt-primary-inverse);
+
             &:hover {
                 background-color: var(--kt-primary);
             }
+
             &.selected {
                 background-color: var(--kt-primary-active);
             }
@@ -293,7 +299,18 @@
         --kt-primary: var(--application-theme-color);
     }
 
+    & .moduleHeader {
+        padding: 1rem 0;
+    }
+
     & .moduleList {
+        &.card .card-body {
+            padding: 2rem 0;
+        }
+        & .table-responsive {
+            margin: 0;
+        }
+
         & .table {
             & thead tr {
                 --kt-text-muted: #514554;
@@ -315,6 +332,7 @@
 
     & .moduleSchedule {
         --kt-gray-300: var(--app-border-color);
+
         &_scrollButton {
             background-color: var(--kt-app-bg-color);
             border: 1px solid var(--app-border-color);
@@ -358,8 +376,9 @@
                 border-color: var(--kt-primary-active);
             }
         }
+
         &_itemButtons {
-            & > .componentButton {
+            &>.componentButton {
                 &.light {
                     border: 1px solid var(--app-border-color);
                 }
@@ -367,18 +386,35 @@
         }
     }
 
+    & .moduleWidgets {
+        &_widget {
+            border: 1px solid var(--app-border-color);
+        }
+    }
+
     & .moduleCalendar {
         & .rbc-btn-group button {
             background-color: transparentize(#d7ee53, 0.7);
             color: var(--kt-primary-inverse);
+
             &:hover {
                 background-color: var(--kt-primary);
             }
+
             &.rbc-active {
                 background-color: var(--kt-primary-active);
             }
         }
 
+    }
+
+    & .moduleForm, & .moduleLogs {
+        & .card-header {
+            padding: 0.5rem 0;
+        }
+        & .card-body {
+            padding: 2rem 0;
+        }
     }
 
     & .nav-tabs .nav-link.active {
@@ -396,22 +432,6 @@
     & .notificationTitleContainer {
         --kt-text-white: var(--kt-primary-inverse);
     }
-
-    /*  & .moduleSchedule_stepsDropdown {
-        & #moduleSchedule_stepsButton {
-            &:hover {
-                background-color: var(--kt-card-bg) !important;
-            }
-        }
-    } */
-
-    /*   .moduleSchedule {
-        &_cellContainer {
-            & .card {
-                border: none;
-            }
-        }
-    } */
 
     .react-loading-skeleton.skeleton {
         --base-color: var(--kt-input-solid-bg);

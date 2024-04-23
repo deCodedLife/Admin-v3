@@ -105,7 +105,7 @@ const ComponentFiltersDropdown: React.FC<TComponentFilters> = (props) => {
                     <div className='px-7 py-5'>
                         <div className='fs-5 text-dark fw-bolder'>{intl.formatMessage({ id: "FILTER.DROPDOWN_TITLE" })}</div>
                     </div>
-                    <div className='separator border-gray-200' />
+                    <div className='separator' />
                     <div className='p-5'>
                         <Formik enableReinitialize initialValues={initialValues} onSubmit={(values) => props.handleChange(values)}>
                             {({ handleSubmit, handleReset }) => {
@@ -188,7 +188,7 @@ const ComponentFiltersBlock: React.FC<TComponentFilters> = (props) => {
                                     <div className='px-7 py-5'>
                                         <div className='fs-5 text-dark fw-bolder'>{intl.formatMessage({ id: "FILTER.DROPDOWN_TITLE" })}</div>
                                     </div>
-                                    <div className='separator border-gray-200'></div>
+                                    <div className='separator'></div>
                                     <div className='px-7 py-5'>
                                         {props.data.map(filter => <div key={getFilterKey(filter)} className="componentFilters_dropdownFilter">
                                             {filter.type !== "checkbox" ? <label className='form-label fw-bold'>{filter.title ?? ""}</label> : null}
@@ -253,7 +253,7 @@ const ComponentFiltersString: React.FC<TComponentFilters> = (props) => {
                                     <div className='px-7 py-5'>
                                         <div className='fs-5 text-dark fw-bolder'>{intl.formatMessage({ id: "FILTER.DROPDOWN_TITLE" })}</div>
                                     </div>
-                                    <div className='separator border-gray-200'></div>
+                                    <div className='separator'></div>
                                     <div className='px-7 py-5'>
                                         {props.data.map(filter => <div key={getFilterKey(filter)} className="componentFilters_dropdownFilter">
                                             {filter.type !== "checkbox" ? <label className='form-label fw-bold'>{filter.title ?? ""}</label> : null}
