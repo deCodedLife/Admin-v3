@@ -27,10 +27,10 @@ import ComponentTooltip from "../../components/ComponentTooltip"
 import ComponentAnnotation from "../../components/ComponentAnnotation"
 import InfoModal from "./src/InfoModal"
 import ComponentGooglePlaces from "../../components/ComponentGooglePlaces"
-import { useHandleSubmitContext } from "../../../page/DynamicPage"
+import { useHandleSubmitContext } from "../../../pages/DynamicPage"
 import { isEqual } from "lodash"
 import { TComponentButton } from "../../components/ComponentButton/_types"
-import {TModuleForm, TModuleFormArea, TModuleFormBlock, TModuleFormField} from "./_types";
+import { TModuleForm, TModuleFormArea, TModuleFormBlock, TModuleFormField } from "./_types";
 
 //контекст
 const FormContext = React.createContext<{ isSuccess?: boolean }>({})
@@ -209,7 +209,7 @@ const ModuleFormField = React.memo<TModuleFormField>((props) => {
 })
 //Блок полей 
 const ModuleFormBlock: React.FC<TModuleFormBlock> = props => {
-    const { title, fields, buttons, object_id, request_object }  = props
+    const { title, fields, buttons, object_id, request_object } = props
     const fieldsArticles = useMemo(() => {
         return fields.map(field => field.article)
     }, [fields])
@@ -420,7 +420,13 @@ const ModuleForm: React.FC<TModuleForm> = ({ components, settings }) => {
                         <div className="moduleForm_container">
                             {areas.map(area => <ModuleFormArea key={getAreaKey(area)} {...area} buttons={fieldButtons} request_object={object} object_id={id} />)}
                         </div>
-                        <ModuleFormButtons className={buttonsContainerAdditionalClass} buttons={mainButtons} handleSubmit={handleSubmit} isSubpage={isSubpage} isFormInsideModal={isFormInsideModal} />
+                        <ModuleFormButtons
+                            className={buttonsContainerAdditionalClass}
+                            buttons={mainButtons}
+                            handleSubmit={handleSubmit}
+                            isSubpage={isSubpage}
+                            isFormInsideModal={isFormInsideModal}
+                        />
                     </FormikForm>
                     <InfoModal />
                 </div>

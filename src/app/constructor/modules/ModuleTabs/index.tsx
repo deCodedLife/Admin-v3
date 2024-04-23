@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext as useReactContext, useMemo } from "react"
 import { Tab, Tabs } from "react-bootstrap"
-import PageBuilder from "../../../page/PageBuilder"
+import PageBuilder from "../../../pages/PageBuilder"
 import { useLocation, useNavigate } from "react-router-dom"
 import { ModalContext } from "../ModuleSchedule"
 import { TModuleTabs } from "./_types"

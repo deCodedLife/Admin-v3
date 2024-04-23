@@ -109,7 +109,7 @@ const ModuleWidgetsToolbar: React.FC<TModuleWidgetsToolbar> = props => {
 const ModuleWidgets = React.memo<TModuleWidgets>(props => {
     const { components, settings, hook } = props
     const { widgets_group: widgetCommand, filters: initialFilters, linked_filter } = settings
-    const { filter, isInitials, setFilter, resetFilter } = useFilter(`${props.type}_${widgetCommand}`, initialFilters)
+    const { filter, isInitials, setFilter, resetFilter } = useFilter(`${props.type}_${widgetCommand}`, initialFilters, linked_filter)
     const haveFilter = Boolean(components?.filters)
     const haveButtons = Boolean(components?.buttons)
     const { data, isLoading, isRefetching, refetch } = useWidget(widgetCommand, filter)

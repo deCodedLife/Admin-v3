@@ -19,7 +19,7 @@ import setModalIndex from "../../helpers/setModalIndex"
 import api from "../../../api"
 import { getErrorToast } from "../../helpers/toasts"
 import { useIsSubpage } from "../helpers"
-import { useHandleSubmitContext } from "../../../page/DynamicPage"
+import { useHandleSubmitContext } from "../../../pages/DynamicPage"
 import { isEqual } from "lodash"
 import { useSetupContext } from "../../helpers/SetupContext"
 import {

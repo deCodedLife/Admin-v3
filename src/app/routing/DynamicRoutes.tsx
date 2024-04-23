@@ -1,8 +1,8 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { MasterLayout } from '../../_metronic/layout/MasterLayout'
-import DynamicPage from '../page/DynamicPage'
-import StaticPage from '../page/StaticPage'
+import DynamicPage from '../pages/DynamicPage'
+import StaticPage from '../pages/StaticPage'
 
 
 const DynamicRoutes: React.FC = () => {

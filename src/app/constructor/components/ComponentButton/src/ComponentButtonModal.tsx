@@ -7,7 +7,7 @@ import ComponentTooltip from "../../ComponentTooltip"
 import { getLabel } from ".."
 import { Modal } from "react-bootstrap"
 import setModalIndex from "../../../helpers/setModalIndex"
-import PageBuilder from "../../../../page/PageBuilder"
+import PageBuilder from "../../../../pages/PageBuilder"
 import { TComponentButtonModal } from "../_types"
 
 

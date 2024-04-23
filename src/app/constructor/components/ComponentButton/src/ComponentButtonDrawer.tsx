@@ -5,7 +5,7 @@ import { useModuleContext } from "../../../modules/helpers/useModuleContent"
 import { ModalContext } from "../../../modules/ModuleSchedule"
 import ComponentTooltip from "../../ComponentTooltip"
 import { getLabel } from ".."
-import PageBuilder from "../../../../page/PageBuilder"
+import PageBuilder from "../../../../pages/PageBuilder"
 import ComponentDrawer from "../../ComponentDrawer"
 import { TComponentButtonDrawer } from "../_types"
 
