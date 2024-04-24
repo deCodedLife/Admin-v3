@@ -7,9 +7,9 @@
         background-color: $app-sidebar-dark-bg-color;
         border-right: 0 !important;
 
-        .hover-scroll-overlay-y {        
+        /* .hover-scroll-overlay-y {        
             @include scrollbar-color($app-sidebar-dark-scrollbar-color, $app-sidebar-dark-scrollbar-color-hover);
-        }
+        } */
 
         .app-sidebar-logo {
             border-bottom: 1px dashed $app-sidebar-dark-separator-color;

@@ -307,8 +307,20 @@
         &.card .card-body {
             padding: 2rem 0;
         }
+
         & .table-responsive {
             margin: 0;
+
+            & table {
+                & th:first-child {
+                    padding-left: 0;
+                }
+
+                & td:last-child,
+                & th:last-child {
+                    padding-right: 0;
+                }
+            }
         }
 
         & .table {
@@ -321,6 +333,25 @@
             & tr.moduleList_row {
                 border-bottom: 1px solid var(--app-border-color);
             }
+        }
+
+        &_selectedItemsContainer {
+            padding: 0;
+        }
+
+        &_cell {
+            &.deleteCheckbox {
+                padding-left: 0;
+            }
+        }
+
+        &_priceCell {
+            background-color: lighten(#75AE40, 5%);
+
+            &.negative {
+                background-color: lighten(#f1416c, 5%);
+            }
+
         }
     }
 
@@ -408,10 +439,12 @@
 
     }
 
-    & .moduleForm, & .moduleLogs {
+    & .moduleForm,
+    & .moduleLogs {
         & .card-header {
             padding: 0.5rem 0;
         }
+
         & .card-body {
             padding: 2rem 0;
         }

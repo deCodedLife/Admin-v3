@@ -4,7 +4,7 @@
 
 
 // Customize native scrollbars only for desktop mode
-@include media-breakpoint-up(lg) {
+/* @include media-breakpoint-up(lg) {
     main,
     span,
     ol,
@@ -31,7 +31,7 @@
         // Default color
         @include scrollbar-color(var(--kt-scrollbar-color), var(--kt-scrollbar-hover-color));
     }
-}
+} */
 
 // Overflow scroll
 .scroll {

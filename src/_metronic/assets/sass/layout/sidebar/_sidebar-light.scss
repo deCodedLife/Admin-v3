@@ -7,9 +7,9 @@
         background-color: var(--kt-app-sidebar-light-bg-color);
         border-right: 0 !important;
 
-        .hover-scroll-overlay-y {        
+        /* .hover-scroll-overlay-y {        
             @include scrollbar-color(var(--kt-app-sidebar-light-scrollbar-color), var(--kt-app-sidebar-light-scrollbar-color-hover));
-        }
+        } */
 
         .app-sidebar-logo {
             border-bottom: 1px solid var(--kt-app-sidebar-light-separator-color);
