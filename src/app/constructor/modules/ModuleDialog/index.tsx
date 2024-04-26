@@ -43,7 +43,12 @@ const ModuleDialogMessage: React.FC<TModuleDialogMessage> = ({ message, intl, is
 
     return <div ref={ref} key={message.id} className={`moduleMiniChat_messageContainer${isOwnMessage ? " author" : ""}`}>
         <div className="moduleMiniChat_messageProperties">
-            <img src={toAbsoluteUrl("/media/avatars/blank.png")} alt="" className="moduleMiniChat_messagePhoto" />
+            <img
+                src={message.avatar ?? toAbsoluteUrl("/media/crm/assets/blank.png")}
+                alt=""
+                className="moduleMiniChat_messagePhoto"
+                onError={event => event.currentTarget.src = toAbsoluteUrl("/media/crm/assets/blank.png")}
+            />
             <div className="moduleMiniChat_messageDescription">
                 <span className="moduleMiniChat_messageAuthor">{message.author_id?.title ?? intl.formatMessage({ id: "DIALOG.DEFAULT_USER_NAME" })}</span>
                 <span className="moduleMiniChat_messageDate">{moment(message.created_at).format("DD MMM HH:mm")}</span>
@@ -305,7 +310,12 @@ const ModuleDialog: React.FC<TModuleDialog> = props => {
                             toast.dismiss(t.id)
                         }
                     }}>
-                        <img src={toAbsoluteUrl("/media/avatars/blank.png")} alt="" className="messageToast_avatar" />
+                        <img
+                            src={notification.avatar ?? toAbsoluteUrl("/media/avatars/blank.png")}
+                            alt=""
+                            className="messageToast_avatar"
+                            onError={event => event.currentTarget.src = toAbsoluteUrl("/media/crm/assets/blank.png")}
+                        />
                         <div className="messageToast_content">
                             <h4 className="messageToast_author">{notification.author_id.title}</h4>
                             <p className="messageToast_message">{notification.message}</p>

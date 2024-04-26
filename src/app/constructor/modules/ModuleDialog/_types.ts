@@ -2,6 +2,7 @@ import { IntlShape } from "react-intl"
 
 export type TMessage = {
     id: number,
+    avatar?: string;
     created_at: string,
     message: string,
     author_id: { title: string, value: number },

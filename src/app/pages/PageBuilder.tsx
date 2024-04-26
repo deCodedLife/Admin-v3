@@ -27,6 +27,8 @@ import ModuleQueue from "../constructor/modules/ModuleQueue"
 import ModuleYandexMap from "../constructor/modules/ModuleYandexMap"
 import PageProvider from "../constructor/modules/helpers/PageContext"
 import ModuleButtons from "../constructor/modules/ModuleButtons"
+import ModuleTariffs from "../constructor/modules/ModuleTariffs"
+import ModuleHtmlPage from "../constructor/modules/ModuleHtmlPage"
 
 const PageProgressBar: React.FC<{ isFetching: boolean }> = ({ isFetching }) => {
     const [progress, setProgress] = useState(0)
@@ -95,6 +97,10 @@ const Module: React.FC<ModuleType> = (props) => {
             return <ModuleYandexMap {...props} />
         case "buttons":
             return <ModuleButtons {...props} />
+        case "tariffs":
+            return <ModuleTariffs {...props} />
+        case "html_page":
+            return <ModuleHtmlPage {...props} />
         default:
             //@ts-ignore
             return <ModuleInCreation {...props} />

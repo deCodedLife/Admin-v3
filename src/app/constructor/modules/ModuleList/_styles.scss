@@ -96,6 +96,9 @@
         white-space: unset;
       }
     }
+    &.phone {
+      white-space: nowrap;
+    }
   }
 
   &_cellData {

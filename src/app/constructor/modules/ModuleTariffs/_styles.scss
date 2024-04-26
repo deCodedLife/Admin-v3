@@ -1,0 +1,48 @@
+.moduleTariffs {
+    &_counterContainer {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        height: 32px;
+        min-width: 150px;
+        margin: 0 1rem;
+    }
+
+    &_counterInput {
+        position: absolute;
+        height: 32px;
+        width: 150px;
+    }
+
+    &_counterContent {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        height: 32px;
+        user-select: none;
+        cursor: pointer;
+    }
+
+    &_icon,
+    &_successIcon {
+        & svg {
+            height: 1.5rem;
+            width: 1.5rem;
+        }
+
+    }
+
+    &_successIcon {
+        color: var(--kt-success);
+    }
+
+    &_cardDescription {
+        opacity: 0;
+        transition: all 0.3s;
+
+        &.filled {
+            opacity: 1;
+        }
+    }
+}

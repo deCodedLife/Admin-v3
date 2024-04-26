@@ -21,6 +21,8 @@ import { TModuleDayPlanning } from "../constructor/modules/ModuleDayPlanning/_ty
 import { TModuleQueue } from "../constructor/modules/ModuleQueue/_types";
 import { TModuleYandexMap } from "../constructor/modules/ModuleYandexMap/_types";
 import { TModuleButtons } from "../constructor/modules/ModuleButtons/_types";
+import { TModuleTariffs } from "../constructor/modules/ModuleTariffs/_types";
+import { TModuleHtmlPage } from "../constructor/modules/ModuleHtmlPage/_types";
 
 //общий тип ответа серверного Api
 export type TApiResponse<data> = {
@@ -36,7 +38,7 @@ export type TApiModule = TModuleHeader | TModuleForm | TModuleInfo | TModuleList
     TModuleChat | TModuleMiniChat | TModuleCalendar | TModuleDocuments |
     TModuleFunnel | TModuleNews | TModuleLogs | TModuleLinksBlock |
     TModuleAppEditor | TModuleAccordion | TModuleDayPlanning | TModuleQueue |
-    TModuleYandexMap | TModuleButtons
+    TModuleYandexMap | TModuleButtons | TModuleTariffs | TModuleHtmlPage
 //тип ответа запроса страницы
 export type TApiPage = Array<TApiModule>
 //тип ответа запроса роли 
