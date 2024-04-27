@@ -46,7 +46,7 @@ const PreviewComponent: React.FC<TPreviewComponent> = ({ file, handleDelete }) =
 }
 
 const ComponentFile: React.FC<TComponentFile> = props => {
-    const { article, is_multiply, allowedFormats = [], max_size, object_id, request_object } =  props
+    const { article, is_multiply, allowedFormats = [], max_size, object_id, request_object } = props
     const intl = useIntl()
     const { setFieldValue } = useFormikContext<any>()
     const [field] = useField(article)
@@ -68,14 +68,18 @@ const ComponentFile: React.FC<TComponentFile> = props => {
 
     //первичная установка превью 
     useEffect(() => {
-        if (field.value) {
+        const isInitFiles = field.value ? Array.isArray(field.value) ?
+            field.value.every(file => typeof file?.path === "string") :
+            typeof field.value?.path === "string" :
+            false
+        if (isInitFiles) {
             setFilePreview(Array.isArray(field.value) ? field.value : [field.value])
         }
-    }, [])
+    }, [field.value])
 
-     //Разрешенный максимальный размер файла
-     const resolvedMaxSize = max_size ?? 2_000_000
-     const resolvedMaxSizeAsMB = (resolvedMaxSize / 1024 / 1024).toFixed(2)
+    //Разрешенный максимальный размер файла
+    const resolvedMaxSize = max_size ?? 2_000_000
+    const resolvedMaxSizeAsMB = (resolvedMaxSize / 1024 / 1024).toFixed(2)
 
     //валидатор формата и загрузка изображений
     const validationUploadedFile = async (files: FileList | null) => {
@@ -124,7 +128,7 @@ const ComponentFile: React.FC<TComponentFile> = props => {
         const sourceValueClone = field.value ? Array.isArray(field.value) ? [...field.value] : [field.value] : []
         const currentFile = sourceValueClone[index]
         if ("title" in currentFile && "extension" in currentFile && request_object && object_id) {
-            await api("files", "remove", {object: request_object, row_id: object_id, title: `${currentFile.title}.${currentFile.extension}`})
+            await api("files", "remove", { object: request_object, row_id: object_id, title: `${currentFile.title}.${currentFile.extension}` })
         }
         sourceValueClone.splice(index, 1)
         setFieldValue(article, sourceValueClone)
@@ -136,39 +140,39 @@ const ComponentFile: React.FC<TComponentFile> = props => {
     }
 
     return <div className="componentFile_container">
-    <div className="componentFile_uploader"
-        onDragEnter={handleDragEnter}
-        onDragLeave={handleDragLeave}
-        onDragOver={event => event.preventDefault()}
-        onDrop={handleUploadFileAsDrop}
-    >
-        {
-            haveUploadedFiles ? <>
-                {filePreview.map((file, index) => <PreviewComponent key={file.path + index} file={file} handleDelete={() => handleDeleteFile(index)} />)}
-                <div className="componentFile_uploadMoreButtonContainer">
-                    <ComponentButton
-                        className="componentFile_uploadMoreButton"
-                        type="custom"
-                        settings={{ title: intl.formatMessage({ id: isMulti ? "FILE.UPLOAD_MORE" : "FILE.REFRESH_FILE" }), icon: "upload", background: "light" }}
-                        customHandler={handleUploadButtonClick} />
-                </div>
-            </> :
-                <p className="componentFile_uploaderText">
-                    {intl.formatMessage({ id: "FILE.DRAG" })}
-                    <a className="componentFile_uploadLink" onClick={handleUploadAnchorClick}>{intl.formatMessage({ id: "FILE.SELECT_LINK" })}</a>
-                    {intl.formatMessage({ id: "FILE.FILE_DESCRIPTION" })}
-                </p>
+        <div className="componentFile_uploader"
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+            onDragOver={event => event.preventDefault()}
+            onDrop={handleUploadFileAsDrop}
+        >
+            {
+                haveUploadedFiles ? <>
+                    {filePreview.map((file, index) => <PreviewComponent key={file.path + index} file={file} handleDelete={() => handleDeleteFile(index)} />)}
+                    <div className="componentFile_uploadMoreButtonContainer">
+                        <ComponentButton
+                            className="componentFile_uploadMoreButton"
+                            type="custom"
+                            settings={{ title: intl.formatMessage({ id: isMulti ? "FILE.UPLOAD_MORE" : "FILE.REFRESH_FILE" }), icon: "upload", background: "light" }}
+                            customHandler={handleUploadButtonClick} />
+                    </div>
+                </> :
+                    <p className="componentFile_uploaderText">
+                        {intl.formatMessage({ id: "FILE.DRAG" })}
+                        <a className="componentFile_uploadLink" onClick={handleUploadAnchorClick}>{intl.formatMessage({ id: "FILE.SELECT_LINK" })}</a>
+                        {intl.formatMessage({ id: "FILE.FILE_DESCRIPTION" })}
+                    </p>
 
-        }
-        <input
-            ref={inputRef}
-            type="file"
-            style={{ display: "none" }}
-            onChange={handleUploadFileAsClick}
-            multiple={isMulti}
-        />
-    </div>
-    {allowedFormats?.length ? <div className="componentFile_props">
+            }
+            <input
+                ref={inputRef}
+                type="file"
+                style={{ display: "none" }}
+                onChange={handleUploadFileAsClick}
+                multiple={isMulti}
+            />
+        </div>
+        {allowedFormats?.length ? <div className="componentFile_props">
             {intl.formatMessage({ id: "FILE.ALLOWED_FORMATS" })} {allowedFormats.map((format, index, array) => <span key={format}
                 className="componentFile_allowedFormat">{`${format}${index !== array.length - 1 ? ", " : "."}`}</span>)}
         </div> : null}
