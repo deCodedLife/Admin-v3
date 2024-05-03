@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import setDrawerIndex from '../../helpers/setDrawerIndex'
 import { TComponentDrawer } from './_types'
@@ -9,8 +9,18 @@ const ComponentDrawer: React.FC<TComponentDrawer> = ({ children, direction = "ri
     const [wrapperClassName, setWrapperClassName] = useState("componentDrawer_wrapper")
     const [className, setClassName] = useState(`componentDrawer ${direction}`)
 
+    const handleEscClick = useCallback((event: KeyboardEvent) => {
+        const currentBodyChildren = document.body.children
+        const isDrawerInFocus = currentBodyChildren[currentBodyChildren.length - 1] === ref.current
+        if (isDrawerInFocus && event.key === "Escape") {
+            return setShow(false)
+        }
+    }, [])
+
     useEffect(() => {
         if (show) {
+            document.body.setAttribute("style", "overflow: hidden; padding-right: 4px;")
+            document.addEventListener("keydown", handleEscClick)
             setShowDrawer(true)
             setTimeout(() => {
                 setWrapperClassName("componentDrawer_wrapper active")
@@ -18,6 +28,8 @@ const ComponentDrawer: React.FC<TComponentDrawer> = ({ children, direction = "ri
             }, 300)
             onEntered?.()
             return () => {
+                document.body.removeAttribute("style")
+                document.removeEventListener("keydown", handleEscClick)
                 setWrapperClassName("componentDrawer_wrapper")
                 setClassName(`componentDrawer ${direction}`)
                 setTimeout(() => {
@@ -27,6 +39,10 @@ const ComponentDrawer: React.FC<TComponentDrawer> = ({ children, direction = "ri
             }
         }
     }, [show])
+
+    const currentDrawerIndex = useMemo(() => {
+        return showDrawer ? setDrawerIndex() : 0
+    }, [showDrawer])
 
     const handleCloseClick = (event: React.MouseEvent<HTMLDivElement>) => {
         if (event.target === event.currentTarget) {
@@ -39,7 +55,7 @@ const ComponentDrawer: React.FC<TComponentDrawer> = ({ children, direction = "ri
     }
 
     return createPortal(<div ref={ref} style={{
-        zIndex: setDrawerIndex(ref.current)
+        zIndex: currentDrawerIndex
     }} className={wrapperClassName} onClick={handleCloseClick}>
         <div className={className}>
             <button type="button" className="btn-close" onClick={() => setShow(false)} />

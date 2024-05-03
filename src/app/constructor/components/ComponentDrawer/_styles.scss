@@ -1,5 +1,5 @@
 .componentDrawer {
-    --drawer-variable: 640px;
+    --drawer-variable: 740px;
     position: fixed;
     background-color: var(--kt-app-bg-color);
     transition: transform 0.5s;
@@ -73,4 +73,17 @@
         top: 10px;
         z-index: 2;
     }
+
+    & .card {
+        & .card-body {
+            padding: 0.8rem;
+        }
+    }
+
+    & .moduleList {
+        & .table-responsive {
+            margin: 0 -0.8rem;
+        }
+    }
+
 }

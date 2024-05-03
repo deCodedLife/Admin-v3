@@ -187,6 +187,28 @@
     }
 }
 
+@media (min-width: 767px) {
+    .componentDrawer {
+        & .componentButton {
+            &_container {
+                justify-content: flex-end;
+                flex-wrap: wrap;
+    
+                & .componentButton {
+                    width: calc(50% - 1rem);
+                    margin-bottom: 0.5rem;
+                    &:nth-child(even) {
+                        margin-left: 2rem;
+                    }
+                    &:not(:last-child) {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
 @media (max-width: 767px) {
 
     input:focus,
@@ -232,6 +254,10 @@
         &_propertyLabel {
             display: inline-block;
         }
+    }
+
+    .componentDrawer {
+        --drawer-variable: 540px;
     }
 
     .moduleChat {
@@ -361,6 +387,9 @@
                 margin-bottom: 0.5rem;
             }
         }
+    }
+    .componentDrawer {
+        --drawer-variable: 340px;
     }
 }
 

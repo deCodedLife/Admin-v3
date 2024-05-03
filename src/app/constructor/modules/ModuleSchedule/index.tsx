@@ -25,13 +25,14 @@ import {
     TModuleScheduleStepsColumn,
     TModuleScheduleTable
 } from "./_types";
+import ComponentDrawer from "../../components/ComponentDrawer"
 
-export const ModalContext = React.createContext<{[key: string]: any}>({})
+export const ModalContext = React.createContext<{ [key: string]: any }>({})
 
 
 const getEmployeeSchedule = (schedule: Array<TModuleScheduleServerCell>, steps_list: Array<string>) => {
     return schedule.reduce<Array<TModuleScheduleCell>>((acc, graph) => {
-        const [start, end] = graph.steps 
+        const [start, end] = graph.steps
         const currentSteps = steps_list.slice(start, end + 1)
 
         switch (graph.status) {
@@ -88,8 +89,8 @@ const ModuleScheduleCell: React.FC<TModuleScheduleComponentCell> = props => {
         setSelectedCell
     } = props
     const currentCellHeight = `${3.15 * cell_height + 0.5 * (cell_height - 1)}rem`
-    const leftResolvedIcons = event && Array.isArray(event.icons) ? event.icons.length > 2 ? event.icons.slice(0,2) : [] : []
-    const rightResolvedIcons = event && Array.isArray(event.icons) ? event.icons.length > 2 ? event.icons.slice(2,4) : event.icons.slice(0,2) : []
+    const leftResolvedIcons = event && Array.isArray(event.icons) ? event.icons.length > 2 ? event.icons.slice(0, 2) : [] : []
+    const rightResolvedIcons = event && Array.isArray(event.icons) ? event.icons.length > 2 ? event.icons.slice(2, 4) : event.icons.slice(0, 2) : []
 
     const handleClick = () => {
         if (type === "disabled") {
@@ -112,7 +113,7 @@ const ModuleScheduleCell: React.FC<TModuleScheduleComponentCell> = props => {
                         <div className="overlay-wrapper moduleSchedule_cellWrapper">
                             <div className={`moduleSchedule_cell ${type} ${event?.color}`} style={{ height: currentCellHeight }}>
                                 <div className={`moduleSchedule_cellContentContainer ${cell_height === 1 ? " minimize" : ""}`}>
-                                <div className="moduleSchedule_cellIcons left">
+                                    <div className="moduleSchedule_cellIcons left">
                                         {leftResolvedIcons.map((icon: string) => <KTSVG key={icon} path={`/media/crm/icons/${icon}.svg`} className='moduleSchedule_cellIcon' />)}
                                     </div>
                                     {Array.isArray(event.description) ? event.description.map((descriptionRow: string) => {
@@ -121,7 +122,7 @@ const ModuleScheduleCell: React.FC<TModuleScheduleComponentCell> = props => {
                                         </div>
                                     }) : null}
                                     <div className="moduleSchedule_cellIcons right">
-                                    {rightResolvedIcons.map((icon: string) => <KTSVG key={icon} path={`/media/crm/icons/${icon}.svg`} className='moduleSchedule_cellIcon' />)}
+                                        {rightResolvedIcons.map((icon: string) => <KTSVG key={icon} path={`/media/crm/icons/${icon}.svg`} className='moduleSchedule_cellIcon' />)}
                                     </div>
                                 </div>
                             </div>
@@ -276,6 +277,17 @@ const ModuleScheduleModalForm = React.memo<TModuleScheduleModal>(({ requestObjec
             insideModal: true
         } : {})
     }, [selectedCell])
+    /*  return <ComponentDrawer
+         show={Boolean(selectedCell) && Boolean(data)}
+         setShow={() => setSelectedCell(null)}
+         onEntered={() => navigate(`?modal=${requestObject}${selectedCell?.event?.id ? `&id=${selectedCell.event.id}` : ""}`)}
+         onExited={() => navigate(location.pathname)}
+ 
+     >
+         <ModalContext.Provider value={modalContext}>
+             {data ? <PageBuilder data={data} isFetching={isFetching} showProgressBar={false} /> : null}
+         </ModalContext.Provider>
+     </ComponentDrawer> */
 
     return <Modal
         size="xl"
@@ -298,7 +310,7 @@ const ModuleScheduleModalForm = React.memo<TModuleScheduleModal>(({ requestObjec
 const ModuleSchedule: React.FC<TModuleSchedule> = props => {
     const { components, settings } = props
     const { object, filters } = settings
-    const { filter, isInitials, setFilter, resetFilter } = useFilter(`${props.type}_${settings.object}`, filters, "", ["start_at"] )
+    const { filter, isInitials, setFilter, resetFilter } = useFilter(`${props.type}_${settings.object}`, filters, "", ["start_at"])
     const [selectedCell, setSelectedCell] = useState<any>(null)
     const haveFilter = Boolean(components?.filters)
 
