@@ -277,7 +277,7 @@ const ModuleScheduleModalForm = React.memo<TModuleScheduleModal>(({ requestObjec
             insideModal: true
         } : {})
     }, [selectedCell])
-    /*  return <ComponentDrawer
+     return <ComponentDrawer
          show={Boolean(selectedCell) && Boolean(data)}
          setShow={() => setSelectedCell(null)}
          onEntered={() => navigate(`?modal=${requestObject}${selectedCell?.event?.id ? `&id=${selectedCell.event.id}` : ""}`)}
@@ -287,9 +287,9 @@ const ModuleScheduleModalForm = React.memo<TModuleScheduleModal>(({ requestObjec
          <ModalContext.Provider value={modalContext}>
              {data ? <PageBuilder data={data} isFetching={isFetching} showProgressBar={false} /> : null}
          </ModalContext.Provider>
-     </ComponentDrawer> */
+     </ComponentDrawer>
 
-    return <Modal
+    /* return <Modal
         size="xl"
         dialogClassName="customModal moduleSchedule_modal"
         show={Boolean(selectedCell) && Boolean(data)}
@@ -305,7 +305,7 @@ const ModuleScheduleModalForm = React.memo<TModuleScheduleModal>(({ requestObjec
             </ModalContext.Provider>
 
         </Modal.Body>
-    </Modal>
+    </Modal> */
 })
 const ModuleSchedule: React.FC<TModuleSchedule> = props => {
     const { components, settings } = props
