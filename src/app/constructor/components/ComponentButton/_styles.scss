@@ -138,6 +138,12 @@
         }
     }
 
+    &_modal {
+        & .modal-content {
+            background-color: var(--kt-modal-bg);
+        }
+    }
+
     &_modalButton {
         position: absolute;
         height: 30px;
