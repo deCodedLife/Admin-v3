@@ -1,4 +1,4 @@
-import React, { useCallback } from "react"; 
+import React, { useCallback } from "react";
 import { TModuleListUpdateField, TModuleListUpdateModal } from "../_types";
 import ComponentInput from "../../../components/ComponentInput";
 import ComponentTextarea from "../../../components/ComponentTextarea";
@@ -27,6 +27,8 @@ const Field: React.FC<TModuleListUpdateField> = (props) => {
         case "textarea":
             return <ComponentTextarea article={article} customHandler={customHandler} />
         case "list":
+        case "link_list" as "list":
+        case "color_list" as "list":
             return <ComponentSelect
                 article={article}
                 data_type={data_type}
