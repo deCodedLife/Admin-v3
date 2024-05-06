@@ -56,7 +56,7 @@ const ComponentDrawer: React.FC<TComponentDrawer> = ({ children, direction = "ri
 
     return createPortal(<div ref={ref} style={{
         zIndex: currentDrawerIndex
-    }} className={wrapperClassName} onClick={handleCloseClick}>
+    }} className={wrapperClassName} onMouseDown={handleCloseClick}>
         <div className={className}>
             <button type="button" className="btn-close" onClick={() => setShow(false)} />
             {children}
