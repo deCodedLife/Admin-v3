@@ -33,7 +33,7 @@
 
     &.right {
         width: var(--drawer-variable);
-        height: 100vh;
+        height: 100dvh;
         top: 0;
         right: 0;
         transform: translateX(100%);
@@ -57,7 +57,7 @@
 
     &.left {
         width: var(--drawer-variable);
-        height: 100vh;
+        height: 100dvh;
         top: 0;
         left: 0;
         transform: translateX(-100%);
