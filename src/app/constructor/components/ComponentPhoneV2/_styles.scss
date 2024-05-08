@@ -1,0 +1,36 @@
+.componentPhoneV2 {
+    flex-grow: 1;
+
+    &.withButton {
+        margin-right: 1rem;
+    }
+
+    &_container {
+        display: flex;
+        justify-content: center;
+    }
+
+    &_button {
+        align-self: center;
+        flex-shrink: 0;
+    }
+
+    & .PhoneInputInput {
+       border: none;
+        background-color: transparent;
+        color: inherit;
+    }
+
+    &.PhoneInput--disabled {
+        & .PhoneInputCountrySelect {
+            opacity: 0;
+        }
+    }
+
+    &_modal {
+        & .modal-content {
+            background-color: var(--kt-modal-bg);
+        }
+    }
+   
+}

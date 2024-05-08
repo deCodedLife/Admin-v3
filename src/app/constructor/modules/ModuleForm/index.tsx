@@ -31,6 +31,7 @@ import { useHandleSubmitContext } from "../../../pages/DynamicPage"
 import { isEqual } from "lodash"
 import { TComponentButton } from "../../components/ComponentButton/_types"
 import { TModuleForm, TModuleFormArea, TModuleFormBlock, TModuleFormField } from "./_types";
+import ComponentPhoneV2 from "../../components/ComponentPhoneV2"
 
 //контекст
 const FormContext = React.createContext<{ isSuccess?: boolean }>({})
@@ -91,12 +92,17 @@ export const Component = React.memo<TModuleFormField>((props) => {
                 is_disabled={Boolean(is_disabled)}
             />
         case "phone":
-            return <ComponentPhone
+            return <ComponentPhoneV2 
+            article={article}
+            hook={hook}
+            is_disabled={Boolean(is_disabled)}
+            script={props.script} />
+            /* return <ComponentPhone
                 article={article}
                 hook={hook}
                 is_disabled={Boolean(is_disabled)}
                 script={props.script}
-            />
+            /> */
         case "date":
         case "time":
         case "datetime":
