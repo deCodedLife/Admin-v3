@@ -248,7 +248,8 @@ const ModuleList = React.memo<TModuleList>((props) => {
         isLoading: isInifiniteDataLoading,
         isFetching: isInfiniteDataFetching,
         hasNextPage,
-        fetchNextPage
+        fetchNextPage,
+        refetch: infiniteRefetch
     } = useInfiniteListData(settings.object, resolvedFilter, withInfiniteScroll)
 
     useSubscribeOnRefetch(refetch, linked_filter)
@@ -337,7 +338,7 @@ const ModuleList = React.memo<TModuleList>((props) => {
 
     const isLoaded = useLoading(isDataFetching)
     const contextValue = useMemo(() => ({
-        refresh: refetch
+        refresh: withInfiniteScroll ? infiniteRefetch : refetch
     }), [])
 
 
