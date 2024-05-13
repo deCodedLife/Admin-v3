@@ -438,4 +438,19 @@ $moduleScheduleBorderColor: var(--kt-gray-300);
       height: 1.5rem;
     }
   }
+
+  &_modal {
+    & .modal-body {
+      padding: 2rem .5rem;
+    }
+    & .pageBuilder_module {
+      & .card .card-body {
+        padding: .8rem;
+      }
+
+      & .table-responsive {
+        margin: 0 -0.8rem;
+      }
+    }
+  }
 }
