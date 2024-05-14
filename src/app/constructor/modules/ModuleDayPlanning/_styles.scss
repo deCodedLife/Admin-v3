@@ -6,6 +6,10 @@
     background-color: lighten($color, $percent);
 }
 
+@mixin moduleDayPlanning_alertColor($color, $percent) {
+    color: lighten($color, $percent);
+}
+
 .moduleDayPlanning {
     &_rowsContainer {
         min-height: 70px;
@@ -197,5 +201,49 @@
         font-weight: 600;
         color: var(--kt-text-muted);
         user-select: none;
+    }
+
+    &_rowProps {
+        display: flex;
+        align-items: center;
+    }
+
+    &_alertIcon {
+        margin-left: 1rem;
+        &.light_blue {
+            @include moduleDayPlanning_alertColor(deepskyblue, 35%)
+        }
+
+        &.blue, &.primary {
+            @include moduleDayPlanning_alertColor(#009ef7, 25%)
+        }
+
+        &.yellow {
+            @include moduleDayPlanning_alertColor(yellow, 40%)
+        }
+
+        &.orange {
+            @include moduleDayPlanning_alertColor(orange, 35%)
+        }
+
+        &.green {
+            @include moduleDayPlanning_alertColor(#50cd89, 25%)
+        }
+
+        &.pink {
+            @include moduleDayPlanning_alertColor(pink, 10%)
+        }
+
+        &.red {
+            @include moduleDayPlanning_alertColor(#f1416c, 25%)
+        }
+
+        &.purple {
+            @include moduleDayPlanning_alertColor(#7239ea, 25%)
+        }
+        & svg {
+            height: 25px;
+            width: 25px;
+        }
     }
 }

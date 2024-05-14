@@ -9,6 +9,7 @@ import { useIntl } from "react-intl"
 import ComponentTooltip from "../../components/ComponentTooltip"
 import ComponentModal from "../../components/ComponentModal"
 import { TModuleDayPlanning, TModuleDayPlanningDate, TModuleDayPlanningLink, TModuleDayPlanningRow } from "./_types"
+import { KTSVG } from "../../../../_metronic/helpers"
 
 const ModuleDayPlanningLink = React.memo<TModuleDayPlanningLink>(props => {
     const handleClick = () => setSelectedPage(link)
@@ -22,10 +23,13 @@ const ModuleDayPlanningLink = React.memo<TModuleDayPlanningLink>(props => {
 const ModuleDayPlanningRow = React.memo<TModuleDayPlanningRow>(props => {
     const { body, color, links, description, time, buttons, setSelectedPage } = props
     return <div className="moduleDayPlanning_row">
-        <span className={`moduleDayPlanning_rowBullet bullet bullet-vertical bg-${color}`} />
+       {/*  <span className={`moduleDayPlanning_rowBullet bullet bullet-vertical bg-${color}`} /> */}
         <ComponentTooltip title={description}>
             <div className="moduleDayPlanning_rowBody">
+                <div className="moduleDayPlanning_rowProps">
                 <div className={`moduleDayPlanning_rowTime ${color}`}>{time}</div>
+                {description ? <KTSVG className={`moduleDayPlanning_alertIcon ${color}`} path="/media/crm/icons/alert.svg" /> : null}
+                </div>
                 <div className="moduleDayPlanning_rowLinks">{links.map(link => <ModuleDayPlanningLink link={link.link} title={link.title} setSelectedPage={setSelectedPage} />)}</div>
                 <div className="moduleDayPlanning_rowContent">{body}</div>
             </div>
