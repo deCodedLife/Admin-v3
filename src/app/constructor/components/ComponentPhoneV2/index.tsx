@@ -43,6 +43,8 @@ const ComponentPhoneV2 = React.memo<TComponentPhone>(props => {
     const resolvedValue = useMemo(() => {
         if (typeof value === "string") {
             return value.startsWith("+") ? value : "+" + value
+        } else {
+            return
         }
     }, [value])
 
@@ -85,7 +87,10 @@ const ComponentPhoneV2 = React.memo<TComponentPhone>(props => {
     }, [script])
 
     const handleChange = (value: any) => {
-        setFieldValue(article, value)
+        const resolvedValue = (value === undefined) ? null : value
+
+        setFieldValue(article, resolvedValue)
+        
         if (customHandler) {
             customHandler(resolvedValue)
         }
