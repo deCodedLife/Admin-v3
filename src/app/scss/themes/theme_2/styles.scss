@@ -470,4 +470,8 @@
         --base-color: var(--kt-input-solid-bg);
         --highlight-color: var(--app-border-color);
     }
+
+    .link-primary {
+        color: var(--application-theme-color) !important;
+    }
 }

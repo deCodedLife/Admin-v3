@@ -440,6 +440,8 @@ $moduleScheduleBorderColor: var(--kt-gray-300);
   }
 
   &_modal {
+    margin-top: 0;
+    margin-bottom: 0;
     & .modal-body {
       padding: 2rem .5rem;
     }
