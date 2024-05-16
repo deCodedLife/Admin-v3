@@ -105,7 +105,7 @@ export const uploadFiles = async (object: string, command: string, data: any) =>
     for (let key in data) {
         const value = data[key]
         if (Array.isArray(value)) {
-            value.forEach((arrayValue, index) => formData.append(`_${key}__${index}`, arrayValue))
+            value.forEach((arrayValue, index) => formData.append(`_${key}__${index}`, arrayValue?.title ?? arrayValue))
         } else {
             formData.append(key, data[key])
         }
