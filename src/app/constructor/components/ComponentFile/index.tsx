@@ -131,7 +131,7 @@ const ComponentFile: React.FC<TComponentFile> = props => {
             await api("files", "remove", { object: request_object, row_id: object_id, title: `${currentFile.title}.${currentFile.extension}` })
         }
         sourceValueClone.splice(index, 1)
-        setFieldValue(article, sourceValueClone)
+        setFieldValue(article, sourceValueClone.length ? sourceValueClone : null)
         setFilePreview(prev => {
             const previewsClone = [...prev]
             previewsClone.splice(index, 1)

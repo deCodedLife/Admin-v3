@@ -393,7 +393,7 @@ const ModuleForm: React.FC<TModuleForm> = ({ components, settings }) => {
                     }
                 }
                 const valuesKeysAsArray = Object.keys(changedValues)
-                const sendRequest = valuesKeysAsArray.length > 1 || (valuesKeysAsArray.length === 1 && (!valuesKeysAsArray.includes("id") || useFormDataRequest))
+                const sendRequest = valuesKeysAsArray.length > 1 || (valuesKeysAsArray.length === 1 && !valuesKeysAsArray.includes("id"))
                 if (sendRequest) {
                     mutate(changedValues)
                 } else {
