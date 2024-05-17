@@ -253,6 +253,7 @@ const ComponentTextEditor: React.FC<TComponentTextEditor> = ({ article, variable
             toolbar={toolbar}
             init={{
                 setup,
+                browser_spellcheck: true,
                 min_height: 500,
                 max_height: 500,
                 menubar: false,
