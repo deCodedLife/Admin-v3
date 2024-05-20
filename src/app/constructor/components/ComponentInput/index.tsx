@@ -96,7 +96,7 @@ const ComponentInput: React.FC<TComponentInput> = props => {
     const isError = Boolean(error && touched)
     const resolvedClassName = `form-control form-control-solid${isError ? " invalid" : ""} ${className}`
 
-    const setValueForHook = useHook(name, values, setFieldValue, hook)
+    const setValueForHook = useHook(name, values, setFieldValue, hook, onBlurSubmit)
 
     const currencyMask = useMemo(() => {
         if (!isMaskedInput) {

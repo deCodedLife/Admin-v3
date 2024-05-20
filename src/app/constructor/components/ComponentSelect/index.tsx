@@ -299,7 +299,7 @@ const ComponentSelect: React.FC<TComponentSelect> = (props) => {
 
     const [value, setValue] = useState<TSelectValue>(null)
 
-    const setValueForHook = useHook(article, values, setFieldValue, hook)
+    const setValueForHook = useHook(article, values, setFieldValue, hook, onChangeSubmit)
 
     const handleAsyncChange = useCallback((value: TSelectValue) => {
         if (customHandler) {
@@ -332,6 +332,9 @@ const ComponentSelect: React.FC<TComponentSelect> = (props) => {
         } else {
             if (value === null) {
                 setFieldValue(article, value)
+                if (hook) {
+                    setValueForHook(value)
+                }
             } else {
                 const resolvedValue = Array.isArray(value) ? value.map(option => (isDuplicate && option.innerValue) ? option.innerValue : option.value) : value.value
                 /* переработать преобразование типов */

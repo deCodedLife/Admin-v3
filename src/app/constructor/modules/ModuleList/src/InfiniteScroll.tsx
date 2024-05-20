@@ -19,5 +19,5 @@ export const InfiniteScroll: React.FC<TModuleListInfiniteScroll> = props => {
         }
     }, [isVisible])
 
-    return <div ref={ref} className="infiniteScroll">Показано {currentRowsCount} строк из {rowsCount}</div>
+    return <div ref={ref} className="infiniteScroll">{`Показано ${currentRowsCount} строк${rowsCount ? ` из ${rowsCount}`: ""}`}</div>
 }

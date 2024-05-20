@@ -1,5 +1,5 @@
 import clsx from "clsx"
-import { Form as FormikForm, Formik } from "formik"
+import { Form as FormikForm, Formik, useField } from "formik"
 import React, { useCallback, useMemo, useState } from "react"
 import { Col, Dropdown, Form } from "react-bootstrap"
 import { KTSVG } from "../../../../_metronic/helpers"
@@ -36,6 +36,7 @@ const ComponentFilter = React.memo<TComponentFilter & { className?: string, cust
                 article={settings.recipient_property}
                 field_type={type}
                 placeholder={placeholder}
+                hook={settings.hook}
                 onBlurSubmit
                 custom_format={custom_format}
             />
@@ -52,6 +53,7 @@ const ComponentFilter = React.memo<TComponentFilter & { className?: string, cust
                 object={settings.donor_object}
                 select={settings.donor_property_title}
                 select_menu={settings.select_menu}
+                hook={settings.hook}
                 onChangeSubmit />
         case "integer":
             return <ComponentInput className={className} article={settings.recipient_property} field_type="integer" placeholder={placeholder} onBlurSubmit />
@@ -62,6 +64,19 @@ const ComponentFilter = React.memo<TComponentFilter & { className?: string, cust
         default:
             return <ComponentInCreation type={type} />
     }
+})
+
+const ComponentFilterContainer = React.memo<TComponentFilter>(props => {
+    const [{ value: filtersVisibility }] = useField(`fieldsVisibility`)
+    const isFieldVisible = filtersVisibility[props.settings.recipient_property]
+
+    if (!isFieldVisible) {
+        return null
+    }
+
+    return <div className="componentFilters_stringFilterContainer">
+        <ComponentFilter {...props} placeholder={props.title ?? ""} className="componentFilters_stringFilter" custom_format />
+    </div>
 })
 
 const getFilterKey = (filter: TComponentFilter) => `${filter.type}-${filter.settings.recipient_property}`
@@ -212,8 +227,18 @@ const ComponentFiltersBlock: React.FC<TComponentFilters> = (props) => {
 }
 
 const ComponentFiltersString: React.FC<TComponentFilters> = (props) => {
+
     const intl = useIntl()
-    const initialValues = useMemo(() => props.filterValues ?? {}, [props.filterValues])
+    const initialValues = useMemo(() => {
+        const initialSettings: { [key: string]: any } = {
+            fieldsVisibility: {}
+        }
+        props.data.forEach(filter => {
+            initialSettings.fieldsVisibility[filter.settings.recipient_property] = (filter.settings.is_visible === false) ? false : true
+        })
+        return Object.assign({}, initialSettings, props.filterValues ?? {})
+    }, [props.filterValues])
+
     const { show, handleToggle } = useToggle()
     return <div className="componentFilters_string">
         <Formik enableReinitialize initialValues={initialValues} onSubmit={(values) => props.handleChange(values)}>
@@ -231,9 +256,7 @@ const ComponentFiltersString: React.FC<TComponentFilters> = (props) => {
                 }
 
                 return <FormikForm className="componentFilters_stringForm">
-                    {props.data.map(filter => <div key={getFilterKey(filter)} className="componentFilters_stringFilterContainer">
-                        <ComponentFilter {...filter} placeholder={filter.title ?? ""} className="componentFilters_stringFilter" custom_format />
-                    </div>)}
+                    {props.data.map(filter => <ComponentFilterContainer key={getFilterKey(filter)} {...filter} />)}
                     {showClearFilterButton ?
                         <ComponentButton
                             type="submit"

@@ -5,8 +5,8 @@ import { getMaskedString } from "../../modules/helpers"
 import { TApiSetup } from "../../../types/api"
 import { useEffect, useState } from "react"
 
-//функция вызова хука у поля после изменения значений
-export const hookAfterChange = async (
+//функция вызова хука у поля после изменения значений (формы)
+const formHookAfterChange = async (
     field_article: string, field_value: any, values: any,
     setFieldValue: (article: string, value: any) => void, requestObject: string
 ) => {
@@ -58,13 +58,68 @@ export const hookAfterChange = async (
         }
     }
 }
-export const useHook = (article: string, values: any, setFieldValue: (article: string, value: any) => void, hook?: string) => {
-    const [valueForHook, setValueForHook] = useState<any>(null)
+//функция вызова хука у поля после изменения значений (фильтры)
+const filtersHookAfterChange = async (
+    field_article: string, field_value: any, values: any,
+    setFieldValue: (article: string, value: any) => void, requestObject: string
+) => {
+    //технические данные в форме
+    const fieldsVisibilityArticle = "fieldsVisibility"
+    const fieldsDescriptionsArticle = "fieldsDescriptions"
+    const fieldsDisabledArticle = "fieldsDisabled"
+    //
+
+    //использую lodash по причине наличия вложенности во многих артикулах
+    const context = {trigger: field_article}
+    const valuesWithCurrentFieldValue = set({ ...values, context }, field_article, field_value)
+    unset(valuesWithCurrentFieldValue, fieldsVisibilityArticle)
+    unset(valuesWithCurrentFieldValue, fieldsDescriptionsArticle)
+    unset(valuesWithCurrentFieldValue, fieldsDisabledArticle)
+
+    const { data: actualValues } = await api(requestObject, "hook_filters", valuesWithCurrentFieldValue)
+    if (actualValues && !Array.isArray(actualValues)) {
+        for (let key in actualValues) {
+
+            const fieldSettings = actualValues[key]
+
+            if (fieldSettings.hasOwnProperty("value") && key !== field_article) {
+                setFieldValue(key, fieldSettings.value)
+            }
+            if (fieldSettings.hasOwnProperty("is_visible")) {
+                setFieldValue(`${fieldsVisibilityArticle}.${key}`, fieldSettings.is_visible)
+                if (fieldSettings.is_visible === false) {
+                    setFieldValue(key, undefined)
+                }
+            }
+         /*    if (fieldSettings.hasOwnProperty("is_disabled")) {
+                setFieldValue(`${fieldsDisabledArticle}.${key}`, fieldSettings.is_disabled)
+            }
+            if (fieldSettings.hasOwnProperty("description")) {
+                setFieldValue(`${fieldsDescriptionsArticle}.${key}`, fieldSettings.description)
+            } */
+        }
+
+        /*
+        --- модальное окно уведомлений 
+        */
+        if ("modal_info" in actualValues) {
+            setFieldValue("modal_info", actualValues["modal_info"])
+        } else {
+            setFieldValue("modal_info", null)
+        }
+    }
+}
+export const useHook = (article: string, values: any, setFieldValue: (article: string, value: any) => void, hook?: string, fromFilters?: boolean) => {
+    const [valueForHook, setValueForHook] = useState<any>(undefined)
 
     useEffect(() => {
         const isValidValue = valueForHook !== null && valueForHook !== undefined
-        if (isValidValue && hook) {
-            hookAfterChange(article, valueForHook, values, setFieldValue, hook)
+        if (hook) {
+            if (fromFilters && valueForHook !== undefined) {
+                filtersHookAfterChange(article, valueForHook, values, setFieldValue, hook)
+            } else if (isValidValue) {
+                formHookAfterChange(article, valueForHook, values, setFieldValue, hook)
+            }
         }
     }, [valueForHook])
     

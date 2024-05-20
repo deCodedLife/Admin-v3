@@ -1,7 +1,7 @@
 type TDefaultComponentFilter<type = string, settings = any> = {
     title: string,
     type: type,
-    settings: { size?: number } & settings,
+    settings: { size?: number, is_visible?: boolean, hook?: string } & settings,
     placeholder?: string,
 }
 

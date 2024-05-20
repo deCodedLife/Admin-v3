@@ -18,7 +18,7 @@ const ComponentCheckbox: React.FC<TComponentCheckbox> = props => {
     const [field, meta] = useField(article)
     const isChecked = customChecked ?? Boolean(field.value)
 
-    const setValueForHook = useHook(article, values, setFieldValue, hook)
+    const setValueForHook = useHook(article, values, setFieldValue, hook, onChangeSubmit)
 
     const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const resolvedValue = event.target.checked

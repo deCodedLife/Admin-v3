@@ -70,14 +70,14 @@
         align-items: center;
         flex-wrap: wrap;
 
-        &>*:not(:last-child) {
-            margin: 0 1rem 2rem 0;
-        }
     }
 
     &_stringFilterContainer {
         width: calc(16% - 1rem);
         min-width: 200px;
+        &:not(:last-child) {
+            margin: 0 1rem 2rem 0;
+        }
     }
 
     &_stringFilter {

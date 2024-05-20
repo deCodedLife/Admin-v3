@@ -7,7 +7,7 @@ import en from 'date-fns/locale/en-US';
 import lv from 'date-fns/locale/lv';
 
 import moment from "moment";
-import { hookAfterChange } from "../helpers";
+import { useHook } from "../helpers";
 import MaskedInput from "react-text-mask"
 import { useIntl } from "react-intl";
 import { useSetupContext } from "../../helpers/SetupContext";
@@ -24,6 +24,7 @@ const ComponentDate: React.FC<TComponentDate> = (props) => {
     const { context } = useSetupContext()
     const [field, meta] = useField(article)
     const { values, setFieldValue, handleSubmit } = useFormikContext<any>()
+    const setValueForHook = useHook(article, values, setFieldValue, hook, onBlurSubmit)
     const { value } = field
     const isError = meta.error && meta.touched
     const currentFormatDate = useMemo(() => {
@@ -146,7 +147,7 @@ const ComponentDate: React.FC<TComponentDate> = (props) => {
                 const value = date ? moment(date).format(fieldSettings.valueFormat) : undefined
                 setFieldValue(article, value)
                 if (hook) {
-                    hookAfterChange(article, value, values, setFieldValue, hook)
+                    setValueForHook(value)
                 }
                 if (customHandler) {
                     customHandler(value)
