@@ -18,7 +18,8 @@ const ComponentCheckbox: React.FC<TComponentCheckbox> = props => {
     const [field, meta] = useField(article)
     const isChecked = customChecked ?? Boolean(field.value)
 
-    const setValueForHook = useHook(article, values, setFieldValue, hook, onChangeSubmit)
+    const setValueForHook = useHook({article, values, setFieldValue, handleSubmit, hook, isFilter: onChangeSubmit})
+    const isUseBasicSubmit = onChangeSubmit && !hook
 
     const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const resolvedValue = event.target.checked
@@ -26,7 +27,7 @@ const ComponentCheckbox: React.FC<TComponentCheckbox> = props => {
         if (hook) {
             setValueForHook(resolvedValue)
         }
-        if (onChangeSubmit) {
+        if (isUseBasicSubmit) {
             handleSubmit()
         }
     }, [customHandler])

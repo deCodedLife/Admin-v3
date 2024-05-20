@@ -17,7 +17,7 @@ const formHookAfterChange = async (
     //
 
     //использую lodash по причине наличия вложенности во многих артикулах
-    const context = {trigger: field_article}
+    const context = { trigger: field_article }
     const valuesWithCurrentFieldValue = set({ ...values, context }, field_article, field_value)
     unset(valuesWithCurrentFieldValue, fieldsVisibilityArticle)
     unset(valuesWithCurrentFieldValue, fieldsDescriptionsArticle)
@@ -61,7 +61,8 @@ const formHookAfterChange = async (
 //функция вызова хука у поля после изменения значений (фильтры)
 const filtersHookAfterChange = async (
     field_article: string, field_value: any, values: any,
-    setFieldValue: (article: string, value: any) => void, requestObject: string
+    setFieldValue: (article: string, value: any) => void, requestObject: string,
+    handleSubmit?: (e?: React.FormEvent<HTMLFormElement> | undefined) => void
 ) => {
     //технические данные в форме
     const fieldsVisibilityArticle = "fieldsVisibility"
@@ -70,7 +71,7 @@ const filtersHookAfterChange = async (
     //
 
     //использую lodash по причине наличия вложенности во многих артикулах
-    const context = {trigger: field_article}
+    const context = { trigger: field_article }
     const valuesWithCurrentFieldValue = set({ ...values, context }, field_article, field_value)
     unset(valuesWithCurrentFieldValue, fieldsVisibilityArticle)
     unset(valuesWithCurrentFieldValue, fieldsDescriptionsArticle)
@@ -91,38 +92,39 @@ const filtersHookAfterChange = async (
                     setFieldValue(key, undefined)
                 }
             }
-         /*    if (fieldSettings.hasOwnProperty("is_disabled")) {
-                setFieldValue(`${fieldsDisabledArticle}.${key}`, fieldSettings.is_disabled)
-            }
-            if (fieldSettings.hasOwnProperty("description")) {
-                setFieldValue(`${fieldsDescriptionsArticle}.${key}`, fieldSettings.description)
-            } */
-        }
-
-        /*
-        --- модальное окно уведомлений 
-        */
-        if ("modal_info" in actualValues) {
-            setFieldValue("modal_info", actualValues["modal_info"])
-        } else {
-            setFieldValue("modal_info", null)
+            /*    if (fieldSettings.hasOwnProperty("is_disabled")) {
+                   setFieldValue(`${fieldsDisabledArticle}.${key}`, fieldSettings.is_disabled)
+               }
+               if (fieldSettings.hasOwnProperty("description")) {
+                   setFieldValue(`${fieldsDescriptionsArticle}.${key}`, fieldSettings.description)
+               } */
         }
     }
+    /* почему-то моментальный запрос не даёт возможности изменить поля через вышеуказанный цикл */
+    setTimeout(() => handleSubmit?.(), 1)
 }
-export const useHook = (article: string, values: any, setFieldValue: (article: string, value: any) => void, hook?: string, fromFilters?: boolean) => {
+export const useHook = (
+    { article, setFieldValue, handleSubmit, values, isFilter, hook }:
+        {
+            article: string, values: any,
+            setFieldValue: (article: string, value: any) => void,
+            handleSubmit?: (e?: React.FormEvent<HTMLFormElement> | undefined) => void,
+            hook?: string, isFilter?: boolean
+        }
+) => {
     const [valueForHook, setValueForHook] = useState<any>(undefined)
 
     useEffect(() => {
         const isValidValue = valueForHook !== null && valueForHook !== undefined
         if (hook) {
-            if (fromFilters && valueForHook !== undefined) {
-                filtersHookAfterChange(article, valueForHook, values, setFieldValue, hook)
+            if (isFilter && valueForHook !== undefined) {
+                filtersHookAfterChange(article, valueForHook, values, setFieldValue, hook, handleSubmit)
             } else if (isValidValue) {
                 formHookAfterChange(article, valueForHook, values, setFieldValue, hook)
             }
         }
     }, [valueForHook])
-    
+
     return setValueForHook
 }
 //функции для автоподстановки переменных в документ

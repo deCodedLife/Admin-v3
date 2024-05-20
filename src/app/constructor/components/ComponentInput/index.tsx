@@ -96,7 +96,8 @@ const ComponentInput: React.FC<TComponentInput> = props => {
     const isError = Boolean(error && touched)
     const resolvedClassName = `form-control form-control-solid${isError ? " invalid" : ""} ${className}`
 
-    const setValueForHook = useHook(name, values, setFieldValue, hook, onBlurSubmit)
+    const setValueForHook = useHook({article: name, values, setFieldValue, handleSubmit, hook, isFilter: onBlurSubmit})
+    const isUseBasicSubmit = onBlurSubmit && !hook
 
     const currencyMask = useMemo(() => {
         if (!isMaskedInput) {
@@ -160,7 +161,7 @@ const ComponentInput: React.FC<TComponentInput> = props => {
 
         onBlur(event)
 
-        if (onBlurSubmit) {
+        if (isUseBasicSubmit) {
             handleSubmit()
         }
     }, [])

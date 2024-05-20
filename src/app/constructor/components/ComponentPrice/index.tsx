@@ -53,12 +53,12 @@ const ComponentPrice: React.FC<TComponentPrice> = ({ article, data_type, hook, i
         return createNumberMask({ ...defaultMaskOptions })
     }, [])
 
-    const setValueForHook = useHook(article, values, setFieldValue, hook, onBlurSubmit)
+    const setValueForHook = useHook({article, values, setFieldValue, hook, isFilter: onBlurSubmit})
 
     /*используем собственный обработчик события, т.к. необходимо зачистить строку от пробелов и привести к числу, но именно на "блюре", т.к. иначе невозможно ввести десятичные числа  */
     const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const currentTargetValue = Number(event?.target.value.replace(/[^\d]/g, ""))
-        if (hook && !onBlurSubmit) {
+        if (hook) {
             setValueForHook(currentTargetValue)
         }
         if (customHandler) {
@@ -71,9 +71,6 @@ const ComponentPrice: React.FC<TComponentPrice> = ({ article, data_type, hook, i
     const handleBlur = useCallback((event: React.FocusEvent<HTMLInputElement>) => {
         const resolvedValue = Number(event.target.value.replace(/[^\d]/g, ""))
         setFieldValue(article, resolvedValue)
-        if (hook && onBlurSubmit) {
-            setValueForHook(resolvedValue)
-        }
         if (customHandler) {
             customHandler(resolvedValue)
         }

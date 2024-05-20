@@ -22,7 +22,7 @@ const ComponentPhone: React.FC<TComponentPhone> = ({ article, is_disabled, hook,
     const isError = Boolean(meta.error && meta.touched)
     const { mask, placeholder, pure_length } = getMaskedPhone(context.phone_format)
 
-    const setValueForHook = useHook(name, values, setFieldValue, hook)
+    const setValueForHook = useHook({article: name, values, setFieldValue, hook})
 
 
     /*

@@ -299,7 +299,8 @@ const ComponentSelect: React.FC<TComponentSelect> = (props) => {
 
     const [value, setValue] = useState<TSelectValue>(null)
 
-    const setValueForHook = useHook(article, values, setFieldValue, hook, onChangeSubmit)
+    const setValueForHook = useHook({article, values, setFieldValue, handleSubmit, hook, isFilter: onChangeSubmit})
+    const isUseBasicSubmit = onChangeSubmit && !hook
 
     const handleAsyncChange = useCallback((value: TSelectValue) => {
         if (customHandler) {
@@ -319,7 +320,7 @@ const ComponentSelect: React.FC<TComponentSelect> = (props) => {
                 setValueForHook(resolvedValue)
             }
 
-            if (onChangeSubmit) {
+            if (isUseBasicSubmit) {
                 handleSubmit()
             }
         }
@@ -330,22 +331,22 @@ const ComponentSelect: React.FC<TComponentSelect> = (props) => {
         if (customHandler) {
             return customHandler(value)
         } else {
+            let resolvedValue
             if (value === null) {
-                setFieldValue(article, value)
-                if (hook) {
-                    setValueForHook(value)
-                }
+                resolvedValue = value
+                setFieldValue(article, resolvedValue)
             } else {
-                const resolvedValue = Array.isArray(value) ? value.map(option => (isDuplicate && option.innerValue) ? option.innerValue : option.value) : value.value
+                resolvedValue = Array.isArray(value) ? value.map(option => (isDuplicate && option.innerValue) ? option.innerValue : option.value) : value.value
                 /* переработать преобразование типов */
                 /* const valueInCurrentFormat = data_type === "integer" ? Number(resolvedValue) : data_type === "boolean" ? Boolean(resolvedValue) : resolvedValue */
                 setFieldValue(article, resolvedValue)
-                if (hook) {
-                    setValueForHook(resolvedValue)
-                }
             }
 
-            if (onChangeSubmit) {
+            if (hook) {
+                setValueForHook(resolvedValue)
+            }
+
+            if (isUseBasicSubmit) {
                 handleSubmit()
             }
         }

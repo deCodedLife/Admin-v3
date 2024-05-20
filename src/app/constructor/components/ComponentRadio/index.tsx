@@ -12,7 +12,7 @@ const ComponentRadio: React.FC<TComponentRadio> = ({ article, list, is_disabled,
     const { values, setFieldValue } = useFormikContext<any>()
     const [field] = useField(article)
     const { value: currentValue } = field
-    const setValueForHook = useHook(article, values, setFieldValue, hook)
+    const setValueForHook = useHook({article, values, setFieldValue, hook})
     const handleClick = (value: string | number | boolean) => {
         if (!is_disabled) {
             const resolvedValue = currentValue === value ? undefined : value

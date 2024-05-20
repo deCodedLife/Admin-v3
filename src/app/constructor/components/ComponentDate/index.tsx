@@ -24,7 +24,7 @@ const ComponentDate: React.FC<TComponentDate> = (props) => {
     const { context } = useSetupContext()
     const [field, meta] = useField(article)
     const { values, setFieldValue, handleSubmit } = useFormikContext<any>()
-    const setValueForHook = useHook(article, values, setFieldValue, hook, onBlurSubmit)
+    const setValueForHook = useHook({article, values, setFieldValue, hook, isFilter: onBlurSubmit})
     const { value } = field
     const isError = meta.error && meta.touched
     const currentFormatDate = useMemo(() => {
@@ -143,6 +143,7 @@ const ComponentDate: React.FC<TComponentDate> = (props) => {
             calendarClassName="componentDate"
             popperClassName="componentDate_popper"
             selected={currentFormatDate}
+            
             onChange={(date: Date) => {
                 const value = date ? moment(date).format(fieldSettings.valueFormat) : undefined
                 setFieldValue(article, value)

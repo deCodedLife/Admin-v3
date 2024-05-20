@@ -38,7 +38,7 @@ const ComponentPhoneV2 = React.memo<TComponentPhone>(props => {
     const { values, setFieldValue } = useFormikContext()
     const isError = Boolean(meta.error && meta.touched)
 
-    const setValueForHook = useHook(name, values, setFieldValue, hook)
+    const setValueForHook = useHook({article: name, values, setFieldValue, hook})
 
     const resolvedValue = useMemo(() => {
         if (typeof value === "string") {
