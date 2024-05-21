@@ -154,6 +154,7 @@
 
     &_stringButton.componentButton {
         border: 1px solid var(--kt-gray-300);
+        margin-bottom: 2rem;
 
         & svg g {
             fill: var(--kt-text-muted);

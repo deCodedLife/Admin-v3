@@ -2,6 +2,7 @@
 :root {
     --application-theme-color: #f6534a;
 }
+
 button {
     outline: none;
 }
@@ -37,7 +38,6 @@ button {
         &:-webkit-autofill:hover,
         &:-webkit-autofill:focus,
         &:-webkit-autofill:active {
-            transition: background-color 50000s;
             -webkit-text-fill-color: #fff !important;
         }
     }
@@ -91,6 +91,7 @@ button {
         &:not(:last-child) {
             margin-bottom: 1rem;
         }
+
         &.withPaddings {
             padding: 0 0.5rem;
         }
@@ -101,6 +102,7 @@ button {
         top: 0;
         left: 0;
         right: 0;
+
         & .progress {
             --bs-progress-height: 0.4rem;
             --bs-progress-border-radius: 0;
@@ -303,6 +305,7 @@ button {
     background-color: var(--kt-app-bg-color);
     opacity: 0;
     transition: opacity 0.3s;
+
     &.visible {
         display: flex;
     }
@@ -397,8 +400,8 @@ button {
     display: flex;
     flex-direction: column;
     background-color: var(--kt-primary);
-    border-top-left-radius:  var(--bs-border-radius);
-    border-top-right-radius:  var(--bs-border-radius);
+    border-top-left-radius: var(--bs-border-radius);
+    border-top-right-radius: var(--bs-border-radius);
 }
 
 .notificationItem {
@@ -467,9 +470,11 @@ button {
         width: 30px;
         height: 30px;
         margin-left: auto;
+
         & .svg-icon {
             transition: color 0.3s;
         }
+
         &:hover {
             & .svg-icon {
                 color: var(--kt-primary);
@@ -509,7 +514,8 @@ button {
     }
 }
 
-.modal-backdrop, .modal {
+.modal-backdrop,
+.modal {
     &.show.hidden {
         display: none !important;
     }
@@ -590,13 +596,12 @@ div::-webkit-scrollbar-corner {
 }
 
 //хак для "отключения" заднего фона полей с автозаполнением
-/* input:-webkit-autofill,
+input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus, 
 input:-webkit-autofill:active  {
-  transition: background-color 50000s;
-  -webkit-text-fill-color: #fff !important;
-} */
+    transition: background-color 5000s ease-in-out 0s !important;
+}
 
 .svg-icon {
     & svg {
@@ -611,9 +616,12 @@ input:-webkit-autofill:active  {
 
 
 input {
-    &:focus, &:focus-visible {
+
+    &:focus,
+    &:focus-visible {
         outline: none;
     }
+
     &[type="number"] {
 
         &::-webkit-outer-spin-button,
@@ -625,7 +633,7 @@ input {
             background-repeat: no-repeat;
             width: 1em;
             border-left: 1px solid var(--bs-card-border-color);
-            opacity: 0.5; 
+            opacity: 0.5;
             position: absolute;
             top: 0;
             right: 0;

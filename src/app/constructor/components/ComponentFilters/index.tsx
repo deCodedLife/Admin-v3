@@ -66,16 +66,19 @@ const ComponentFilter = React.memo<TComponentFilter & { className?: string, cust
     }
 })
 
-const ComponentFilterContainer = React.memo<TComponentFilter>(props => {
+const ComponentFilterContainer = React.memo<TComponentFilter & { containerClassName?: string, className?: string, showTitle?: boolean, custom_format?: boolean }>(props => {
     const [{ value: filtersVisibility }] = useField(`fieldsVisibility`)
     const isFieldVisible = filtersVisibility[props.settings.recipient_property]
+    const resolvedContainerClassName = props.containerClassName ?? ""
+    const resolvedClassName = props.className ?? ""
 
     if (!isFieldVisible) {
         return null
     }
 
-    return <div className="componentFilters_stringFilterContainer">
-        <ComponentFilter {...props} placeholder={props.title ?? ""} className="componentFilters_stringFilter" custom_format />
+    return <div className={resolvedContainerClassName}>
+        {props.type !== "checkbox" && props.showTitle ? <label className='form-label fw-bold'>{props.title ?? ""}</label> : null}
+        <ComponentFilter {...props} placeholder={props.title ?? ""} className={resolvedClassName} custom_format={props.custom_format} />
     </div>
 })
 
@@ -108,8 +111,19 @@ const ComponentFiltersCustomToggle: React.FC<TComponentFiltersCustomToggle> = Re
 
 const ComponentFiltersDropdown: React.FC<TComponentFilters> = (props) => {
     const intl = useIntl()
-    const initialValues = useMemo(() => props.filterValues ?? {}, [props.filterValues])
+
+    const initialValues = useMemo(() => {
+        const initialSettings: { [key: string]: any } = {
+            fieldsVisibility: {}
+        }
+        props.data.forEach(filter => {
+            initialSettings.fieldsVisibility[filter.settings.recipient_property] = (filter.settings.is_visible === false) ? false : true
+        })
+        return Object.assign({}, initialSettings, props.filterValues ?? {})
+    }, [props.filterValues])
+
     const { show, handleToggle } = useToggle()
+
     return <div className="componentFilters_dropdownContainer">
         <Dropdown show={show} onToggle={handleToggle} >
             <Dropdown.Toggle as={ComponentFiltersCustomToggle} id="dropdown-custom-components">
@@ -134,15 +148,13 @@ const ComponentFiltersDropdown: React.FC<TComponentFilters> = (props) => {
                                 }
                                 return <FormikForm>
                                     <div className="componentFilters_dropdownFiltersContainer">
-                                        {props.data.map(filter => <Form.Group
+                                        {props.data.map(filter => <ComponentFilterContainer
                                             key={getFilterKey(filter)}
-                                            as={Col}
-                                            md={filter.settings.size ? filter.settings.size * 3 : 12}
-                                            className="componentFilters_dropdownFilter"
-                                        >
-                                            {filter.type !== "checkbox" ? <label className='form-label fw-bold'>{filter.title ?? ""}</label> : null}
-                                            <ComponentFilter {...filter} placeholder={filter.placeholder ?? filter.title} />
-                                        </Form.Group>)}
+                                            containerClassName={`componentFilters_dropdownFilter col-md-${filter.settings.size ? filter.settings.size * 3 : 12}`}
+                                            {...filter}
+                                            showTitle
+                                        />
+                                        )}
                                     </div>
                                     <ComponentButton
                                         type="submit"
@@ -229,6 +241,7 @@ const ComponentFiltersBlock: React.FC<TComponentFilters> = (props) => {
 const ComponentFiltersString: React.FC<TComponentFilters> = (props) => {
 
     const intl = useIntl()
+    
     const initialValues = useMemo(() => {
         const initialSettings: { [key: string]: any } = {
             fieldsVisibility: {}
@@ -240,6 +253,7 @@ const ComponentFiltersString: React.FC<TComponentFilters> = (props) => {
     }, [props.filterValues])
 
     const { show, handleToggle } = useToggle()
+
     return <div className="componentFilters_string">
         <Formik enableReinitialize initialValues={initialValues} onSubmit={(values) => props.handleChange(values)}>
             {({ handleSubmit, handleReset }) => {
@@ -256,7 +270,12 @@ const ComponentFiltersString: React.FC<TComponentFilters> = (props) => {
                 }
 
                 return <FormikForm className="componentFilters_stringForm">
-                    {props.data.map(filter => <ComponentFilterContainer key={getFilterKey(filter)} {...filter} />)}
+                    {props.data.map(filter => <ComponentFilterContainer
+                        key={getFilterKey(filter)}
+                        containerClassName="componentFilters_stringFilterContainer"
+                        className="componentFilters_stringFilter"
+                        {...filter} />
+                    )}
                     {showClearFilterButton ?
                         <ComponentButton
                             type="submit"
@@ -278,10 +297,12 @@ const ComponentFiltersString: React.FC<TComponentFilters> = (props) => {
                                     </div>
                                     <div className='separator'></div>
                                     <div className='px-7 py-5'>
-                                        {props.data.map(filter => <div key={getFilterKey(filter)} className="componentFilters_dropdownFilter">
-                                            {filter.type !== "checkbox" ? <label className='form-label fw-bold'>{filter.title ?? ""}</label> : null}
-                                            <ComponentFilter {...filter} placeholder={filter.placeholder ?? filter.title} />
-                                        </div>)}
+                                        {props.data.map(filter => <ComponentFilterContainer
+                                            key={getFilterKey(filter)}
+                                            containerClassName={`componentFilters_dropdownFilter col-md-${filter.settings.size ? filter.settings.size * 3 : 12}`}
+                                            {...filter}
+                                            showTitle
+                                        />)}
                                         <ComponentButton
                                             type="submit"
                                             settings={{ title: intl.formatMessage({ id: "FILTER.CLEAR_BUTTON" }), background: "dark", icon: "" }}
