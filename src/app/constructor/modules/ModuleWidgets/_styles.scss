@@ -105,4 +105,8 @@
   & .apexcharts-text tspan {
     fill: currentColor;
   }
+
+  & .apexcharts-xaxistooltip.apexcharts-theme-light {
+    background-color: var(--kt-card-bg) !important;
+  }
 }
