@@ -109,7 +109,7 @@ export const Pagination: React.FC<TModuleListPagination> = props => {
             />
         </div>
         <div className="pagination_details">
-            {`Записи с ${limit * (activePage - 1) + 1} по ${limit * activePage > detail.rows_count ? detail.rows_count : limit * activePage} из ${detail.rows_count}`}
+            {`Записи с ${limit * (activePage - 1) + 1} по ${limit * activePage > detail.rows_count ? detail.rows_count : limit * activePage}${detail.rows_count ? ` из ${detail.rows_count}` : "" }`}
         </div>
         <div className="pagination_pages">
             <div id='kt_table_users_paginate'>
