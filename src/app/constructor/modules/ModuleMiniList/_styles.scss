@@ -42,8 +42,9 @@
     }
 
     & .table-responsive {
-        max-height: 180px;
+        height: 180px;
     }
+    
     & td:not(:first-child) {
         text-align: end;
     }
