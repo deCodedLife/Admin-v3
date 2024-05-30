@@ -29,6 +29,7 @@ import PageProvider from "../constructor/modules/helpers/PageContext"
 import ModuleButtons from "../constructor/modules/ModuleButtons"
 import ModuleTariffs from "../constructor/modules/ModuleTariffs"
 import ModuleHtmlPage from "../constructor/modules/ModuleHtmlPage"
+import ModuleMiniList from "../constructor/modules/ModuleMiniList"
 
 const PageProgressBar: React.FC<{ isFetching: boolean }> = ({ isFetching }) => {
     const [progress, setProgress] = useState(0)
@@ -101,6 +102,8 @@ const Module: React.FC<ModuleType> = (props) => {
             return <ModuleTariffs {...props} />
         case "html_page":
             return <ModuleHtmlPage {...props} />
+        case "mini_list":
+            return <ModuleMiniList {...props} />
         default:
             //@ts-ignore
             return <ModuleInCreation {...props} />
@@ -112,6 +115,7 @@ const getModuleKey = (module: ModuleType) => {
         case "header":
             return `${module.type}-${module.settings.title}`
         case "list":
+        case "mini_list":
             return `${module.type}-${module.settings.object}`
         case "analytic_widgets":
             return `${module.type}-${module.settings.widgets_group}`

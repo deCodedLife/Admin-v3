@@ -34,6 +34,7 @@ export type TComponentFilters = {
     data: Array<TComponentFilter>,
     filterValues?: any,
     isInitials: boolean,
+    minimize?: boolean
     handleChange: (values: any) => void,
     handleReset: () => void
 }

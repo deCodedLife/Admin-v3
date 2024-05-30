@@ -108,6 +108,29 @@ const ComponentFiltersCustomToggle: React.FC<TComponentFiltersCustomToggle> = Re
     </a>
 })
 
+const ComponentFiltersCustomMinimizeToggle: React.FC<TComponentFiltersCustomToggle> = React.forwardRef(({ children, onClick }, ref) => {
+    const { config } = useLayout()
+    const daterangepickerButtonClass = config.app?.toolbar?.fixed?.desktop
+        ? 'btn-light'
+        : 'btn-color-gray-700 btn-active-color-primary'
+    return <a
+        href='#'
+        className={clsx('btn btn-sm btn-flex fw-bold componentFilters_dropdownMinimize', daterangepickerButtonClass)}
+        //@ts-ignore
+        ref={ref}
+        onClick={(e) => {
+            e.preventDefault();
+            onClick(e);
+        }}
+
+    >
+        <KTSVG
+            path='/media/crm/icons/dots.svg'
+            className='svg-icon-6 svg-icon-muted me-0'
+        />
+    </a>
+})
+
 
 const ComponentFiltersDropdown: React.FC<TComponentFilters> = (props) => {
     const intl = useIntl()
@@ -126,7 +149,7 @@ const ComponentFiltersDropdown: React.FC<TComponentFilters> = (props) => {
 
     return <div className="componentFilters_dropdownContainer">
         <Dropdown show={show} onToggle={handleToggle} >
-            <Dropdown.Toggle as={ComponentFiltersCustomToggle} id="dropdown-custom-components">
+            <Dropdown.Toggle as={props.minimize ? ComponentFiltersCustomMinimizeToggle  : ComponentFiltersCustomToggle} id="dropdown-custom-components">
                 {intl.formatMessage({ id: "FILTER.DROPDOWN_TITLE" })}
             </Dropdown.Toggle>
             <Dropdown.Menu>

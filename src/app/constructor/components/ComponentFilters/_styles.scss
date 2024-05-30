@@ -1,6 +1,10 @@
 .componentFilters {
-    &_dropdown {
+    &_dropdown, &_dropdownMinimize {
         background-color: var(--kt-gray-300);
+    }
+
+    &_dropdownMinimize {
+        padding: .25rem !important;
     }
 
     &_dropdownContainer {
