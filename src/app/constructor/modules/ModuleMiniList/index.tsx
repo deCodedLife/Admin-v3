@@ -1,13 +1,14 @@
 import moment from "moment"
 import React, { useCallback, useMemo } from "react"
 import ComponentFilters from "../../components/ComponentFilters"
-import { TModuleMiniList, TModuleMiniListMonth } from "./_types"
+import { TModuleMiniList, TModuleMiniListCell, TModuleMiniListMonth } from "./_types"
 import { getMaskedString, useFilter } from "../helpers"
 import useListData from "../../../api/hooks/useListData"
 import { useRefetchSubscribers, useSubscribeOnRefetch } from "../helpers/PageContext"
 import useUpdate from "../../../api/hooks/useUpdate"
 import { TApiSetup } from "../../../types/api"
 import { useSetupContext } from "../../helpers/SetupContext"
+import ComponentTooltip from "../../components/ComponentTooltip"
 
 
 /* const data = [
@@ -46,7 +47,14 @@ const headers = [
     }
 ] */
 
-
+const ModuleMiniListCell = React.memo<TModuleMiniListCell>(props => {
+    const { title, containerClassName, value } = props
+    return <td>
+        <ComponentTooltip title={title}>
+            <span className={containerClassName}>{value}</span>
+        </ComponentTooltip>
+    </td>
+})
 
 const ModuleMiniListMonth: React.FC<TModuleMiniListMonth> = props => {
     const { index, month, isActive, handleMonthClick } = props
@@ -79,7 +87,7 @@ const parseValue = (type: string, value: any, context: TApiSetup) => {
         case "integer":
         case "float":
             return getMaskedString(value?.value ?? value, type, context, value?.suffix)
-        case "price": 
+        case "price":
             return getMaskedString(value?.value ?? value, "float", context)
         default:
             return value?.value ?? value
@@ -147,10 +155,12 @@ const ModuleMiniList = React.memo<TModuleMiniList>(props => {
                     <tbody>
                         {response?.data.map(row => {
                             return <tr>
-                                {headers.map(column => <td key={column.article}>
-                                    <span className={getValueContainerClassName(column.type, row[column.article])}>
-                                        {parseValue(column.type, row[column.article], setupContext)}
-                                    </span></td>)}
+                                {headers.map(column => <ModuleMiniListCell
+                                    key={column.article}
+                                    title={column.title}
+                                    containerClassName={getValueContainerClassName(column.type, row[column.article])}
+                                    value={parseValue(column.type, row[column.article], setupContext)}
+                                />)}
                             </tr>
                         })}
                     </tbody>
