@@ -140,7 +140,13 @@ const ComponentInput: React.FC<TComponentInput> = props => {
                         case "first_name":
                         case "last_name":
                         case "patronymic":
-                            resolvedValue = inputValue.slice(0, 1).toUpperCase() + inputValue.slice(1).toLowerCase()
+                            resolvedValue = inputValue.includes("-") ? inputValue.split("-").map(string => {
+                                if (string === "-") {
+                                    return string
+                                } else {
+                                    return string.slice(0, 1).toUpperCase() + string.slice(1).toLowerCase()
+                                }
+                            }).join("-") : resolvedValue = inputValue.slice(0, 1).toUpperCase() + inputValue.slice(1).toLowerCase()
                             break
                         default:
                             resolvedValue = inputValue
