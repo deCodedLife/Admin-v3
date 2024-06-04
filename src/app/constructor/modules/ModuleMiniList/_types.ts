@@ -8,7 +8,7 @@ export type TModuleMiniListMonth = { index: number, month: string, isActive: boo
 
 export type TModuleMiniList = TDefaultModule<"mini_list", { filters: Array<TComponentFilter> }, {
     object: string,
-    headers: TModuleListHeaders,
+    headers?: TModuleListHeaders,
     filters: { [key: string]: any },
     context?: Object,
     linked_filter?: string

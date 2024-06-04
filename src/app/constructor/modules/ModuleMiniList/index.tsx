@@ -155,7 +155,7 @@ const ModuleMiniList = React.memo<TModuleMiniList>(props => {
                     <tbody>
                         {response?.data.map(row => {
                             return <tr>
-                                {headers.map(column => <ModuleMiniListCell
+                                {headers?.map(column => <ModuleMiniListCell
                                     key={column.article}
                                     title={column.title}
                                     containerClassName={getValueContainerClassName(column.type, row[column.article])}
