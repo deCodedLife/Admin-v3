@@ -165,4 +165,32 @@
     &_popper.react-datepicker-popper {
         z-index: 2000;
     }
+
+    &_clearButton.react-datepicker__close-icon {
+        &::after {
+            background-color: transparent;
+            color: #cccccc;
+            width: 20px;
+            height: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: color 0.3s;
+
+        }
+
+        &:hover {
+            &::after {
+                color: var(--kt-text-muted);
+            }
+        }
+    }
+    &_input {
+        &:focus {
+            &~.componentDate_clearButton.react-datepicker__close-icon {
+                &::after {        
+                    color: var(--kt-text-muted);     
+                }
+            }
+        }
+    }
 }

@@ -297,6 +297,7 @@ const ComponentFiltersString: React.FC<TComponentFilters> = (props) => {
                         key={getFilterKey(filter)}
                         containerClassName="componentFilters_stringFilterContainer"
                         className="componentFilters_stringFilter"
+                        custom_format={props.custom_format}
                         {...filter} />
                     )}
                     {showClearFilterButton ?

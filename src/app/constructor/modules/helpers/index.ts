@@ -166,14 +166,14 @@ export const getDateFormat = (type: "time" | "date" | "datetime" | "month", cont
         case "datetime":
             switch (useIn) {
                 case "string":
-                    return lang === "en" ? "MM.DD.YYYY г. HH:mm" : "DD.MM.YYYY г. HH:mm"
+                    return lang === "en" ? "MM.DD.YYYY HH:mm" : "DD.MM.YYYY г. HH:mm"
                 default:
                     return lang == "en" ? "MM.dd.yyyy HH:mm" : "dd.MM.yyyy HH:mm"
             }
         default:
             switch (useIn) {
                 case "string":
-                    return lang === "en" ? "MM.DD.YYYY г." : "DD.MM.YYYY г."
+                    return lang === "en" ? "MM.DD.YYYY" : "DD.MM.YYYY г."
                 default:
                     return lang === "en" ? "MM.dd.yyyy" : "dd.MM.yyyy"
             }

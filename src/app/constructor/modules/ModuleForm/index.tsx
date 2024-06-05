@@ -111,6 +111,7 @@ export const Component = React.memo<TModuleFormField>((props) => {
                 article={article}
                 field_type={field_type}
                 is_disabled={Boolean(is_disabled)}
+                is_clearable={Boolean(is_clearable)}
                 hook={hook}
             />
         case "checkbox":

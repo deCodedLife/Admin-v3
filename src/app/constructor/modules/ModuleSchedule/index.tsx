@@ -338,6 +338,7 @@ const ModuleSchedule: React.FC<TModuleSchedule> = props => {
             isInitials={isInitials}
             handleChange={setFilter}
             handleReset={resetFilter}
+            custom_format
         /> : null}
         <div className={`moduleSchedule card${isFetching ? " loading" : ""}`}>
             <ModuleScheduleScrollButtons scrollTable={scrollTable} />

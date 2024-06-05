@@ -19,7 +19,7 @@ registerLocale("en", en)
 registerLocale("lv", lv)
 
 const ComponentDate: React.FC<TComponentDate> = (props) => {
-    const { article, field_type, is_disabled, hook, onBlurSubmit, className = "", custom_format = false, placeholder, customHandler } = props
+    const { article, field_type, is_disabled, hook, onBlurSubmit, className = "", custom_format = false, is_clearable = false, placeholder, customHandler } = props
     const intl = useIntl()
     const { context } = useSetupContext()
     const [field, meta] = useField(article)
@@ -142,10 +142,11 @@ const ComponentDate: React.FC<TComponentDate> = (props) => {
             className={resolvedClassName}
             calendarClassName="componentDate"
             popperClassName="componentDate_popper"
+            clearButtonClassName="componentDate_clearButton"
             selected={currentFormatDate}
             
             onChange={(date: Date) => {
-                const value = date ? moment(date).format(fieldSettings.valueFormat) : undefined
+                const value = date ? moment(date).format(fieldSettings.valueFormat) : date
                 setFieldValue(article, value)
                 if (hook) {
                     setValueForHook(value)
@@ -172,10 +173,12 @@ const ComponentDate: React.FC<TComponentDate> = (props) => {
             showYearDropdown
             dropdownMode="scroll"
             disabled={is_disabled}
+            isClearable={is_clearable}
             todayButton={intl.formatMessage({ id: "DATE.TODAY_BUTTON" })}
             timeCaption={intl.formatMessage({ id: "DATE.TIME_CAPTION" })}
             customInput={<MaskedInput key={maskedInputKey} mask={isInFocus ? fieldSettings.mask : visualMask} guide={false} pipe={handlePipe} />}
             portalId="root"
+          
         />
         {isError ? <div className="invalid_feedback">
             {meta.error}
