@@ -5150,6 +5150,15 @@ fs-extra@^10.0.0:
     jsonfile "^6.0.1"
     universalify "^2.0.0"
 
+fs-extra@^11.2.0:
+  version "11.2.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-11.2.0.tgz#e70e17dfad64232287d01929399e0ea7c86b0e5b"
+  integrity sha512-PmDi3uwK5nFuXh7XDTlVnS17xJS7vW36is2+w3xcv8SVxiB4NyATf4ctkVY5bkSjX0Y4nbvZCq1/EjtEyr9ktw==
+  dependencies:
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
+
 fs-extra@^9.0.0, fs-extra@^9.0.1:
   version "9.1.0"
   resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-9.1.0.tgz"
@@ -9641,6 +9650,11 @@ tinymce@^6.3.1:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-6.3.1.tgz#cc5cf2b9f702d429cf5d1d21ed62245d768bfc4f"
   integrity sha512-+oCwXuTxAdJXVJ0130OxQz0JDNsqg3deuzgeUo8X5Vb27EzCJgXwO5eWvCxvkxpQo4oiHMVlM4tUIpTUHufHGQ==
+
+tinymce@^7.1.2:
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-7.1.2.tgz#cb40e527dc03d6a0547a23c91231a946e50dae03"
+  integrity sha512-I/M5WRyEJjwIhyIv6FhkvZS1mWNbb0sIEvDkP8akBnuV1X78mkNhi6Kz9FBBbHzy61U3pmXgzyCSaDZfdQbCSg==
 
 tmpl@1.0.5:
   version "1.0.5"

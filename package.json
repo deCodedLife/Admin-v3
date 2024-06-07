@@ -24,6 +24,7 @@
     "chart.js": "3.7.1",
     "clsx": "1.1.1",
     "formik": "2.2.9",
+    "fs-extra": "^11.2.0",
     "html-react-parser": "^3.0.8",
     "line-awesome": "1.3.0",
     "lodash": "^4.17.21",
@@ -63,6 +64,7 @@
     "sass": "1.50.1",
     "socicon": "3.0.5",
     "text-mask-addons": "^3.8.0",
+    "tinymce": "^7.1.2",
     "yup": "0.32.11"
   },
   "devDependencies": {
@@ -97,7 +99,8 @@
     "eject": "react-scripts eject",
     "lint": "prettier --check .",
     "format": "prettier --write .",
-    "rtl": "webpack --config=rtl.config.js"
+    "rtl": "webpack --config=rtl.config.js",
+    "postinstall": "node ./postinstall.js"
   },
   "eslintConfig": {
     "extends": [

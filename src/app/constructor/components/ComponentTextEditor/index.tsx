@@ -246,8 +246,9 @@ const ComponentTextEditor: React.FC<TComponentTextEditor> = ({ article, variable
 
     return <div className={`componentTextEditor${isError ? " invalid" : ""}`}>
         <Editor
+            tinymceScriptSrc={process.env.PUBLIC_URL + '/tinymce/tinymce.min.js'}
             key={editorKey}
-            apiKey="oth28mguina8f3mquj6i3xe3pojyg1z6xnjig1zws0200g77"/* "xuv4iq7uob27qh8ygu3yntok0c8qi8dirr9a9ze7m3g0nowb" */
+            /*   apiKey="xuv4iq7uob27qh8ygu3yntok0c8qi8dirr9a9ze7m3g0nowb" */
             value={unescape(value)}
             plugins={plugins}
             toolbar={toolbar}
@@ -257,7 +258,7 @@ const ComponentTextEditor: React.FC<TComponentTextEditor> = ({ article, variable
                 min_height: 500,
                 max_height: 500,
                 menubar: false,
-                fontsize_formats : "10px 12px 14px 16px 18px 20px 22px 24px 26px 28px 30px",
+                fontsize_formats: "10px 12px 14px 16px 18px 20px 22px 24px 26px 28px 30px",
                 content_style: "body { font-size: 20px;}",
                 //@ts-ignore
                 images_upload_handler: handleImageUpload,
