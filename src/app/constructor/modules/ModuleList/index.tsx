@@ -309,7 +309,7 @@ const ModuleList = React.memo<TModuleList>((props) => {
 
     useEffect(() => {
         if (successDelete) {
-            isSetSearchData ? searchRefetch() : refetch()
+            isSetSearchData ? searchRefetch() : withInfiniteScroll ? infiniteRefetch() : refetch()
         }
     }, [successDelete])
 
