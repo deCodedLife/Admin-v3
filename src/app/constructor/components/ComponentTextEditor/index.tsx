@@ -247,7 +247,7 @@ const ComponentTextEditor: React.FC<TComponentTextEditor> = ({ article, variable
     return <div className={`componentTextEditor${isError ? " invalid" : ""}`}>
         <Editor
             key={editorKey}
-            apiKey="xuv4iq7uob27qh8ygu3yntok0c8qi8dirr9a9ze7m3g0nowb"
+            apiKey="oth28mguina8f3mquj6i3xe3pojyg1z6xnjig1zws0200g77"/* "xuv4iq7uob27qh8ygu3yntok0c8qi8dirr9a9ze7m3g0nowb" */
             value={unescape(value)}
             plugins={plugins}
             toolbar={toolbar}
