@@ -263,7 +263,7 @@ const ModuleList = React.memo<TModuleList>((props) => {
     //блок поиска
     const haveSearch = Boolean(components.search)
     const { search, setSearch } = useSearch(`${props.type}_${settings.object}`)
-    const isSetSearchData = haveSearch && search.length
+    const isSetSearchData = haveSearch && Boolean(search.length)
     const {
         isLoading: searchLoading,
         isFetching: isSearchFetching,
@@ -338,8 +338,8 @@ const ModuleList = React.memo<TModuleList>((props) => {
 
     const isLoaded = useLoading(isDataFetching)
     const contextValue = useMemo(() => ({
-        refresh: withInfiniteScroll ? infiniteRefetch : refetch
-    }), [])
+        refresh: isSetSearchData ? searchRefetch : withInfiniteScroll ? infiniteRefetch : refetch
+    }), [isSetSearchData])
 
 
     const handleDownloadCSV = async (selectedColumns: Array<string>) => {
