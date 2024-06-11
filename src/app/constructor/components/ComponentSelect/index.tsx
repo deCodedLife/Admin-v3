@@ -332,9 +332,10 @@ const ComponentSelect: React.FC<TComponentSelect> = (props) => {
             return customHandler(value)
         } else {
             let resolvedValue
-            if (value === null) {
-                resolvedValue = value
-                setFieldValue(article, resolvedValue)
+            const isCleaningValue = value === null || (Array.isArray(value) && !value.length)
+            if (isCleaningValue) {
+                resolvedValue = null
+                setFieldValue(article, null)
             } else {
                 resolvedValue = Array.isArray(value) ? value.map(option => (isDuplicate && option.innerValue) ? option.innerValue : option.value) : value.value
                 /* переработать преобразование типов */
