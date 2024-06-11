@@ -29,6 +29,7 @@ const ComponentButtonDrawer: React.FC<TComponentButtonDrawer> = ({ settings, def
     const moduleContext = useModuleContext()
     const modalContext = useReactContext<any>(ModalContext)
 
+    const isIconBased = defaultLabel === "icon"
 
     const handleResponse = useCallback((data: any) => {
         if (refresh_after_submit) {
@@ -60,8 +61,8 @@ const ComponentButtonDrawer: React.FC<TComponentButtonDrawer> = ({ settings, def
         }
     }, [])
     return <>
-        <ComponentTooltip title={settings.title ?? ""}>
-            <button className={`componentButton ${className} ${settings.background}`} type="button" onClick={() => setShowModal(true)}>
+        <ComponentTooltip title={settings.title ?? ""} show={isIconBased ? undefined : false}>
+            <button className={`componentButton${isIconBased ? " icon_based" : ""} ${className} ${settings.background}`} type="button" onClick={() => setShowModal(true)}>
                 {getLabel(defaultLabel, settings)}
             </button>
         </ComponentTooltip>

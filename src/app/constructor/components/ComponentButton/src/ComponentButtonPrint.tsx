@@ -111,7 +111,7 @@ const ComponentButtonPrint: React.FC<TComponentButtonPrint> = ({ settings, defau
     const documentsList = useMemo(() => documents && Array.isArray(documents) ? documents.map(document => ({ title: document.title, value: document.article })) : [], [documents])
     const resolvedClassName = `componentButton${isIconBased ? " icon_based" : ""} ${className} ${settings.background} ${isMinimize ? " minimized" : ""} ${visible ? "" : " hidden"}`
     return <>
-        <ComponentTooltip title={settings.title ?? ""}>
+        <ComponentTooltip title={settings.title ?? ""} show={isIconBased ? undefined : false}>
             <button
                 ref={ref}
                 className={resolvedClassName}

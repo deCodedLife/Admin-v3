@@ -9,7 +9,7 @@ import { TComponentButton } from "./_types"
 export const getLabel = (defaultLabel: string, settings: any) => {
     switch (defaultLabel) {
         case "icon":
-            return <KTSVG path={settings.icon ? `/media/crm/icons/${settings.icon}.svg` : "/media/icons/duotune/general/gen032.svg"} />
+            return <KTSVG path={`/media/crm/icons/${settings.icon ? settings.icon : "plus"}.svg`} />
         default:
             return <span className="componentButton_content">
                 {settings.icon ? <KTSVG path={`/media/crm/icons/${settings.icon}.svg`} /> : null}

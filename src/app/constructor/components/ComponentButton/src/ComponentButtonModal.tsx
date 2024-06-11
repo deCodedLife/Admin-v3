@@ -32,6 +32,8 @@ const ComponentButtonModal: React.FC<TComponentButtonModal> = ({ settings, defau
 
     const isButtonDisabled = !data && !isFetching
 
+    const isIconBased = defaultLabel === "icon"
+
     const handleResponse = useCallback((data: any) => {
         if (refresh_after_submit) {
             moduleContext.refresh()
@@ -67,9 +69,9 @@ const ComponentButtonModal: React.FC<TComponentButtonModal> = ({ settings, defau
         }
     }, [])
     return <>
-        <ComponentTooltip title={settings.title ?? ""}>
+        <ComponentTooltip title={settings.title ?? ""} show={isIconBased ? undefined : false}>
             <button
-             className={`componentButton ${className} ${settings.background}`}
+             className={`componentButton${isIconBased ? " icon_based" : ""} ${className} ${settings.background}`}
               type="button" 
               disabled={isButtonDisabled}
               onClick={() => setShowModal(true)}

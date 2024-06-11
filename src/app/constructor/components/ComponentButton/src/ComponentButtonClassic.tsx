@@ -84,7 +84,7 @@ const ComponentButtonClassic: React.FC<TComponentButtonClassic> = ({ type, setti
         }
     }
     return <>
-        <ComponentTooltip title={settings.title ?? ""}>
+        <ComponentTooltip title={settings.title ?? ""} show={isIconBased ? undefined : false}>
             <button
                 className={`componentButton${isIconBased ? " icon_based" : ""} ${className} ${settings.background}`}
                 type="button"

@@ -5,4 +5,5 @@ export type TComponentTooltip = {
     placement?: Placement,
     tooltipClassName?: string,
     children: React.ReactElement,
+    show?: boolean
 }

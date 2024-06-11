@@ -21,23 +21,35 @@ const ModuleTabs = React.memo<TModuleTabs>(props => {
         }
     }, [settings])
 
-    const initialKey = resolvedTabs.length ? resolvedTabs[0].key : null
-    const [key, setKey] = useState<string | null>(initialKey)
+
     const navigate = useNavigate()
     const location = useLocation()
     const modalContext = useReactContext<any>(ModalContext)
-
     const isTabsInsideModal = Boolean(modalContext.insideModal)
+    
+    const initialKey = useMemo(() => {
+        const initialQueryStringKey = location.search.match(/\?tab=\w+/gi)?.[0].replace(/\?tab=/, "")
+        const isValidInitialKey = initialQueryStringKey ? resolvedTabs.some(tab => tab.key === initialQueryStringKey) : false
+        if (!isTabsInsideModal && isValidInitialKey) {
+            return initialQueryStringKey as string
+        } else {
+            return resolvedTabs.length ? resolvedTabs[0].key : null
+        }
 
-    const handleChangeTab = (key: string | null) => {
-        const queryString = isTabsInsideModal && location.search ? location.search.replace(/&tab=.*/, "") + `&tab=${key}` : `?tab=${key}`
-        navigate(queryString)
-        setKey(key)
-    }
+    }, [resolvedTabs])
+
+    const [key, setKey] = useState<string | null>(initialKey)
+
+    useEffect(() => {
+        if (key) {
+            const queryString = isTabsInsideModal && location.search ? location.search.replace(/&tab=.*/, "") + `&tab=${key}` : `?tab=${key}`
+            navigate(queryString)
+        }
+    }, [key])
 
     useEffect(() => {
         if (resolvedTabs.length && key !== initialKey) {
-            handleChangeTab(initialKey)
+            setKey(initialKey)
         }
     }, [resolvedTabs])
 
@@ -45,12 +57,14 @@ const ModuleTabs = React.memo<TModuleTabs>(props => {
         <Tabs
             id="moduleTabs"
             activeKey={key as string | undefined}
-            onSelect={handleChangeTab}
+            onSelect={setKey}
             className="mb-3"
             mountOnEnter
             unmountOnExit
         >
-            {resolvedTabs.map(tab => <Tab key={tab.key} eventKey={tab.key}
+            {resolvedTabs.map(tab => <Tab
+                key={tab.key}
+                eventKey={tab.key}
                 title={<div className="moduleTabs_tabTitle">{tab.title}{tab.settings?.counter ? <span className="moduleTabs_tabCounter badge badge-primary">{tab.settings?.counter}</span> : null}</div>}>
                 <PageBuilder data={tab.body} isFetching={false} showProgressBar={false} />
             </Tab>)}
