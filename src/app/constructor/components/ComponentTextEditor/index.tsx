@@ -255,6 +255,7 @@ const ComponentTextEditor: React.FC<TComponentTextEditor> = ({ article, variable
             init={{
                 setup,
                 browser_spellcheck: true,
+                contextmenu: false,
                 min_height: 500,
                 max_height: 500,
                 menubar: false,
