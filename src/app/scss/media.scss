@@ -404,6 +404,15 @@
     }
 }
 
+@media (max-width: 300px) {
+    .auth {
+        &_formTitle {
+            font-size: 1.5rem;
+        }
+    }
+
+}
+
 @media print {
 
     html,
