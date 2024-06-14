@@ -10,10 +10,14 @@ import { useIntl } from "react-intl"
 import setModalIndex from "../../helpers/setModalIndex"
 import { unescape } from "lodash"
 import { TComponentTextEditor } from "./_types"
+import { useSetupContext } from "../../helpers/SetupContext"
+import { useThemeMode } from "../../../../_metronic/partials"
 
 
 
 const ComponentTextEditor: React.FC<TComponentTextEditor> = ({ article, variables = [], tableVariables = [] }) => {
+    const applicationContext = useSetupContext()
+    const theme = useThemeMode()
     const intl = useIntl()
     const [field, meta] = useField(article)
     const isError = Boolean(meta.error && meta.touched)
@@ -34,7 +38,7 @@ const ComponentTextEditor: React.FC<TComponentTextEditor> = ({ article, variable
   insertdatetime media table paste wordcount link signature | ${variables.length ? "variables" : ""} | ${tableVariables.length ? "variablesTable" : ""}`
 
     //хак для повторной инициализации редактора
-    const editorKey = useMemo(() => toolbar.length + plugins.length, [toolbar, plugins])
+    const editorKey = useMemo(() => toolbar.length + plugins.length + theme.mode.length, [toolbar, plugins, theme])
 
     const handleChange = (value: string) => {
         return setFieldValue(article, value)
@@ -253,6 +257,9 @@ const ComponentTextEditor: React.FC<TComponentTextEditor> = ({ article, variable
             plugins={plugins}
             toolbar={toolbar}
             init={{
+                language: applicationContext.context.lang,
+                skin: theme.mode === "dark" ? "oxide-dark" : "oxide",
+                content_css: theme.mode === "dark" ? "dark" : "default",
                 setup,
                 browser_spellcheck: true,
                 contextmenu: false,
