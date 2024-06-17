@@ -25,7 +25,7 @@ type Tdocument = { title: string, article: string, object?: string, structure: A
 
 const ComponentButtonPrint: React.FC<TComponentButtonPrint> = ({ settings, defaultLabel = "title", className = "" }) => {
     const ref = useRef<HTMLButtonElement | null>(null)
-    const {context: applicationContext} = useSetupContext()
+    const { context: applicationContext } = useSetupContext()
     const { currentUser } = useAuth()
     const intl = useIntl()
     const { data, context, visible = true, afterSubmit = false } = settings
@@ -43,11 +43,16 @@ const ComponentButtonPrint: React.FC<TComponentButtonPrint> = ({ settings, defau
     const outterModalContext = React.useContext(ModalContext)
     const insideOutterModal = Boolean(outterModalContext.insideModal)
 
-    const handleScriptAction = useCallback((title: string, body: string) => {
+    const handleScriptAction = useCallback(async (title: string, body: string) => {
         if (script) {
-            const resolvedTitle = `${title} (${moment().format("DD.MM.YY г.")})`
-            const requestData = Object.assign({}, { title: resolvedTitle, body }, script.properties ?? {})
-            api(script.object, script.command, requestData)
+            try {
+                const resolvedTitle = `${title} (${moment().format("DD.MM.YY г.")})`
+                const requestData = Object.assign({}, { title: resolvedTitle, body }, script.properties ?? {})
+                await api(script.object, script.command, requestData)
+            } catch (error) {
+                //@ts-ignore
+                getErrorToast(error.message)
+            }
         }
     }, [script])
 
