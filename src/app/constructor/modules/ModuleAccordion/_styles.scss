@@ -69,6 +69,14 @@
         border: 1px solid var(--kt-card-border-color);
     }
 
+    &_itemPreview {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 60px;
+        text-align: center;
+    }
+
     & .paginationRow {
         margin: 1rem 0 0;
         background-color: var(--kt-card-bg);

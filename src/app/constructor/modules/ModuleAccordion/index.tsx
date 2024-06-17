@@ -13,9 +13,10 @@ import { unescape } from "lodash"
 import { Pagination } from "../ModuleList/src/Pagination"
 import useListData from "../../../api/hooks/useListData"
 import { TModuleAccordion, TModuleAccordionItem } from "./_types"
+import ComponentDashboard from "../../components/ComponentDashboard";
 
 
-const AccordionItem: React.FC<TModuleAccordionItem> = ({ id, title, body, user_id, mutate, handleEdit }) => {
+const AccordionItem: React.FC<TModuleAccordionItem> = ({ id, title, body, href, user_id, mutate, handleEdit }) => {
     const intl = useIntl()
     const eventKey = String(id)
     const { activeEventKey } = useContext(AccordionContext)
@@ -34,19 +35,23 @@ const AccordionItem: React.FC<TModuleAccordionItem> = ({ id, title, body, user_i
                 {`${title}${user_id ? ` - ${user_id.title}` : ""}`}
             </Card.Title>
             <div className="moduleAccordion_itemButtons">
-            <ComponentButton
-                    type="custom"
-                    settings={{ title: intl.formatMessage({id: "BUTTON.EDIT"}), icon: "edit", background: "light" }}
-                    defaultLabel="icon"
-                    customHandler={() => handleEdit({id, body})} />
+                {
+                    body ? <>
+                        <ComponentButton
+                            type="custom"
+                            settings={{ title: intl.formatMessage({ id: "BUTTON.EDIT" }), icon: "edit", background: "light" }}
+                            defaultLabel="icon"
+                            customHandler={() => handleEdit({ id, body })} />
+                        <ComponentButton
+                            type="custom"
+                            settings={{ title: intl.formatMessage({ id: "BUTTON.PRINT" }), icon: "print", background: "light" }}
+                            defaultLabel="icon"
+                            customHandler={handlePrint} />
+                    </> : null
+                }
                 <ComponentButton
                     type="custom"
-                    settings={{ title: intl.formatMessage({id: "BUTTON.PRINT"}), icon: "print", background: "light" }}
-                    defaultLabel="icon"
-                    customHandler={handlePrint} />
-                <ComponentButton
-                    type="custom"
-                    settings={{ title: intl.formatMessage({id: "BUTTON.DELETE"}), icon: "trash", background: "light", attention_modal: true }}
+                    settings={{ title: intl.formatMessage({ id: "BUTTON.DELETE" }), icon: "trash", background: "light", attention_modal: true }}
                     defaultLabel="icon"
                     customHandler={handleDelete}
                 />
@@ -54,25 +59,28 @@ const AccordionItem: React.FC<TModuleAccordionItem> = ({ id, title, body, user_i
         </Card.Header>
         <Accordion.Collapse eventKey={eventKey}>
             <Card.Body className="moduleAccordion_itemBody">
-                {parse(unescape(body))}
+                {body ? parse(unescape(body)) : <div className="moduleAccordion_itemPreview">
+                    <span>Предварительный просмотр недоступен, пожалуйста, перейдите по <a href={href} target="_blank">ссылке</a></span>
+                </div>}
             </Card.Body>
         </Accordion.Collapse>
     </Card>
 }
 
-const ModuleAccordion: React.FC<TModuleAccordion> = ({ settings }) => {
+const ModuleAccordion: React.FC<TModuleAccordion> = ({ settings, components }) => {
     const intl = useIntl()
     const { object, property_title, property_body, filters } = settings
     const initialFilters = Object.assign({ select: ["title", "body", "user_id"] }, filters ?? {})
-    const [filter, setFilter] = useState<{page: number, limit: number}>({page: 1, limit: 20})
+    const [filter, setFilter] = useState<{ page: number, limit: number }>({ page: 1, limit: 20 })
     const { data, refetch } = useListData(object, Object.assign(filter, initialFilters))
     const { mutate, isSuccess } = useMutate(object, "remove")
-    const {mutate: updateItem, isSuccess: isUpdateSuccess} = useMutate(object, "update")
-    const [editableItem, setEditableItem] = useState<{id: number, body: string} | null>(null)
+    const { mutate: updateItem, isSuccess: isUpdateSuccess } = useMutate(object, "update")
+    const [editableItem, setEditableItem] = useState<{ id: number, body: string } | null>(null)
 
-    const handleEdit = useCallback((document: {id: number, body: string}) => setEditableItem(document), [])
+    const handleEdit = useCallback((document: { id: number, body: string }) => setEditableItem(document), [])
 
     const showPagination = data?.data.length
+    const haveButtons = Boolean(components?.buttons)
 
     useEffect(() => {
         if (isSuccess || isUpdateSuccess) {
@@ -82,46 +90,52 @@ const ModuleAccordion: React.FC<TModuleAccordion> = ({ settings }) => {
     }, [isSuccess, isUpdateSuccess])
 
 
-    return <div className="moduleAccordion">
-        <Accordion>
-            {data?.data.map(document => <AccordionItem
-                key={document.id}
-                id={document.id}
-                title={document[property_title]}
-                body={document[property_body]}
-                user_id={document.user_id}
-                mutate={mutate}
-                handleEdit={handleEdit}
-            />)}     
-        </Accordion>
-        {showPagination ? <Pagination detail={data?.detail}  filter={filter} setFilter={setFilter}/> : null}
-        
-        <Modal show={Boolean(editableItem)} onHide={() => setEditableItem(null)} size="xl" onEntering={setModalIndex}>
-            <Modal.Header>
-                <Modal.Title>
-                    {intl.formatMessage({id: "MODAL.EDIT_TITLE"})}
-                </Modal.Title>
-            </Modal.Header>
+    return <>
+        <ComponentDashboard>
+            {haveButtons ? components.buttons.map(button => <ComponentButton key={button.settings.title} {...button} />) : null}
+        </ComponentDashboard>
+        <div className="moduleAccordion">
+            <Accordion>
+                {data?.data.map(document => <AccordionItem
+                    key={document.id}
+                    id={document.id}
+                    title={document[property_title]}
+                    body={document[property_body]}
+                    href={document.href}
+                    user_id={document.user_id}
+                    mutate={mutate}
+                    handleEdit={handleEdit}
+                />)}
+            </Accordion>
+            {showPagination ? <Pagination detail={data?.detail} filter={filter} setFilter={setFilter} /> : null}
+
+            <Modal show={Boolean(editableItem)} onHide={() => setEditableItem(null)} size="xl" onEntering={setModalIndex}>
+                <Modal.Header>
+                    <Modal.Title>
+                        {intl.formatMessage({ id: "MODAL.EDIT_TITLE" })}
+                    </Modal.Title>
+                </Modal.Header>
                 <Formik initialValues={editableItem ?? {}} onSubmit={values => updateItem(values)}>
-                    {({handleSubmit}) => <FormikForm>
+                    {({ handleSubmit }) => <FormikForm>
                         <Modal.Body>
-                        <ComponentTextEditor article="body" />
+                            <ComponentTextEditor article="body" />
                         </Modal.Body>
-                    <Modal.Footer>
-                    <ComponentButton
-                     type="submit"
-                     settings={{title: intl.formatMessage({id: "BUTTON.CANCEL"}), icon: "", background: "light"}}
-                      customHandler={() => setEditableItem(null)} />
-                        <ComponentButton 
-                        type="submit"
-                         settings={{title: intl.formatMessage({id: "BUTTON.SUBMIT"}), icon: "", background: "dark"}} 
-                         customHandler={handleSubmit} />
-                    </Modal.Footer>
-                        </FormikForm>
-                        }
+                        <Modal.Footer>
+                            <ComponentButton
+                                type="submit"
+                                settings={{ title: intl.formatMessage({ id: "BUTTON.CANCEL" }), icon: "", background: "light" }}
+                                customHandler={() => setEditableItem(null)} />
+                            <ComponentButton
+                                type="submit"
+                                settings={{ title: intl.formatMessage({ id: "BUTTON.SUBMIT" }), icon: "", background: "dark" }}
+                                customHandler={handleSubmit} />
+                        </Modal.Footer>
+                    </FormikForm>
+                    }
                 </Formik>
-        </Modal>
-    </div>
+            </Modal>
+        </div>
+    </>
 }
 
 export default ModuleAccordion
