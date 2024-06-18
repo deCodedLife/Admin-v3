@@ -18,11 +18,10 @@ import { Document, Page, pdfjs } from "react-pdf";
 import { ModuleContext } from "../helpers/useModuleContent";
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
+//@ts-ignore
+import worker from "pdfjs-dist/build/pdf.worker.entry"
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    'pdfjs-dist/build/pdf.worker.min.mjs',
-    import.meta.url,
-).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = worker;
 
 const AccordionView: React.FC<{ view: string, body?: string, href?: string }> = ({ view, body, href }) => {
     const [numPages, setNumPages] = useState<number>();
