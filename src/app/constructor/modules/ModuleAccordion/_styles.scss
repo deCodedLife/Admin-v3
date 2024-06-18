@@ -70,11 +70,46 @@
     }
 
     &_itemPreview {
-        display: flex;
         justify-content: center;
         align-items: center;
-        height: 60px;
-        text-align: center;
+
+
+        &.default {
+            display: flex;
+            height: 60px;
+            text-align: center;
+        }
+
+        &.image {
+            display: flex;
+
+            & img {
+                max-width: 100%;
+                object-fit: contain;
+
+            }
+        }
+
+        &.pdf {
+            & .react-pdf__Page {
+                &:not(:last-child) {
+                    margin-bottom: 1rem;
+                }
+
+                &__canvas {
+                    margin: 0 auto;
+                }
+
+                &__textContent {
+                    left: 50%;
+                    transform: translateX(-50%);
+                    border: 1px solid darkgrey;
+                    box-shadow: 5px 5px 5px 1px #ccc;
+                    border-radius: 5px;
+
+                }
+            }
+        }
     }
 
     & .paginationRow {
@@ -83,4 +118,9 @@
         padding: 0.25rem 1rem;
         border-radius: 0.625rem;
     }
+}
+
+.hiddenCanvasElement {
+    height: 0;
+    width: 0;
 }

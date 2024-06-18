@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react"
+import React, { useCallback, useContext, useEffect, useMemo, useState } from "react"
 import { Accordion, AccordionContext, Card, Modal, useAccordionButton } from "react-bootstrap"
 import parse from "html-react-parser"
 import ComponentButton from "../../components/ComponentButton"
@@ -14,7 +14,42 @@ import { Pagination } from "../ModuleList/src/Pagination"
 import useListData from "../../../api/hooks/useListData"
 import { TModuleAccordion, TModuleAccordionItem } from "./_types"
 import ComponentDashboard from "../../components/ComponentDashboard";
+import { Document, Page, pdfjs } from "react-pdf";
+import { ModuleContext } from "../helpers/useModuleContent";
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
 
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+    'pdfjs-dist/build/pdf.worker.min.mjs',
+    import.meta.url,
+).toString();
+
+const AccordionView: React.FC<{ view: string, body?: string, href?: string }> = ({ view, body, href }) => {
+    const [numPages, setNumPages] = useState<number>();
+
+    function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
+        setNumPages(numPages);
+    }
+
+    switch (view) {
+        case "native":
+            return <div>{parse(unescape(body))}</div>
+        case "pdf":
+            return <div className="moduleAccordion_itemPreview pdf">
+                <Document file={href} onLoadSuccess={onDocumentLoadSuccess}>
+                    {Array.from(new Array(numPages), (el, index) => (
+                        <Page scale={1.4} key={`page_${index + 1}`} pageNumber={index + 1} />
+                    ))}
+                </Document>
+            </div>
+        case "image":
+            return <div className="moduleAccordion_itemPreview image"><img src={href} /></div>
+        default:
+            return <div className="moduleAccordion_itemPreview default">
+                <span>Предварительный просмотр недоступен, пожалуйста, перейдите по <a href={href} target="_blank">ссылке</a></span>
+            </div>
+    }
+}
 
 const AccordionItem: React.FC<TModuleAccordionItem> = ({ id, title, body, href, user_id, mutate, handleEdit }) => {
     const intl = useIntl()
@@ -28,6 +63,19 @@ const AccordionItem: React.FC<TModuleAccordionItem> = ({ id, title, body, href, 
     }
     const handlePrint = () => printer.printHtml(unescape(body))
     const handleDelete = () => mutate({ id })
+
+    const view = useMemo(() => {
+        if (body) {
+            return "native"
+        } else if (href) {
+            if (href.includes("pdf")) {
+                return "pdf"
+            } else if (href.includes("jpg") || href.includes("jpeg") || href.includes("png")) {
+                return "image"
+            }
+        }
+        return "link"
+    }, [body, href])
 
     return <Card className="moduleAccordion_item">
         <Card.Header className={`moduleAccordion_itemHeader${isCurrentEventKey ? " active" : ""}`} onClick={handleTitleClick}>
@@ -59,9 +107,7 @@ const AccordionItem: React.FC<TModuleAccordionItem> = ({ id, title, body, href, 
         </Card.Header>
         <Accordion.Collapse eventKey={eventKey}>
             <Card.Body className="moduleAccordion_itemBody">
-                {body ? parse(unescape(body)) : <div className="moduleAccordion_itemPreview">
-                    <span>Предварительный просмотр недоступен, пожалуйста, перейдите по <a href={href} target="_blank">ссылке</a></span>
-                </div>}
+                <AccordionView view={view} body={body} href={href} />
             </Card.Body>
         </Accordion.Collapse>
     </Card>
@@ -89,8 +135,11 @@ const ModuleAccordion: React.FC<TModuleAccordion> = ({ settings, components }) =
         }
     }, [isSuccess, isUpdateSuccess])
 
+    const contextValue = useMemo(() => ({
+        refresh: refetch
+    }), [])
 
-    return <>
+    return <ModuleContext.Provider value={contextValue}>
         <ComponentDashboard>
             {haveButtons ? components.buttons.map(button => <ComponentButton key={button.settings.title} {...button} />) : null}
         </ComponentDashboard>
@@ -135,7 +184,7 @@ const ModuleAccordion: React.FC<TModuleAccordion> = ({ settings, components }) =
                 </Formik>
             </Modal>
         </div>
-    </>
+    </ModuleContext.Provider>
 }
 
 export default ModuleAccordion
