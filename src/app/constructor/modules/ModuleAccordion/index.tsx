@@ -20,6 +20,7 @@ import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 //@ts-ignore
 import worker from "pdfjs-dist/build/pdf.worker.entry"
+import printJS from "print-js";
 
 pdfjs.GlobalWorkerOptions.workerSrc = worker;
 
@@ -60,7 +61,7 @@ const AccordionItem: React.FC<TModuleAccordionItem> = ({ id, title, body, href, 
     const handleTitleClick = (event: React.MouseEvent<HTMLDivElement>) => {
         return event.target instanceof Element && !event.target.closest(".componentButton") ? handleAccordionToggle(event) : null
     }
-    const handlePrint = () => printer.printHtml(unescape(body))
+
     const handleDelete = () => mutate({ id })
 
     const view = useMemo(() => {
@@ -76,6 +77,27 @@ const AccordionItem: React.FC<TModuleAccordionItem> = ({ id, title, body, href, 
         return "link"
     }, [body, href])
 
+    const handlePrint = useCallback(() => {
+        switch (view) {
+            case "native":
+                return printer.printHtml(unescape(body))
+            case "pdf":
+            case "image":
+                return printJS({ printable: href, type: view })
+            default:
+                return
+        }
+    }, [body, href, view])
+
+    const handleShow = () => {
+        const link = document.createElement('a')
+        link.href = href as string
+        link.target = "_blank"
+        document.body.appendChild(link)
+        link.click()
+        return link.remove()
+    }
+
     return <Card className="moduleAccordion_item">
         <Card.Header className={`moduleAccordion_itemHeader${isCurrentEventKey ? " active" : ""}`} onClick={handleTitleClick}>
             <Card.Title className="moduleAccordion_itemTitle">
@@ -83,19 +105,29 @@ const AccordionItem: React.FC<TModuleAccordionItem> = ({ id, title, body, href, 
             </Card.Title>
             <div className="moduleAccordion_itemButtons">
                 {
-                    body ? <>
+                    body
+                        ?
                         <ComponentButton
                             type="custom"
                             settings={{ title: intl.formatMessage({ id: "BUTTON.EDIT" }), icon: "edit", background: "light" }}
                             defaultLabel="icon"
                             customHandler={() => handleEdit({ id, body })} />
+                        :
                         <ComponentButton
                             type="custom"
-                            settings={{ title: intl.formatMessage({ id: "BUTTON.PRINT" }), icon: "print", background: "light" }}
+                            settings={{ title: intl.formatMessage({ id: "BUTTON.OPEN" }), icon: "glasses", background: "light" }}
                             defaultLabel="icon"
-                            customHandler={handlePrint} />
-                    </> : null
+                            customHandler={handleShow} />
+
                 }
+
+                {view !== "link" ? <ComponentButton
+                    type="custom"
+                    settings={{ title: intl.formatMessage({ id: "BUTTON.PRINT" }), icon: "print", background: "light" }}
+                    defaultLabel="icon"
+                    customHandler={handlePrint} /> : null
+                }
+
                 <ComponentButton
                     type="custom"
                     settings={{ title: intl.formatMessage({ id: "BUTTON.DELETE" }), icon: "trash", background: "light", attention_modal: true }}

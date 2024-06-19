@@ -75,6 +75,7 @@
   "BUTTON.DELETE": "Delete",
   "BUTTON.CANCEL": "Cancel",
   "BUTTON.CLOSE": "Close",
+  "BUTTON.OPEN": "Open",
   "BUTTON.PRINT": "Print",
   "BUTTON.PREVIOUS": "Back",
   "BUTTON.NEXT": "Forward",
