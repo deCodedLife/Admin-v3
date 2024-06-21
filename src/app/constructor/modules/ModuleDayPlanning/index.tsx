@@ -66,7 +66,7 @@ const ModuleDayPlanning: React.FC<TModuleDayPlanning> = props => {
     //спектр выводимых дат под фильтр
     const dates = useMemo(() => {
         const datesArray = []
-        for (let i = -7; i <= 7; i++) {
+        for (let i = -14; i <= 14; i++) {
             if (i < 0) {
                 datesArray.push(moment().subtract(Math.abs(i), 'days'))
             } else if (i > 0) {
@@ -75,15 +75,7 @@ const ModuleDayPlanning: React.FC<TModuleDayPlanning> = props => {
                 datesArray.push(moment())
             }
         }
-        return new Array(29).fill(0).map((el, index) => {
-            if (index < 14) {
-               return moment().subtract(Math.abs(index + 1), 'days')
-            } else if (index > 14) {
-               return moment().add(index + 1, "days")
-            } else {
-               return moment()
-            }
-        })
+        return datesArray
     }, [])
 
     //фильтрация и запрос
