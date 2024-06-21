@@ -62,7 +62,7 @@ const ModuleMiniListMonth: React.FC<TModuleMiniListMonth> = props => {
         className={`moduleMiniList_nativeFilterButton${isActive ? " active" : ""}`}
         onClick={(event) => {
             event.currentTarget.parentElement?.scrollTo({
-                left: event.currentTarget.offsetLeft + event.currentTarget.clientWidth / 4 - event.currentTarget.parentElement.offsetWidth / 2,
+                left: event.currentTarget.offsetLeft - event.currentTarget.parentElement.offsetWidth / 2,
                 behavior: "smooth"
             })
             handleMonthClick(index + 1)

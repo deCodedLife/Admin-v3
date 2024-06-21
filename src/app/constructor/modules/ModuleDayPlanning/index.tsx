@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import moment from "moment"
 import ComponentButton from "../../components/ComponentButton"
 import { useFilter } from "../helpers"
@@ -42,7 +42,13 @@ const ModuleDayPlanningRow = React.memo<TModuleDayPlanningRow>(props => {
 
 const ModuleDayPlanningDate = React.memo<TModuleDayPlanningDate>(({ date, filter, handleDateClick }) => {
     const isCurrentDate = filter.day === date.format("YYYY-MM-DD")
-    return <div className={`moduleDayPlanning_date${isCurrentDate ? " active" : ""}`} onClick={() => handleDateClick(date)}>
+    return <div className={`moduleDayPlanning_date${isCurrentDate ? " active" : ""}`} onClick={event => {
+        event.currentTarget.parentElement?.scrollTo({
+            left: event.currentTarget.offsetLeft - event.currentTarget.parentElement.offsetWidth / 2,
+            behavior: "smooth"
+        })
+        handleDateClick(date)
+    }}>
         <span className="moduleDayPlanning_dateWeekDay">{date.format("dd").slice(0, 1).toUpperCase() + date.format("dd").slice(1)}</span>
         <span className="moduleDayPlanning_dateMonthDay">{date.format("DD.MM")}</span>
     </div>
@@ -69,7 +75,15 @@ const ModuleDayPlanning: React.FC<TModuleDayPlanning> = props => {
                 datesArray.push(moment())
             }
         }
-        return datesArray
+        return new Array(29).fill(0).map((el, index) => {
+            if (index < 14) {
+               return moment().subtract(Math.abs(index + 1), 'days')
+            } else if (index > 14) {
+               return moment().add(index + 1, "days")
+            } else {
+               return moment()
+            }
+        })
     }, [])
 
     //фильтрация и запрос
@@ -81,7 +95,7 @@ const ModuleDayPlanning: React.FC<TModuleDayPlanning> = props => {
         time_to_property,
         day: moment().format("YYYY-MM-DD")
     }), [])
-    const { filter, setFilter } = useFilter(`${props.type}_${settings.object}`, filterInitials)
+    const { filter, setFilter } = useFilter(`${props.type}_${settings.object}`, filterInitials, "", ["day"])
     const { data, isFetching, refetch } = useDayPlanning(filter)
     const isEmptyDate = !isFetching && !data?.length
 
@@ -95,9 +109,19 @@ const ModuleDayPlanning: React.FC<TModuleDayPlanning> = props => {
     }, [])
 
 
+    const datesContainerRef = useRef<HTMLDivElement | null>(null)
+    useEffect(() => {
+        const containerRef = datesContainerRef.current
+        if (containerRef) {
+            containerRef.scrollTo({
+                left: containerRef.scrollWidth / 2 - containerRef.offsetWidth / 2,
+                behavior: "smooth"
+            })
+        }
+    }, [])
     return <div className="moduleDayPlanning card">
         <div className="moduleDayPlanning_body card-body">
-            <div className="moduleDayPlanning_datesContainer">
+            <div ref={datesContainerRef} className="moduleDayPlanning_datesContainer">
                 {dates.map(date => <ModuleDayPlanningDate key={date.format("YYYY-MM-DD")} date={date} filter={filter} handleDateClick={handleDateClick} />)}
             </div>
             <div className={`moduleDayPlanning_rowsContainer${isFetching ? " loading" : ""}`}>
