@@ -8,6 +8,7 @@ import { useIntl } from "react-intl"
 import { useFilter } from "../helpers"
 import ComponentDashboard from "../../components/ComponentDashboard"
 import ComponentFilters from "../../components/ComponentFilters"
+import SplashScreen from "../../helpers/SplashScreen"
 
 const LogItem: React.FC<TModuleLogsLog> = (props) => {
     const intl = useIntl()
@@ -80,6 +81,7 @@ const ModuleLogs: React.FC<TModuleLogs> = ({ type, components, settings }) => {
         </ComponentDashboard>
         <div className="moduleLogs card">
             <div className="card-body">
+                <SplashScreen active={loading} />
                 {isEmptyData ? <div className="moduleLogs_emptyList">{intl.formatMessage({ id: "LOGS.EMPTY_LOGS_LIST" })}</div> : null}
                 {Array.isArray(data) ? <ul className="moduleLogs_logsList">
                     {data.map(log => <LogItem key={log.id} {...log} />)}

@@ -30,6 +30,9 @@ const ComponentButtonModal: React.FC<TComponentButtonModal> = ({ settings, defau
     const moduleContext = useModuleContext()
     const modalContext = useReactContext<any>(ModalContext)
 
+     //если модалка находится внутри другой модалки, то не сохранять фильтры 
+     const saveInStorage = !(modalContext.insideModal)
+
     const isButtonDisabled = !data && !isFetching
 
     const isIconBased = defaultLabel === "icon"
@@ -63,6 +66,7 @@ const ComponentButtonModal: React.FC<TComponentButtonModal> = ({ settings, defau
             setShow: handleClose,
             refetchPage: refetch,
             insideModal: true,
+            saveInStorage,
             settings: {
                 close_after_submit
             }

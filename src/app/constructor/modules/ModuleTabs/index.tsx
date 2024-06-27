@@ -48,7 +48,8 @@ const ModuleTabs = React.memo<TModuleTabs>(props => {
     }, [key])
 
     useEffect(() => {
-        if (resolvedTabs.length && key !== initialKey) {
+        /* Проверка на модальное окно стоит для случаев, когда модалку не нужно закрывать, но саму страницу внутри нужно перезагрузить */
+        if (resolvedTabs.length && key !== initialKey && !isTabsInsideModal) {
             setKey(initialKey)
         }
     }, [resolvedTabs])
