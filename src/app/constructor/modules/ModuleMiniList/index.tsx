@@ -111,9 +111,9 @@ const ModuleMiniList = React.memo<TModuleMiniList>(props => {
     const resolvedFilter = { context, ...filter }
     const { data: response, isLoading: loading, isFetching, isRefetching, refetch } = useListData(settings.object, resolvedFilter)
 
-    useSubscribeOnRefetch(refetch, linked_filter)
+    useSubscribeOnRefetch(refetch, setFilter, linked_filter)
 
-    useRefetchSubscribers(`${props.type}_${settings.object}`, isRefetching, Boolean(linked_filter))
+    useRefetchSubscribers(`${props.type}_${settings.object}`, isRefetching, Boolean(linked_filter), filter)
 
     //проверка обновления при наличии хука 
     useUpdate([{ active: Boolean(hook), update: refetch }], hook, 1000)

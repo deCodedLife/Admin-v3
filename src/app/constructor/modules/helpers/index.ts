@@ -251,36 +251,6 @@ export const useFilter = (moduleKey: string, initials: Object, linked_filter?: s
         }
     }, [filterValues])
 
-    //прослушивание значений фильтров других модулей из sessionStorage
-    const moduleFilterValuesListener = useCallback(() => {
-        const suppostedListenModueKey = linked_filter ? `${location.pathname}${location.search}-${linked_filter}` : ""
-        const excludeArticlesArray = excludeArticles ?? []
-        setFilter((prev: any) => {
-            const suppostedValueToListen = sessionStorage.getItem(suppostedListenModueKey) ? JSON.parse(sessionStorage.getItem(suppostedListenModueKey) as string) : null
-            if (!suppostedValueToListen) {
-                return prev
-            } else {
-                const objectWithExcludes: { [key: string]: any } = {}
-                const prevValuesWithoutExcludes = { ...prev }
-
-                excludeArticlesArray.forEach(key => {
-                    if (key in prevValuesWithoutExcludes) {
-                        objectWithExcludes[key] = prevValuesWithoutExcludes[key]
-                        delete prevValuesWithoutExcludes[key]
-                    }
-                })
-                const isValuesEqual = isEqual(suppostedValueToListen, prevValuesWithoutExcludes)
-                return isValuesEqual ? prev : Object.assign({}, resolvedInitialValues, suppostedValueToListen, objectWithExcludes)
-            }
-        })
-    }, [])
-
-    useEffect(() => {
-        if (linked_filter) {
-            window.addEventListener("storage", moduleFilterValuesListener)
-            return () => window.removeEventListener("storage", moduleFilterValuesListener)
-        }
-    }, [])
 
     return {
         filter: filterValues,

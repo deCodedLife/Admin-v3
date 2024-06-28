@@ -199,6 +199,8 @@ const HeaderCell: React.FC<TModuleListHeaderCell> = props => {
         ><KTSVG path='/media/crm/icons/sort.svg' /></button> : null}</th>
 }
 
+const filterExcludes = ["limit", "page", "sort_by", "sort_order"]
+
 const ModuleList = React.memo<TModuleList>((props) => {
     const intl = useIntl()
     const { settings, components, hook } = props
@@ -220,7 +222,7 @@ const ModuleList = React.memo<TModuleList>((props) => {
         `${props.type}_${settings.object}`,
         resolvedInitialFilterValues,
         linked_filter,
-        ["limit", "page", "sort_by", "sort_order"]
+        filterExcludes
     )
 
     /*
@@ -252,9 +254,9 @@ const ModuleList = React.memo<TModuleList>((props) => {
         refetch: infiniteRefetch
     } = useInfiniteListData(settings.object, resolvedFilter, withInfiniteScroll)
 
-    useSubscribeOnRefetch(refetch, linked_filter)
+    useSubscribeOnRefetch(refetch, setFilter, linked_filter)
 
-    useRefetchSubscribers(`${props.type}_${settings.object}`, isRefetching, Boolean(linked_filter))
+    useRefetchSubscribers(`${props.type}_${settings.object}`, isRefetching, Boolean(linked_filter), filter, filterExcludes)
 
     //проверка обновления при наличии хука 
     useUpdate([{ active: Boolean(hook), update: refetch }], hook, 1000)

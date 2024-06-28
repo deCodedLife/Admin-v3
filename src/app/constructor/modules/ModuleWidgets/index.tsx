@@ -114,9 +114,9 @@ const ModuleWidgets = React.memo<TModuleWidgets>(props => {
     const haveButtons = Boolean(components?.buttons)
     const { data, isLoading, isRefetching, refetch } = useWidget(widgetCommand, filter)
     
-    useSubscribeOnRefetch(refetch, linked_filter)
+    useSubscribeOnRefetch(refetch, setFilter, linked_filter)
 
-    useRefetchSubscribers(`${props.type}_${widgetCommand}`, isRefetching, Boolean(linked_filter))
+    useRefetchSubscribers(`${props.type}_${widgetCommand}`, isRefetching, Boolean(linked_filter), filter)
    
 
     useUpdate([{ active: Boolean(hook), update: refetch }], hook, 1000)

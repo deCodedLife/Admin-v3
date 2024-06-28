@@ -40,12 +40,6 @@ const ModuleTabs = React.memo<TModuleTabs>(props => {
 
     const [key, setKey] = useState<string | null>(initialKey)
 
-    useEffect(() => {
-        if (key) {
-            const queryString = isTabsInsideModal && location.search ? location.search.replace(/&tab=.*/, "") + `&tab=${key}` : `?tab=${key}`
-            navigate(queryString)
-        }
-    }, [key])
 
     useEffect(() => {
         /* Проверка на модальное окно стоит для случаев, когда модалку не нужно закрывать, но саму страницу внутри нужно перезагрузить */
@@ -58,7 +52,17 @@ const ModuleTabs = React.memo<TModuleTabs>(props => {
         <Tabs
             id="moduleTabs"
             activeKey={key as string | undefined}
-            onSelect={setKey}
+            onSelect={key => {
+                const keyIndex = resolvedTabs.findIndex(tab => tab.key === key)
+                let queryString
+                if (keyIndex === 0) {
+                    queryString = isTabsInsideModal && location.search ? location.pathname + location.search.replace(/&tab=.*/, "") : location.pathname
+                } else {
+                    queryString = isTabsInsideModal && location.search ? location.search.replace(/&tab=.*/, "") + `&tab=${key}` : `?tab=${key}`
+                }
+                navigate(queryString)
+                setKey(key)
+            }}
             className="mb-3"
             mountOnEnter
             unmountOnExit
