@@ -135,6 +135,7 @@ const ComponentButtonPrint: React.FC<TComponentButtonPrint> = ({ settings, defau
             show={showEditModal}
             onEntering={setModalIndex}
             onHide={handleMinimize}
+            enforceFocus={false}
         >
             <Modal.Header>
                 <Modal.Title>
