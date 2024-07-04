@@ -12,6 +12,7 @@ import { unescape } from "lodash"
 import { TComponentTextEditor } from "./_types"
 import { useSetupContext } from "../../helpers/SetupContext"
 import { useThemeMode } from "../../../../_metronic/partials"
+import { getTheme } from "./src/getTheme"
 
 
 
@@ -258,8 +259,8 @@ const ComponentTextEditor: React.FC<TComponentTextEditor> = ({ article, variable
             toolbar={toolbar}
             init={{
                 language: applicationContext.context.lang,
-                skin: theme.mode === "dark" ? "oxide-dark" : "oxide",
-                content_css: theme.mode === "dark" ? "dark" : "default",
+                skin: getTheme(theme.mode, "skin", applicationContext.context.theme),
+                content_css: getTheme(theme.mode, "content", applicationContext.context.theme), 
                 setup,
                 browser_spellcheck: true,
                 contextmenu: false,
