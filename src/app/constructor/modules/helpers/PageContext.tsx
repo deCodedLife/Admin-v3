@@ -32,7 +32,7 @@ export const useRefetchSubscribers = (moduleArticle: string, isRefetching: boole
     const { modules } = usePageContext()
 
     useEffect(() => {
-        if (!isModuleAsSubscriber && isRefetching && modules[moduleArticle]?.length) {
+        if (!isModuleAsSubscriber && modules[moduleArticle]?.length) {
 
             const filterValuesWithoutExcludes = { ...filter }
             if (excludeArticles?.length) {
@@ -51,7 +51,7 @@ export const useRefetchSubscribers = (moduleArticle: string, isRefetching: boole
                 })
             })
         }
-    }, [isRefetching])
+    }, [filter])
 }
 
 const PageProvider: React.FC<{ children: React.ReactElement }> = ({ children }) => {
