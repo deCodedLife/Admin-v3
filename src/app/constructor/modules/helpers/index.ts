@@ -8,6 +8,7 @@ import { isEqual } from 'lodash';
 import { TApiSetup } from '../../../types/api';
 import { ModalContext } from '../ModuleSchedule';
 import {TModuleFormArea, TModuleFormField} from "../ModuleForm/_types";
+import { getApiUrl } from '../../../api';
 
 //функция для получения массива полей из схемы формы
 export const getFields = (areas: Array<TModuleFormArea>) => {
@@ -290,7 +291,6 @@ export const useSearch = (key: string) => {
 
 
 //хук для определения подстраницы
-
 export const useIsSubpage = () => {
     const { pathname } = useLocation()
 
@@ -301,4 +301,9 @@ export const useIsSubpage = () => {
     }, [pathname])
 
     return isSubpage
+}
+
+//функция возврата ссылки 
+export const getResolvedLink = (link: string) => {
+    return link.includes("http") ? link : getApiUrl() + link
 }

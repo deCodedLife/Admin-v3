@@ -7,13 +7,14 @@ import parse from "html-react-parser"
 import { useIntl } from "react-intl"
 import { KTSVG, toAbsoluteUrl } from "../../../../_metronic/helpers"
 import setModalIndex from "../../helpers/setModalIndex"
+import { getResolvedLink } from "../helpers"
 
 const NewsCard: React.FC<TModuleNewsCard> = ({ image, title, body, preview, handleNewsClick }) => {
     const intl = useIntl()
     return <div className="moduleNews_newsCard">
         <div className="overlay moduleNews_newsCardOverlay">
             <div className="overlay-wrapper">
-                <img className="moduleNews_newsCardImage" src={image} alt="news image" onError={event => {
+                <img className="moduleNews_newsCardImage" src={getResolvedLink(image)} alt="news image" onError={event => {
                     event.currentTarget.src = toAbsoluteUrl("media/crm/backgrounds/crm.jpg")
                 }} />
             </div>
