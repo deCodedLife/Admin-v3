@@ -50,7 +50,7 @@ const instanse = axios.create({
     }
 })
 
-const api = async <dataType = any>(object: string | undefined, command: string, data: any = undefined) => {
+const api = async <dataType = any>(object: string | undefined, command: string, data: any = undefined, config?: { signal?: AbortSignal }) => {
     if (!object) {
         throw new Error("Отсутствует объект запроса")
     }
@@ -59,6 +59,8 @@ const api = async <dataType = any>(object: string | undefined, command: string, 
         command,
         data,
         jwt: localStorage.getItem("authToken") ?? undefined
+    }, {
+        signal: config?.signal
     })
     //выгрузка простых документов (CSV, text)
     if (headers["content-type"].includes("text") || headers["content-type"].includes("excel")) {

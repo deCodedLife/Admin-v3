@@ -8,6 +8,7 @@ import ComponentButton from "../ComponentButton"
 import ComponentDropdown from "../ComponentDropdown"
 import AvatarEditor from "react-avatar-editor"
 import { TComponentImage, TComponentImageEditor } from "./_types"
+import { getResolvedLink } from "../../modules/helpers"
 
 const readImageAsData = (file: File | Blob) => {
     return new Promise<string>(resolve => {
@@ -249,7 +250,7 @@ const ComponentImage: React.FC<TComponentImage> = ({ article, allowedFormats = [
                             </div> : null
                         }
 
-                        <img draggable={false} className="componentImage_image" src={image} alt="user_avatar" onClick={() => setFullscreenCarousel(true)} />
+                        <img draggable={false} className="componentImage_image" src={getResolvedLink(image)} alt="user_avatar" onClick={() => setFullscreenCarousel(true)} />
                     </div>
 
                 </Carousel.Item>)}

@@ -17,6 +17,7 @@ import { toast } from "react-hot-toast"
 import clsx from "clsx"
 import useMessagesCount from "../../../api/hooks/useMessagesCount"
 import { TListItem, TMessage, TModuleDialog, TModuleDialogChat, TModuleDialogChatsWrapper, TModuleDialogGroupsWrapper, TModuleDialogMessage, TModuleDialogToggleButton } from "./_types"
+import { getResolvedLink } from "../helpers"
 
 
 const itemClass = 'ms-1 ms-lg-3'
@@ -44,7 +45,7 @@ const ModuleDialogMessage: React.FC<TModuleDialogMessage> = ({ message, intl, is
     return <div ref={ref} key={message.id} className={`moduleMiniChat_messageContainer${isOwnMessage ? " author" : ""}`}>
         <div className="moduleMiniChat_messageProperties">
             <img
-                src={message.avatar ?? toAbsoluteUrl("/media/crm/assets/blank.png")}
+                src={getResolvedLink(message.avatar)}
                 alt=""
                 className="moduleMiniChat_messagePhoto"
                 onError={event => event.currentTarget.src = toAbsoluteUrl("/media/crm/assets/blank.png")}
@@ -311,7 +312,7 @@ const ModuleDialog: React.FC<TModuleDialog> = props => {
                         }
                     }}>
                         <img
-                            src={notification.avatar ?? toAbsoluteUrl("/media/avatars/blank.png")}
+                            src={getResolvedLink(notification.avatar)}
                             alt=""
                             className="messageToast_avatar"
                             onError={event => event.currentTarget.src = toAbsoluteUrl("/media/crm/assets/blank.png")}

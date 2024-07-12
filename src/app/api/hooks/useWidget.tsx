@@ -7,9 +7,7 @@ import { getErrorToast } from "../../constructor/helpers/toasts"
 
 const useWidget = (command: string, filter: any) => {
     const fetchKey = ["analytic_widgets", command, filter]
-    
-    const fetchFunction = () => api<TApiWidget>("analytic_widgets", command, filter)
-   
+
     const hookConfiguration = {
         retry: false,
         refetchOnWindowFocus: false,
@@ -17,7 +15,7 @@ const useWidget = (command: string, filter: any) => {
         select: (data: TApiResponse<TApiWidget>) => data.data,
         onError: (error: any) => getErrorToast(error.message)
     }
-    const { isLoading, isRefetching, error, data, refetch } = useQuery(fetchKey, fetchFunction, hookConfiguration)
+    const { isLoading, isRefetching, error, data, refetch } = useQuery(fetchKey, ({signal}) => api<TApiWidget>("analytic_widgets", command, filter, {signal}), hookConfiguration)
     return { isLoading, isRefetching, error, data, refetch }
 }
 

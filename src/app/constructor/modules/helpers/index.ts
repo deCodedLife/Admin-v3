@@ -304,6 +304,6 @@ export const useIsSubpage = () => {
 }
 
 //функция возврата ссылки 
-export const getResolvedLink = (link: string) => {
-    return link.includes("http") ? link : getApiUrl() + link
+export const getResolvedLink = (link?: string) => {
+    return (link?.includes("http") || !link) ? link : getApiUrl() + link
 }

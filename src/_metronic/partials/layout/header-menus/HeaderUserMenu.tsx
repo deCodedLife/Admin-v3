@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { FC, useCallback, useMemo } from 'react'
+import { FC, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../../../app/modules/auth'
 import { Languages } from './Languages'
 import { toAbsoluteUrl } from '../../../helpers'
 import { useIntl } from 'react-intl'
-import { getApiUrl } from '../../../../app/api'
+import { getResolvedLink } from '../../../../app/constructor/modules/helpers'
 
 const HeaderUserMenu: FC = () => {
   const intl = useIntl()
@@ -17,14 +17,6 @@ const HeaderUserMenu: FC = () => {
     logout()
   }, [])
 
-  const userAvatar = useMemo(() => {
-    if (currentUser?.avatar) {
-      return currentUser.avatar.includes("https") ? currentUser.avatar : `${getApiUrl()}${currentUser.avatar}`
-    } else {
-      return toAbsoluteUrl('/media/crm/assets/blank.png')
-    }
-  }, [currentUser])
-
   return (
     <div
       className='menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px'
@@ -33,15 +25,20 @@ const HeaderUserMenu: FC = () => {
       <div className='menu-item px-3'>
         <div className='menu-content d-flex align-items-center px-3'>
           <div className='symbol symbol-50px me-5'>
-            <img src={userAvatar} style={{ objectFit: "cover" }} alt="menu_user_avatar" />
+            <img
+              src={getResolvedLink(currentUser?.avatar)}
+              style={{ objectFit: "cover" }}
+              alt="menu_user_avatar"
+              onError={event => event.currentTarget.src === toAbsoluteUrl('/media/crm/assets/blank.png')}
+            />
           </div>
 
-          <div className='d-flex flex-column' style={{maxWidth: "calc(100% - 50px - 1.25rem)"}}>
+          <div className='d-flex flex-column' style={{ maxWidth: "calc(100% - 50px - 1.25rem)" }}>
             <div className='fw-bolder d-flex align-items-center fs-5'>
               {currentUser?.last_name} {currentUser?.first_name}
               {/*  <span className='badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2'>Pro</span> */}
             </div>
-            <a href={`mailto:${currentUser?.email}`} className='fw-bold text-muted text-hover-primary fs-7' style={{overflow: "hidden", textOverflow: "ellipsis"}}>
+            <a href={`mailto:${currentUser?.email}`} className='fw-bold text-muted text-hover-primary fs-7' style={{ overflow: "hidden", textOverflow: "ellipsis" }}>
               {currentUser?.email}
             </a>
           </div>

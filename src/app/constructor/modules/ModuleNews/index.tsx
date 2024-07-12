@@ -83,7 +83,7 @@ const ModuleNews: React.FC<TModuleNews> = ({ settings }) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className="scroll-y">
-                <img className="moduleNews_newsModalImage" src={selectedNews?.image} alt="news image" onError={event => {
+                <img className="moduleNews_newsModalImage" src={getResolvedLink(selectedNews?.image)} alt="news image" onError={event => {
                     event.currentTarget.src = toAbsoluteUrl("media/crm/backgrounds/crm.jpg")
                 }} />
                 <p className="moduleNews_newsModalBody">{parse(selectedNews?.body ?? "")}</p>
