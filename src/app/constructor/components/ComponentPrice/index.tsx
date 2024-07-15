@@ -53,31 +53,33 @@ const ComponentPrice: React.FC<TComponentPrice> = ({ article, data_type, hook, i
         return createNumberMask({ ...defaultMaskOptions })
     }, [])
 
-    const setValueForHook = useHook({article, values, setFieldValue, hook, isFilter: onBlurSubmit})
+    const setValueForHook = useHook({ article, values, setFieldValue, hook, isFilter: onBlurSubmit })
 
     /*используем собственный обработчик события, т.к. необходимо зачистить строку от пробелов и привести к числу, но именно на "блюре", т.к. иначе невозможно ввести десятичные числа  */
     const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-        const currentTargetValue = Number(event?.target.value.replace(/[^\d]/g, ""))
-        if (hook) {
-            setValueForHook(currentTargetValue)
-        }
+        const inputValue = event.target.value === "" ? null : Number(event?.target.value.replace(/[^\d|\.]/g, ""))
+
         if (customHandler) {
-            customHandler(currentTargetValue)
+            customHandler(event)
+        } else {
+            setFieldValue(article, inputValue)
         }
-        onChange(event)
+
+        if (hook) {
+            setValueForHook(inputValue)
+        }
+
     }, [])
 
 
     const handleBlur = useCallback((event: React.FocusEvent<HTMLInputElement>) => {
-        const resolvedValue = Number(event.target.value.replace(/[^\d]/g, ""))
-        setFieldValue(article, resolvedValue)
-        if (customHandler) {
-            customHandler(resolvedValue)
-        }
+
         onBlur(event)
+
         if (onBlurSubmit) {
             handleSubmit()
         }
+
     }, [])
 
     const resolvedClassName = `form-control form-control-solid${isError ? " invalid" : ""} ${className}`

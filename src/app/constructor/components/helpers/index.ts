@@ -103,6 +103,8 @@ const filtersHookAfterChange = async (
     /* почему-то моментальный запрос не даёт возможности изменить поля через вышеуказанный цикл */
     setTimeout(() => handleSubmit?.(), 1)
 }
+
+/* полям фильтров, у которых хук находится в change, не передавать handleSubmit */
 export const useHook = (
     { article, setFieldValue, handleSubmit, values, isFilter, hook }:
         {

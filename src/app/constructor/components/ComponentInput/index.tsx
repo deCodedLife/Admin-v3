@@ -96,7 +96,7 @@ const ComponentInput: React.FC<TComponentInput> = props => {
     const isError = Boolean(error && touched)
     const resolvedClassName = `form-control form-control-solid${isError ? " invalid" : ""} ${className}`
 
-    const setValueForHook = useHook({article: name, values, setFieldValue, handleSubmit, hook, isFilter: onBlurSubmit})
+    const setValueForHook = useHook({ article: name, values, setFieldValue, handleSubmit, hook, isFilter: onBlurSubmit })
     const isUseBasicSubmit = onBlurSubmit && !hook
 
     const currencyMask = useMemo(() => {
@@ -127,13 +127,13 @@ const ComponentInput: React.FC<TComponentInput> = props => {
         if (customHandler) {
             return customHandler(event)
         } else {
-            if (isMaskedInput) {
-                const resolvedValue = Number(event?.target.value.replace(/[^\d]/g, ""))
-                return setFieldValue(name, resolvedValue)
+            const inputValue = event.target.value
+            if (inputValue === "") {
+                return setFieldValue(name, null)
             } else {
-                const inputValue = event.target.value
-                if (inputValue === "") {
-                    return setFieldValue(name, null)
+                if (isMaskedInput) {
+                    const resolvedValue = Number(inputValue.replace(/[^\d|\.]/g, ""))
+                    return setFieldValue(name, resolvedValue)
                 } else {
                     let resolvedValue
                     switch (name) {
@@ -153,13 +153,12 @@ const ComponentInput: React.FC<TComponentInput> = props => {
                     }
                     return setFieldValue(name, resolvedValue)
                 }
-
             }
         }
     }, [])
 
     const handleBlur = useCallback((event: React.FocusEvent<HTMLInputElement>) => {
-        const resolvedValue = isMaskedInput ? Number(event?.target.value.replace(/[^\d]/g, "")) : event.target.value
+        const resolvedValue = isMaskedInput ? Number(event?.target.value.replace(/[^\d|\.]/g, "")) : event.target.value
 
         if (hook) {
             setValueForHook(resolvedValue)
