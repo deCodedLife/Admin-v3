@@ -1,50 +1,29 @@
 import React, { useEffect, useMemo, useState } from "react"
 import useDomRu from "../../../api/hooks/useDomRu"
-import { useAuth } from "../../../modules/auth"
-import api from "../../../api"
 import { Modal } from "react-bootstrap"
 import useItem from "../../../api/hooks/useItem"
 import PageBuilder from "../../../pages/PageBuilder"
 import { ModalContext } from "../ModuleSchedule"
-import ComponentButton from "../../components/ComponentButton"
 import { KTSVG } from "../../../../_metronic/helpers"
 import setModalIndex from "../../helpers/setModalIndex"
 import SplashScreen from "../../helpers/SplashScreen"
 
 
 const ModuleDomRu: React.FC = () => {
-    const { currentUser } = useAuth()
-    const { data, refetch } = useDomRu()
+    const { data } = useDomRu()
     const isActiveCall = data && typeof data !== "boolean"
     const isActiveCallWithPage = isActiveCall && data.type === "page"
     const pageRequestData = isActiveCallWithPage ? { page: data.value.slice(1) } : {}
-    const [notificated, setNotificated] = useState(false)
     const [show, setShow] = useState(false)
     const { data: pageData, isFetching } = useItem("pages", pageRequestData, Boolean(isActiveCallWithPage))
-
+    
     useEffect(() => {
-        if (isActiveCall && !notificated) {
-            setShow(true)
-        } else {
-            setShow(false)
-        }
-    }, [isActiveCall, notificated])
-
-
-    const handleHideModal = () => {
-        setNotificated(true)
-        setShow(false)
-    }
-
-
-    const handleCloseCall = async () => {
         if (isActiveCall) {
-            await api("dom_ru", "close_modal", { user_id: currentUser?.id, phone: isActiveCallWithPage ? data.phone : data.value })
-            setShow(false)
-            await refetch()
-            setNotificated(false)
+            setShow(true)
+            return () => setShow(false)
         }
-    }
+    }, [isActiveCall])
+
 
     const modalSize = isActiveCallWithPage ? "xl" : "sm"
     /*
@@ -68,12 +47,11 @@ const ModuleDomRu: React.FC = () => {
         }
 
         <ModalContext.Provider value={modalContext}>
-            <Modal dialogClassName="customModal" show={show} size={modalSize} onHide={handleHideModal} onEntering={setModalIndex}>
+            <Modal dialogClassName="customModal" show={show} size={modalSize} onHide={() =>  setShow(false)} onEntering={setModalIndex}>
                 <Modal.Header closeButton>
                     <Modal.Title>
                         Входящий звонок
                     </Modal.Title>
-                    <ComponentButton type="custom" settings={{ title: "Завершить звонок", background: "dark", icon: "" }} customHandler={handleCloseCall} />
                 </Modal.Header>
                 <Modal.Body style={{ minHeight: "300px" }}>
                     {
