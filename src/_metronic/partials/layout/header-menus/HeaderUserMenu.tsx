@@ -26,7 +26,7 @@ const HeaderUserMenu: FC = () => {
         <div className='menu-content d-flex align-items-center px-3'>
           <div className='symbol symbol-50px me-5'>
             <img
-              src={getResolvedLink(currentUser?.avatar)}
+              src={getResolvedLink(currentUser?.avatar) ?? toAbsoluteUrl('/media/crm/assets/blank.png')}
               style={{ objectFit: "cover" }}
               alt="menu_user_avatar"
               onError={event => event.currentTarget.src === toAbsoluteUrl('/media/crm/assets/blank.png')}

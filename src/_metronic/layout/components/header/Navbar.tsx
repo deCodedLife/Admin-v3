@@ -13,6 +13,7 @@ import useNotifications from '../../../../app/api/hooks/useNotifications'
 import ModuleDialog from '../../../../app/constructor/modules/ModuleDialog'
 import ModuleDeveloper from '../../../../app/constructor/modules/ModuleDeveloper'
 import ModuleSalaryWidgets from '../../../../app/constructor/modules/ModuleSalaryWidgets'
+import { getResolvedLink } from '../../../../app/constructor/modules/helpers'
 
 
 const itemClass = 'ms-1 ms-lg-3'
@@ -91,13 +92,6 @@ const Navbar = () => {
   const showDevMenu = Number(currentUser?.role_id) === 1
   const showSalaryWidget = Boolean(context.salary_widget)
 
-  const userAvatar = useMemo(() => {
-    if (currentUser?.avatar) {
-      return currentUser.avatar.includes("https") ? currentUser.avatar : `${getApiUrl()}${currentUser.avatar}`
-    } else {
-      return toAbsoluteUrl('/media/crm/assets/blank.png')
-    }
-  }, [currentUser])
 
   return (
     <div className='app-navbar flex-shrink-0'>
@@ -138,7 +132,12 @@ const Navbar = () => {
           data-kt-menu-attach='parent'
           data-kt-menu-placement='bottom-end'
         >
-          <img src={userAvatar} style={{ objectFit: "cover" }} alt="header_user_avatar" />
+          <img
+            src={getResolvedLink(currentUser?.avatar) ?? toAbsoluteUrl('/media/crm/assets/blank.png')}
+            style={{ objectFit: "cover" }}
+            alt="header_user_avatar"
+            onError={event => event.currentTarget.src === toAbsoluteUrl('/media/crm/assets/blank.png')}
+          />
         </div>
         <HeaderUserMenu />
       </div>
