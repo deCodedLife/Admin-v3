@@ -33,7 +33,7 @@ const ModuleDomRu: React.FC = () => {
         if (isActiveCallWithPage) {
             const splitedLink = data.value.split("/")
             const id = splitedLink[splitedLink.length - 1]
-            return { initialData: { id }, setShow: () => { } }
+            return { initialData: { id }, setShow: () => { }, insideModal: true, saveInStorage: false }
         }
         else {
             return {}

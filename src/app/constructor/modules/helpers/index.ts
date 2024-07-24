@@ -236,11 +236,11 @@ export const useFilter = (moduleKey: string, initials: Object, linked_filter?: s
     const resolvedUnicKey = `${location.pathname}${location.search}-${moduleKey}`
     const resolvedInitialValues = initials && !Array.isArray(initials) ? initials : {}
 
-    //Не сохранять фильтры страниц во вложенных модалках (модалка в модалке)
+    //Не сохранять фильтры страниц в модалках без уникальной ссылки
     const modalContext = useContext(ModalContext)
     const isSaveInStorage = modalContext?.saveInStorage !== false
 
-    const [filterValues, setFilter] = useState<any>(getSessionStorageValue(resolvedUnicKey, resolvedInitialValues))
+    const [filterValues, setFilter] = useState<any>(getSessionStorageValue(isSaveInStorage ? resolvedUnicKey : "", resolvedInitialValues))
     const handleFilterValuesReset = () => setFilter(resolvedInitialValues)
     useEffect(() => {
         const resolvedValues = { ...filterValues }
