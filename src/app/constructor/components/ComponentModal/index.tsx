@@ -6,12 +6,16 @@ import PageBuilder from "../../../pages/PageBuilder"
 import { ModalContext } from "../../modules/ModuleSchedule"
 import setModalIndex from "../../helpers/setModalIndex"
 import { TComponentModal, TContext } from "./_types"
+import { useLocation, useNavigate } from "react-router-dom"
+import usePrevious from "../../helpers/usePrevious"
 
 const ComponentModal: React.FC<TComponentModal> = ({ page, show, size = "xl", centered = false, setShow, refresh }) => {
-
+    const navigate = useNavigate()
+    const location = useLocation()
     //если модалка находится внутри другой модалки, то не сохранять фильтры 
     const outterModalContext = React.useContext(ModalContext)
-    const saveInStorage = !(outterModalContext.insideModal)
+    const isModalInsideModal = Boolean(outterModalContext.insideModal)
+    const saveInStorage = !isModalInsideModal
 
     const handleClose = useCallback((value: any) => {
         if (refresh) {
@@ -19,7 +23,6 @@ const ComponentModal: React.FC<TComponentModal> = ({ page, show, size = "xl", ce
         }
         setShow(false)
     }, [setShow, refresh])
-
 
     const resolvedRequestProps = useMemo(() => Object.assign({ page }, show && typeof show === "object" ? { context: show } : {}), [page])
     const { data, isFetching, refetch } = useItem("pages", resolvedRequestProps, Boolean(page))
@@ -32,12 +35,24 @@ const ComponentModal: React.FC<TComponentModal> = ({ page, show, size = "xl", ce
         }
     }, [show])
 
+    //нужно хранить страницу, т.к. onExited срабатывает уже после того, как page становится "falsy"
+    const pageForExitedHandler = usePrevious(page)
+
     return <Modal
         size={size}
         dialogClassName="customModal"
         show={Boolean(show) && Boolean(data)}
         onHide={() => setShow(null)}
         onEntering={setModalIndex}
+        onEntered={() => {
+            const resolvedPath = isModalInsideModal && location.search ? location.search + `&modal=${page}` : `?modal=${page}`
+            navigate(resolvedPath)
+        }}
+        onExited={() => {
+            const regex = new RegExp(`${isModalInsideModal ? `&modal=${pageForExitedHandler}` : `\\?modal=${pageForExitedHandler}`}.*`)
+            const resolvedPath = location.pathname + location.search.replace(regex, "")
+            navigate(resolvedPath)
+        }}
         centered={centered}
     >
         <Modal.Header closeButton className="modal-emptyHeader" />

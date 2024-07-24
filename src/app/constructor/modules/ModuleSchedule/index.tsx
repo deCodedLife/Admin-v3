@@ -295,7 +295,7 @@ const ModuleScheduleModalForm = React.memo<TModuleScheduleModal>(({ requestObjec
         show={Boolean(selectedCell) && Boolean(data)}
         onHide={() => setSelectedCell(null)}
         onEntering={setModalIndex}
-        onEntered={() => navigate(`?modal=${requestObject}${selectedCell?.event?.id ? `&id=${selectedCell.event.id}` : ""}`)}
+        onEntered={() => navigate(`?modal=${requestObject}${selectedCell?.event?.id ? `/update/${selectedCell.event.id}` : "/add"}`)}
         onExited={() => navigate(location.pathname)}
     >
         <Modal.Header closeButton className="modal-emptyHeader" />
