@@ -1,7 +1,6 @@
 import moment from "moment"
 import React, { useCallback, useMemo, useRef, useState } from "react"
 import { Dropdown, Modal } from "react-bootstrap"
-import { useLocation, useNavigate } from "react-router-dom"
 import { KTSVG } from "../../../../_metronic/helpers"
 import useSchedule from "../../../api/hooks/useSchedule"
 import useScheduleForm from "../../../api/hooks/useScheduleForm"
@@ -26,6 +25,7 @@ import {
     TModuleScheduleTable
 } from "./_types";
 import ComponentDrawer from "../../components/ComponentDrawer"
+import useModalSettings from "../../helpers/useModalSettings"
 
 export const ModalContext = React.createContext<{ [key: string]: any }>({})
 
@@ -264,8 +264,10 @@ const ModuleScheduleScrollButtons = React.memo<TModuleScheduleScrollButtons>(({ 
 })
 const ModuleScheduleModalForm = React.memo<TModuleScheduleModal>(({ requestObject, selectedCell, setSelectedCell }) => {
     const { data, isFetching, refetch } = useScheduleForm(requestObject, selectedCell)
-    const navigate = useNavigate()
-    const location = useLocation()
+
+    const page = `${requestObject}${selectedCell?.event?.id ? `/update/${selectedCell.event.id}` : "/add"}`
+    const { handleEntered, handleExited } = useModalSettings(page)
+
     const modalContext = useMemo(() => {
         return Object.assign({ setShow: setSelectedCell, refetchPage: refetch }, selectedCell ? {
             initialData: {
@@ -277,17 +279,17 @@ const ModuleScheduleModalForm = React.memo<TModuleScheduleModal>(({ requestObjec
             insideModal: true
         } : {})
     }, [selectedCell])
-     /* return <ComponentDrawer
-         show={Boolean(selectedCell) && Boolean(data)}
-         setShow={() => setSelectedCell(null)}
-         onEntered={() => navigate(`?modal=${requestObject}${selectedCell?.event?.id ? `&id=${selectedCell.event.id}` : ""}`)}
-         onExited={() => navigate(location.pathname)}
+    /* return <ComponentDrawer
+        show={Boolean(selectedCell) && Boolean(data)}
+        setShow={() => setSelectedCell(null)}
+        onEntered={handleEntered}
+        onExited={handleExited}
  
-     >
-         <ModalContext.Provider value={modalContext}>
-             {data ? <PageBuilder data={data} isFetching={isFetching} showProgressBar={false} /> : null}
-         </ModalContext.Provider>
-     </ComponentDrawer> */
+    >
+        <ModalContext.Provider value={modalContext}>
+            {data ? <PageBuilder data={data} isFetching={isFetching} showProgressBar={false} /> : null}
+        </ModalContext.Provider>
+    </ComponentDrawer> */
 
     return <Modal
         size="xl"
@@ -295,8 +297,8 @@ const ModuleScheduleModalForm = React.memo<TModuleScheduleModal>(({ requestObjec
         show={Boolean(selectedCell) && Boolean(data)}
         onHide={() => setSelectedCell(null)}
         onEntering={setModalIndex}
-        onEntered={() => navigate(`?modal=${requestObject}${selectedCell?.event?.id ? `/update/${selectedCell.event.id}` : "/add"}`)}
-        onExited={() => navigate(location.pathname)}
+        onEntered={handleEntered}
+        onExited={handleExited}
     >
         <Modal.Header closeButton className="modal-emptyHeader" />
         <Modal.Body className="scroll-y">

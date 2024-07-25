@@ -9,6 +9,7 @@ import { Modal } from "react-bootstrap"
 import setModalIndex from "../../../helpers/setModalIndex"
 import PageBuilder from "../../../../pages/PageBuilder"
 import { TComponentButtonModal } from "../_types"
+import useModalSettings from "../../../helpers/useModalSettings"
 
 
 const ComponentButtonModal: React.FC<TComponentButtonModal> = ({ settings, defaultLabel = "title", className = "", }) => {
@@ -30,8 +31,11 @@ const ComponentButtonModal: React.FC<TComponentButtonModal> = ({ settings, defau
     const moduleContext = useModuleContext()
     const modalContext = useReactContext<any>(ModalContext)
 
-     //если модалка находится внутри другой модалки, то не сохранять фильтры 
-     const saveInStorage = !(modalContext.insideModal)
+    //если модалка находится внутри другой модалки, то не сохранять фильтры 
+    const saveInStorage = !(modalContext.insideModal)
+
+    //обработчики событий модалки
+    const { handleEntered, handleExited } = useModalSettings(settings.page)
 
     const isButtonDisabled = !data && !isFetching
 
@@ -75,11 +79,11 @@ const ComponentButtonModal: React.FC<TComponentButtonModal> = ({ settings, defau
     return <>
         <ComponentTooltip title={settings.title ?? ""} show={isIconBased ? undefined : false}>
             <button
-             className={`componentButton${isIconBased ? " icon_based" : ""} ${className} ${settings.background}`}
-              type="button" 
-              disabled={isButtonDisabled}
-              onClick={() => setShowModal(true)}
-              >
+                className={`componentButton${isIconBased ? " icon_based" : ""} ${className} ${settings.background}`}
+                type="button"
+                disabled={isButtonDisabled}
+                onClick={() => setShowModal(true)}
+            >
                 {getLabel(defaultLabel, settings)}
             </button>
         </ComponentTooltip>
@@ -91,6 +95,8 @@ const ComponentButtonModal: React.FC<TComponentButtonModal> = ({ settings, defau
             show={Boolean(showModal) && Boolean(data)}
             onHide={() => setShowModal(false)}
             onEntering={setModalIndex}
+            onEntered={handleEntered}
+            onExited={handleExited}
             enforceFocus={false}
         >
             <Modal.Header closeButton className="modal-emptyHeader" />
