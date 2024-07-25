@@ -1,6 +1,7 @@
 import { isEqual } from "lodash";
 import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { createContext, useContext } from "react";
+import usePrevious from "../../helpers/usePrevious";
 /*
 -- Контекст страницы для общения модулей между собой 
 */
@@ -30,28 +31,35 @@ export const useSubscribeOnRefetch = (refetch: () => void, setFilter: React.Disp
 
 export const useRefetchSubscribers = (moduleArticle: string, isRefetching: boolean, isModuleAsSubscriber: boolean, filter: any, excludeArticles?: Array<string>) => {
     const { modules } = usePageContext()
+    const isModuleAsParent = !isModuleAsSubscriber && modules[moduleArticle]?.length
+    const previousFilter = usePrevious(filter)
 
+    /*
+    --- Два сценария обновления подписчиков. Один - изменение фильтров, другой - обновление при отсутствии изменения в фильтрах (актуализация.). 
+    Чтобы при фильтрации не проходили лишние запросы (изменение св-ва filter влечёт за собой изменение isFetching в true), воспроизводить сценарий обновления только
+    при отсутствии изменений в фильтрах
+    */
     useEffect(() => {
-        if (!isModuleAsSubscriber && modules[moduleArticle]?.length) {
-
+        //если модуль не является подписчиком и имеет подписчиков
+        if (isModuleAsParent) {
+            //зачистка объекта фильтров от внутренних свойств фильтрации
             const filterValuesWithoutExcludes = { ...filter }
             if (excludeArticles?.length) {
                 excludeArticles.forEach(article => delete filterValuesWithoutExcludes[article])
             }
-            
             modules[moduleArticle].forEach(subscriber => {
-                subscriber.setFilter((prev: any) => {
-                    const actualFilterValues = Object.assign({}, prev, filterValuesWithoutExcludes)
-                    if (isEqual(prev, actualFilterValues)) {
-                        subscriber.refetch()
-                        return prev
-                    } else {
-                        return actualFilterValues
-                    }
-                })
+                subscriber.setFilter(filterValuesWithoutExcludes)
             })
         }
     }, [filter])
+
+    useEffect(() => {
+        if (isModuleAsParent && isRefetching && isEqual(previousFilter, filter)) {
+            modules[moduleArticle].forEach(subscriber => {
+                subscriber.refetch()
+            })
+        }
+    }, [isRefetching])
 }
 
 const PageProvider: React.FC<{ children: React.ReactElement }> = ({ children }) => {

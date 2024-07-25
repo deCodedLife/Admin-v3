@@ -4,10 +4,10 @@ import { useLocation } from 'react-router-dom';
 import { conformToMask } from 'react-text-mask';
 import { createNumberMask } from 'text-mask-addons';
 import * as Yup from 'yup';
-import { isEqual } from 'lodash';
+import { filter, isEqual } from 'lodash';
 import { TApiSetup } from '../../../types/api';
 import { ModalContext } from '../ModuleSchedule';
-import {TModuleFormArea, TModuleFormField} from "../ModuleForm/_types";
+import { TModuleFormArea, TModuleFormField } from "../ModuleForm/_types";
 import { getApiUrl } from '../../../api';
 
 //функция для получения массива полей из схемы формы
@@ -219,9 +219,9 @@ export const checkDatesInString = (value: any) => {
 }
 
 //хук для сохранения фильтров
-const getSessionStorageValue = (key: string, initials: Object) => {
+const getSessionStorageValue = (key: string) => {
     const supposedValue = sessionStorage.getItem(key)
-    return Object.assign({}, initials, supposedValue ? JSON.parse(supposedValue) : {})
+    return supposedValue ? JSON.parse(supposedValue) : {}
 }
 const setSessionStorageValue = (key: string, value: Object) => {
     const stringifiedValue = JSON.stringify(value)
@@ -240,8 +240,13 @@ export const useFilter = (moduleKey: string, initials: Object, linked_filter?: s
     const modalContext = useContext(ModalContext)
     const isSaveInStorage = modalContext?.saveInStorage !== false
 
-    const [filterValues, setFilter] = useState<any>(getSessionStorageValue(isSaveInStorage ? resolvedUnicKey : "", resolvedInitialValues))
-    const handleFilterValuesReset = () => setFilter(resolvedInitialValues)
+    //В storage не хранить иниты, чтобы избежать необходимости сбрасывать фильтры/закрывать вкладку при изменении инитов в схеме
+    const [filterValues, setFilter] = useState<any>(getSessionStorageValue(isSaveInStorage ? resolvedUnicKey : ""))
+
+    const resolvedFilterValues = useMemo(() => Object.assign({}, resolvedInitialValues, filterValues), [filterValues])
+
+    const handleFilterValuesReset = () => setFilter({})
+
     useEffect(() => {
         const resolvedValues = { ...filterValues }
         if (!linked_filter && excludeArticles?.length) {
@@ -254,8 +259,8 @@ export const useFilter = (moduleKey: string, initials: Object, linked_filter?: s
 
 
     return {
-        filter: filterValues,
-        isInitials: isEqual(filterValues, resolvedInitialValues),
+        filter: resolvedFilterValues,
+        isInitials: isEqual(resolvedFilterValues, resolvedInitialValues),
         setFilter,
         resetFilter: handleFilterValuesReset
     }
@@ -273,7 +278,7 @@ export const useSearch = (key: string) => {
     const resolvedKey = `${location.pathname}${location.search}-${key}-search`
     const [search, setSearch] = useState(getSessionStorageSearchValue(resolvedKey))
 
-    
+
     //Не сохранять фильтры страниц во вложенных модалках (модалка в модалке)
     const modalContext = useContext(ModalContext)
     const isSaveInStorage = modalContext?.saveInStorage !== false
