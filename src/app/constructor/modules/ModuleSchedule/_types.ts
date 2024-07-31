@@ -1,5 +1,5 @@
-import {TComponentFilter} from "../../components/ComponentFilters/_types";
-import {TComponentButton} from "../../components/ComponentButton/_types";
+import { TComponentFilter } from "../../components/ComponentFilters/_types";
+import { TComponentButton } from "../../components/ComponentButton/_types";
 import { TDefaultModule } from "../_types"
 
 export type TModuleScheduleEvent = {
@@ -75,7 +75,13 @@ export type TModuleScheduleScrollButtons = {
 }
 export type TModuleScheduleModal = {
     requestObject: string,
-    selectedCell: any,
+    selectedCell: {
+        type: "available" | "busy" | "disabled",
+        date: string,
+        time: string,
+        event?: { id: number, [key: string]: any }
+        initials: { [key: string]: any }
+    },
     setSelectedCell: (value: null) => void
 }
 export type TModuleSchedule = TDefaultModule<"schedule", { filters: Array<TComponentFilter>, buttons: Array<TComponentButton> }, {

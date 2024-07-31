@@ -4,7 +4,7 @@ import { TApiPage, TApiResponse } from "../../types/api"
 import { getErrorToast } from "../../constructor/helpers/toasts"
 
 
-const useScheduleForm = (requestObject: string, cell: {type: "available" | "busy", date: string, time: string, event: any, initials: {[key: string]: any}} | null) => {
+const useScheduleForm = (requestObject: string, cell: {type: "available" | "busy" | "disabled", date: string, time: string, event?: any, initials: {[key: string]: any}} | null) => {
     const enabled = Boolean(cell)
     const fetchKey = ["scheduleForm", cell]
     const requestPath = cell ? cell.type === "busy" ? `${requestObject}/update/${cell.event?.id}` : `${requestObject}/add` : ""

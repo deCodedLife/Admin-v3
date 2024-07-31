@@ -8,9 +8,16 @@ const useModalSettings = (page?: string | null) => {
 
 
     const handleEntered = () => {
-        const resolvedPath = location.search ? location.search + `&modal=${page}` : `?modal=${page}`
-        navigate(resolvedPath)
-        setUrlPattern(location.search ? `&modal=${page}` : `?modal=${page}`)
+        const search = location.search
+        const regexToCheckUrl = new RegExp(`[\\?|\\&]modal=${page}`, "g")
+        const pathInUrl = search.match(regexToCheckUrl)?.[0]
+        if (pathInUrl) {
+            return setUrlPattern(pathInUrl)
+        } else {
+            const resolvedPath = search ? search + `&modal=${page}` : `?modal=${page}`
+            navigate(resolvedPath)
+            return setUrlPattern(search ? `&modal=${page}` : `?modal=${page}`)
+        }
     }
 
     const handleExited = () => {
