@@ -12,7 +12,7 @@
 
 .moduleDayPlanning {
     &_rowsContainer {
-        min-height: 70px;
+        min-height: 72px;
         opacity: 1;
         transition: opacity 0.5s;
 
@@ -21,6 +21,17 @@
             pointer-events: none;
             user-select: none;
         }
+    }
+
+    &_skeletonRow {
+        display: flex;
+        align-items: center;
+        min-height: inherit;
+    }
+
+    &_skeletonRowBody {
+        flex-grow: 1;
+        padding: 0 1rem;
     }
 
     &_row {

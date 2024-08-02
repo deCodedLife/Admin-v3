@@ -10,6 +10,7 @@ import ComponentTooltip from "../../components/ComponentTooltip"
 import ComponentModal from "../../components/ComponentModal"
 import { TModuleDayPlanning, TModuleDayPlanningDate, TModuleDayPlanningLink, TModuleDayPlanningRow } from "./_types"
 import { KTSVG } from "../../../../_metronic/helpers"
+import SkeletonRow from "./src/SkeletonRow"
 
 const ModuleDayPlanningLink = React.memo<TModuleDayPlanningLink>(props => {
     const handleClick = () => setSelectedPage(link)
@@ -23,12 +24,12 @@ const ModuleDayPlanningLink = React.memo<TModuleDayPlanningLink>(props => {
 const ModuleDayPlanningRow = React.memo<TModuleDayPlanningRow>(props => {
     const { body, color, links, description, time, buttons, setSelectedPage } = props
     return <div className="moduleDayPlanning_row">
-       {/*  <span className={`moduleDayPlanning_rowBullet bullet bullet-vertical bg-${color}`} /> */}
+        {/*  <span className={`moduleDayPlanning_rowBullet bullet bullet-vertical bg-${color}`} /> */}
         <ComponentTooltip title={description}>
             <div className="moduleDayPlanning_rowBody">
                 <div className="moduleDayPlanning_rowProps">
-                <div className={`moduleDayPlanning_rowTime ${color}`}>{time}</div>
-                {description ? <KTSVG className={`moduleDayPlanning_alertIcon ${color}`} path="/media/crm/icons/alert.svg" /> : null}
+                    <div className={`moduleDayPlanning_rowTime ${color}`}>{time}</div>
+                    {description ? <KTSVG className={`moduleDayPlanning_alertIcon ${color}`} path="/media/crm/icons/alert.svg" /> : null}
                 </div>
                 <div className="moduleDayPlanning_rowLinks">{links.map(link => <ModuleDayPlanningLink link={link.link} title={link.title} setSelectedPage={setSelectedPage} />)}</div>
                 <div className="moduleDayPlanning_rowContent">{body}</div>
@@ -88,7 +89,7 @@ const ModuleDayPlanning: React.FC<TModuleDayPlanning> = props => {
         day: moment().format("YYYY-MM-DD")
     }), [])
     const { filter, setFilter } = useFilter(`${props.type}_${settings.object}`, filterInitials, "", ["day"])
-    const { data, isFetching, refetch } = useDayPlanning(filter)
+    const { data, isFetching, isLoading, refetch } = useDayPlanning(filter)
     const isEmptyDate = !isFetching && !data?.length
 
     //автообновление
@@ -116,7 +117,8 @@ const ModuleDayPlanning: React.FC<TModuleDayPlanning> = props => {
             <div ref={datesContainerRef} className="moduleDayPlanning_datesContainer">
                 {dates.map(date => <ModuleDayPlanningDate key={date.format("YYYY-MM-DD")} date={date} filter={filter} handleDateClick={handleDateClick} />)}
             </div>
-            <div className={`moduleDayPlanning_rowsContainer${isFetching ? " loading" : ""}`}>
+            <div className={`moduleDayPlanning_rowsContainer${(isFetching && !isLoading) ? " loading" : ""}`}>
+                {isLoading ? <SkeletonRow /> : null}
                 {data?.map(row => <ModuleDayPlanningRow key={row.id} {...row} setSelectedPage={setSelectedPage} />)}
                 {isEmptyDate ? <div className="moduleDayPlanning_emptyList">{intl.formatMessage({ id: "DAY_PANNING.EMPTY_LIST" })}</div> : null}
             </div>
