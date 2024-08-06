@@ -38,9 +38,12 @@
 
 
     & .componentButton {
-        &.gray {
+        &.secondary {
             background-color: var(--kt-light);
             color: var(--kt-light-inverse);
+            &:hover {
+                background-color: var(--kt-light-active);
+            }
         }
         &.moduleList_actionButton {
             background-color: var(--kt-light);

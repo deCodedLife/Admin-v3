@@ -62,7 +62,7 @@ const DynamicPage: React.FC = () => {
         {isSubpage ? <div className="componentButton_container inverse marginless paddingless">
             <ComponentButton
                 type='custom'
-                settings={{ title: intl.formatMessage({ id: "BUTTON.PREVIOUS" }), icon: "", background: "gray" }}
+                settings={{ title: intl.formatMessage({ id: "BUTTON.PREVIOUS" }), icon: "", background: "secondary" }}
                 customHandler={handleReturnClick} />
             {submitButton ? <ComponentButton {...submitButton} />: null}
         </div> : null}

@@ -2,7 +2,7 @@ type TDefaultComponentButton<type = string, settings = any> = {
     type: type,
     settings: settings & {
         title: string,
-        background: "dark" | "light" | "danger" | "warning" | "success" | "gray",
+        background: "dark" | "primary" | "primary-light" | "secondary" | "success" | "danger" | "warning" | "info" | "light" | "gray",
         icon: string,
         attention_modal?: boolean
     },

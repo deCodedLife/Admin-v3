@@ -1,15 +1,22 @@
 .componentButton {
+    --app-btn-color: var(--kt-primary); 
+    --app-btn-color-active: var(--kt-primary-active);
+    --app-btn-contrastText: var(--kt-primary-inverse);
     position: relative;
     font-size: 0.925rem;
     font-weight: 600;
-    color: var(--kt-primary-inverse);
+    color: var(--app-btn-contrastText);
     padding: calc(0.55rem + 1px) calc(1.25rem + 1px);
-    background-color: var(--kt-primary);
+    background-color: var(--app-btn-color);
     white-space: nowrap;
     border: none;
     border-radius: 0.425rem;
-    transition: color 0.3s, background-color 0.3s;
+    transition: color .3s, background-color .3s;
     z-index: 1;
+
+    &:hover {
+        background-color: var(--app-btn-color-active);
+    }
 
     &:disabled {
         opacity: 0.5;
@@ -19,38 +26,16 @@
         display: none;
     }
 
-    &:hover {
-        background-color: var(--kt-primary-active);
-    }
+    &.primary {
+        color: var(--kt-primary-inverse);
+        background-color: var(--kt-primary);
 
-    &_container {
-        display: flex;
-        justify-content: flex-end;
-        padding: 0 0.75rem;
-        margin-bottom: 10px;
-
-        &.between {
-            justify-content: space-between;
-        }
-
-        &.inverse {
-            justify-content: flex-start;
-        }
-
-        & .componentButton:not(:last-child) {
-            margin-right: 1rem;
-        }
-
-        &.marginless {
-            margin-bottom: 0;
-        }
-
-        &.paddingless {
-            padding: 0;
+        &:hover {
+            background-color: var(--kt-primary-active);
         }
     }
 
-    &.dark-light {
+    &.primary-light {
         background-color: var(--kt-primary-light);
         color: var(--kt-primary);
         border: 0;
@@ -61,45 +46,17 @@
         }
     }
 
-    &.light {
-        color: var(--kt-light-inverse);
-        background-color: var(--kt-light);
-
-        & svg,
-        svg g,
-        svg [fill] {
-            fill: var(--kt-text-gray-700);
-        }
+    &.secondary {
+        color: var(--kt-secondary-inverse);
+        background-color: var(--kt-secondary);
 
         &:hover {
-            background-color: var(--kt-light-active);
-        }
-
-    }
-
-    &.danger {
-        background-color: var(--kt-danger);
-        color: var(--kt-danger-inverse);
-        &:hover {
-            background-color: var(--kt-danger-active);
-        }
-
-        & svg,
-        svg g,
-        svg [fill] {
-            fill: var(--kt-danger-inverse);
-        }
-    }
-
-    &.warning {
-        background-color: var(--kt-warning);
-
-        &:hover {
-            background-color: var(--kt-warning-active);
+            background-color: var(--kt-secondary-active);
         }
     }
 
     &.success {
+        color: var(--kt-success-inverse);
         background-color: var(--kt-success);
 
         &:hover {
@@ -107,15 +64,42 @@
         }
     }
 
-    &.gray {
-        background-color: var(--kt-text-gray-300);
-        color: var(--kt-text-gray-700);
+    &.danger {
+        color: var(--kt-danger-inverse);
+        background-color: var(--kt-danger);
+
+        &:hover {
+            background-color: var(--kt-danger-active);
+        }
     }
 
-    & svg,
-    svg g,
-    svg [fill] {
-        fill: var(--kt-primary-inverse);
+    &.warning {
+        color: var(--kt-warning-inverse);
+        background-color: var(--kt-warning);
+
+        &:hover {
+            background-color: var(--kt-warning-active);
+        }
+    }
+
+    &.info {
+        color: var(--kt-info-inverse);
+        background-color: var(--kt-info);
+
+        &:hover {
+            background-color: var(--kt-info-active);
+        }
+    }
+
+
+    &.light {
+        color: var(--kt-light-inverse);
+        background-color: var(--kt-light);
+
+        &:hover {
+            background-color: var(--kt-light-active);
+        }
+
     }
 
     &.icon_based {
@@ -132,10 +116,18 @@
         justify-content: center;
 
         & .svg-icon {
+            color: inherit;
             display: flex;
             align-items: center;
             margin-right: 4px;
         }
+    }
+
+    & svg,
+    svg g,
+    svg [fill] {
+        color: inherit;
+        fill: currentColor;
     }
 
     &_modal {
@@ -182,6 +174,33 @@
             }
         }
 
+    }
+
+    &_container {
+        display: flex;
+        justify-content: flex-end;
+        padding: 0 0.75rem;
+        margin-bottom: 10px;
+
+        &.between {
+            justify-content: space-between;
+        }
+
+        &.inverse {
+            justify-content: flex-start;
+        }
+
+        & .componentButton:not(:last-child) {
+            margin-right: 1rem;
+        }
+
+        &.marginless {
+            margin-bottom: 0;
+        }
+
+        &.paddingless {
+            padding: 0;
+        }
     }
 
     &.minimized {

@@ -397,7 +397,7 @@ const ModuleList = React.memo<TModuleList>((props) => {
                 {
                     haveSearch || haveButtons || showCSVDownloader || showExelDownloader ? <div className="moduleList_toolbar">
                         {haveSearch ? <ComponentSearch value={search} setValue={setSearch} /> : null}
-                        {haveButtons ? components.buttons.map(button => <ComponentButton key={button.settings.title} className="dark-light" {...button} />) : null}
+                        {haveButtons ? components.buttons.map(button => <ComponentButton key={button.settings.title} className="primary-light" {...button} />) : null}
                         {showCSVDownloader ? <DownloaderModule
                             title={intl.formatMessage({ id: "LIST.CSV_BUTTON_TITLE" })}
                             handleDownload={handleDownloadCSV}
