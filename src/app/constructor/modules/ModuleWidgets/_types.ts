@@ -46,14 +46,15 @@ export type TModuleWidgetsWidget = {
         background: string,
         detail: Array<any> | TModuleWidgetsWidgetGraphModule["detail"],
         size?: number
-    }
+    },
+    isRefetching: boolean
 }
 
 export type TModuleWidgetsView = { data?: TApiWidget, is_hard: boolean }
 
-export type TModuleWidgetsSimpleReport = { data: Array<any> }
+export type TModuleWidgetsSimpleReport = { data: Array<any>, isRefetching: boolean }
 
-export type TModuleWidgetsHardReport = { data: { report: Array<any>, status: "no_cache" | "updating" | "updated", updated_at: null | string } }
+export type TModuleWidgetsHardReport = { data: { report: Array<any>, status: "no_cache" | "updating" | "updated", updated_at: null | string }, isRefetching: boolean }
 
 export type TModuleWidgetsToolbar = { updated_at: string | null, status: "no_cache" | "updating" | "updated", handleUpdateHardReport: () => Promise<void> }
 

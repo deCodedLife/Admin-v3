@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Col, Form } from "react-bootstrap"
 import useWidget from "../../../api/hooks/useWidget"
 import ComponentDashboard from "../../components/ComponentDashboard"
@@ -23,6 +23,8 @@ import {
     TModuleWidgetsWidget,
     TModuleWidgetsWidgetGraphModule
 } from "./_types";
+import Skeleton from "react-loading-skeleton"
+import SkeletonWidget from "./src/SkeletonWidget"
 
 
 const WidgetGraphModule: React.FC<TModuleWidgetsWidgetGraphModule> = ({ detail }) => {
@@ -45,12 +47,12 @@ const WidgetGraphModule: React.FC<TModuleWidgetsWidgetGraphModule> = ({ detail }
     }
 }
 
-const Widget: React.FC<TModuleWidgetsWidget> = ({ data }) => {
+const Widget: React.FC<TModuleWidgetsWidget> = ({ data, isRefetching }) => {
     const { prefix, value, postfix, description, detail, size = 2 } = data
     const havePostifx = !Array.isArray(postfix) && postfix.value
     const haveGraphModule = !Array.isArray(detail)
     const widgetSize = size * 3
-    return <Form.Group className="moduleWidgets_widgetContainer" as={Col} md={widgetSize}>
+    return <Form.Group className="moduleWidgets_widgetContainer active" as={Col} md={widgetSize}>
 
         <div className="moduleWidgets_widget card card-flush">
             <div className="moduleWidgets_widgetContent card-header">
@@ -58,7 +60,7 @@ const Widget: React.FC<TModuleWidgetsWidget> = ({ data }) => {
                     <div className="moduleWidgets_widgetValueContainer">
                         <span className="moduleWidgets_widgetValuePrefix">{prefix}</span>
                         <ComponentTooltip title={value}>
-                            <span className="moduleWidgets_widgetValue">{value}</span>
+                            <span className="moduleWidgets_widgetValue">{isRefetching ? <Skeleton className="skeleton" width={120} /> : value}</span>
                         </ComponentTooltip>
                         {
                             havePostifx ? <span className={`badge badge-light-${postfix?.background ?? "success"} fs-base`}>
@@ -71,7 +73,7 @@ const Widget: React.FC<TModuleWidgetsWidget> = ({ data }) => {
                             </span> : null
                         }
                     </div>
-                    <span className='moduleWidgets_widgetDescription'>{description}</span>
+                    <span className='moduleWidgets_widgetDescription'>{isRefetching ? <Skeleton className="skeleton" width={200} /> : description}</span>
                 </div>
             </div>
             {haveGraphModule ? <WidgetGraphModule detail={detail} /> : null}
@@ -79,12 +81,12 @@ const Widget: React.FC<TModuleWidgetsWidget> = ({ data }) => {
 
     </Form.Group>
 }
-const ModuleWidgetsSimpleReport: React.FC<TModuleWidgetsSimpleReport> = ({ data }) => {
+const ModuleWidgetsSimpleReport: React.FC<TModuleWidgetsSimpleReport> = ({ data, isRefetching }) => {
     return <>
-        {data.map(widget => <Widget key={widget.description + widget.value} data={widget} />)}
+        {data.map(widget => <Widget key={widget.description + widget.value} data={widget} isRefetching={isRefetching} />)}
     </>
 }
-const ModuleWidgetsHardReport: React.FC<TModuleWidgetsHardReport> = ({ data }) => {
+const ModuleWidgetsHardReport: React.FC<TModuleWidgetsHardReport> = ({ data, isRefetching }) => {
     const { report, status } = data
     return <div className="moduleWidgets_hardReportContainer">
         {status === "no_cache" ? <div className="moduleWidgets_infoCard">
@@ -93,7 +95,7 @@ const ModuleWidgetsHardReport: React.FC<TModuleWidgetsHardReport> = ({ data }) =
             status === "updating" ? <div className="moduleWidgets_infoCard">
                 <span>Отчёт в процессе формирования. Пожалуйста, ожидайте.</span>
             </div> :
-                report?.map(widget => <Widget key={widget.description + widget.value} data={widget} />)}
+                report?.map(widget => <Widget key={widget.description + widget.value} data={widget} isRefetching={isRefetching} />)}
     </div>
 }
 const ModuleWidgetsToolbar: React.FC<TModuleWidgetsToolbar> = props => {
@@ -113,11 +115,11 @@ const ModuleWidgets = React.memo<TModuleWidgets>(props => {
     const haveFilter = Boolean(components?.filters)
     const haveButtons = Boolean(components?.buttons)
     const { data, isLoading, isRefetching, refetch } = useWidget(widgetCommand, filter)
-    
+
     useSubscribeOnRefetch(refetch, setFilter, linked_filter)
 
     useRefetchSubscribers(`${props.type}_${widgetCommand}`, isRefetching, Boolean(linked_filter), filter)
-   
+
 
     useUpdate([{ active: Boolean(hook), update: refetch }], hook, 1000)
     const showToolbar = data && !Array.isArray(data)
@@ -142,8 +144,9 @@ const ModuleWidgets = React.memo<TModuleWidgets>(props => {
         }
 
         {showToolbar ? <ModuleWidgetsToolbar updated_at={data.updated_at} status={data.status} handleUpdateHardReport={handleUpdateHardReport} /> : null}
-        <SplashScreen active={isLoading} />
-        {data ? Array.isArray(data) ? <ModuleWidgetsSimpleReport data={data} /> : <ModuleWidgetsHardReport data={data} /> : null}
+        {isLoading ? <SkeletonWidget /> : null}
+        {data ? Array.isArray(data) ? <ModuleWidgetsSimpleReport data={data} isRefetching={isRefetching} /> :
+            <ModuleWidgetsHardReport data={data} isRefetching={isRefetching} /> : null}
     </div>
 })
 
