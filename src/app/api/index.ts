@@ -33,6 +33,12 @@ export const getApiUrl = () => {
             apiUrl = "https://yazdorov.docacrm.com"
     }
 
+    if (currentDomain === "doca" && currentSubdomain === "admin") {
+
+        return "https://api.doca.ru"
+
+    } 
+
     if (currentDomain === "mewbas" && currentSubdomain === "crm-admin") {
 
         apiUrl = "https://crm-api.mewbas.com"
