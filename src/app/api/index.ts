@@ -35,7 +35,7 @@ export const getApiUrl = () => {
 
     if (currentDomain === "doca" && currentSubdomain === "admin") {
 
-        return "https://api.doca.ru"
+        return "http://api.doca.ru"
 
     } 
 
