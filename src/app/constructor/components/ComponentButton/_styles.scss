@@ -116,11 +116,14 @@
         justify-content: center;
 
         & .svg-icon {
-            color: inherit;
             display: flex;
             align-items: center;
             margin-right: 4px;
         }
+    }
+
+    & .svg-icon {
+        color: inherit;
     }
 
     & svg,
